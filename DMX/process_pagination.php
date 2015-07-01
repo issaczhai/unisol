@@ -13,18 +13,41 @@ if(isset($_POST["page"])){
 }else{
     $pageNumber = 1; //if there's no page number, set it to 1
 }
+
 $projectMgr = new ProjectManager();
 $itemPerPage = 10;
-//get total number of records from database
-$totalNumberProjects = $projectMgr->getTotalNumberOfProjects();
-//break records into pages
-$totalPages = ceil($totalNumberProjects/$itemPerPage);
+$results = [];
+$filteredProjects = [];
 
-//fetch position of record
-$pagePosition = (($pageNumber-1) * $itemPerPage);
+if(isset($_SESSION['filterResults']) && !empty($_SESSION['filterResults'])){
+    //get total number of records from database
+    $filteredProjects = $_SESSION['filterResults'];
+    $totalNumberProjects = count($filteredProjects);
+    //break records into pages
+    $totalPages = ceil($totalNumberProjects/$itemPerPage);
 
-//Fetch part of records using SQL LIMIT clause
-$results = $projectMgr->getPaginatedResults($pagePosition,$itemPerPage);
+    //fetch position of record
+    $pagePosition = (($pageNumber-1) * $itemPerPage);
+
+    //fetch paginated results
+    for($i=$pagePosition; $i<min(($pagePosition+$itemPerPage), $totalNumberProjects);$i++){
+        array_push($results,$filteredProjects[$i]);
+    }
+    
+}else{
+    //get total number of records from database
+    $totalNumberProjects = $projectMgr->getTotalNumberOfProjects();
+    //break records into pages
+    $totalPages = ceil($totalNumberProjects/$itemPerPage);
+
+    //fetch position of record
+    $pagePosition = (($pageNumber-1) * $itemPerPage);
+
+    //Fetch part of records using SQL LIMIT clause
+    $results = $projectMgr->getPaginatedResults($pagePosition,$itemPerPage);  
+}
+
+
 
 //Display fetched records
 if(!empty($results)) {
@@ -46,8 +69,17 @@ if(!empty($results)) {
             </div>
 <?php
         }
+?>  
+        <!-- Pagination -->    
+        <div class="col-md-6 project-pagination">
+<?php
+        echo paginate_function($itemPerPage, $pageNumber, $totalNumberProjects, $totalPages);
 ?>
         </div>
+        
+        </div>
+
+
 <?php
         
     }else{
@@ -57,15 +89,7 @@ if(!empty($results)) {
         </div>
 <?php
     } 
-?>
-        <div class="col-md-6 col-md-offset-3 project-pagination">
-<?php
-        echo paginate_function($itemPerPage, $pageNumber, $totalNumberProjects, $totalPages);
-?>
-        </div>
-<?php
-function paginate_function($item_per_page, $currentPage, $total_records, $totalPages)
-{
+function paginate_function($item_per_page, $currentPage, $total_records, $totalPages){
     $pagination = '';
     if($totalPages > 0 && $totalPages != 1 && $currentPage <= $totalPages){ //verify total pages and current page number
         $pagination .= '<ul class="pagination">';

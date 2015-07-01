@@ -76,6 +76,8 @@ and open the template in the editor.
                 border-radius: 0;
             }
             .project{
+                float:none;
+                display:inline-block;
                 width: 200px;
                 margin-right:10px;
                 margin-bottom: 15px;
@@ -126,7 +128,8 @@ and open the template in the editor.
                 z-index:1000
             }
             .project-pagination{
-                text-align: center;
+                float:none;
+                margin:0 auto;
             }
             .pagination li a:hover{
                 background-color: rgb(192, 192, 186) !important;
@@ -221,6 +224,9 @@ and open the template in the editor.
                                 <span class="sort-value">COUNTRY</span> <span class="caret pull-right"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
+                                <?php
+                                    
+                                ?>
                                 <li><a class='country' href="#sg">Singapore</a></li>
                                 <li><a class='country' href="#cn">China</a></li>
                                 <li><a class='country' href="#my">Malaysia</a></li>
@@ -261,35 +267,11 @@ and open the template in the editor.
                 </div>
                 <div id="loaderID" style="display:none;position:absolute; top:200px; left:50%; z-index:10; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
                 <div id="results">
-                    <!--
-                    <div id='thumbnails' class='col-md-10'>
-                        
-                       // <?php
-                            //foreach ($projects as $eachProject){
-                                //$project_name = $eachProject['project_name'];
-                        ?>
-                                <div class='col-md-2 project' style='height:200px;'>
-                                    <a href="#"><img class="project-image" style="width:200px;height:200px" src="./public_html/img/sample1.jpg" alt="" /></a>
-                                    <div class="projectName-overlay"><span><?php //$project_name ?></span></div>
-                                    <div class="project-overlay">
-                                        <h4><a href='#'>Location 1</a></h5>
-                                        <h4><a href='#'>Location 2</a></h5>
-                                    </div>
-                                </div>
-                        <?php
-
-                            //}
-
-                        ?>
-                    -->
-                </div>
                     
                 </div>
+                    
             </div>
-        </div>    
-        
-        
-        
+        </div>
         
     <?php
         //include_once("./templates/footer.php");
@@ -352,11 +334,18 @@ and open the template in the editor.
         };
         
         $(document).ready(function() {
+            // kill the filter results session when the page is reloaded
+            <?php
+            if(isset($_SESSION['filterResults'])){
+                unset($_SESSION['filterResults']);
+            }
+            
+            ?>
             var data = ''; //get page number from link
             $.ajax({ //Process the form using $.ajax()
                 type      : 'POST', //Method type
-                url       : './process_pagination.php', //Your form processing file URL
-                data      : data, //Forms name
+                url       : './process_pagination.php', //processing file URL
+                data      : data,
                 cache     : false,
                 success   : function(html) {
                                 $('#loaderID').hide();
@@ -373,8 +362,8 @@ and open the template in the editor.
                 var data = 'page=' + $(this).attr("data-page"); //get page number from link
                 $.ajax({ //Process the form using $.ajax()
                     type      : 'POST', //Method type
-                    url       : './process_pagination.php', //Your form processing file URL
-                    data      : data, //Forms name
+                    url       : './process_pagination.php', //processing file URL
+                    data      : data, 
                     cache     : false,
                     success   : function(html) {
                                     $('#loaderID').hide();
@@ -382,9 +371,6 @@ and open the template in the editor.
                                     $('#results').show();
                                 }
                 });
-                //$("#results").load("./process_pagination.php",{"page":page}, function(){ //get content from PHP page
-                    //$("#loaderID").hide(); //once done, hide loading element
-                //});
 
             });
         });

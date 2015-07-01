@@ -7,6 +7,7 @@ include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/ProjectManager.php");
 $filterType = addslashes(filter_input(INPUT_POST, 'filterType'));
 $filterValue = filter_input(INPUT_POST, 'filterValue');
+// PAGE NUMBER IS SET TO 1
 $pageNumber = filter_input(INPUT_POST, 'page');
 $projectMgr = new ProjectManager();
 $filteredProjects = [];
@@ -23,22 +24,18 @@ if($filterType=='all'){
 
 //get total number of records from database
 $totalNumberProjects = count($filteredProjects);
-print_r($totalNumberProjects);
 //break records into pages
 $totalPages = ceil($totalNumberProjects/$itemPerPage);
-
 //fetch position of record
 $pagePosition = (($pageNumber-1) * $itemPerPage);
 
 //Fetch part of records using SQL LIMIT clause
-for($i=$pagePosition; $i<($pagePosition+$itemPerPage);$i++){
+for($i=$pagePosition; $i<min(($pagePosition+$itemPerPage), $totalNumberProjects);$i++){
     array_push($results,$filteredProjects[$i]);
 }
-//$display = '';
-
 
 if(!empty($results)) {
-        //$_SESSION['results'] = $filteredProjects;
+        $_SESSION['filterResults'] = $filteredProjects;
 ?>
         <div id='thumbnails' class='col-md-10'>
 <?php
@@ -58,7 +55,15 @@ if(!empty($results)) {
 <?php
         }
 ?>
+        <!-- Pagination -->    
+        <div class="col-md-6 project-pagination">
+<?php
+        echo paginate_function($itemPerPage, $pageNumber, $totalNumberProjects, $totalPages);
+?>
         </div>
+            
+        </div>
+
 <?php
         
     }else{
@@ -68,15 +73,7 @@ if(!empty($results)) {
         </div>
 <?php
     } 
-?>
-        <div class="col-md-6 col-md-offset-3 project-pagination">
-<?php
-        echo paginate_function($itemPerPage, $pageNumber, $totalNumberProjects, $totalPages);
-?>
-        </div>
-<?php
-function paginate_function($item_per_page, $currentPage, $total_records, $totalPages)
-{
+function paginate_function($item_per_page, $currentPage, $total_records, $totalPages){
     $pagination = '';
     if($totalPages > 0 && $totalPages != 1 && $currentPage <= $totalPages){ //verify total pages and current page number
         $pagination .= '<ul class="pagination">';
