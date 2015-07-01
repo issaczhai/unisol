@@ -166,5 +166,37 @@ class ProjectManager {
         return $projectArr;
     }
     
+	
+	function getTypeList(){
+        $type_arr = array();
+        $ConnectionMgr = new ConnectionManager();
+        $conn = $ConnectionMgr->getConnection();
+        $stmt = $conn->prepare("SELECT DISTINCT type FROM project");
+        $stmt->execute();
+        $stmt->bind_result($type);
+        while ($stmt->fetch())
+        {   
+            $project_type = $type;
+            array_push($type_arr,$project_type);
+        }
+        $ConnectionMgr->closeConnection($stmt, $conn);
+        return $type_arr;
+    }
+	
+	function getYearList(){
+        $year_arr = array();
+        $ConnectionMgr = new ConnectionManager();
+        $conn = $ConnectionMgr->getConnection();
+        $stmt = $conn->prepare("SELECT DISTINCT year FROM project ORDER BY year DESC");
+        $stmt->execute();
+        $stmt->bind_result($year);
+        while ($stmt->fetch())
+        {   
+            $project_year = $year;
+            array_push($year_arr,$project_year);
+        }
+        $ConnectionMgr->closeConnection($stmt, $conn);
+        return $year_arr;
+    }
     
 }
