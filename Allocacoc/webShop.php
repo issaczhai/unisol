@@ -4,6 +4,26 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php
+    if (session_status()!=PHP_SESSION_ACTIVE) {
+        session_start();
+    }
+    include_once("./Manager/ConnectionManager.php");
+    include_once("./Manager/ProductManager.php");
+    $productMgr = new ProductManager();
+    $userid = null;
+    $username = null;
+    
+    if(isset($_SESSION["userid"]) && !empty($_SESSION["userid"])){
+        // $userid is customer email address
+        $userid = $_SESSION["userid"];
+        $pos = strpos($userid, "@");
+        // $username is displayed in the header
+        $username = substr($userid, 0, $pos);
+        $cart_items = $productMgr->retrieveFromShoppingCart($userid);
+        $cart_total_qty = $productMgr->retrieveTotalNumberOfItemsInShoppingCart($userid);
+    }
+?>
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,17 +76,18 @@ and open the template in the editor.
                 color: #8F006B;
             }
             .overlay-carousel{
-                background-color: #fff;
+                position:relative;
+                background: rgba(255, 255, 255, 0.6);
                 height:50px;
                 margin-top:-50px;
                 padding-top:16.5px;
-                opacity:0.6
+                z-index:10000;
             }
             .overlay-nav-item{
                 display: inline;
                 margin-top:17px
             }
-            .overlay-nav > li:nth-child(2){
+            .overlay-nav > .item-cart{
                 margin-left:20px
             }
             .overlay-text{
@@ -84,6 +105,67 @@ and open the template in the editor.
                 margin-top:-1.0000000000000001em;
             }
         </style>
+        <script>
+        function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
+
+            var result = { width: 0, height: 0, fScaleToTargetWidth: true };
+
+            if ((srcwidth <= 0) || (srcheight <= 0) || (targetwidth <= 0) || (targetheight <= 0)) {
+                return result;
+            }
+
+            // scale to the target width
+            var scaleX1 = targetwidth;
+            var scaleY1 = (srcheight * targetwidth) / srcwidth;
+
+            // scale to the target height
+            var scaleX2 = (srcwidth * targetheight) / srcheight;
+            var scaleY2 = targetheight;
+
+            // now figure out which one we should use
+            var fScaleOnWidth = (scaleX2 > targetwidth);
+            if (fScaleOnWidth) {
+                fScaleOnWidth = fLetterBox;
+            }
+            else {
+               fScaleOnWidth = !fLetterBox;
+            }
+
+            if (fScaleOnWidth===true) {
+                result.width = Math.floor(scaleX1);
+                result.height = Math.floor(scaleY1);
+                result.fScaleToTargetWidth = true;
+            }
+            else {
+                result.width = Math.floor(scaleX2);
+                result.height = Math.floor(scaleY2);
+                result.fScaleToTargetWidth = false;
+            }
+            result.targetleft = Math.floor((targetwidth - result.width) / 2);
+            result.targettop = Math.floor((targetheight - result.height) / 2);
+
+            return result;
+        }
+
+        function OnCartImageLoad(evt) {
+            var img = evt.currentTarget;
+
+            // what's the size of this image and it's parent
+            var w = img.naturalWidth;
+            var h = img.naturalHeight;
+            var tw = $(".cartImg").width();
+            var th = $(".cartImg").height();
+
+            // compute the new size and offsets
+            var result = ScaleImage(w, h, tw, th, true);
+
+            // adjust the image coordinates and size
+            $(img).width(result.width);
+            $(img).height(result.height);
+            $(img).css("left", result.targetleft);
+            $(img).css("top", result.targettop);
+        }
+        </script>
         <meta charset="UTF-8">
         <title>Allocacoc Webshop</title>
     </head>
@@ -97,7 +179,6 @@ and open the template in the editor.
             <!-- Top part of the slider -->
             <div class="row mainPic">
                 <div class="col-sm-10" id="carousel-bounding-box">
-                    
                     <div class="carousel slide" id="myCarousel">
                         <!-- Carousel items -->
                         <div class="carousel-inner">
@@ -122,30 +203,69 @@ and open the template in the editor.
                         </div>
                         <div class="overlay-carousel">
                             <ul class="overlay-nav">
-                                <li class="overlay-nav-item">
-                                    <a class='overlay-text' href="#"><span></span>shop</a>
+                                <li class="overlay-nav-item item-shop">
+                                    <a class='overlay-text' href="./category.php"><span></span>shop</a>
                                 </li>
-                                <li class="overlay-nav-item">
-                                    <a class='overlay-text' href="#"><i class="fa fa-shopping-cart fa-lg"></i> cart</a>
-                                </li>
+                                <li class="cart-dropdown overlay-nav-item item-cart" >
+                                    <?php
+                                    if(!empty($cart_items)){
+                                    ?>
+                                    <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( <?=$cart_total_qty?> ) </span></a>
+                                    <?php
+                                    }else{
+                                    ?>
+                                    <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( 0 ) </span></a>
+                                    <?php
+                                    }
+                                    ?>
+
+                                        <ul role="menu" class="sub-menu">
+                                    <?php
+                                    if(!empty($cart_items)){
+                                        for($x=0;$x<min(4,count($cart_items));$x++){
+                                            $each_cart_item = $cart_items[$x];
+                                            $each_product_id = $each_cart_item['product_id'];
+                                            $each_product_quantity = $each_cart_item['quantity'];
+                                            $each_product_name = $productMgr->getProductName($each_product_id);
+
+                                    ?>
+                                             <li class="notification">
+                                                <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
+                                                   <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                                </div>
+                                                <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
+                                                    <br>
+                                                    <span style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
+                                            </li>
+                                    <?php
+                                        }
+                                    }else{
+                                    ?>
+                                             <li class="notification">
+                                                <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
+                                            </li>
+                                    <?php
+                                    }
+                                    ?>
+                                        <li class="notification">
+                                            <div class="btn-group-justified">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default" onclick="location.href = './cart_template.php';">
+                                                            View All Items <span>(<?=$cart_total_qty ?>)</span>
+                                                    </button>
+                                                </div>
+                                            </div> 
+                                        </li>
+                                    </ul>
+                                </li> 
                             </ul>
                         </div>
-                        <!-- Carousel nav 
-                        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left"></span>                                       
-                        </a>
-                        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right"></span>                                       
-                        </a>   
-                        -->
                     </div>
                 </div>
             </div>    
             <div class="row">
                 <div class="col-sm-7" id="slider-thumbs">
                     <!-- Bottom switcher of slider -->
-                    
-                    
                     <div class="col-sm-3 thumbnail">
                         <a id="carousel-selector-0"><img src="./public_html/img/carouselThumb/Banner Fr.312.png"></a>
                     </div>
@@ -162,7 +282,7 @@ and open the template in the editor.
                         <a id="carousel-selector-3"><img src="./public_html/img/carouselThumb/PowerCube.png"></a>
                     </div>
                 </div>
-            </div>
+            </div><!--/Slider-->
             <div class='row'>
                 <div id='video_gallary' class='col-sm-8' style='height:350px;'>
                     <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered"
@@ -174,17 +294,8 @@ and open the template in the editor.
                     </video>
                 </div>
             </div>
-        </div><!--/Slider-->
-            <!-- 
-            <div class="row hidden-xs" id="slider-thumbs">
-                                   
-            </div>
-            -->
         </div>
-
-        <?php
-        include_once("./templates/footer.php");
-        ?>
+    </div>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>    
     <script src="//vjs.zencdn.net/4.12/video.js"></script>   
