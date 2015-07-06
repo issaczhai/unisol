@@ -80,21 +80,16 @@ if($filter_type=='all' && $sort_type!='default'){
             $price = $eachProduct["price"];
             $product_id = $eachProduct["product_id"];
 ?>
-            <div class="col-sm-3">
-                <div class="product-image-wrapper">
-                    <div class="single-products">
-                       <div class="productinfo text-center">
-                           <div class="productImg" style="width:206px;height:238px;overflow:hidden;position:relative">
-                               <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$customer_id ?>"><img class="product-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnProductImageLoad(event);" /></a>
-                           </div>
-
-                           <!--<div  style="white-space:nowrap;overflow:hidden; text-overflow:ellipsis">-->
-                           <div style="height:45px">
-                               <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$customer_id ?>" style="text-decoration: none;"><h5><?=$product_name ?></h5></a>
-                           </div>
-                           <p>SGD <?= number_format($price,1,'.','') ?></p>
-
-                       </div>
+            <div class='col-sm-6'>
+                <div class='product-wrapper'>
+                    <div class='product-img'>
+                        <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$customer_id ?>">
+                        <img src='./public_html/img/productImg/GE.png'>
+                        </a>
+                    </div>
+                    <div class='product-summary'> 
+                        <h5 class="product-name"><a href='./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$customer_id ?>'><?= $product_name ?></a></h5>
+                        <h5 class="price">$<?= number_format($price,1,'.','') ?> <span> incl.VAT</span></h5>
                     </div>
                 </div>
             </div>

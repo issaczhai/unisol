@@ -8,6 +8,21 @@ and open the template in the editor.
 if (session_status()!=PHP_SESSION_ACTIVE) {
         session_start();
 }
+include_once("./Manager/ConnectionManager.php");
+include_once("./Manager/ProductManager.php");
+$productMgr = new ProductManager();
+$userid = null;
+$username = null;
+
+if(isset($_SESSION["userid"]) && !empty($_SESSION["userid"])){
+    // $userid is customer email address
+    $userid = $_SESSION["userid"];
+    $pos = strpos($userid, "@");
+    // $username is displayed in the header
+    $username = substr($userid, 0, $pos);
+    $cart_items = $productMgr->retrieveFromShoppingCart($userid);
+    $cart_total_qty = $productMgr->retrieveTotalNumberOfItemsInShoppingCart($userid);
+}
 /*
 $filter_type = '';
 $sort_type = '';
@@ -25,11 +40,10 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-        <!-- Optional theme -->
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="./public_html/css/main.css">
-        <link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+        <link rel="stylesheet" href="./public_html/css/webShop.css">
+        <!--<link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">-->
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -39,16 +53,25 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
             .product-image-wrapper{margin-bottom:0px;}
             .product-image-wrapper:hover {border:1px solid #B82E8A;-webkit-transition: all 0.4s ease-out;-moz-transition: all 0.4s ease-out;  /* FF4+ */-o-transition: all 0.4s ease-out;  /* Opera 10.5+ */-ms-transition: all 0.4s ease-out;  /* IE10? */transition: all 0.4s ease-out;}
              
-            #top_bar {position: relative;width:1140px;z-index:2;background:#FFF;margin-top:20px}    
-            //#main-content{margin-left:280px}
+            /* #top_bar {position: relative;width:1140px;z-index:2;background:#FFF;margin-top:20px}  */
+            .top-bar, #main-content{
+                float:none;
+                margin:0 auto;
+                padding-right: 0;
+                padding-left: 0;
+            }
             #cart_btn{background:#B82E8A;color:#FFFFFF}
-            // apply to all pages
-            ul.refine_bar{list-style-type: none;}
+            /* apply to all pages */
+            ul.refine_bar{
+                list-style-type: none;
+                border:1px solid #E6E6E6;
+                height:40px;
+            }
             
             ul.refine_bar > li{display: inline-block}
             li.filter{position:absolute;margin-top: 10px;}
             ul.refine_bar li > a{cursor:pointer;padding:5px;color:#737373}
-            ul.refine_bar li > a:hover{color:#FF4747}
+            ul.refine_bar li > a:hover{color:rgb(0, 89, 112)}
             .productImgSmall{
                 margin:0 auto;
                 transition:All 1s ease;
@@ -206,7 +229,7 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
     </head>
     <body>
         <?php
-        include_once("./templates/header.php");
+        //include_once("./templates/header.php");
         include_once("./templates/modal.php");
         /*
         if(!empty($sort_type) || !empty($filter_type)){
@@ -222,19 +245,20 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
         }
         */
         $results = [];
-        print_r(isset($_SESSION['results']));
-        if(isset($_SESSION['results']) && !empty($_SESSION['results'])){
-            $results = $_SESSION['results'];
-        }else{
-            $results = $productMgr->getAllProduct();
-        }
+        //print_r(isset($_SESSION['results']));
+        //if(isset($_SESSION['results']) && !empty($_SESSION['results'])){
+            //$results = $_SESSION['results'];
+        //}else{
+        $results = $productMgr->getAllProduct();
+        //}
         ?>
-        <div id="loaderID" style="display:none;position:absolute; top:200px; left:50%; z-index:10; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
+        <div id="loaderID" style="display:none;position:absolute; top:500px; left:50%; z-index:10; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
          
         <!-- Content Modal-->
         <!--<div style='position:fixed;width:100%;margin-top:-20px;height:20px;background:#FFF;z-index:2'></div>-->
         
-        <div class="container" style='margin-top:100px'>
+        <div class="container">
+                <!--
                 <div id='video_gallary' style='width:800px;height:400px;padding-left:15px;padding-right:15px;'>
                     <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered"
                         controls preload="auto" width="100%" height="100%"
@@ -273,26 +297,49 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
                         </div>
                     </li>
                 </ul>
-                <div id='top_bar'>
-                    <ul class="refine_bar" style='border:1px solid #E6E6E6;height:40px;margin-left:15px;margin-right:15px'>
-                        <li class='filter' style='margin-left:0px'><a class='filter_link active_filter' id='allproducts' href="javascript:filter('allproducts')" style='background:#FF4747;color:#FFF;border-radius:3px'>All</a></li>
-                        <li class='filter' style='margin-left:30px'><a class='filter_link' id='PowerCube' href="javascript:filter('PowerCube')">PowerCube</a></li>
-                        <li class='filter' style='margin-left:122px'><a class='filter_link' id='ReWirable' href="javascript:filter('ReWirable')">ReWirable</a></li>
-                        <li class='filter' style='margin-left:205px'><a class='filter_link' id='Remote' href="javascript:filter('Remote')">Remote</a></li>
-                        <li class='pull-right' style='height:100%'>
-                            <div class="btn-group" style='height:100%'>
-                                <button type="button" class="btn btn-default dropdown-toggle" style='border-radius:0;border-right:none;border-top:none;border-bottom:none;border-left:1px solid #E6E6E6;height:100%'
-                                        data-toggle="dropdown">
-                                        <span class="sort-value" id='sort_type'>Default Sorting</span> <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu" style="width:100%">
-                                    <li><a href="javascript:sort('default');">Default Sorting</a></li>
-                                    <li><a href="javascript:sort('priceLH');">Price: Low To High</a></li>
-                                    <li><a href="javascript:sort('priceHL');">Price: High To Low</a></li>
-                                </ul>
-                            </div>
+                -->
+            <div class="row">
+            <div class='col-sm-10 banner'>
+                <div class='col-sm-12 bannerPhoto'>
+                <img src='./public_html/img/shopHeadBG/bg.png'>    
+                </div>
+                
+                <div class='allocacocLogo'>
+                    <img src='public_html/img/allocacoc_NoText.png'><span class='logoText'>Webshop</span>
+                </div>
+                
+                <div class="col-sm-12 overlay">
+                    <ul class="overlay-nav">
+                        <li class="overlay-nav-item">
+                            <a class='overlay-text' href="#">shop</a>
+                        </li>
+                        <li class="overlay-nav-item">
+                            <a class='overlay-text' href="#"><i class="fa fa-shopping-cart fa-lg"></i> cart</a>
                         </li>
                     </ul>
+                </div>
+            </div>
+            <div class="col-sm-10 top-bar">
+                <ul class="refine_bar">
+                    <li class='filter' style='margin-left:0px'><a class='filter_link active_filter' id='allproducts' href="javascript:filter('allproducts')" style='background:rgb(0, 89, 112);color:#FFF;border-radius:3px'>All</a></li>
+                    <li class='filter' style='margin-left:30px'><a class='filter_link' id='PowerCube' href="javascript:filter('PowerCube')">PowerCube</a></li>
+                    <li class='filter' style='margin-left:122px'><a class='filter_link' id='ReWirable' href="javascript:filter('ReWirable')">ReWirable</a></li>
+                    <li class='filter' style='margin-left:205px'><a class='filter_link' id='Remote' href="javascript:filter('Remote')">Remote</a></li>
+                    <li class='pull-right' style='height:100%'>
+                        <div class="btn-group" style='height:100%'>
+                            <button type="button" class="btn btn-default dropdown-toggle" style='border-radius:0;border-right:none;border-top:none;border-bottom:none;border-left:1px solid #E6E6E6;height:100%'
+                                    data-toggle="dropdown">
+                                    <span class="sort-value" id='sort_type'>Default Sorting</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" style="width:100%">
+                                <li><a href="javascript:sort('default');">Default Sorting</a></li>
+                                <li><a href="javascript:sort('priceLH');">Price: Low To High</a></li>
+                                <li><a href="javascript:sort('priceHL');">Price: High To Low</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
             </div>
             <div class="row" style='margin-top:20px'>
                 <!-- Side panel 
@@ -345,7 +392,7 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
                     
                 </div>
                 -->
-                <div class="col-sm-12" id="main-content">
+                <div class="col-sm-10" id="main-content">
                     
                     <div class="features_items">
                     <!--<h2 class="title text-center">All Products</h2>-->
@@ -357,6 +404,20 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
                                 $price = $eachProduct["price"];
                                 $product_id = $eachProduct["product_id"];
                         ?>
+                        <div class='col-sm-6'>
+                            <div class='product-wrapper'>
+                                <div class='product-img'>
+                                    <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>">
+                                    <img src='./public_html/img/productImg/GE.png'>
+                                    </a>
+                                </div>
+                                <div class='product-summary'> 
+                                    <h5 class="product-name"><a href='./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>'><?= $product_name ?></a></h5>
+                                    <h5 class="price">$<?= number_format($price,1,'.','') ?> <span> incl.VAT</span></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <!--
                         <div class="col-sm-3">
                             <div class="product-image-wrapper">
                                 <div class="single-products">
@@ -365,19 +426,19 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
                                            <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>"><img class="product-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnProductImageLoad(event);" /></a>
                                        </div>
                                        
-                                       <!--<div  style="white-space:nowrap;overflow:hidden; text-overflow:ellipsis">-->
                                        <div style="height:45px">
                                            <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>" style="text-decoration: none;"><h5><?=$product_name ?></h5></a>
                                        </div>
-                                       <p>SGD <?= number_format($price,1,'.','') ?></p>
+                                       <p>SGD </p>
                                        
                                    </div>
                                 </div>
                             </div>
                         </div>
+                        -->
                         <?php
             
-                                }
+                            }
 
                         ?>
                     </div>
@@ -436,7 +497,7 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
             });
             event.preventDefault(); //Prevent the default submit
         });
-    };
+    }
     </script>
 
     <!-- Register -->
@@ -487,7 +548,7 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
             });
             event.preventDefault(); //Prevent the default submit
         });
-    };
+    }
     </script>
     <!-- Filter -->
     <script>
@@ -499,7 +560,7 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
             $('.filter_link').css('color','#B2B2B2');
             $('.filter_link').removeClass('active_filter');
             //highlight the clicked link background and color
-            $('#'+filter_type).css('background','#FF4747');
+            $('#'+filter_type).css('background','rgb(0, 89, 112)');
             $('#'+filter_type).css('color','#FFF');
             $('#'+filter_type).css('border-radius','3px');
             $('#'+filter_type).addClass('active_filter'); 
@@ -521,7 +582,7 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
                                 $('#main-content').show();
                             }
             });
-    };
+    }
     </script>
     <!-- Sort -->
     <script>
@@ -551,7 +612,7 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
                                 $('#main-content').show();
                             }
             });
-    };
+    }
     </script>
     <!-- display product detail modal
     <script>
@@ -662,7 +723,7 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
             });
         }
     </script>
-    <!-- change image -->
+    <!-- change image 
     <script>
         function changeVideo(source,poster){
             var video = document.getElementById('example_video_1_html5_api');
@@ -676,6 +737,6 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
             
         }
     </script>
-    <script src="//vjs.zencdn.net/4.12/video.js"></script>
+    <script src="//vjs.zencdn.net/4.12/video.js"></script>-->
     </body>
 </html>
