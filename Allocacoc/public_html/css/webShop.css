@@ -22,10 +22,10 @@ and open the template in the editor.
 }
 .allocacocLogo{
     position:absolute;
+    width: 200px;
     margin-left:30px;
     margin-top:-320px;
     z-index:1000;
-    width: 200px;
 }
 .logoText{
     position:absolute;
@@ -193,6 +193,16 @@ and open the template in the editor.
     background-color: rgb(0, 89, 112);
     color: #fff;
 }
+.cart-table td{
+    vertical-align: middle !important;
+}
+.media{
+    display: table;
+}
+.media-body{
+    display:table-cell;
+    vertical-align: middle;
+}
 /* checkbox aspect */
 .checkbox-cartItem input[type="checkbox"]{
     display:none;
@@ -228,4 +238,16 @@ and open the template in the editor.
 .checkbox-cartItem input[type="checkbox"]:checked + label:after {
   opacity: 1;
   transform: scale(1);
+}
+.cart-amount{
+    color:rgb(0, 89, 112);
+}
+.btn-remove{
+    background:none;
+    border:none;
+}
+.btn-checkOut{
+    background-color: rgb(0, 89, 112);
+    border-radius: 0;
+    color:rgb(255,255,255);
 }

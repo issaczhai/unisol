@@ -139,12 +139,61 @@ include_once("./protect.php");
                 
                 <div class="col-sm-12 overlay">
                     <ul class="overlay-nav">
-                        <li class="overlay-nav-item">
-                            <a class='overlay-text' href="#">shop</a>
+                        <li class="overlay-nav-item item-shop">
+                            <a class='overlay-text' href="./category.php"><span></span>shop</a>
                         </li>
-                        <li class="overlay-nav-item">
-                            <a class='overlay-text' href="#"><i class="fa fa-shopping-cart fa-lg"></i> cart</a>
-                        </li>
+                        <li class="cart-dropdown overlay-nav-item item-cart" >
+                            <?php
+                            if(!empty($cart_items)){
+                            ?>
+                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( <?=$cart_total_qty?> ) </span></a>
+                            <?php
+                            }else{
+                            ?>
+                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( 0 ) </span></a>
+                            <?php
+                            }
+                            ?>
+
+                                <ul role="menu" class="sub-menu">
+                            <?php
+                            if(!empty($cart_items)){
+                                for($x=0;$x<min(4,count($cart_items));$x++){
+                                    $each_cart_item = $cart_items[$x];
+                                    $each_product_id = $each_cart_item['product_id'];
+                                    $each_product_quantity = $each_cart_item['quantity'];
+                                    $each_product_name = $productMgr->getProductName($each_product_id);
+
+                            ?>
+                                     <li class="notification">
+                                        <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
+                                           <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                        </div>
+                                        <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
+                                            <br>
+                                            <span style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
+                                    </li>
+                            <?php
+                                }
+                            }else{
+                            ?>
+                                     <li class="notification">
+                                        <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
+                                    </li>
+                            <?php
+                            }
+                            ?>
+                                <li class="notification">
+                                    <div class="btn-group-justified">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default" onclick="location.href = './cart_template.php';">
+                                                    View All Items <span>(<?=$cart_total_qty ?>)</span>
+                                            </button>
+                                        </div>
+                                    </div> 
+                                </li>
+                            </ul>
+                        </li> 
                     </ul>
                 </div>
             </div>
@@ -158,8 +207,8 @@ include_once("./protect.php");
                         <thead>
                             <tr>
                                 <th> </th>
-                                <th>products</th>
-                                <th>qty</th>
+                                <th class="text-center">products</th>
+                                <th class="text-center">qty</th>
                                 <th class="text-center">price</th>
                                 <th class="text-center">subtotal</th>
                                 <th> </th>
@@ -179,6 +228,7 @@ include_once("./protect.php");
                             $each_cart_item_total = $each_cart_item_price * $each_cart_item_qty;
                             $subtotal += $each_cart_item_total;
                             $qtyid = $each_cart_item_id.'qty';
+                            $cboxid = $each_cart_item_id.'cbox';
                             $removeBtnid = $each_cart_item_id.'remove';
                             $each_cart_totalid = $each_cart_item_id.'total';
 
@@ -186,38 +236,40 @@ include_once("./protect.php");
                            <tr>
                                 <td class="col-sm-1 col-md-1 text-center">
                                     <div class="checkbox-cartItem">
-                                      <input id="checkbox" type="checkbox">
-                                      <label for="checkbox"></label>
+                                      <input id="<?= $cboxid ?>" type="checkbox">
+                                      <label for="<?= $cboxid ?>"></label>
                                     </div>
                                 </td>
-                                <td class="col-sm-8 col-md-6">
-                                <div class="media">
-                                    <div class="cartItemImg" style="width:88px;height:88px;overflow:hidden;position:relative;float:left">
-                                        <a href="javascript:getProductDetail('<?=$each_cart_item_id ?>');"> <img style="position:absolute !important;" src="./public_html/img/GE.png" onload="OnCartItemImageLoad(event)"> </a>
+                                <td class="col-sm-8 col-md-5">
+                                    <div class="media">
+                                        <div class="cartItemImg" style="width:88px;height:88px;overflow:hidden;position:relative;float:left">
+                                            <a href="javascript:getProductDetail('<?=$each_cart_item_id ?>');"> <img style="position:absolute !important;" src="./public_html/img/GE.png" onload="OnCartItemImageLoad(event)"> </a>
+                                        </div>
+                                        <div class="media-body  text-center">
+                                            
+                                            <h4 class="media-heading"><a href="#"><?=$each_cart_item_name ?></a></h4>
+                                            <?php
+                                            if($each_cart_item_stock>0){
+                                            ?>
+                                            <span>Stock: </span><span class="text-success"><strong><?=$each_cart_item_stock?></strong></span>
+                                            <?php
+                                            }else{
+                                            ?>
+                                            <span>Stock: </span><span class="text-danger"><strong>Out of Stock</strong></span>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
-                                    <div class="media-body" style="padding-left:10px">
-                                        <h4 class="media-heading"><a href="#"><?=$each_cart_item_name ?></a></h4>
-                                        <?php
-                                        if($each_cart_item_stock>0){
-                                        ?>
-                                        <span>Stock: </span><span class="text-success"><strong><?=$each_cart_item_stock?></strong></span>
-                                        <?php
-                                        }else{
-                                        ?>
-                                        <span>Stock: </span><span class="text-danger"><strong>Out of Stock</strong></span>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
-                                </div></td>
-                                <td class="col-sm-7 col-md-1" style="text-align: center">
-                                <input type="text" style='text-align: center' class="form-control" id="<?=$qtyid?>" onchange="change_qty('<?=$each_cart_item_id?>','<?=$each_cart_item_price_format ?>',this.value)" value="<?=$each_cart_item_qty ?>">
+                                </td>
+                                <td class="col-sm-7 col-md-2" style="text-align: center">
+                                    <input type="text" style='text-align: center; border-radius:0' class="form-control" id="<?=$qtyid?>" onchange="change_qty('<?=$each_cart_item_id?>','<?=$each_cart_item_price_format ?>',this.value)" value="<?=$each_cart_item_qty ?>">
                                 </td>
                                 <td class="col-sm-1 col-md-1 text-center"><strong><?=number_format($each_cart_item_price,2,'.','') ?></strong></td>
                                 <td id='<?=$each_cart_totalid ?>' class="col-sm-1 col-md-1 text-center"><strong><?=number_format($each_cart_item_total,2,'.','')?></strong></td>
                                 <td class="col-sm-1 col-md-1">
-                                <button type="button" id='<?=$removeBtnid?>' class="btn btn-danger" onclick="location.href='./process_item_remove.php?remove_item_id=<?=$each_cart_item_id?>&customer_id=<?=$userid?>'">
-                                    <span class="glyphicon glyphicon-remove"></span> Remove
+                                <button type="button" id='<?=$removeBtnid?>' class="btn btn-remove" onclick="location.href='./process_item_remove.php?remove_item_id=<?=$each_cart_item_id?>&customer_id=<?=$userid?>'">
+                                    <span class="glyphicon glyphicon-remove"></span>
                                 </button></td>
                             </tr> 
 
@@ -229,24 +281,28 @@ include_once("./protect.php");
                                 <td>   </td>
                                 <td>   </td>
                                 <td>   </td>
+                                <td>   </td>
                                 <td><h5>Subtotal</h5></td>
-                                <td class="text-right"><h5 id='subtotal'><strong><?=number_format($subtotal,2,'.','') ?></strong></h5></td>
+                                <td class="text-right"><h5 id='subtotal'><strong class="cart-amount"><?=number_format($subtotal,2,'.','') ?></strong></h5></td>
                             </tr>
                             <tr>
+                                <td>   </td>
                                 <td>   </td>
                                 <td>   </td>
                                 <td>   </td>
                                 <td><h5>Estimated shipping</h5></td>
-                                <td class="text-right"><h5 id='shipping_cost'><strong><?=number_format($shipping_fee,2,'.','') ?></strong></h5></td>
+                                <td class="text-right"><h5 id='shipping_cost'><strong class="cart-amount"><?=number_format($shipping_fee,2,'.','') ?></strong></h5></td>
                             </tr>
                             <tr>
+                                <td>   </td>
                                 <td>   </td>
                                 <td>   </td>
                                 <td>   </td>
                                 <td><h3>Total</h3></td>
-                                <td class="text-right"><h3 id='total_cost'><strong><?=number_format($total,2,'.','') ?></strong></h3></td>
+                                <td class="text-right"><h3 id='total_cost'><strong class="cart-amount"><?=number_format($total,2,'.','') ?></strong></h3></td>
                             </tr>
                             <tr>
+                                <td>   </td>
                                 <td>   </td>
                                 <td>   </td>
                                 <td>   </td>
@@ -255,8 +311,8 @@ include_once("./protect.php");
                                     <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                                 </button></td>
                                 <td>
-                                <button type="button" class="btn btn-success" onclick="location.href = './payment.php';">
-                                    Checkout <span class="glyphicon glyphicon-play"></span>
+                                <button type="button" class="btn btn-checkOut" onclick="location.href = './payment.php';">
+                                    Checkout</span>
                                 </button></td>
                             </tr>
                         </tbody>
@@ -268,7 +324,7 @@ include_once("./protect.php");
                 <h2>Your Shopping Cart is Empty.</h2>
                 <p>
                  Your Shopping Cart lives to serve. Give it purpose — fill it with our products. 
-                 Continue shopping on the <a href="./shop.php">Allocacoc.com</a>.
+                 Continue shopping on the <a href="./webShop.php">Allocacoc.com</a>.
                 </p>
                 <?php
                     }
@@ -277,10 +333,10 @@ include_once("./protect.php");
             </div>
         </div>
     </div>
-        <?php
-        $currentPage = "cart";
-        include_once("./templates/footer.php");
-        ?>
+    <?php
+    $currentPage = "cart";
+    include_once("./templates/footer.php");
+    ?>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <!-- display product detail modal-->
