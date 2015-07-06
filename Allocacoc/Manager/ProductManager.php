@@ -64,7 +64,7 @@ class ProductManager {
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $total = 0;
-        $stmt = $conn->prepare("SELECT * FROM cart WHERE customer_id=?");
+        $stmt = $conn->prepare("SELECT quantity FROM cart WHERE customer_id=?");
         $stmt->bind_param("s", $customer_id);
         $stmt->execute();
         $stmt->bind_result($quantity);

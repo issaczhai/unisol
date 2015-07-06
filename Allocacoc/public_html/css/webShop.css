@@ -25,12 +25,15 @@ and open the template in the editor.
     margin-left:30px;
     margin-top:-320px;
     z-index:1000;
+    width: 200px;
 }
 .logoText{
     position:absolute;
-    margin-left:-100px;
-    margin-top:40px;
-    color: #8F006B;
+    margin-left: 10px;
+    margin-top: 23px;
+    color: #0087A0;
+    font-family: "Century Gothic";
+    font-weight: bold;
 }
 .overlay{
     position:relative;

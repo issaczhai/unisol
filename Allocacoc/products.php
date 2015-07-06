@@ -18,16 +18,17 @@ and open the template in the editor.
 // put your code here
 ?>
 <div class='container'>
+    
     <div class='row'>
         <div class='col-sm-10 banner'>
             <div class='col-sm-12 bannerPhoto'>
             <img src='./public_html/img/shopHeadBG/bg.png'>    
             </div>
-            
+
             <div class='allocacocLogo'>
-                <img src='public_html/img/allocacoc.png'><span class='logoText'>Webshop</span>
+                <img src='public_html/img/allocacoc_NoText.png'><span class='logoText'>Webshop</span>
             </div>
-            
+
             <div class="col-sm-12 overlay">
                 <ul class="overlay-nav">
                     <li class="overlay-nav-item">
@@ -39,7 +40,6 @@ and open the template in the editor.
                 </ul>
             </div>
         </div>
-        
         <div class='col-sm-9 category'>
 
             <div class='col-sm-6'>
@@ -120,6 +120,11 @@ and open the template in the editor.
         
     </div>
 </div>
+    
+    <?php
+    $currentPage = "";
+    include_once("./templates/footer.php");
+    ?>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> 
 </body>

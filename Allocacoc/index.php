@@ -114,6 +114,7 @@ and open the template in the editor.
         </div><!-- /carousel -->
         
         <?php
+        $currentPage = "";
         include_once("./templates/footer.php");
         ?>
         

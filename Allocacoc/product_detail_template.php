@@ -25,7 +25,7 @@ and open the template in the editor.
             </div>
             
             <div class='allocacocLogo'>
-                <img src='public_html/img/allocacoc.png'><span class='logoText'>Webshop</span>
+                <img src='public_html/img/allocacoc_NoText.png'><span class='logoText'>Webshop</span>
             </div>
             
             <div class="col-sm-12 overlay">
@@ -169,6 +169,10 @@ and open the template in the editor.
         
     </div>
 </div>
+    <?php
+        $currentPage = "product";
+        include_once("./templates/footer.php");
+        ?>
 <script src="./public_html/js/jquery-1.11.0.js"></script>
 <script src="./public_html/js/bootstrap.min.js"></script> 
 <script>

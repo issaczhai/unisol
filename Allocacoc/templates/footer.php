@@ -9,8 +9,12 @@
     <div class="row" style="position:relative;margin-top:0px;background-color:#0087A0;height:40px;">
         
         <div id="path" class='col-md-5 col-md-offset-2' style="padding-top: 10px">
-            <img src="#" width="20px" height="20px"/>
-            <span>Webshop > <?php echo $currentPage ?></span>
+            <img src="#" height="20" width="20"/>
+            <?php if($currentPage !== ""){ ?>
+            <span>webshop > <?php echo $currentPage ?></span>
+            <?php }else{ ?>
+            <span>webshop</span>
+            <?php } ?>
         </div>
         <div id="redirection" class='col-md-3' style="padding-top: 10px">
             <span>Go to main site &nbsp;</span>
@@ -26,10 +30,10 @@
         <div class='col-md-8 col-md-offset-2' style="padding-top:20px;font-family: Century Gothic">
             <div class="row">
                 <div class='col-md-2'>
-                    <span><a href="#" style="color: #333">disclaimer</a></span>
+                    <span><a href="./disclaimer.php" style="color: #333">disclaimer</a></span>
                 </div>
                 <div class='col-md-3'>
-                    <span><a href="#" style="color: #333">terms & conditions</a></span>
+                    <span><a href="./termAndConditions.php" style="color: #333">terms & conditions</a></span>
                 </div>
             </div>
             

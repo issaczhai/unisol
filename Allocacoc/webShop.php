@@ -71,9 +71,11 @@ and open the template in the editor.
             }
             .logoText{
                 position:absolute;
-                margin-left:-100px;
-                margin-top:40px;
-                color: #8F006B;
+                margin-left:10px;
+                margin-top:23px;
+                color: #0087A0;
+                font-family: "Century Gothic";
+                font-weight: bold;
             }
             .overlay-carousel{
                 position:relative;
@@ -199,7 +201,7 @@ and open the template in the editor.
                             </div>
                         </div>
                         <div class='allocacocLogo'>
-                            <img src='public_html/img/allocacoc.png'><span class='logoText'>Webshop</span>
+                            <img src='public_html/img/allocacoc_NoText.png'><span class='logoText'>Webshop</span>
                         </div>
                         <div class="overlay-carousel">
                             <ul class="overlay-nav">
@@ -296,6 +298,10 @@ and open the template in the editor.
             </div>
         </div>
     </div>
+        <?php
+        $currentPage = "";
+        include_once("./templates/footer.php");
+        ?>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>    
     <script src="//vjs.zencdn.net/4.12/video.js"></script>   

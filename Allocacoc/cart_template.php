@@ -134,7 +134,7 @@ include_once("./protect.php");
                 </div>
                 
                 <div class='allocacocLogo'>
-                    <img src='public_html/img/allocacoc.png'><span class='logoText'>Webshop</span>
+                    <img src='public_html/img/allocacoc_NoText.png'><span class='logoText'>Webshop</span>
                 </div>
                 
                 <div class="col-sm-12 overlay">
@@ -277,6 +277,10 @@ include_once("./protect.php");
             </div>
         </div>
     </div>
+        <?php
+        $currentPage = "cart";
+        include_once("./templates/footer.php");
+        ?>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <!-- display product detail modal-->
