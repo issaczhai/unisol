@@ -1,0 +1,228 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 1, 2015, 11:53:34 PM
+    Author     : User
+*/
+
+.banner{
+    float:none;
+    margin:0 auto;
+    margin-bottom: 30px;
+    padding:0;
+    border-bottom:1px solid #EDEDED;
+}
+.bannerPhoto{
+    float:none;
+    position:relative;
+    padding:0;
+}
+.allocacocLogo{
+    position:absolute;
+    margin-left:30px;
+    margin-top:-320px;
+    z-index:1000;
+}
+.logoText{
+    position:absolute;
+    margin-left:-100px;
+    margin-top:40px;
+    color: #8F006B;
+}
+.overlay{
+    position:relative;
+    width:100%;
+    background-color:#fff;
+    height:50px;
+    margin-top:-50px;
+    padding:0;
+    padding-top:16.5px;
+    z-index:1000;
+}
+.overlay-nav-item{
+    display: inline;
+    margin-top:17px
+}
+.overlay-nav > li:nth-child(2){
+    margin-left:20px
+}
+.overlay-text{
+    color: #626262;
+    font-weight: 400;
+    font-size: 16px;
+}
+.category{
+    float: none;
+    margin:0 auto;
+}
+.category-thumbnail{
+    margin-bottom: 20px;
+}
+.category-wrapper{
+    text-align: center;
+    text-decoration: none;
+}
+.product-summary, .product-img{
+
+    display: inline-block;
+}
+.product-summary{
+    position: absolute;
+    top: 25%;
+    right: 10%;
+}
+.product-overview{
+    padding-top: 10px;
+    padding-left: 80px;
+    padding-bottom: 30px;
+}
+.product-overview .product-name{
+    margin-bottom: 0;
+}
+.product-detail{
+    float:none;
+    margin:0 auto;
+}
+.price-lg{
+    margin-top: 10px;
+}
+.cart-form .btn-group, .cart-form .input-group {
+    margin-bottom: 15px;
+}
+.cart-form .btn-group .dropdown-toggle{
+    height:34px !important;
+    width:20%;
+    text-align: center;
+}
+.form-wrapper div:first-child .btn{
+    border-radius: 0;
+}
+.cart-form .dropdown-menu{
+    min-width: 0;
+    border-radius: 0;
+}
+.form-wrapper{
+    width: 70%;
+}
+.form-wrapper > div:first-child{
+    width:40%;
+}
+.form-wrapper > div:first-child button{
+    background-color: rgb(219, 219, 219);
+}
+.form-wrapper div:first-child button:first-child{
+    width:80%;
+    background-color: rgb(237, 237, 237);
+}
+.form-wrapper .dropdown-menu{
+    width:100%;
+}
+.color-selection{
+    display: block;
+}
+
+.color-selection > div{
+    display: inline-block;
+}
+.color-selection > div:first-child{
+    margin-right:20px;
+}
+.color-selection .color{
+    padding:5px;
+    border:1px solid rgb(219, 219, 219);
+    margin-right: 5px;
+}
+.color-selection{
+    padding-left: 0;
+}
+.color-selection input[type="radio"]{
+    display: none;
+}
+.color-selection .color label{
+    position:relative;
+    vertical-align: middle;
+    margin-bottom: 0;
+    width:20px;
+    height:20px;
+}
+.qty-input{
+    float:none !important;
+}
+.number-spinner {
+    width:40%;
+}
+.number-spinner .input-group-btn .btn{
+    border-radius: 0 !important;
+    background-color: rgb(219, 219, 219);
+}
+.number-spinner input{    
+    border-left:none;
+}
+.number-spinner .qty-text{
+    padding-right: 30px;
+}
+.cart-button{
+    width: 40%;
+    border-radius: 18px;
+    background-color: rgb(0, 89, 112);
+    color:#fff;
+}
+.product-description{
+    float:none;
+    margin:0 auto;
+    border-top: 1px solid #EDEDED;
+    padding-top: 50px;
+}
+.single-characteristic{
+    margin-bottom: 50px;
+}
+.char-description{
+    position: relative;
+}
+.char-description p, .char-description ul, .char-description h4{
+    position: relative;
+    vertical-align: middle;
+}
+.cart-table thead{
+    background-color: rgb(0, 89, 112);
+    color: #fff;
+}
+/* checkbox aspect */
+.checkbox-cartItem input[type="checkbox"]{
+    display:none;
+}
+.checkbox-cartItem input[type="checkbox"]:not(:checked) + label:before,
+.checkbox-cartItem input[type="checkbox"]:checked + label:before {
+  content: '';
+  position:absolute;
+  width: 17px; height: 17px;
+  border: 1px solid #aaa;
+  background: #f8f8f8;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.3)
+}
+
+/* checked mark aspect */
+.checkbox-cartItem input[type="checkbox"]:not(:checked) + label:after,
+.checkbox-cartItem input[type="checkbox"]:checked + label:after {
+  content: " \2713";
+  position:absolute;
+  padding-left:3px;
+  font-size: 14px;
+  color: rgb(0, 89, 112);
+  text-align: center;
+  transition: all .2s;
+}
+/* checked mark aspect changes */
+.checkbox-cartItem input[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.checkbox-cartItem input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
