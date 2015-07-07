@@ -4,14 +4,119 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php 
+if (session_status()!=PHP_SESSION_ACTIVE) {
+        session_start();
+}
+include_once("./Manager/ConnectionManager.php");
+include_once("./Manager/ProductManager.php");
+$productMgr = new ProductManager();
+$userid = null;
+$username = null;
+
+if(isset($_SESSION["userid"]) && !empty($_SESSION["userid"])){
+    // $userid is customer email address
+    $userid = $_SESSION["userid"];
+    $pos = strpos($userid, "@");
+    // $username is displayed in the header
+    $username = substr($userid, 0, $pos);
+    $cart_items = $productMgr->retrieveFromShoppingCart($userid);
+    $cart_total_qty = $productMgr->retrieveTotalNumberOfItemsInShoppingCart($userid);
+}
+
+$selected_product_id = addslashes(filter_input(INPUT_GET, 'selected_product_id'));
+
+$productMgr = new ProductManager();
+$product_selected = $productMgr->getProduct($selected_product_id);
+$selected_product_name = $product_selected['product_name'];
+$selected_product_description = $product_selected['description'];
+$selected_product_price = $product_selected['price'];
+$selected_product_stock = $product_selected['stock'];  
+$selected_product_qty_id = $selected_product_id.'qty';
+$selected_qty_msg_id = $selected_product_id.'msg';
+$selected_add_btn_id = $selected_product_id.'btn';
+//if the customer is not logged in, the default quantity of product in the cart is 0
+$selected_product_in_cart = 0;
+//if customer is logged in, check if the product is in the cart
+if(!empty($userid)){
+    
+    $selected_product_in_cart = $productMgr->retrieveItemQtyInShoppingCart($userid, $selected_product_id);
+    
+}
+
+
+?>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./public_html/css/bootstrap.min.css">
     <link rel="stylesheet" href="./public_html/font-awesome-4.1.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./public_html/css/main.css">
     <link rel="stylesheet" href="./public_html/css/webShop.css">
+
+    <script>
+    function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
+
+        var result = { width: 0, height: 0, fScaleToTargetWidth: true };
+
+        if ((srcwidth <= 0) || (srcheight <= 0) || (targetwidth <= 0) || (targetheight <= 0)) {
+            return result;
+        }
+
+        // scale to the target width
+        var scaleX1 = targetwidth;
+        var scaleY1 = (srcheight * targetwidth) / srcwidth;
+
+        // scale to the target height
+        var scaleX2 = (srcwidth * targetheight) / srcheight;
+        var scaleY2 = targetheight;
+
+        // now figure out which one we should use
+        var fScaleOnWidth = (scaleX2 > targetwidth);
+        if (fScaleOnWidth) {
+            fScaleOnWidth = fLetterBox;
+        }
+        else {
+           fScaleOnWidth = !fLetterBox;
+        }
+
+        if (fScaleOnWidth===true) {
+            result.width = Math.floor(scaleX1);
+            result.height = Math.floor(scaleY1);
+            result.fScaleToTargetWidth = true;
+        }
+        else {
+            result.width = Math.floor(scaleX2);
+            result.height = Math.floor(scaleY2);
+            result.fScaleToTargetWidth = false;
+        }
+        result.targetleft = Math.floor((targetwidth - result.width) / 2);
+        result.targettop = Math.floor((targetheight - result.height) / 2);
+
+        return result;
+    }
+
+    function OnCartImageLoad(evt) {
+        var img = evt.currentTarget;
+
+        // what's the size of this image and it's parent
+        var w = img.naturalWidth;
+        var h = img.naturalHeight;
+        var tw = $(".cartImg").width();
+        var th = $(".cartImg").height();
+
+        // compute the new size and offsets
+        var result = ScaleImage(w, h, tw, th, true);
+
+        // adjust the image coordinates and size
+        $(img).width(result.width);
+        $(img).height(result.height);
+        $(img).css("left", result.targetleft);
+        $(img).css("top", result.targettop);
+    }
+    </script>
     <meta charset="UTF-8">
-    <title></title>
+    <title><?= $selected_product_name ?></title>
 </head>
 <body>
 <?php
@@ -30,26 +135,77 @@ and open the template in the editor.
             
             <div class="col-sm-12 overlay">
                 <ul class="overlay-nav">
-                    <li class="overlay-nav-item">
-                        <a class='overlay-text' href="#">shop</a>
+                    <li class="overlay-nav-item item-shop">
+                                <a class='overlay-text' href="./shop.php"><span></span>shop</a>
                     </li>
-                    <li class="overlay-nav-item">
-                        <a class='overlay-text' href="#"><i class="fa fa-shopping-cart fa-lg"></i> cart</a>
-                    </li>
+                    <li class="cart-dropdown overlay-nav-item item-cart" >
+                        <?php
+                        if(!empty($cart_items)){
+                        ?>
+                        <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( <?=$cart_total_qty?> ) </span></a>
+                        <?php
+                        }else{
+                        ?>
+                        <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( 0 ) </span></a>
+                        <?php
+                        }
+                        ?>
+
+                            <ul role="menu" class="sub-menu">
+                        <?php
+                        if(!empty($cart_items)){
+                            for($x=0;$x<min(4,count($cart_items));$x++){
+                                $each_cart_item = $cart_items[$x];
+                                $each_product_id = $each_cart_item['product_id'];
+                                $each_product_quantity = $each_cart_item['quantity'];
+                                $each_product_name = $productMgr->getProductName($each_product_id);
+
+                        ?>
+                                 <li class="notification">
+                                    <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
+                                       <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                    </div>
+                                    <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
+                                        <br>
+                                        <span style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
+                                </li>
+                        <?php
+                            }
+                        }else{
+                        ?>
+                                 <li class="notification">
+                                    <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
+                                </li>
+                        <?php
+                        }
+                        ?>
+                            <li class="notification">
+                                <div class="btn-group-justified">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
+                                                View All Items <span>(<?=$cart_total_qty ?>)</span>
+                                        </button>
+                                    </div>
+                                </div> 
+                            </li>
+                        </ul>
+                    </li> 
                 </ul>
             </div>
         </div>
-
+    </div>
+    
+    <div class="row">
         <div class="col-sm-10 product-detail">
             <div class="col-sm-4 img-detail">
                 <img src='./public_html/img/detailImg/typeG_Extended_S.jpg'>
             </div>
 
             <div class="col-sm-8 product-overview">
-                <h2 class="product-name">PowerCube |Original|</h2>
+                <h2 class="product-name"><?= $selected_product_name ?></h2>
                 <span>multiply your socket</span>
-                <h3 class="price-lg">$19.9 <span> incl.VAT</span></h3>
-                <form class="cart-form">
+                <h3 class="price-lg"><?= number_format($selected_product_price,1,'.','') ?><span> incl.VAT</span></h3>
+               <!-- <form class="cart-form"> -->
                     <div class="form-wrapper">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default">
@@ -93,22 +249,33 @@ and open the template in the editor.
                                </div>
                                 
                         </div>
-                        <div class="input-group number-spinner" style="">
-                            <span class="qty-text">qty  </span>
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" data-dir="dwn" data-stock=''><span class="glyphicon glyphicon-minus"></span></button>
-                            </span>
-                            <input id='' type="text"  data-id='' data-stock='' class="form-control text-center qty-input" value="1">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" data-dir="up" data-stock=''><span class="glyphicon glyphicon-plus"></span></button>
-                            </span>
+                        <?php 
+                            if($selected_product_in_cart == 0){
+                        ?>
+                            <div class="input-group number-spinner">
+                                <span class="qty-text">qty  </span>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" data-dir="dwn" data-stock=''><span class="glyphicon glyphicon-minus"></span></button>
+                                </span>
+                                <input id='<?=$selected_product_qty_id ?>' type="text"  data-id='<?=$selected_qty_msg_id ?>' data-stock='<?=$selected_product_stock ?>' class="form-control text-center qty-input" value="1">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" data-dir="up" data-stock='<?=$selected_product_stock ?>'><span class="glyphicon glyphicon-plus"></span></button>
+                                </span>
 
-                        </div>
+                            </div>
 
-                        <button class="btn btn-default cart-button"> add to cart </button>
+                            <button id='<?=$selected_add_btn_id ?>' class="btn btn-default cart-button" onclick="addToCart('<?=$selected_product_id ?>')"> add to cart </button>
+                        <?php
+                            }else{
+                        ?>
+                            <button class="btn btn-default cart-button" onclick="javascript:window.location='./cart.php';"> <span>proceed to checkout</span> </button>
+                        <?php
+                            }
+                        ?>
+                        
 
                     </div>
-                </form>
+              <!--  </form> -->
             </div>
 
         </div>
@@ -123,7 +290,7 @@ and open the template in the editor.
 
                 <div class="col-sm-10 char-description">
                 <p>
-                    Often we will find ourselves short of power sockets at home to supply power to all the appliances that we want to use at the same time. Either because they are blocked by bulky plugs and cannot be used anymore, or there are just a few near us. Using regular extension cords to multiply sockets, often deals with long unnecessary cords.
+                    <?= $selected_product_description ?>
                 </p>
                 </div>
             </div>
@@ -134,7 +301,7 @@ and open the template in the editor.
                 </div>
 
                 <div class="col-sm-10 char-description">
-                    <h4>PowerCube |Original|</h4>
+                    <h4><?= $selected_product_name ?></h4>
                 </div>
             </div>
 
@@ -169,41 +336,42 @@ and open the template in the editor.
         
     </div>
 </div>
-    <?php
-        $currentPage = "product";
-        include_once("./templates/footer.php");
-        ?>
+<?php
+$currentPage = "product";
+include_once("./templates/footer.php");
+?>
 <script src="./public_html/js/jquery-1.11.0.js"></script>
 <script src="./public_html/js/bootstrap.min.js"></script> 
+<script src="./public_html/js/allocacoc.js"></script>
 <script>
-        $(document).on('click', '.number-spinner button', function () {    
-            console.log($(this).attr('data-stock'));
-            
-            var oldValue = $(this).closest('.number-spinner').find('input').val();
-            var newVal = 0;
-            var stock = $(this).attr('data-stock');
-            if ($(this).attr('data-dir') === 'up') {
-                if(parseInt(oldValue)<stock){
-                    newVal = parseInt(oldValue) + 1;
-                }else{
-                    //$(this).addClass('disabled');
-                    newVal = stock;
-                }
-            } else {
-                    console.log('down');
-                    if (oldValue > 1) {
-                            newVal = parseInt(oldValue) - 1;
-                    } else {
-                            newVal = 1;
-                    }
-            }
-            console.log(newVal);
-            $('.number-spinner').find('input').val(newVal);
-        });
-
-        function changeImg(source){
-            document.getElementById('display_img').src = source;
+$(document).on('click', '.number-spinner button', function () {    
+    console.log($(this).attr('data-stock'));
+    
+    var oldValue = $(this).closest('.number-spinner').find('input').val();
+    var newVal = 0;
+    var stock = $(this).attr('data-stock');
+    if ($(this).attr('data-dir') === 'up') {
+        if(parseInt(oldValue)<stock){
+            newVal = parseInt(oldValue) + 1;
+        }else{
+            //$(this).addClass('disabled');
+            newVal = stock;
         }
-    </script>
+    } else {
+            console.log('down');
+            if (oldValue > 1) {
+                    newVal = parseInt(oldValue) - 1;
+            } else {
+                    newVal = 1;
+            }
+    }
+    console.log(newVal);
+    $('.number-spinner').find('input').val(newVal);
+});
+
+function changeImg(source){
+    document.getElementById('display_img').src = source;
+}
+</script>
 </body>
 </html>

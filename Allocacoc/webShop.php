@@ -31,6 +31,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="./public_html/css/main.css">
+        <link rel="stylesheet" href="./public_html/css/webShop.css">
         <link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
         <style>
             body{
@@ -206,7 +207,7 @@ and open the template in the editor.
                         <div class="overlay-carousel">
                             <ul class="overlay-nav">
                                 <li class="overlay-nav-item item-shop">
-                                    <a class='overlay-text' href="./category.php"><span></span>shop</a>
+                                    <a class='overlay-text' href="./shop.php"><span></span>shop</a>
                                 </li>
                                 <li class="cart-dropdown overlay-nav-item item-cart" >
                                     <?php
@@ -252,7 +253,7 @@ and open the template in the editor.
                                         <li class="notification">
                                             <div class="btn-group-justified">
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-default" onclick="location.href = './cart_template.php';">
+                                                    <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
                                                             View All Items <span>(<?=$cart_total_qty ?>)</span>
                                                     </button>
                                                 </div>
@@ -298,13 +299,15 @@ and open the template in the editor.
             </div>
         </div>
     </div>
-        <?php
-        $currentPage = "";
-        include_once("./templates/footer.php");
-        ?>
+    <?php
+    $currentPage = "";
+    include_once("./templates/footer.php");
+    ?>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>    
     <script src="//vjs.zencdn.net/4.12/video.js"></script>   
+    <script src="./public_html/js/main.js"></script>
+    <script src="./public_html/js/allocacoc.js"></script>
     <!-- Carousel -->
     <script>
     jQuery(document).ready(function($) {

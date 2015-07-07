@@ -22,268 +22,18 @@ and open the template in the editor.
             .carousel,.item,.active{height:100%;}
             .carousel-inner{height:100%;}
             //transparent header and bring it z-index up to make full screen carousel, style only for home page
-            .navbar{opacity: 0.4;z-index: 16;}
+           #myNavbar{ background-color: transparent;
+                    background: rgba(248, 248, 248,0.8);
+                    border: none;
+                    z-index: 100;
+                    margin-bottom: 0;
+                    border-radius: 0;
+           }
+           .badge{
+               background-color:#AEAEAE;
+           }
         </style>
-        
-        <!-- Latest compiled and minified JavaScript -->
-        
-        <meta charset="UTF-8">
-        <title>Allocacoc</title>
-    </head>
-<body>
-        
-    <?php
-    include_once("./Manager/ConnectionManager.php");
-    include_once("./templates/header.php");
-    include_once("./templates/modal.php");
-    ?>
-    
-	<!--<div id="loaderID" style="display:none;position:absolute; top:50%; left:53%; z-index:10; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
-        <div class="modal" id="product_detail_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content" id="product_detail_modal_content" style="width:800px">
-                
-            </div>
-            </div>
-        </div>-->
-    	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                <!-- Overlay 
-                <div class="overlay"></div>-->
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-                </ol>
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <img src="./public_html/img/sfeer_Extended_USB.jpg" alt="First slide">
-                        <div class="hero">
-                            <hgroup>
-                                <h1>Extended</h1>        
-                                <h3>Get start your next awesome project</h3>
-                            </hgroup>
-                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
-                        </div>
-            <!-- Static Header -->
-
-                    </div>
-                    <div class="item">
-                        <img src="./public_html/img/sfeer_Extended.jpg" alt="Second slide">
-                        <div class="hero">
-                            <hgroup>
-                                <h1>Extended USB</h1>        
-                                <h3>Get start your next awesome project</h3>
-                            </hgroup>
-                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
-                        </div>
-
-                    </div>
-                    <div class="item">
-                        <img src="./public_html/img/sfeer_ReWirable.jpg" alt="Third slide">
-                        <div class="hero">
-                            <hgroup>
-                                <h1>ReWirable</h1>        
-                                <h3>Get start your next awesome project</h3>
-                            </hgroup>
-                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
-                        </div>
-
-                    </div>
-                    <div class="item">
-                        <img src="./public_html/img/sfeer_ReWirable_USB.jpg" alt="Forth slide">
-                        <div class="hero">
-                            <hgroup>
-                                <h1>ReWirable USB</h1>        
-                                <h3>Get start your next awesome project</h3>
-                            </hgroup>
-                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
-                        </div>
-
-                    </div>
-                </div>
-                <!-- Controls
-                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-                </a> -->
-        </div><!-- /carousel -->
-        
-        <?php
-        $currentPage = "";
-        include_once("./templates/footer.php");
-        ?>
-        
-<!-- Scripts -->        
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<!-- Login -->
-<script>
-    function login() {
-    $('#errorMsgRegister').html("");
-    $('#login').submit(function(event) { //Trigger on form submit
-        
-        //Validate fields if required using jQuery
-        var postForm = { //Fetch form data
-            'userid'     : $('#userid').val(), //Store userid fields value
-            'pwdInput'   : $('#passwordinput').val(), //Store userid fields value
-            'status'     : '',
-            'message'    : ''
-        };
-        
-        $.ajax({ //Process the form using $.ajax()
-            type      : 'POST', //Method type
-            url       : './process_login.php', //Your form processing file URL
-            data      : postForm, //Forms name
-            success   : function(data) {
-                            var pos = data.indexOf("{");
-                            var dataValid = data.substring(pos);
-                            var jsonData = eval("("+dataValid+")");
-                            console.log(jsonData.exceed);
-                            if (!jsonData.success) { 
-                                    //If fails
-                                    $('#errorMsg').html(jsonData.errors); 
-                                    
-                            }else{
-                                var status = jsonData.status;
-                                var message = jsonData.message;
-                                var exceed = jsonData.exceed;
-                                if (typeof status === 'undefined'){
-                                    status = '';
-                                }
-                                if (typeof message === 'undefined'){
-                                    message = '';
-                                }
-                                if (typeof exceed === 'undefined'){
-                                    exceed = '';
-                                }
-                                if(status !== ''){
-                                    window.location='./index.php?status='+status+'&message='+message+'&exceed='+exceed;
-                                }else{
-                                    window.location='./index.php?exceed='+exceed;
-                                }
-                            }
-                        }
-        });
-        event.preventDefault(); //Prevent the default submit
-    });
-};
-</script>
-
-<!-- Register -->
-<script>
-    function register() {
-        
-    $('#errorMsgRegister').html("");
-    $('#register').submit(function(event) { //Trigger on form submit
-        
-        //Validate fields if required using jQuery
-        var postForm = { //Fetch form data
-            'email'     : $('#email').val(), //Store userid fields value
-            'pwd'   : $('#password').val(), //Store password fields value
-            'pwdConfirm'   : $('#reenterpassword').val(),//Store password confirm fields value
-            'status'       : '',
-            'message'      : ''
-        };
-        
-        $.ajax({ //Process the form using $.ajax()
-            type      : 'POST', //Method type
-            url       : './process_register.php', //Your form processing file URL
-            data      : postForm, //Forms name
-            success   : function(data) {
-                            
-                            var pos = data.indexOf("{");
-                            var dataValid = data.substring(pos);
-                            var jsonData = eval("("+dataValid+")");
-                            if (!jsonData.success) { 
-                                    //If fails
-                                    $('#errorMsgRegister').html(jsonData.errors); 
-                                    
-                            }else{
-                                var status = jsonData.status;
-                                var message = jsonData.message;
-                                if (typeof status === 'undefined'){
-                                    status = '';
-                                }
-                                if (typeof message === 'undefined'){
-                                    message = '';
-                                }
-                                if(status !== ''){
-                                    window.location='./index.php?status='+status+'&message='+message;
-                                }else{
-                                    window.location='./index.php';
-                                }
-                            }
-                        }
-        });
-        event.preventDefault(); //Prevent the default submit
-    });
-};
-</script>
-<!-- display product detail modal
-<script>
-    function getProductDetail(product_id){
-        $('#product_detail_modal_content').hide();
-        $('#product_detail_modal').modal('show');
-        $('#loaderID').show();
-        var customer_id = '';
-        if(customer_id===null){
-            customer_id = '';
-        }
-        var selected_product_id = 'selected_product_id=' + product_id + '&customer_id=' + customer_id;
-
-        //event.preventDefault();
-        $.ajax({ //Process the form using $.ajax()
-            type      : 'POST', //Method type
-            url       : './process_product_detail.php', //Your form processing file URL
-            data      : selected_product_id,
-            cache     : false,
-            success   : function(html) {
-                            $('#loaderID').hide();
-                            $('#product_detail_modal_content').html(html);
-                            $('#product_detail_modal_content').show();
-                        }
-        });
-    }
-</script>
--->
-<!-- add to shopping cart-->
-<script>
-    function addToCart(product_id){
-        var qty_id = '#' + product_id + 'qty';
-        var qty = $(qty_id).val();
-        var product_to_add = 'selected_product_id=' + product_id + '&qty=' + qty;
-        $('#product_detail_modal').modal('hide');
-        //event.preventDefault();
-        $.ajax({ //Process the form using $.ajax()
-            type      : 'POST', //Method type
-            url       : './process_add_to_cart.php', //Your form processing file URL
-            data      : product_to_add,
-            cache     : false,
-            success   : function(data) {
-                            var pos = data.indexOf("{");
-                            var dataValid = data.substring(pos);
-                            var jsonData = eval("("+dataValid+")");
-                            var cart_qty = jsonData.cart_qty;
-                            //var add_product_id = jsonData.add_item_id;
-
-                            if(jsonData.error_not_logged_in){
-                                $('#sign_in_modal').modal('show');
-                                $('#login_modal_content').show();
-                            }else{
-                                $('.badge').text(cart_qty);
-                                $('.badge').css("color","#FF0000"); 
-
-                            }
-                        }
-        });
-    }
-</script>
-<script>
+        <script>
         function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
 
             var result = { width: 0, height: 0, fScaleToTargetWidth: true };
@@ -387,5 +137,139 @@ and open the template in the editor.
             $(img).css("top", result.targettop);
         }
         </script>
-</body>
-</html>
+        <!-- Latest compiled and minified JavaScript -->
+        
+        <meta charset="UTF-8">
+        <title>Allocacoc</title>
+    </head>
+<body>
+    <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '387511714775185',
+            xfbml      : true,
+            version    : 'v2.3'
+          });
+        };
+
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "//connect.facebook.net/en_US/sdk.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+    </script>    
+    <?php
+    include_once("./templates/header.php");
+    include_once("./templates/modal.php");
+    ?>
+    
+	<!--<div id="loaderID" style="display:none;position:absolute; top:50%; left:53%; z-index:10; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
+        <div class="modal" id="product_detail_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content" id="product_detail_modal_content" style="width:800px">
+                
+            </div>
+            </div>
+        </div>-->
+    	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Overlay 
+                <div class="overlay"></div>-->
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="./public_html/img/sfeer_Extended_USB.jpg" alt="First slide">
+                        <div class="hero">
+                            <hgroup>
+                                <h1>Extended</h1>        
+                                <h3>Get start your next awesome project</h3>
+                            </hgroup>
+                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
+                        </div>
+            <!-- Static Header -->
+
+                    </div>
+                    <div class="item">
+                        <img src="./public_html/img/sfeer_Extended.jpg" alt="Second slide">
+                        <div class="hero">
+                            <hgroup>
+                                <h1>Extended USB</h1>        
+                                <h3>Get start your next awesome project</h3>
+                            </hgroup>
+                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <img src="./public_html/img/sfeer_ReWirable.jpg" alt="Third slide">
+                        <div class="hero">
+                            <hgroup>
+                                <h1>ReWirable</h1>        
+                                <h3>Get start your next awesome project</h3>
+                            </hgroup>
+                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <img src="./public_html/img/sfeer_ReWirable_USB.jpg" alt="Forth slide">
+                        <div class="hero">
+                            <hgroup>
+                                <h1>ReWirable USB</h1>        
+                                <h3>Get start your next awesome project</h3>
+                            </hgroup>
+                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Controls
+                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                </a> -->
+        </div><!-- /carousel -->
+        
+<!-- Scripts -->        
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="./public_html/js/main.js"></script>
+<script src="./public_html/js/allocacoc.js"></script>
+<!-- display product detail modal
+<script>
+    function getProductDetail(product_id){
+        $('#product_detail_modal_content').hide();
+        $('#product_detail_modal').modal('show');
+        $('#loaderID').show();
+        var customer_id = '';
+        if(customer_id===null){
+            customer_id = '';
+        }
+        var selected_product_id = 'selected_product_id=' + product_id + '&customer_id=' + customer_id;
+
+        //event.preventDefault();
+        $.ajax({ //Process the form using $.ajax()
+            type      : 'POST', //Method type
+            url       : './process_product_detail.php', //Your form processing file URL
+            data      : selected_product_id,
+            cache     : false,
+            success   : function(html) {
+                            $('#loaderID').hide();
+                            $('#product_detail_modal_content').html(html);
+                            $('#product_detail_modal_content').show();
+                        }
+        });
+    }
+</script>
+-->
+    

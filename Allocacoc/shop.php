@@ -310,12 +310,61 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
                 
                 <div class="col-sm-12 overlay">
                     <ul class="overlay-nav">
-                        <li class="overlay-nav-item">
-                            <a class='overlay-text' href="#">shop</a>
+                        <li class="overlay-nav-item item-shop">
+                                    <a class='overlay-text' href="./shop.php"><span></span>shop</a>
                         </li>
-                        <li class="overlay-nav-item">
-                            <a class='overlay-text' href="#"><i class="fa fa-shopping-cart fa-lg"></i> cart</a>
-                        </li>
+                        <li class="cart-dropdown overlay-nav-item item-cart" >
+                            <?php
+                            if(!empty($cart_items)){
+                            ?>
+                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( <?=$cart_total_qty?> ) </span></a>
+                            <?php
+                            }else{
+                            ?>
+                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( 0 ) </span></a>
+                            <?php
+                            }
+                            ?>
+
+                                <ul role="menu" class="sub-menu">
+                            <?php
+                            if(!empty($cart_items)){
+                                for($x=0;$x<min(4,count($cart_items));$x++){
+                                    $each_cart_item = $cart_items[$x];
+                                    $each_product_id = $each_cart_item['product_id'];
+                                    $each_product_quantity = $each_cart_item['quantity'];
+                                    $each_product_name = $productMgr->getProductName($each_product_id);
+
+                            ?>
+                                     <li class="notification">
+                                        <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
+                                           <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                        </div>
+                                        <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
+                                            <br>
+                                            <span style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
+                                    </li>
+                            <?php
+                                }
+                            }else{
+                            ?>
+                                     <li class="notification">
+                                        <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
+                                    </li>
+                            <?php
+                            }
+                            ?>
+                                <li class="notification">
+                                    <div class="btn-group-justified">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
+                                                    View All Items <span>(<?=$cart_total_qty ?>)</span>
+                                            </button>
+                                        </div>
+                                    </div> 
+                                </li>
+                            </ul>
+                        </li> 
                     </ul>
                 </div>
             </div>
@@ -451,105 +500,8 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
     <!-- Scripts -->        
     
     <script src="./public_html/js/main.js"></script>
-    <!-- Login -->
-    <script>
-        function login() {
-        $('#errorMsgRegister').html("");
-        $('#login').submit(function(event) { //Trigger on form submit
-
-            //Validate fields if required using jQuery
-            var postForm = { //Fetch form data
-                'userid'     : $('#userid').val(), //Store userid fields value
-                'pwdInput'   : $('#passwordinput').val(), //Store userid fields value
-                'status'     : '',
-                'message'    : ''
-            };
-
-            $.ajax({ //Process the form using $.ajax()
-                type      : 'POST', //Method type
-                url       : './process_login.php', //Your form processing file URL
-                data      : postForm, //Forms name
-                success   : function(data) {
-                                console.log(data);
-                                var pos = data.indexOf("{");
-                                var dataValid = data.substring(pos);
-                                var jsonData = eval("("+dataValid+")");
-                                if (!jsonData.success) { 
-                                        //If fails
-                                        $('#errorMsg').html(jsonData.errors); 
-
-                                }else{
-                                    var status = jsonData.status;
-                                    var message = jsonData.message;
-                                    if (typeof status === 'undefined'){
-                                        status = '';
-                                    }
-                                    if (typeof message === 'undefined'){
-                                        message = '';
-                                    }
-                                    if(status !== ''){
-                                        window.location='./shop.php?status='+status+'&message='+message;
-                                    }else{
-                                        window.location='./shop.php';
-                                    }
-                                }
-                            }
-            });
-            event.preventDefault(); //Prevent the default submit
-        });
-    }
-    </script>
-
-    <!-- Register -->
-    <script>
-        function register() {
-
-        $('#errorMsgRegister').html("");
-        $('#register').submit(function(event) { //Trigger on form submit
-
-            //Validate fields if required using jQuery
-            var postForm = { //Fetch form data
-                'email'     : $('#email').val(), //Store userid fields value
-                'pwd'   : $('#password').val(), //Store password fields value
-                'pwdConfirm'   : $('#reenterpassword').val(),//Store password confirm fields value
-                'status'       : '',
-                'message'      : ''
-            };
-
-            $.ajax({ //Process the form using $.ajax()
-                type      : 'POST', //Method type
-                url       : './process_register.php', //Your form processing file URL
-                data      : postForm, //Forms name
-                success   : function(data) {
-
-                                var pos = data.indexOf("{");
-                                var dataValid = data.substring(pos);
-                                var jsonData = eval("("+dataValid+")");
-                                if (!jsonData.success) { 
-                                        //If fails
-                                        $('#errorMsgRegister').html(jsonData.errors); 
-
-                                }else{
-                                    var status = jsonData.status;
-                                    var message = jsonData.message;
-                                    if (typeof status === 'undefined'){
-                                        status = '';
-                                    }
-                                    if (typeof message === 'undefined'){
-                                        message = '';
-                                    }
-                                    if(status !== ''){
-                                        window.location='./shop.php?status='+status+'&message='+message;
-                                    }else{
-                                        window.location='./shop.php';
-                                    }
-                                }
-                            }
-            });
-            event.preventDefault(); //Prevent the default submit
-        });
-    }
-    </script>
+    <script src="./public_html/js/allocacoc.js"></script>
+    
     <!-- Filter -->
     <script>
         function filter(filter_type) {
@@ -641,88 +593,7 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
         }
     </script>
     -->
-    <script>
-        $(document).on('click', '.number-spinner button', function () {    
-            console.log($(this).attr('data-stock'));
-            
-            var oldValue = $(this).closest('.number-spinner').find('input').val();
-            var newVal = 0;
-            var stock = $(this).attr('data-stock');
-            if ($(this).attr('data-dir') === 'up') {
-                if(parseInt(oldValue)<stock){
-                    newVal = parseInt(oldValue) + 1;
-                }else{
-                    //$(this).addClass('disabled');
-                    newVal = stock;
-                }
-            } else {
-                    console.log('down');
-                    if (oldValue > 1) {
-                            newVal = parseInt(oldValue) - 1;
-                    } else {
-                            newVal = 1;
-                    }
-            }
-            console.log(newVal);
-            $('.number-spinner').find('input').val(newVal);
-        });
-    </script>
-<!-- remind msg for quantity exceed stock-->
-    <script>
-        $(document).on('keyup', '.number-spinner input', function () {    
-            
-            var value = $(this).val();
-            var stock = $(this).attr('data-stock');
-            var id_get = $(this).attr('data-id');
-            var product_id = id_get.substr(0,id_get.length-3);
-            var add_btn_id = '#' + product_id + 'btn';
-            var id = '#' + id_get;
-            if(value){
-                if(parseInt(value)<stock){
-                    $(id).css("visibility","hidden");
-                    $(add_btn_id).removeClass('disabled');
-                }else{
-                    $(id).css("visibility","visiale");
-                    $(add_btn_id).addClass('disabled');
-                }
-            }else{
-                $(add_btn_id).addClass('disabled');
-            }
-        });
-    </script>
-    <!-- add to shopping cart-->
-    <script>
-        function addToCart(product_id){
-            var qty_id = '#' + product_id + 'qty';
-            var qty = $(qty_id).val();
-            var product_to_add = 'selected_product_id=' + product_id + '&qty=' + qty;
-            $('#product_detail_modal').modal('hide');
-            //event.preventDefault();
-            $.ajax({ //Process the form using $.ajax()
-                type      : 'POST', //Method type
-                url       : './process_add_to_cart.php', //Your form processing file URL
-                data      : product_to_add,
-                cache     : false,
-                success   : function(data) {
-                                var pos = data.indexOf("{");
-                                var dataValid = data.substring(pos);
-                                var jsonData = eval("("+dataValid+")");
-                                var cart_qty = jsonData.cart_qty;
-                                //var add_product_id = jsonData.add_item_id;
-                                
-                                if(jsonData.error_not_logged_in){
-                                    $('#sign_in_modal').modal('show');
-                                    $('#login_modal_content').show();
-                                }else{
-                                    
-                                    $('.badge').text(cart_qty);
-                                    $('.badge').css("color","#FF0000"); 
-                                    
-                                }
-                            }
-            });
-        }
-    </script>
+    
     <!-- change image 
     <script>
         function changeVideo(source,poster){

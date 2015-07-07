@@ -79,7 +79,7 @@ class ProductManager {
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $productQty = 0;
-        $stmt = $conn->prepare("SELECT * FROM cart WHERE customer_id=? AND product_id=?");
+        $stmt = $conn->prepare("SELECT count(*) FROM cart WHERE customer_id=? AND product_id=?");
         $stmt->bind_param("ss", $customer_id,$product_id);
         $stmt->execute();
         $stmt->bind_result($quantity);

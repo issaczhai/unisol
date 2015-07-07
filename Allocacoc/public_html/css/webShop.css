@@ -92,10 +92,10 @@ and open the template in the editor.
 .price-lg{
     margin-top: 10px;
 }
-.cart-form .btn-group, .cart-form .input-group {
-    margin-bottom: 15px;
+.form-wrapper .btn-group, .cart-form .input-group, .number-spinner {
+    margin-bottom: 20px;
 }
-.cart-form .btn-group .dropdown-toggle{
+.form-wrapper .btn-group .dropdown-toggle{
     height:34px !important;
     width:20%;
     text-align: center;
@@ -184,9 +184,11 @@ and open the template in the editor.
 }
 .char-description{
     position: relative;
+    display: table;
 }
 .char-description p, .char-description ul, .char-description h4{
     position: relative;
+    display: table-cell;
     vertical-align: middle;
 }
 .cart-table thead{

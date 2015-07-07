@@ -140,7 +140,7 @@ include_once("./protect.php");
                 <div class="col-sm-12 overlay">
                     <ul class="overlay-nav">
                         <li class="overlay-nav-item item-shop">
-                            <a class='overlay-text' href="./category.php"><span></span>shop</a>
+                            <a class='overlay-text' href="./shop.php"><span></span>shop</a>
                         </li>
                         <li class="cart-dropdown overlay-nav-item item-cart" >
                             <?php
@@ -339,6 +339,9 @@ include_once("./protect.php");
     ?>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="./public_html/js/main.js"></script>
+    <script src="./public_html/js/allocacoc.js"></script>
+
         <!-- display product detail modal-->
     <script>
         function getProductDetail(product_id){
