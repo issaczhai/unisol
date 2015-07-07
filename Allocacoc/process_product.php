@@ -14,7 +14,7 @@ $photoMgr = new PhotoManager();
  * and open the template in the editor.
  */
 $operation = filter_input(INPUT_POST,'operation');
-echo $operation;
+//echo $operation;
 
 if ($operation === "add_product"){
     $valid=true;
@@ -44,8 +44,8 @@ if ($operation === "add_product"){
     }else{
         $valid = false;
     }
-    $photo_name_arr = ['1_photo_input','2_photo_input','3_photo_input','4_photo_input','5_photo_input'];
-    $imgURL_1=$imgURL_2=$imgURL_3=$imgURL_4=$imgURL_5="";
+    $photo_name_arr = ['1_photo_input','2_photo_input'];
+    $imgURL_1=$imgURL_2="";
     foreach ($photo_name_arr as $photo_name){
         $picname = $_FILES[$photo_name]['name']; 
         $picsize = $_FILES[$photo_name]['size'];
@@ -60,36 +60,24 @@ if ($operation === "add_product"){
                 exit; 
             }
             $rand = rand(10000, 99999); 
-            $pics = date("YmdHis") . $rand . $type;
-
-            $pic_path = "image/". $pics;
-            move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
-            
+            $pics = $picname . date("YmdHis") . $rand . $type;
             switch ($photo_name) {
                 case "1_photo_input":
+                    $pic_path = "public_html/img/productImg/". $pics;
+                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
                     $imgURL_1 = $pic_path;
                     break;
                 case "2_photo_input":
+                    $pic_path = "public_html/img/detailImg/". $pics;
+                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
                     $imgURL_2 = $pic_path;
-                    break;
-                case "3_photo_input":
-                    $imgURL_3 = $pic_path;
-                    break;
-                case "4_photo_input":
-                    $imgURL_4 = $pic_path;
-                    break;
-                case "5_photo_input":
-                    $imgURL_5 = $pic_path;
-                    break;        
+                    break;     
             }
         }
     }
     $productMgr->addProduct($product_id, $product_name, $price, $color, $description, $stock);
     $photoMgr->AddPhoto($product_id, '1', $imgURL_1);
     $photoMgr->AddPhoto($product_id, '2', $imgURL_2);
-    $photoMgr->AddPhoto($product_id, '3', $imgURL_3);
-    $photoMgr->AddPhoto($product_id, '4', $imgURL_4);
-    $photoMgr->AddPhoto($product_id, '5', $imgURL_5);
 header("Location: admin.php");
 }elseif ($operation === "edit_product") {
     $valid=true;
@@ -111,7 +99,7 @@ header("Location: admin.php");
             }   
         }
     }
-    echo $color;
+    //echo $color;
     $description = "";
     if(!empty($_POST['edit_product_description'])){
         $description = $_POST['edit_product_description'];
@@ -124,8 +112,8 @@ header("Location: admin.php");
     }
     
     $productMgr->updateProduct($product_id, $product_name, $price, $color, $description, $stock);
-    $photo_name_arr = ['edit_1_photo_input','edit_2_photo_input','edit_3_photo_input','edit_4_photo_input','edit_5_photo_input'];
-    $imgURL_1=$imgURL_2=$imgURL_3=$imgURL_4=$imgURL_5="";
+    $photo_name_arr = ['edit_1_photo_input','edit_2_photo_input'];
+    $imgURL_1=$imgURL_2="";
 
     foreach ($photo_name_arr as $photo_name){
         $picname = $_FILES[$photo_name]['name']; 
@@ -141,33 +129,24 @@ header("Location: admin.php");
                 exit; 
             }
             $rand = rand(10000, 99999); 
-            $pics = date("YmdHis") . $rand . $type;
-
-            $pic_path = "image/". $pics;
-            move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
-            
+            $pics = $picname . date("YmdHis") . $rand . $type;
             switch ($photo_name) {
                 case "edit_1_photo_input":
+                    $pic_path = "public_html/img/productImg/". $pics;
+                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
                     $imgURL_1 = $pic_path;
                     break;
                 case "edit_2_photo_input":
+                    $pic_path = "public_html/img/productImg/". $pics;
+                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
                     $imgURL_2 = $pic_path;
-                    break;
-                case "edit_3_photo_input":
-                    $imgURL_3 = $pic_path;
-                    break;
-                case "edit_4_photo_input":
-                    $imgURL_4 = $pic_path;
-                    break;
-                case "edit_5_photo_input":
-                    $imgURL_5 = $pic_path;
-                    break;        
+                    break;      
             }
         }
     }
-    $new_photo_arr = [$imgURL_1,$imgURL_2,$imgURL_3,$imgURL_4,$imgURL_5];
+    $new_photo_arr = [$imgURL_1,$imgURL_2];
     $type = '';
-    for($i=0;$i<5;$i++){
+    for($i=0;$i<2;$i++){
         switch ($i) {
                 case 0:
                     $type = '1';
@@ -175,15 +154,6 @@ header("Location: admin.php");
                 case 1:
                     $type = '2';
                     break;
-                case 2:
-                    $type = '3';
-                    break;
-                case 3:
-                    $type = '4';
-                    break;
-                case 4:
-                    $type = '5';
-                    break;        
             }
             
         if($new_photo_arr[$i] !== ""){

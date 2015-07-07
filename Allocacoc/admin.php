@@ -273,68 +273,25 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                                 <table width="100%">
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td width="20%">
+                                                                            <td width="40%">
                                                                                 
                                                                                 
                                                                                 <div class="btn" style="width:80%">
-                                                                                <span>  Photo 1  </span>
+                                                                                <span>  Photo (167 x 167) </span>
                                                                                 <input type="file" name="1_photo_input" id="1_photo_input" onchange="check('1_photo')"/>
                                                                                 </div>
                                                                                 <div id="1_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
                                                                                 <div id="1_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-<!--                                                                                <input type="hidden" id="imgURL_overall"/>
-                                                                                <a class="thumbnail">
-                                                                                    <img id="imgURL_overall_thumbnail" src="./public_html/img/no-image.png" alt="..." height="100" width="100">
-                                                                                </a>-->
+
                                                                             </td>
-                                                                            <td width="20%">
+                                                                            <td width="40%">
                                                                                 <div class="btn" style="width:80%">
-                                                                                <span>  Photo 2  </span>
+                                                                                <span>  Photo (280 x 280) </span>
                                                                                 <input type="file" name="2_photo_input" id="2_photo_input" onchange="check('2_photo')"/>
                                                                                 </div>
                                                                                 <div id="2_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
                                                                                 <div id="2_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-<!--                                                                                <input type="hidden" id="imgURL_left"/>
-                                                                                <a class="thumbnail">
-                                                                                    <img id="imgURL_left_thumbnail" src="./public_html/img/no-image.png" alt="..." height="100" width="100">
-                                                                                </a>-->
-                                                                            </td>
-                                                                            <td width="20%">
-                                                                                <div class="btn" style="width:80%">
-                                                                                <span>  Photo 3  </span>
-                                                                                <input type="file" name="3_photo_input" id="3_photo_input" onchange="check('3_photo')"/>
-                                                                                </div>
-                                                                                <div id="3_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
-                                                                                <div id="3_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-<!--                                                                                <input type="hidden" id="imgURL_right"/>
-                                                                                <a class="thumbnail">
-                                                                                    <img id="imgURL_right_thumbnail" src="./public_html/img/no-image.png" alt="..." height="100" width="100">
-                                                                                </a>-->
-                                                                            </td>
-                                                                            <td width="20%">
-                                                                                <div class="btn" style="width:80%">
-                                                                                <span>  Photo 4  </span>
-                                                                                <input type="file" name="4_photo_input" id="4_photo_input" onchange="check('4_photo')"/>
-                                                                                </div>
-                                                                                <div id="4_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
-                                                                                <div id="4_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-<!--                                                                                <input type="hidden" id="imgURL_front"/>
-                                                                                <a class="thumbnail">
-                                                                                    <img id="imgURL_front_thumbnail" src="./public_html/img/no-image.png" alt="..." height="100" width="100">
-                                                                                </a>-->
-                                                                            </td>
-                                                                            <td width="20%">
-                                                                                
-                                                                                <div class="btn" style="width:80%">
-                                                                                <span>  Photo 5  </span>
-                                                                                <input type="file" name="5_photo_input" id="5_photo_input" onchange="check('5_photo')"/>
-                                                                                </div>
-                                                                                <div id="5_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
-                                                                                <div id="5_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-<!--                                                                               <input type="hidden" id="imgURL_back"/>
-                                                                                <a class="thumbnail">
-                                                                                    <img id="imgURL_back_thumbnail" src="./public_html/img/no-image.png" alt="..." height="100" width="100">
-                                                                                </a>-->
+
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -418,7 +375,7 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                                <td><?php echo $p_price; ?></td>
                                                                <td><?php echo $p_color; ?></td>
                                                                <td><?php echo $p_stock; ?></td>
-                                                               <td><div class="btn"><span>Edit<i class="fa fa-edit"></i></span><input type="button" onclick="showEditTab();populateEditField('<?php echo $p_id ?>','<?php echo $p_name ?>','<?php echo $p_price ?>','<?php echo $p_color ?>','<?php echo $p_stock ?>','<?php echo $description ?>','<?php echo $photo_url_arr['1'] ?>','<?php echo $photo_url_arr['2'] ?>','<?php echo $photo_url_arr['3'] ?>','<?php echo $photo_url_arr['4'] ?>','<?php echo $photo_url_arr['5'] ?>');" value="Edit Product"/></div></td>
+                                                               <td><div class="btn"><span>Edit<i class="fa fa-edit"></i></span><input type="button" onclick="showEditTab();populateEditField('<?php echo $p_id ?>','<?php echo $p_name ?>','<?php echo $p_price ?>','<?php echo $p_color ?>','<?php echo $p_stock ?>','<?php echo $description ?>','<?php echo $photo_url_arr['1'] ?>','<?php echo $photo_url_arr['2'] ?>');" value="Edit Product"/></div></td>
                                                            </tr>
                                                         <?php
                                                         }
@@ -541,43 +498,6 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
 <!--                                                                                <input type="hidden" id="imgURL_left"/>-->
                                                                                 <a class="thumbnail">
                                                                                     <img id="imgURL_2_thumbnail" src="./public_html/img/no-image.png" alt="..." height="100" width="100">
-                                                                                </a>
-                                                                            </td>
-                                                                            <td width="20%">
-                                                                                <div class="btn" style="width:80%">
-                                                                                <span>  Photo 3  </span>
-                                                                                <input type="file" name="edit_3_photo_input" id="edit_3_photo_input" onchange="check('edit_3_photo')"/>
-                                                                                </div>
-                                                                                <div id="edit_3_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
-                                                                                <div id="edit_3_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-<!--                                                                                <input type="hidden" id="imgURL_right"/>-->
-                                                                                <a class="thumbnail">
-                                                                                    <img id="imgURL_3_thumbnail" src="./public_html/img/no-image.png" alt="..." height="100" width="100">
-                                                                                </a>
-                                                                            </td>
-                                                                            <td width="20%">
-                                                                                <div class="btn" style="width:80%">
-                                                                                <span>  Photo 4  </span>
-                                                                                <input type="file" name="edit_4_photo_input" id="edit_4_photo_input" onchange="check('edit_4_photo')"/>
-                                                                                </div>
-                                                                                <div id="edit_4_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
-                                                                                <div id="edit_4_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-<!--                                                                                <input type="hidden" id="imgURL_front"/>-->
-                                                                                <a class="thumbnail">
-                                                                                    <img id="imgURL_4_thumbnail" src="./public_html/img/no-image.png" alt="..." height="100" width="100">
-                                                                                </a>
-                                                                            </td>
-                                                                            <td width="20%">
-                                                                                
-                                                                                <div class="btn" style="width:80%">
-                                                                                <span>  Photo 5  </span>
-                                                                                <input type="file" name="edit_5_photo_input" id="edit_5_photo_input" onchange="check('edit_5_photo')"/>
-                                                                                </div>
-                                                                                <div id="edit_5_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
-                                                                                <div id="edit_5_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-<!--                                                                               <input type="hidden" id="imgURL_back"/>-->
-                                                                                <a class="thumbnail">
-                                                                                    <img id="imgURL_5_thumbnail" src="./public_html/img/no-image.png" alt="..." height="100" width="100">
                                                                                 </a>
                                                                             </td>
                                                                         </tr>
@@ -742,7 +662,7 @@ function hideEditTab(){
     document.getElementById("viewProduct").className = "tab-pane fade active in";
 }
 
-function populateEditField(product_id,p_name,p_price,p_color,p_stock,p_description,url1,url2,url3,url4,url5){
+function populateEditField(product_id,p_name,p_price,p_color,p_stock,p_description,url1,url2){
     document.getElementById("edit_product_id").value = product_id;
     document.getElementById("edit_product_name").value = p_name;
     document.getElementById("edit_price").value = p_price;
@@ -752,9 +672,9 @@ function populateEditField(product_id,p_name,p_price,p_color,p_stock,p_descripti
             document.getElementById("edit_color"+i).checked = true;
         }   
     }
-    var photo_url_array = [url1,url2,url3,url4,url5];
+    var photo_url_array = [url1,url2];
     
-    for (i=0;i<5;i++){
+    for (i=0;i<2;i++){
         var angle = '';
         switch(i) {
             case 0:
@@ -762,15 +682,6 @@ function populateEditField(product_id,p_name,p_price,p_color,p_stock,p_descripti
                 break;
             case 1:
                 angle = '2';
-                break;
-            case 2:
-                angle = '3';
-                break;
-            case 3:
-                angle = '4';
-                break;
-            case 4:
-                angle = '5';
                 break;
         }
         if(photo_url_array[i]){
