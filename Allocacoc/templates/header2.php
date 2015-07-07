@@ -33,10 +33,10 @@
     <div id="myNav" class="row">
         <ul class="overlay-nav" style="margin-top:15px">
             <li class="overlay-nav-item">
-                <a class='overlay-text' href="#"><span></span>shop</a>
+                <a class='overlay-text' href="./shop.php"><span></span>shop</a>
             </li>
             <li class="overlay-nav-item">
-                <a class='overlay-text' href="#"><i class="fa fa-shopping-cart fa-lg"></i> cart</a>
+                <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> cart</a>
             </li>
         </ul>
     </div>
