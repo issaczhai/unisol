@@ -12,9 +12,9 @@ $changed_item_id = addslashes(filter_input(INPUT_POST, 'changed_item_id'));
 $qty_to_change = $_POST["qty_to_change"];
 $customer_id = addslashes(filter_input(INPUT_POST, 'customer_id'));
 $productMgr = new ProductManager();
-
+$stock = $productMgr->getStock($changed_item_id);
 $data_form = array();
-if($stock>$qty_to_change){
+if($stock>=$qty_to_change){
     $productMgr->updateItemQty($customer_id, $changed_item_id, $qty_to_change);
     $stock = $productMgr->getStock($changed_item_id);
     $subtotal = 0;

@@ -120,8 +120,11 @@ if(!empty($userid)){
 </head>
 <body>
 <?php
-// put your code here
+    include_once("./templates/modal.php");
 ?>
+<div id="loader-overlay">
+    <div style="position:relative;top:25%; left:50%; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
+</div>
 <div class='container'>
     <div class='row'>
         <div class='col-sm-10 banner'>
@@ -142,11 +145,11 @@ if(!empty($userid)){
                         <?php
                         if(!empty($cart_items)){
                         ?>
-                        <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( <?=$cart_total_qty?> ) </span></a>
+                        <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span class="cart-qty"> ( <?=$cart_total_qty?> ) </span></a>
                         <?php
                         }else{
                         ?>
-                        <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( 0 ) </span></a>
+                        <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span class="cart-qty"> ( 0 ) </span></a>
                         <?php
                         }
                         ?>
@@ -179,17 +182,43 @@ if(!empty($userid)){
                         <?php
                         }
                         ?>
-                            <li class="notification">
+                            <li class="notification-template notification">
+                                <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
+                                   <a class="product-img-link" href="#"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                </div>
+                                <span>&nbsp;<a class="product-name-link" href="#" style='font-size:12px'></a></span>
+                                    <br>
+                                    <span class="item-qty" style='font-size:12px'>&nbsp;Quantity: </span>
+                            </li>
+                            <li class="notification last-notification">
                                 <div class="btn-group-justified">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
-                                                View All Items <span>(<?=$cart_total_qty ?>)</span>
+                                                View All Items <span class="cart-qty">(<?=$cart_total_qty ?>)</span>
                                         </button>
                                     </div>
                                 </div> 
                             </li>
                         </ul>
                     </li> 
+                    <?php 
+                    if(empty($userid)){
+                    ?>
+                    <li id="sign_in_element" class="overlay-nav-item">
+                        <a class='overlay-text' href="#signup" data-toggle="modal" data-target=".bs-modal-sm">sign in</a>
+                    </li>
+                    <?php
+                    }else{
+                    ?>
+                    <li id="user_element" class="overlay-nav-item">
+                        <a class='overlay-text' href="./account.php" ><?= $username ?></a>
+                    </li>
+                    <li class="overlay-nav-item">
+                        <a class='overlay-text' href="./logout.php" >logout</a>
+                    </li>
+                    <?php
+                    }
+                    ?>
                 </ul>
             </div>
         </div>

@@ -160,7 +160,7 @@ max-height: 200px;
                     </li>
                 </ul>
                 </li> 
-                <li id="user_element"><a href="./account.php" ><i class="fa fa-user"></i><?php echo $username ?></a></li>
+                <li id="user_element"><a href="./account.php" ><?= $username ?></a></li>
                 <li><a href="./logout.php" >LOGOUT</a></li>
                 <?php
             }

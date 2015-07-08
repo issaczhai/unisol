@@ -174,7 +174,7 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        // put your code here
+        include_once("./templates/modal.php");
         ?>
     <div class="container">
         <div id="main_area">
@@ -261,6 +261,24 @@ and open the template in the editor.
                                         </li>
                                     </ul>
                                 </li> 
+                                <?php 
+                                if(empty($userid)){
+                                ?>
+                                <li id="sign_in_element" class="overlay-nav-item">
+                                    <a class='overlay-text' href="#signup" data-toggle="modal" data-target=".bs-modal-sm">sign in</a>
+                                </li>
+                                <?php
+                                }else{
+                                ?>
+                                <li id="user_element" class="overlay-nav-item">
+                                    <a class='overlay-text' href="./account.php" ><?= $username ?></a>
+                                </li>
+                                <li class="overlay-nav-item">
+                                    <a class='overlay-text' href="./logout.php" >logout</a>
+                                </li>
+                                <?php
+                                }
+                                ?> 
                             </ul>
                         </div>
                     </div>

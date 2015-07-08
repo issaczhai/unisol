@@ -26,8 +26,15 @@ if(!empty($_SESSION["userid"])){
 
     //get the number of item in customer's shopping cart
     $cart_qty = $productMgr->retrieveTotalNumberOfItemsInShoppingCart($userid);
+    $cart_unique_qty = $productMgr->retrieveTotalNumberOfUniqueItemsInShoppingCart($userid);
+    $item_qty = $productMgr->retrieveItemQtyInShoppingCart($userid, $product_id);
+    $product_name = $productMgr->getProductName($product_id);
     $cart_data['cart_qty'] = $cart_qty;
+    $cart_data['cart_unique_qty'] = $cart_unique_qty;
     $cart_data['add_item_id'] = $product_id;
+    $cart_data['item_qty'] = $item_qty;
+    $cart_data['product_name'] = $product_name;
+    $cart_data['userid'] = $userid;
 }else{
     $cart_data['error_not_logged_in']=true;
     

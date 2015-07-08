@@ -23,9 +23,8 @@ and open the template in the editor.
         $cart_items = $productMgr->retrieveFromShoppingCart($userid);
         $cart_total_qty = $productMgr->retrieveTotalNumberOfItemsInShoppingCart($userid);
     }
-?>
-<?php
-include_once("./protect.php");
+
+    include_once("./protect.php");
 ?>
 <html>
     <head>
@@ -121,11 +120,14 @@ include_once("./protect.php");
         <meta charset="UTF-8">
         <title>Shopping Cart</title>
     </head>
-    <body>
-        <?php
-        
-        include_once("./templates/modal.php");
-        ?>
+<body>
+    <?php
+    
+    include_once("./templates/modal.php");
+    ?>
+    <div id="loader-overlay">
+        <div style="position:relative;top:25%; left:50%; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
+    </div>
     <div class="container">
         <div class="row">
             <div class='col-sm-10 banner'>
@@ -186,7 +188,7 @@ include_once("./protect.php");
                                 <li class="notification">
                                     <div class="btn-group-justified">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-default" onclick="location.href = './cart_template.php';">
+                                            <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
                                                     View All Items <span>(<?=$cart_total_qty ?>)</span>
                                             </button>
                                         </div>
@@ -194,6 +196,24 @@ include_once("./protect.php");
                                 </li>
                             </ul>
                         </li> 
+                        <?php 
+                if(empty($userid)){
+                ?>
+                <li id="sign_in_element" class="overlay-nav-item">
+                    <a class='overlay-text' href="#signup" data-toggle="modal" data-target=".bs-modal-sm">sign in</a>
+                </li>
+                <?php
+                }else{
+                ?>
+                <li id="user_element" class="overlay-nav-item">
+                    <a class='overlay-text' href="./account.php" ><?= $username ?></a>
+                </li>
+                <li class="overlay-nav-item">
+                    <a class='overlay-text' href="./logout.php" >logout</a>
+                </li>
+                <?php
+                }
+                ?>
                     </ul>
                 </div>
             </div>
@@ -243,11 +263,11 @@ include_once("./protect.php");
                                 <td class="col-sm-8 col-md-5">
                                     <div class="media">
                                         <div class="cartItemImg" style="width:88px;height:88px;overflow:hidden;position:relative;float:left">
-                                            <a href="javascript:getProductDetail('<?=$each_cart_item_id ?>');"> <img style="position:absolute !important;" src="./public_html/img/GE.png" onload="OnCartItemImageLoad(event)"> </a>
+                                            <a href="./product_detail.php?selected_product_id=<?=$each_cart_item_id ?>&customer_id=<?=$userid ?>"> <img style="position:absolute !important;" src="./public_html/img/GE.png" onload="OnCartItemImageLoad(event)"> </a>
                                         </div>
                                         <div class="media-body  text-center">
                                             
-                                            <h4 class="media-heading"><a href="#"><?=$each_cart_item_name ?></a></h4>
+                                            <h4 class="media-heading"><a href="./product_detail.php?selected_product_id=<?=$each_cart_item_id ?>&customer_id=<?=$userid ?>"><?=$each_cart_item_name ?></a></h4>
                                             <?php
                                             if($each_cart_item_stock>0){
                                             ?>
@@ -342,7 +362,7 @@ include_once("./protect.php");
     <script src="./public_html/js/main.js"></script>
     <script src="./public_html/js/allocacoc.js"></script>
 
-        <!-- display product detail modal-->
+        <!-- display product detail modal
     <script>
         function getProductDetail(product_id){
             $('#product_detail_modal_content').hide();
@@ -368,63 +388,49 @@ include_once("./protect.php");
             });
         }
     </script>
-        <script>
-            function change_qty(item_id,item_price,qty_to_change){
-                console.log(item_id,item_price,qty_to_change);
-                var customer_id = '<?=$userid?>';
-                console.log(customer_id);
-                var changed_product_id = 'changed_item_id=' + item_id + '&qty_to_change=' + qty_to_change + '&customer_id=' + customer_id;
-                console.log(changed_product_id);
-                var price = qty_to_change * item_price;
-                var price_formatted = price.toFixed(2);
-                var each_cart_totalid = '#' + item_id + 'total';
-                $.ajax({ //Process the form using $.ajax()
-                type      : 'POST', //Method type
-                url       : './process_qty_change.php', //Your form processing file URL
-                data      : changed_product_id,
-                cache     : false,
-                success   : function(data) {
-                                
-                                var pos = data.indexOf("{");
-                                var dataValid = data.substring(pos);
-                                
-                                var jsonData = eval("("+dataValid+")");
-                                if(jsonData.error){
-                                    $('#error_modal').modal('show');
-                                    $('#error_modal_content').show();
-                                }else{
-                                    var subtotal = jsonData.subtotal;
-                                    var shipping_fee = jsonData.shipping_fee;
-                                    var total = jsonData.total;
-                                    $('#subtotal').html('<Strong>'+subtotal+'</Strong>');
-                                    $('#shipping_cost').html('<Strong>'+shipping_fee+'</Strong>');
-                                    $('#total_cost').html('<Strong>'+total+'</Strong>');
-                                    $(each_cart_totalid).html('<Strong>'+price_formatted+'</Strong>'); 
-                                }
-                                
-                            }
-                });
-                
-            }
-        </script>
+    -->
+<script>
+    function change_qty(item_id,item_price,qty_to_change){
+        $('#loader-overlay').css('display','block');
+        console.log("this fucker is called!!!!!!!!!");
+        var customer_id = '<?=$userid?>';
+        var changed_product_id = 'changed_item_id=' + item_id + '&qty_to_change=' + qty_to_change + '&customer_id=' + customer_id;
         
-        <script>
-            function remove_item(item_id){
-                var customer_id = '<?=$userid?>';
-                var remove_product_id = 'remove_item_id=' + item_id + '&customer_id=' + customer_id;
-                $.ajax({ //Process the form using $.ajax()
-                type      : 'POST', //Method type
-                url       : './process_item_remove.php', //Your form processing file URL
-                data      : remove_product_id,
-                cache     : false,
-                success   : function(html) {
-                                $('#loaderID').hide();
-                                $('#product_detail_modal_content').html(html);
-                                $('#product_detail_modal_content').show();
-                            }
-                });
-                
-            }
-        </script>
+        var price = qty_to_change * item_price;
+        var price_formatted = price.toFixed(2);
+        var each_cart_totalid = '#' + item_id + 'total';
+        $.ajax({ //Process the form using $.ajax()
+        type      : 'POST', //Method type
+        url       : './process_qty_change.php', //Your form processing file URL
+        data      : changed_product_id,
+        cache     : false,
+        success   : function(data) {
+                        
+                        $('#loader-overlay').css('display','none');
+                        console.log(data);
+                        var pos = data.indexOf("{");
+                        var dataValid = data.substring(pos);
+                        console.log(dataValid);
+                        var jsonData = eval("("+dataValid+")");
+                        if(jsonData.error){
+                            $('#error_modal').modal('show');
+                            $('#error_modal_content').show();
+                        }else{
+                            var subtotal = jsonData.subtotal;
+                            var shipping_fee = jsonData.shipping_fee;
+                            var total = jsonData.total;
+                            $('#subtotal').html('<Strong>'+subtotal+'</Strong>');
+                            $('#shipping_cost').html('<Strong>'+shipping_fee+'</Strong>');
+                            $('#total_cost').html('<Strong>'+total+'</Strong>');
+                            $(each_cart_totalid).html('<Strong>'+price_formatted+'</Strong>'); 
+                            
+                        }
+                        
+                    }
+        });
+        
+    }
+</script>
+
     </body>
 </html>

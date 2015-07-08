@@ -2,7 +2,7 @@
 var login = function() {
     $('#errorMsgRegister').html("");
     $('#login').submit(function(event) { //Trigger on form submit
-        
+        $('#sign-in-btn').text('Signing In...');
         //Validate fields if required using jQuery
         var postForm = { //Fetch form data
             'userid'     : $('#userid').val(), //Store userid fields value
@@ -99,40 +99,58 @@ $('#register').submit(function(event) { //Trigger on form submit
 };
 // Add to cart
 var addToCart = function(product_id){
-        event.preventDefault();
         if($('.cart-button').text() === 'proceed to checkout'){
             console.log('coming here');
             window.location = './cart.php';
         }else{
+                
                 var qty_id = '#' + product_id + 'qty';
                 var qty = $(qty_id).val();
                 var product_to_add = 'selected_product_id=' + product_id + '&qty=' + qty;
                 console.log("add to cart is called");
-                
+                $('#loader-overlay').css('display','block');
                 $.ajax({ //Process the form using $.ajax()
                     type      : 'POST', //Method type
                     url       : './process_add_to_cart.php', //Your form processing file URL
                     data      : product_to_add,
                     cache     : false,
                     success   : function(data) {
-                                    var pos = data.indexOf("{");
-                                    var dataValid = data.substring(pos);
-                                    var jsonData = eval("("+dataValid+")");
-                                    var cart_qty = jsonData.cart_qty;
-                                    //var add_product_id = jsonData.add_item_id;
-                                    console.log('returned');
+                                    $('#loader-overlay').css('display','none');
+                                    var pos = data.indexOf("{"),
+                                        dataValid = data.substring(pos),
+                                        jsonData = eval("("+dataValid+")"),
+                                        cart_qty = jsonData.cart_qty,
+                                        cart_unique_qty = jsonData.cart_unique_qty,
+                                        product_name = jsonData.product_name,
+                                        item_qty = jsonData.item_qty,
+                                        add_product_id = jsonData.add_item_id,
+                                        userid = jsonData.userid,
+                                        product_url = './product_detail.php?selected_product_id='+ add_product_id + '&customer_id=' + userid;
+
                                     if(jsonData.error_not_logged_in){
                                         $('#sign_in_modal').modal('show');
                                         $('#login_modal_content').show();
                                     }else{
                                         $('.cart-qty').text('( ' + cart_qty + ' )');
                                         $('.cart-qty').css("color","rgb(0, 89, 112)");
+                                        // cart item preview list contains max 5 items
+                                        if(cart_unique_qty < 6){
+                                            var newNotification = $('.notification-template').clone();
+                                            newNotification.find('.item-qty').text('Quantity:' + item_qty);
+                                            newNotification.find('.item-qty').prepend('&nbsp;');
+                                            newNotification.find('.product-name-link').attr('href', product_url);
+                                            newNotification.find('.product-img-link').attr('href', product_url);
+                                            newNotification.find('.product-name-link').text(product_name);
+                                            $('.last-notification').before(newNotification);
+                                            newNotification.removeClass('notification-template');
+                                        }
                                         $('.number-spinner').hide(); 
                                         $('.cart-button').text('process to checkout');
                                         $('.cart-button').attr('onclick',"window.location='./cart.php'");
                                     }
                                 }
                 });
+                event.preventDefault();
         }   
     
 };

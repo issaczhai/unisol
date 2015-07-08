@@ -1,10 +1,22 @@
 
 <!-- Modal -->
 <style>
-    #sign-in-btn{
+    .btn-signIn{
         width:100%;
         background-image:none;
+        background-color: rgb(0, 89, 112);
+        color: #fff;
         border-radius:0;
+    }
+    .btn-signUp, .btn-reset{
+        background-image:none;
+        border-radius:0;
+        background-color: rgb(0, 89, 112);
+        color: #fff;
+    }
+    .btn-close{
+      background-image: none;
+      border-radius:0;
     }
     #userid, #passwordinput{
         border-radius:0;
@@ -41,6 +53,10 @@
         margin-top: 0px !important;
         margin-bottom: 0px !important;
       }
+      .modal-content{
+        border-radius: 0;
+      }
+      
 </style>
 <!-- The script below give the basic version of the SDK where the options are set to their most common defaults -->
 <script>
@@ -124,6 +140,7 @@
                     data      : postForm, //Forms name
                     success   : function(data) {
                                     console.log('get the response');
+                                    console.log('data:'+data);
                                     var pos = data.indexOf("{");
                                     var dataValid = data.substring(pos);
                                     var jsonData = eval("("+dataValid+")");
@@ -210,9 +227,9 @@
 
             <!-- Button -->
             <div class="control-group">
-              <label class="control-label" for="signin"></label>
+              <label class="control-label" for="sign-in-btn"></label>
               <div class="controls">
-                  <button id="sign-in-btn" onclick="login()" id="signin" name="signin" class="btn btn-success">Sign In</button>
+                  <button id="sign-in-btn" onclick="login()" name="signin" class="btn btn-signIn">Sign In</button>
               </div>
             </div>
             </fieldset>
@@ -278,8 +295,8 @@
             <div class="control-group">
               <label class="control-label" for="confirmsignup"></label>
               <div class="controls">
-                <button id="confirmsignup" onclick="register()" name="confirmsignup" class="btn btn-success pull-right">Sign Up</button>
-                <button id="reset" type="reset" class="btn btn-success">Reset</button>
+                <button id="confirmsignup" onclick="register()" name="confirmsignup" class="btn btn-signUp pull-right">Sign Up</button>
+                <button id="reset" type="reset" class="btn btn-reset">Reset</button>
               </div>
             </div>
             </fieldset>
@@ -289,7 +306,7 @@
       </div>
       <div class="modal-footer">
       <center>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
         </center>
       </div>
     </div>

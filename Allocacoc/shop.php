@@ -45,8 +45,6 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
         <link rel="stylesheet" href="./public_html/css/webShop.css">
         <!--<link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">-->
 
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         
         <style>
             .navbar{opacity: 1;margin-bottom:0}
@@ -226,281 +224,303 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
         </script>
         <meta charset="UTF-8">
         <title>Allocacoc Shop</title>
-    </head>
-    <body>
-        <?php
-        //include_once("./templates/header.php");
-        include_once("./templates/modal.php");
-        /*
-        if(!empty($sort_type) || !empty($filter_type)){
-            if(empty($sort_type)){
-                
-            }else if(empty($filter_type)){
-                
-            }else{
-                
-            }
-        }else{
-            $allProducts = $productMgr->getAllProduct(); 
-        }
-        */
-        $results = [];
-        //print_r(isset($_SESSION['results']));
-        //if(isset($_SESSION['results']) && !empty($_SESSION['results'])){
-            //$results = $_SESSION['results'];
-        //}else{
-        $results = $productMgr->getAllProduct();
-        //}
-        ?>
-        <div id="loaderID" style="display:none;position:absolute; top:500px; left:50%; z-index:10; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
-         
-        <!-- Content Modal-->
-        <!--<div style='position:fixed;width:100%;margin-top:-20px;height:20px;background:#FFF;z-index:2'></div>-->
+</head>
+<body>
+<?php
+//include_once("./templates/header.php");
+include_once("./templates/modal.php");
+/*
+if(!empty($sort_type) || !empty($filter_type)){
+    if(empty($sort_type)){
         
-        <div class="container">
-                <!--
-                <div id='video_gallary' style='width:800px;height:400px;padding-left:15px;padding-right:15px;'>
-                    <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered"
-                        controls preload="auto" width="100%" height="100%"
-                        src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Allocacoc+PowerCube+Remote+double+click+-+YouTube+%5B360p%5D.mp4"
-                        poster="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Remote+Double+Click.png"
-                        data-setup='{"example_option":true}'>
-                        
-                    </video>
-                    
-                    
-                </div>
-                <ul style="display:inline;float:right;padding-right:45px;margin-top:-400px">
-                    <li>
-                        <div class="productImgSmall" id="firstThumb" style="width:150px;height:80px;padding-top:1px;cursor:pointer;">
-                            <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Remote+Double+Click.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Allocacoc+PowerCube+Remote+double+click+-+YouTube+%5B360p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Remote+Double+Click.png')" style="position:relative"/>				
-                        </div>
-                    </li>
-                    <li>
-                        <div class="productImgSmall between" style="width:155px;height:80px;padding-top:1px;cursor:pointer;">
-                            <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Powercube+Review.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/PowerCube+review+-+YouTube+%5B360p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Powercube+Review.png')" style="position:relative"/>				
-                        </div>
-                    </li>
-                    <li>
-                        <div class="productImgSmall middle" style="width:160px;height:80px;padding-top:1px;cursor:pointer;">
-                            <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/UK.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Powercube+UK+with+Music.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/UK.png')" style="position:relative"/>				
-                        </div>
-                    </li>
-                    <li>
-                        <div class="productImgSmall between" style="width:155px;height:80px;padding-top:1px;cursor:pointer;">
-                            <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Standard+Romantic.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/%E2%96%B6+The+PowerCube+-+A+romantic+standard.+-+YouTube+%5B720p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Standard+Romantic.png')" style="position:relative"/>				
-                        </div>
-                    </li>
-                    <li>
-                        <div id="lastThumb" class="productImgSmall" style="width:150px;height:80px;padding-top:1px;cursor:pointer;">
-                            <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Coming+Home.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/%E2%96%B6+The+PowerCube+Remote+-+Coming+Home+-+YouTube+%5B720p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Coming+Home.png')" style="position:relative"/>				
-                        </div>
-                    </li>
-                </ul>
-                -->
-            <div class="row">
-            <div class='col-sm-10 banner'>
-                <div class='col-sm-12 bannerPhoto'>
-                <img src='./public_html/img/shopHeadBG/bg.png'>    
-                </div>
+    }else if(empty($filter_type)){
+        
+    }else{
+        
+    }
+}else{
+    $allProducts = $productMgr->getAllProduct(); 
+}
+*/
+$results = [];
+//print_r(isset($_SESSION['results']));
+//if(isset($_SESSION['results']) && !empty($_SESSION['results'])){
+    //$results = $_SESSION['results'];
+//}else{
+$results = $productMgr->getAllProduct();
+//}
+?>
+<div id="loaderID" style="display:none;position:absolute; top:500px; left:50%; z-index:10; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
+ 
+<!-- Content Modal-->
+<!--<div style='position:fixed;width:100%;margin-top:-20px;height:20px;background:#FFF;z-index:2'></div>-->
+
+<div class="container">
+        <!--
+        <div id='video_gallary' style='width:800px;height:400px;padding-left:15px;padding-right:15px;'>
+            <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered"
+                controls preload="auto" width="100%" height="100%"
+                src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Allocacoc+PowerCube+Remote+double+click+-+YouTube+%5B360p%5D.mp4"
+                poster="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Remote+Double+Click.png"
+                data-setup='{"example_option":true}'>
                 
-                <div class='allocacocLogo'>
-                    <img src='public_html/img/allocacoc_NoText.png'><span class='logoText'>Webshop</span>
+            </video>
+            
+            
+        </div>
+        <ul style="display:inline;float:right;padding-right:45px;margin-top:-400px">
+            <li>
+                <div class="productImgSmall" id="firstThumb" style="width:150px;height:80px;padding-top:1px;cursor:pointer;">
+                    <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Remote+Double+Click.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Allocacoc+PowerCube+Remote+double+click+-+YouTube+%5B360p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Remote+Double+Click.png')" style="position:relative"/>				
                 </div>
-                
-                <div class="col-sm-12 overlay">
-                    <ul class="overlay-nav">
-                        <li class="overlay-nav-item item-shop">
-                                    <a class='overlay-text' href="./shop.php"><span></span>shop</a>
+            </li>
+            <li>
+                <div class="productImgSmall between" style="width:155px;height:80px;padding-top:1px;cursor:pointer;">
+                    <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Powercube+Review.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/PowerCube+review+-+YouTube+%5B360p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Powercube+Review.png')" style="position:relative"/>				
+                </div>
+            </li>
+            <li>
+                <div class="productImgSmall middle" style="width:160px;height:80px;padding-top:1px;cursor:pointer;">
+                    <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/UK.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Powercube+UK+with+Music.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/UK.png')" style="position:relative"/>				
+                </div>
+            </li>
+            <li>
+                <div class="productImgSmall between" style="width:155px;height:80px;padding-top:1px;cursor:pointer;">
+                    <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Standard+Romantic.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/%E2%96%B6+The+PowerCube+-+A+romantic+standard.+-+YouTube+%5B720p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Standard+Romantic.png')" style="position:relative"/>				
+                </div>
+            </li>
+            <li>
+                <div id="lastThumb" class="productImgSmall" style="width:150px;height:80px;padding-top:1px;cursor:pointer;">
+                    <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Coming+Home.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/%E2%96%B6+The+PowerCube+Remote+-+Coming+Home+-+YouTube+%5B720p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Coming+Home.png')" style="position:relative"/>				
+                </div>
+            </li>
+        </ul>
+        -->
+    <div class="row">
+    <div class='col-sm-10 banner'>
+        <div class='col-sm-12 bannerPhoto'>
+        <img src='./public_html/img/shopHeadBG/bg.png'>    
+        </div>
+        
+        <div class='allocacocLogo'>
+            <img src='public_html/img/allocacoc_NoText.png'><span class='logoText'>Webshop</span>
+        </div>
+        
+        <div class="col-sm-12 overlay">
+            <ul class="overlay-nav">
+                <li class="overlay-nav-item item-shop">
+                            <a class='overlay-text' href="./shop.php"><span></span>shop</a>
+                </li>
+                <li class="cart-dropdown overlay-nav-item item-cart" >
+                    <?php
+                    if(!empty($cart_items)){
+                    ?>
+                    <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( <?=$cart_total_qty?> ) </span></a>
+                    <?php
+                    }else{
+                    ?>
+                    <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( 0 ) </span></a>
+                    <?php
+                    }
+                    ?>
+
+                        <ul role="menu" class="sub-menu">
+                    <?php
+                    if(!empty($cart_items)){
+                        for($x=0;$x<min(4,count($cart_items));$x++){
+                            $each_cart_item = $cart_items[$x];
+                            $each_product_id = $each_cart_item['product_id'];
+                            $each_product_quantity = $each_cart_item['quantity'];
+                            $each_product_name = $productMgr->getProductName($each_product_id);
+
+                    ?>
+                             <li class="notification">
+                                <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
+                                   <a href="./product_detail.php?selected_product_id='<?=$each_product_id ?>'&customer_id='<?=$userid ?>'"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                </div>
+                                <span>&nbsp;<a href="./product_detail.php?selected_product_id='<?=$each_product_id ?>'&customer_id='<?=$userid ?>'" style='font-size:12px'><?=$each_product_name ?></a></span>
+                                    <br>
+                                    <span style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
+                            </li>
+                    <?php
+                        }
+                    }else{
+                    ?>
+                             <li class="notification">
+                                <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
+                            </li>
+                    <?php
+                    }
+                    ?>
+                        <li class="notification">
+                            <div class="btn-group-justified">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
+                                            View All Items <span>(<?=$cart_total_qty ?>)</span>
+                                    </button>
+                                </div>
+                            </div> 
                         </li>
-                        <li class="cart-dropdown overlay-nav-item item-cart" >
-                            <?php
-                            if(!empty($cart_items)){
-                            ?>
-                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( <?=$cart_total_qty?> ) </span></a>
-                            <?php
-                            }else{
-                            ?>
-                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( 0 ) </span></a>
-                            <?php
-                            }
-                            ?>
-
-                                <ul role="menu" class="sub-menu">
-                            <?php
-                            if(!empty($cart_items)){
-                                for($x=0;$x<min(4,count($cart_items));$x++){
-                                    $each_cart_item = $cart_items[$x];
-                                    $each_product_id = $each_cart_item['product_id'];
-                                    $each_product_quantity = $each_cart_item['quantity'];
-                                    $each_product_name = $productMgr->getProductName($each_product_id);
-
-                            ?>
-                                     <li class="notification">
-                                        <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
-                                           <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
-                                        </div>
-                                        <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
-                                            <br>
-                                            <span style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
-                                    </li>
-                            <?php
-                                }
-                            }else{
-                            ?>
-                                     <li class="notification">
-                                        <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
-                                    </li>
-                            <?php
-                            }
-                            ?>
-                                <li class="notification">
-                                    <div class="btn-group-justified">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
-                                                    View All Items <span>(<?=$cart_total_qty ?>)</span>
-                                            </button>
-                                        </div>
-                                    </div> 
-                                </li>
-                            </ul>
-                        </li> 
+                    </ul>
+                </li>
+                <?php 
+                if(empty($userid)){
+                ?>
+                <li id="sign_in_element" class="overlay-nav-item">
+                    <a class='overlay-text' href="#signup" data-toggle="modal" data-target=".bs-modal-sm">sign in</a>
+                </li>
+                <?php
+                }else{
+                ?>
+                <li id="user_element" class="overlay-nav-item">
+                    <a class='overlay-text' href="./account.php" ><?= $username ?></a>
+                </li>
+                <li class="overlay-nav-item">
+                    <a class='overlay-text' href="./logout.php" >logout</a>
+                </li>
+                <?php
+                }
+                ?> 
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-10 top-bar">
+        <ul class="refine_bar">
+            <li class='filter' style='margin-left:0px'><a class='filter_link active_filter' id='allproducts' href="javascript:filter('allproducts')" style='background:rgb(0, 89, 112);color:#FFF;border-radius:3px'>All</a></li>
+            <li class='filter' style='margin-left:30px'><a class='filter_link' id='PowerCube' href="javascript:filter('PowerCube')">PowerCube</a></li>
+            <li class='filter' style='margin-left:122px'><a class='filter_link' id='ReWirable' href="javascript:filter('ReWirable')">ReWirable</a></li>
+            <li class='filter' style='margin-left:205px'><a class='filter_link' id='Remote' href="javascript:filter('Remote')">Remote</a></li>
+            <li class='pull-right' style='height:100%'>
+                <div class="btn-group" style='height:100%'>
+                    <button type="button" class="btn btn-default dropdown-toggle" style='border-radius:0;border-right:none;border-top:none;border-bottom:none;border-left:1px solid #E6E6E6;height:100%'
+                            data-toggle="dropdown">
+                            <span class="sort-value" id='sort_type'>Default Sorting</span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" style="width:100%">
+                        <li><a href="javascript:sort('default');">Default Sorting</a></li>
+                        <li><a href="javascript:sort('priceLH');">Price: Low To High</a></li>
+                        <li><a href="javascript:sort('priceHL');">Price: High To Low</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="row" style='margin-top:20px'>
+        <!-- Side panel 
+        <div  id="sidebar" class="col-sm-2">
+            <div class="btn-group-justified">
+                <div class="btn-group sort-panel">
+                    <button type="button" class="btn btn-default dropdown-toggle"
+                            data-toggle="dropdown">
+                            <span class="sort-value" id='sort_type'>Default Sorting</span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" style="width:100%">
+                        <li><a href="./shop.php">Default Sorting</a></li>
+                        <li><a href="javascript:sort('priceLH');">Price: Low To High</a></li>
+                        <li><a href="javascript:sort('priceHL');">Price: High To Low</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="col-sm-10 top-bar">
-                <ul class="refine_bar">
-                    <li class='filter' style='margin-left:0px'><a class='filter_link active_filter' id='allproducts' href="javascript:filter('allproducts')" style='background:rgb(0, 89, 112);color:#FFF;border-radius:3px'>All</a></li>
-                    <li class='filter' style='margin-left:30px'><a class='filter_link' id='PowerCube' href="javascript:filter('PowerCube')">PowerCube</a></li>
-                    <li class='filter' style='margin-left:122px'><a class='filter_link' id='ReWirable' href="javascript:filter('ReWirable')">ReWirable</a></li>
-                    <li class='filter' style='margin-left:205px'><a class='filter_link' id='Remote' href="javascript:filter('Remote')">Remote</a></li>
-                    <li class='pull-right' style='height:100%'>
-                        <div class="btn-group" style='height:100%'>
-                            <button type="button" class="btn btn-default dropdown-toggle" style='border-radius:0;border-right:none;border-top:none;border-bottom:none;border-left:1px solid #E6E6E6;height:100%'
-                                    data-toggle="dropdown">
-                                    <span class="sort-value" id='sort_type'>Default Sorting</span> <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu" style="width:100%">
-                                <li><a href="javascript:sort('default');">Default Sorting</a></li>
-                                <li><a href="javascript:sort('priceLH');">Price: Low To High</a></li>
-                                <li><a href="javascript:sort('priceHL');">Price: High To Low</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            </div>
-            <div class="row" style='margin-top:20px'>
-                <!-- Side panel 
-                <div  id="sidebar" class="col-sm-2">
-                    <div class="btn-group-justified">
-                        <div class="btn-group sort-panel">
-                            <button type="button" class="btn btn-default dropdown-toggle"
-                                    data-toggle="dropdown">
-                                    <span class="sort-value" id='sort_type'>Default Sorting</span> <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu" style="width:100%">
-                                <li><a href="./shop.php">Default Sorting</a></li>
-                                <li><a href="javascript:sort('priceLH');">Price: Low To High</a></li>
-                                <li><a href="javascript:sort('priceHL');">Price: High To Low</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="btn-group-justified">
-                        <div class="btn-group sort-panel">
-                            <button type="button" class="btn btn-default" value="allproducts" onclick="filter('allproducts')">
-                                    <span class="sort-value">All Products</span>
-                            </button>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="btn-group-justified">
-                        <div class="btn-group sort-panel">
-                            <button type="button" class="btn btn-default" onclick="filter('PowerCube')"> 
-                                    <span class="sort-value">PowerCube Family</span>
-                            </button>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="btn-group-justified">
-                        <div class="btn-group sort-panel">
-                            <button type="button" class="btn btn-default" onclick="filter('ReWirable')">
-                                    <span class="sort-value">ReWirable Family</span>
-                            </button>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="btn-group-justified">
-                        <div class="btn-group sort-panel">
-                            <button type="button" class="btn btn-default" onclick="filter('Remote')">
-                                    <span class="sort-value">Remote Family</span>
-                            </button>
-                        </div>
-                    </div>
-                    
+            <br>
+            <div class="btn-group-justified">
+                <div class="btn-group sort-panel">
+                    <button type="button" class="btn btn-default" value="allproducts" onclick="filter('allproducts')">
+                            <span class="sort-value">All Products</span>
+                    </button>
                 </div>
-                -->
-                <div class="col-sm-10" id="main-content">
-                    
-                    <div class="features_items">
-                    <!--<h2 class="title text-center">All Products</h2>-->
-                    
-                        <?php
-                            
-                            foreach ($results as $eachProduct) {
-                                $product_name = $eachProduct["product_name"];
-                                $price = $eachProduct["price"];
-                                $product_id = $eachProduct["product_id"];
-                        ?>
-                        <div class='col-sm-6'>
-                            <div class='product-wrapper'>
-                                <div class='product-img'>
-                                    <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>">
-                                    <img src='./public_html/img/productImg/GE.png'>
-                                    </a>
-                                </div>
-                                <div class='product-summary'> 
-                                    <h5 class="product-name"><a href='./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>'><?= $product_name ?></a></h5>
-                                    <h5 class="price">$<?= number_format($price,1,'.','') ?> <span> incl.VAT</span></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <!--
-                        <div class="col-sm-3">
-                            <div class="product-image-wrapper">
-                                <div class="single-products">
-                                   <div class="productinfo text-center">
-                                       <div class="productImg" style="width:206px;height:238px;overflow:hidden;position:relative">
-                                           <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>"><img class="product-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnProductImageLoad(event);" /></a>
-                                       </div>
-                                       
-                                       <div style="height:45px">
-                                           <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>" style="text-decoration: none;"><h5><?=$product_name ?></h5></a>
-                                       </div>
-                                       <p>SGD </p>
-                                       
-                                   </div>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-                        <?php
-            
-                            }
-
-                        ?>
-                    </div>
-                     
+            </div>
+            <br>
+            <div class="btn-group-justified">
+                <div class="btn-group sort-panel">
+                    <button type="button" class="btn btn-default" onclick="filter('PowerCube')"> 
+                            <span class="sort-value">PowerCube Family</span>
+                    </button>
                 </div>
-           
+            </div>
+            <br>
+            <div class="btn-group-justified">
+                <div class="btn-group sort-panel">
+                    <button type="button" class="btn btn-default" onclick="filter('ReWirable')">
+                            <span class="sort-value">ReWirable Family</span>
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div class="btn-group-justified">
+                <div class="btn-group sort-panel">
+                    <button type="button" class="btn btn-default" onclick="filter('Remote')">
+                            <span class="sort-value">Remote Family</span>
+                    </button>
+                </div>
             </div>
             
         </div>
-    <!-- Scripts -->  
-    <?php      
-    include_once("./templates/footer.php");
-    ?>
+        -->
+        <div class="col-sm-10" id="main-content">
+            
+            <div class="features_items">
+            <!--<h2 class="title text-center">All Products</h2>-->
+            
+                <?php
+                    
+                    foreach ($results as $eachProduct) {
+                        $product_name = $eachProduct["product_name"];
+                        $price = $eachProduct["price"];
+                        $product_id = $eachProduct["product_id"];
+                ?>
+                <div class='col-sm-6'>
+                    <div class='product-wrapper'>
+                        <div class='product-img'>
+                            <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>">
+                            <img src='./public_html/img/productImg/GE.png'>
+                            </a>
+                        </div>
+                        <div class='product-summary'> 
+                            <h5 class="product-name"><a href='./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>'><?= $product_name ?></a></h5>
+                            <h5 class="price">$<?= number_format($price,1,'.','') ?> <span> incl.VAT</span></h5>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                <div class="col-sm-3">
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                           <div class="productinfo text-center">
+                               <div class="productImg" style="width:206px;height:238px;overflow:hidden;position:relative">
+                                   <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>"><img class="product-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnProductImageLoad(event);" /></a>
+                               </div>
+                               
+                               <div style="height:45px">
+                                   <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>" style="text-decoration: none;"><h5><?=$product_name ?></h5></a>
+                               </div>
+                               <p>SGD </p>
+                               
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                -->
+                <?php
+    
+                    }
+
+                ?>
+            </div>
+             
+        </div>
+   
+    </div>
+    
+</div>
+<?php
+$currentPage = "product";
+include_once("./templates/footer.php");
+?>
+    <!-- Scripts -->        
+    
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="./public_html/js/main.js"></script>
     <script src="./public_html/js/allocacoc.js"></script>
     
@@ -611,5 +631,5 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
         }
     </script>
     <script src="//vjs.zencdn.net/4.12/video.js"></script>-->
-    </body>
+</body>
 </html>
