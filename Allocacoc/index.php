@@ -240,6 +240,7 @@ and open the template in the editor.
                 </a> -->
         </div><!-- /carousel -->
         <?php
+        $currentPage = "";
         include_once("./templates/footer.php");
         ?>
         

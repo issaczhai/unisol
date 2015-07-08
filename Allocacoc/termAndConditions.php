@@ -13,6 +13,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="./public_html/css/main.css">
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="./public_html/js/allocacoc.js"></script>
         <style>
             body{
                 background-color:#ffffff;
@@ -54,7 +55,6 @@ and open the template in the editor.
         <title>Terms & Conditions</title>
     </head>
     <body>
-        
     <div class="container">
         <div class="col-md-10 col-md-offset-1">
             <?php
