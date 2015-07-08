@@ -497,8 +497,10 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
             </div>
             
         </div>
-    <!-- Scripts -->        
-    
+    <!-- Scripts -->  
+    <?php      
+    include_once("./templates/footer.php");
+    ?>
     <script src="./public_html/js/main.js"></script>
     <script src="./public_html/js/allocacoc.js"></script>
     

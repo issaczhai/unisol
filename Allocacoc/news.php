@@ -104,7 +104,9 @@ and open the template in the editor.
         </div>
     </div>
     <!-- /.row -->
-
+    <?php
+    include_once("./templates/footer.php");
+    ?>
     
     <!-- Scripts -->        
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>

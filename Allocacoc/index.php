@@ -239,6 +239,10 @@ and open the template in the editor.
                 <span class="glyphicon glyphicon-chevron-right"></span>
                 </a> -->
         </div><!-- /carousel -->
+        <?php
+        include_once("./templates/footer.php");
+        ?>
+        
         
 <!-- Scripts -->        
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
