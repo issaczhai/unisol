@@ -75,6 +75,21 @@ class ProductManager {
         return $total;
     }
     
+    function retrieveTotalNumberOfUniqueItemsInShoppingCart($customer_id){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $total = 0;
+        $stmt = $conn->prepare("SELECT count(*) FROM cart WHERE customer_id=?");
+        $stmt->bind_param("s", $customer_id);
+        $stmt->execute();
+        $stmt->bind_result($quantity);
+        while ($stmt->fetch())
+        {
+            $total = $quantity;
+        }
+        return $total;
+    }
+    
     function retrieveItemQtyInShoppingCart($customer_id,$product_id){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
