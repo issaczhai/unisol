@@ -229,6 +229,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .notification > span a{color:#525252 !important}
 .notification > span a:hover{color: #B82E8A !important;background:none !important;}
+.notification .btn-default{
+  border-radius: 0;
+  background-color: rgb(0, 89, 112);
+  color: #fff;
+}
 
 .sub-menu > li{margin-bottom:5px}
 .sub-menu > li:last-child {margin-bottom:10px}
