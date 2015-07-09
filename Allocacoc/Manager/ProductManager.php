@@ -33,7 +33,7 @@ class ProductManager {
         date_default_timezone_set('Asia/Singapore');
         $creat_time = date('Y-m-d H:i:s');
         $pay_time= null;
-        $stmt->bind_param("ssdss", $customer_id, $product_id, $qty, $creat_time, $pay_time);
+        $stmt->bind_param("ssiss", $customer_id, $product_id, $qty, $creat_time, $pay_time);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }

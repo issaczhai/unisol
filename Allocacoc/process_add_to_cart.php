@@ -8,7 +8,7 @@
 include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/ProductManager.php");
 $product_id = addslashes(filter_input(INPUT_POST, 'selected_product_id'));
-$qty = addslashes(filter_input(INPUT_POST, 'qty'));
+$qty = intval(addslashes(filter_input(INPUT_POST, 'qty')));
 //$url = filter_input(INPUT_POST, 'url');
 //print_r($url);
 $productMgr = new ProductManager();
