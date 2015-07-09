@@ -176,7 +176,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .cart-dropdown ul.sub-menu {
-	position: relative;
+	position: absolute;
 	margin: 0;
 	left: 0;
 	background: #ffffff;

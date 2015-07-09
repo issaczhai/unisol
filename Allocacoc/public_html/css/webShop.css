@@ -205,6 +205,9 @@ and open the template in the editor.
 .cart-table td{
     vertical-align: middle !important;
 }
+.cart-table .th-row > th{
+    border-bottom:none;
+}
 .media{
     display: table;
 }
