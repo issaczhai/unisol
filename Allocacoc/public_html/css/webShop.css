@@ -276,3 +276,14 @@ and open the template in the editor.
     z-index:1001;
     display:none;
 }
+/***************************
+****************************
+    Cart.php Deletion Modal
+****************************
+***************************/
+
+.btn-delete-item, .btn-cancel-delete{
+    border-radius: 0;
+    color: #fff;
+    background-color: rgb(0, 89, 112);
+}

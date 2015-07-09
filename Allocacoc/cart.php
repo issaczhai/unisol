@@ -128,6 +128,25 @@ and open the template in the editor.
     <div id="loader-overlay">
         <div style="position:relative;top:25%; left:50%; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
     </div>
+    <!-- Modal Dialog -->
+    <div class="modal fade confirmDeleteModal" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Remove Item</h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure want to remove this product from your shpping cart?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-cancel-delete" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-delete-item" id="confirm">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
         <div class="row">
             <div class='col-sm-10 banner'>
@@ -288,7 +307,8 @@ and open the template in the editor.
                                 <td class="col-sm-1 col-md-1 text-center"><strong><?=number_format($each_cart_item_price,2,'.','') ?></strong></td>
                                 <td id='<?=$each_cart_totalid ?>' class="col-sm-1 col-md-1 text-center"><strong><?=number_format($each_cart_item_total,2,'.','')?></strong></td>
                                 <td class="col-sm-1 col-md-1">
-                                <button type="button" id='<?=$removeBtnid?>' class="btn btn-remove" onclick="location.href='./process_item_remove.php?remove_item_id=<?=$each_cart_item_id?>&customer_id=<?=$userid?>'">
+                                <button type="button" id='<?=$removeBtnid?>' class="btn btn-remove">
+                                <!-- onclick="location.href='./process_item_remove.php?remove_item_id=<?=$each_cart_item_id?>&customer_id=<?=$userid?>'" -->
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button></td>
                             </tr> 
@@ -392,7 +412,6 @@ and open the template in the editor.
 <script>
     function change_qty(item_id,item_price,qty_to_change){
         $('#loader-overlay').css('display','block');
-        console.log("this fucker is called!!!!!!!!!");
         var customer_id = '<?=$userid?>';
         var changed_product_id = 'changed_item_id=' + item_id + '&qty_to_change=' + qty_to_change + '&customer_id=' + customer_id;
         
@@ -430,6 +449,23 @@ and open the template in the editor.
         });
         
     }
+
+    $('.btn-remove').on('click', function(){
+        $('.confirmDeleteModal').attr('id', this.id.substr(0, this.id.length - 6));
+        $('.confirmDeleteModal').modal('show');
+    });
+    $('.btn-delete-item').on('click', function(){
+        var product_id = $('.confirmDeleteModal').attr('id');
+        console.log(product_id);
+        //$('.confirmDeleteModal').modal('hide');
+        location.href ="./process_item_remove.php?remove_item_id=" + product_id +"&customer_id=<?=$userid?>";
+
+    });
+    $('.btn-cancel-delete').on('click', function(){
+        
+        $('.confirmDeleteModal').modal('hide');
+
+    });
 </script>
 
     </body>
