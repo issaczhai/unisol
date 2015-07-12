@@ -182,7 +182,7 @@ $address_list = $addressMgr->getAddress($customer_id);
     }
     
     ?>
-    <div class="container" style="margin-top:100px">
+    <div class="container" style="margin-top:60px">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
@@ -208,22 +208,47 @@ $address_list = $addressMgr->getAddress($customer_id);
             </div>
             <div id="bottom-content">
                 <font color="#FFFFFF" size="5">Just share this link:</font>
-                <script type="text/javascript">
-                    var clip = new ZeroClipboard(document.getElementById("copy").value);
-                </script>
+                
                 <div class="col-lg-4 input-group">
                     <input type="text" id="invitation_link" class="form-control" value=<?php echo 'gosg.net/'.$customer['invitation_link'] ?>>
                     <span class="input-group-btn">
                         <input class="btn btn-default" id="copy" type="button" data-clipboard-target="invitation_link" value="Copy">
                     </span>
+					<script type="text/javascript">
+                    var clip = new ZeroClipboard(document.getElementById("copy"), {moviePath: "./public_html/js/ZeroClipboard.swf"});
+                    </script>
                 </div>  
             </div>
             <div id="bottom-left-content">
                 <div class="share">
-                    <div class="column"><button type="button" class="btn btn-warning btn-lg"><i class="fa fa-envelope"></i> Invite Via Email </button></div>
+                    <div class="column"><button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#emailModal" data-title="Invite Your Friend"><i class="fa fa-envelope"></i> Invite Via Email </button></div>
                     <div class="column"><button type="button" class="btn btn-primary btn-lg" onclick="shareOnFacebook()"><i class="fa fa-facebook-square"></i> Invite via Facebook </button></div>
                     <div class="column"><a href="https://twitter.com/intent/tweet?text=<?=$invitation_link ?>" class="btn btn-info btn-lg" data-text="<?=$invitation_link ?>">
                             <i class="fa fa-twitter"></i> Invite via Twitter </a></div>
+                </div>
+            </div>
+			<div id="emailModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                            <h4 class="modal-title">Modal Window</h4>
+                        </div>
+                        <form role="form" action="coupon_email.php" method="POST">
+                            <input type="hidden" name="invitation_link" class="form-control" value=<?php echo 'gosg.net/'.$customer['invitation_link'] ?>>
+                            <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Email:</label>
+                                        <input type="text" name="send_email_address" class="form-control" id="recipient-name">
+                                    </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </div> 
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -352,6 +377,10 @@ $address_list = $addressMgr->getAddress($customer_id);
             </div>
         </div>
     </div>
+        <?php
+        $currentPage = "account";
+        include_once("./templates/footer.php");
+        ?>
     <script>
     function add_address(){
             //Validate fields if required using jQuery
@@ -417,6 +446,15 @@ $address_list = $addressMgr->getAddress($customer_id);
         return t;
       }(document, "script", "twitter-wjs"));
     </script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#emailModal").on('show.bs.modal', function(event){
+			var button = $(event.relatedTarget);  // Button that triggered the modal
+			var titleData = button.data('title'); // Extract value from data-* attributes
+			$(this).find('.modal-title').text(titleData + ' Form');
+		});
+	});
+	</script>  
     </body>
     
 
