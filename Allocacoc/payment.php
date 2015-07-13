@@ -35,7 +35,7 @@ and open the template in the editor.
     include_once("./templates/header2.php");
     ?>
       
-    <form id="payment" action="#" method="post" class="form-horizontal"> 
+    <!--<form id="payment" action="./PayPal-PHP-SDK/sample/payments/CreatePayment.php" method="post" class="form-horizontal"> -->
         <div class="col-lg-12">
             <div class="page-header">
                 <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-map-marker"></i> Shipping Address </font>
@@ -109,6 +109,7 @@ and open the template in the editor.
             </div>
         </div>
         <!-- Credit card form -->
+		<form id="payment" action="./paypal/payments/CreatePayment.php" method="post" class="form-horizontal">
         <div class="col-lg-12">
             <div class="page-header">
                  <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-credit-card"></i> Payment Information </font>
@@ -125,15 +126,21 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Payment Method</label>
                                 <div class="col-lg-5">
-                                    <input type="radio" name="creditcard" ><img src="./public_html/img/visa-logo.png" alt="" height="50" width="50" />
-                                    &nbsp;&nbsp;<input type="radio" name="creditcard" ><img src="./public_html/img/mastercard-logo.jpg" alt="" height="30" width="50" />
+                                    <input type="radio" name="creditcard" value="visa"><img src="./public_html/img/visa-logo.png" alt="" height="50" width="50" />
+                                    &nbsp;&nbsp;<input type="radio" name="creditcard" value="master"><img src="./public_html/img/mastercard-logo.jpg" alt="" height="30" width="50" />
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">CARD HOLDER</label>
+                                <label class="col-lg-3 control-label">FIRST NAME</label>
                                 <div class="col-lg-5">
-                                    <input type="text" class="form-control" id="cardHolder" name="cardHolder" autocomplete="off"/>
+                                    <input type="text" class="form-control" id="cardHolderFN" name="cardHolderFN" autocomplete="off"/>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-lg-3 control-label">LAST NAME</label>
+                                <div class="col-lg-5">
+                                    <input type="text" class="form-control" id="cardHolderLN" name="cardHolderLN" autocomplete="off"/>
                                 </div>
                             </div>
                             <div class="form-group">
