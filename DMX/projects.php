@@ -29,42 +29,13 @@ and open the template in the editor.
 
         <!-- Optional theme -->
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-        <link rel="stylesheet" href="./public_html/css/carouselHome.css">
         <link rel="stylesheet" href="./public_html/css/main.css">
+        <link rel="stylesheet" href="./public_html/css/dmx_style.css">
         <style>
-            @media screen and (min-width: 1367px){#myNavbar{margin-left:13%;margin-right:13%;}}
             .search_box .form-control:focus{
                 border-color: #cccccc;
                 -webkit-box-shadow: none;
                 box-shadow: none;
-            }
-            #myNavbar{
-                background: -webkit-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Safari 5.1 to 6.0 */
-                background: -o-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Opera 11.1 to 12.0 */
-                background: -moz-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Firefox 3.6 to 15 */
-                background: linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* Standard syntax */
-            }
-            #subscribe_btn{
-                border-radius:0;
-            }
-            
-            .dropdown-menu{
-                margin:0;
-                width:100%
-            }
-            .dropdown-menu li > ul{
-                width:100%;
-                padding-left:35px;
-            }
-            .dropdown-menu li > ul li{
-                width:20px
-            }
-            .dropdown-menu li > ul li:hover{
-                background: #E6E6E6;
-            }
-            h5{
-                text-align: center;
-                margin-top: 0
             }
             .caret{
                 margin-top:8px
@@ -84,7 +55,7 @@ and open the template in the editor.
                 padding:0;
                 overflow: hidden
             }
-            .project-overlay{
+            .project-location-overlay{
                 -webkit-transition: all 0.7s ease;
                 transition: all 0.7s ease;
                 position:absolute;
@@ -97,18 +68,18 @@ and open the template in the editor.
                 background-color: #000000;
                 z-index:1000
             }
-            .project:hover > .project-overlay{
+            .project:hover > .project-location-overlay{
                 margin-top:-200px;
             }
-            .project-overlay h4{
+            .project-location-overlay h4{
                 
                 z-index:1000
             }
-            .project-overlay h4 a{
+            .project-location-overlay h4 a{
                 color:#fff;
                 
             }
-            .project-overlay h4 a:hover{
+            .project-location-overlay h4 a:hover{
                 color:#A3A3A3;
                 
             }
@@ -147,9 +118,9 @@ and open the template in the editor.
     </head>
     <body>
     <?php
-    include_once("./templates/header.php");
+    include_once("./templates/new_header.html");
     ?>
-        <div class='container-fluid' style='margin-top:100px'>
+        <div class='container-fluid'>
             <div class='row' style='height:50px;background-color: rgb(153, 153, 153)'>
             </div>
             <div class='row pull-right' style='height:40px;margin-top:-40px;background:none;border-top: 1px #FFF solid; border-left: 1px #FFF solid;padding-left:1151px'>
@@ -335,6 +306,7 @@ and open the template in the editor.
         
         $(document).ready(function() {
             // kill the filter results session when the page is reloaded
+            $("#loaderID").show();
             <?php
             if(isset($_SESSION['filterResults'])){
                 unset($_SESSION['filterResults']);

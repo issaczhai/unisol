@@ -1,0 +1,134 @@
+/****    large screen   ****/
+@media screen and (min-width: 1367px){
+    body{
+        max-width: 1367px;
+    }
+    .navbar-dmx{
+        min-height:92px;
+        border-radius: 0;
+    }
+    .navbar-dmx .navbar-nav li a, .navbar-dmx .navbar-header{
+        line-height: 92px;
+        height:92px;
+    }
+    .navbar-dmx .navbar-nav li{
+        padding-left: 30px;
+        padding-right: 30px
+    }
+    .project-overlay{
+        position:relative;
+        height: 120px;
+        margin-top: -120px;
+        padding-left: 110px;
+        padding-top: 10px;
+        background-color: rgba(204, 204, 204, 0.5);
+        z-index: 9999;
+    }
+
+} 
+
+/****    desktop   ****/
+@media screen and (min-width: 767px){
+
+    .navbar-dmx{
+        min-height:92px;
+        border-radius: 0;
+    }
+    .navbar-dmx .navbar-nav li a, .navbar-dmx .navbar-header{
+        line-height: 92px;
+        height:92px;
+    }
+    .navbar-dmx .navbar-nav li{
+        padding-left: 30px;
+        padding-right: 30px
+    }
+    .project-overlay{
+        position:relative;
+        height: 120px;
+        margin-top: -120px;
+        padding-left: 110px;
+        padding-top: 10px;
+        background-color: rgba(204, 204, 204, 0.5);
+        z-index: 9999;
+    }
+    
+}
+/****    mobile   ****/
+@media screen and (max-width: 767px){
+    .navbar-dmx .divider{
+        display:none;
+    }
+    .navbar-brand img{
+        display:none;
+    }
+    .frame-thin, .frame-thick, .top-overlay{
+        display:none;
+    }
+    .project-overlay{
+        position:relative;
+        height: 50px;
+        margin-top: -60px;
+        padding-left: 20px;
+        background-color: rgba(204, 204, 204, 0.5);
+    }
+    .detail-thumbnail{
+        text-align: center;
+    }
+}  
+
+.row-no-right-margin{
+    margin-right:0;
+}
+
+#DMXNavbar{
+    border:none;
+    background: -webkit-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* Standard syntax */
+}
+
+.navbar-dmx .navbar-brand{
+    padding-top:0;
+    padding-left:0;
+}
+.navbar-dmx .navbar-collapse{
+    padding-right: 0;
+}
+/*
+.navbar-dmx .navbar-collapse .divider{
+    position:absolute;
+    width:100%;
+    margin-top: 45px;
+    margin-left: 315px;
+    border:1px solid rgba(81, 81, 81, 0.5);
+}
+*/
+.navbar-dmx .divider{
+    position:relative;
+    width:77%;
+    margin-top: -50px;
+    z-index:1000;
+    border-top:1px solid rgba(81, 81, 81, 0.5);
+}
+#subscribe_btn{
+    border-radius:0;
+}
+.dropdown-menu{
+    margin:0;
+    width:100%
+}
+.dropdown-menu li > ul{
+    width:100%;
+    padding-left:35px;
+}
+.dropdown-menu li > ul li{
+    width:20px
+}
+.dropdown-menu li > ul li:hover{
+    background: #E6E6E6;
+}
+h5{
+    text-align: center;
+    margin-top: 0
+}

@@ -14,24 +14,10 @@ and open the template in the editor.
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="./public_html/css/carouselHome.css">
         <link rel="stylesheet" href="./public_html/css/main.css">
+        <link rel="stylesheet" href="./public_html/css/dmx_style.css">
         <style>
-            @media screen and (min-width: 1367px){#myNavbar{margin-left:13%;margin-right:13%;}}
-            .search_box .form-control:focus{
-                border-color: #cccccc;
-                -webkit-box-shadow: none;
-                box-shadow: none;
-            }
-            #myNavbar{
-                background: -webkit-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Safari 5.1 to 6.0 */
-                background: -o-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Opera 11.1 to 12.0 */
-                background: -moz-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Firefox 3.6 to 15 */
-                background: linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* Standard syntax */
-            }
             .carousel-indicators li{
                 border:none;
-            }
-            #subscribe_btn{
-                border-radius:0;
             }
         </style>
         <meta charset="UTF-8">
@@ -39,9 +25,8 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        include_once("./templates/header.php");
+        include_once("./templates/new_header.html");
         ?>
-        <div style="position:relative;width:100%;height:10px;background-color:#9E9E9E;margin-top:112px"></div>
         <div style="position:absolute;width:85%;height:375px;background:none;margin-top:40px;margin-left:15%;z-index:3;border-top:2px solid #ffffff;border-left:2px solid #ffffff"></div>
     	<div id="index-carousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
@@ -86,6 +71,6 @@ and open the template in the editor.
         ?>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./public_html/js/main.js">
+    <script src="./public_html/js/main.js"></script>
     </body>
 </html>
