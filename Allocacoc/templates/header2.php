@@ -66,7 +66,7 @@
         ?>
         <ul class="pull-right" style="margin-top:15px">
             <li class="overlay-nav-item" style="margin-right:17px">
-                <a class='overlay-text' href="#signup" data-toggle="modal" data-target=".bs-modal-sm"><i class="fa fa-user fa-lg"></i> login</a>
+                <a class='overlay-text' href="#signup" data-toggle="modal" data-target=".bs-modal-sm"> login</a>
             </li>
         </ul>
         <?php
@@ -74,7 +74,7 @@
         ?>
         <ul class="pull-right" style="margin-top:15px">
             <li class="overlay-nav-item" style="margin-right:17px">
-                <a class='overlay-text' href="./account.php"><i class="fa fa-user fa-lg"></i> <?php echo $username ?></a>
+                <a class='overlay-text' href="./account.php"> <?php echo $username ?></a>
             </li>
             <li class="overlay-nav-item" style="margin-right:17px">
                 <a class='overlay-text' href="./logout.php"> Logout</a>

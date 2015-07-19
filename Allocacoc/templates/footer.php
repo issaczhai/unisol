@@ -9,11 +9,11 @@
     <div class="row" style="position:relative;margin-top:0px;background-color:#0087A0;">
         
         <div id="path" class='col-md-2 col-md-offset-2 col-xs-6 col-xs-offset-0' style="margin-top:10px;margin-bottom:10px">
-            <img src="#" height="20" width="20"/>
+            <i class="fa fa-gift fa-lg" style="color: #ffffff"></i>
             <?php if($currentPage !== ""){ ?>
-            <span>webshop > <?php echo $currentPage ?></span>
+            <span> webshop > <?php echo $currentPage ?></span>
             <?php }else{ ?>
-            <span>webshop</span>
+            <span> webshop</span>
             <?php } ?>
         </div>
         <div id="redirection" class='col-md-3 col-md-offset-3 col-xs-6 col-xs-offset-0' style="margin-top:10px;margin-bottom:10px">
