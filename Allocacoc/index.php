@@ -16,6 +16,11 @@ and open the template in the editor.
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="./public_html/css/carouselHome.css">
         <link rel="stylesheet" href="./public_html/css/main.css">
+        <!-- Scripts -->        
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="./public_html/js/main.js"></script>
+        <script src="./public_html/js/allocacoc.js"></script>
         <!-- full screen carousel style -->
         <style>
              html,body{height:100%;}
@@ -239,17 +244,8 @@ and open the template in the editor.
                 <span class="glyphicon glyphicon-chevron-right"></span>
                 </a> -->
         </div><!-- /carousel -->
-        <?php
-        $currentPage = "";
-        include_once("./templates/footer.php");
-        ?>
-        
-        
-<!-- Scripts -->        
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script src="./public_html/js/main.js"></script>
-<script src="./public_html/js/allocacoc.js"></script>
+
+
 <!-- display product detail modal
 <script>
     function getProductDetail(product_id){

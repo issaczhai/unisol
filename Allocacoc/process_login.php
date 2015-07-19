@@ -35,11 +35,11 @@ if($customer !== []){
                 $customerMgr->updateCredit($userid, 10.0);
                 setcookie('sender_email','' , time()-1);
                 $form_data['status'] = 'success';
-                $form_data['message'] = "Congratulations! You have got <br> $10 credits from your friend!";
+                $form_data['message'] = "Congratulations! You have got $10 credits from your friend!";
 
             }else{
                 $form_data['status'] = 'fail';
-                $form_data['message'] = "You have already received <br> credit from your friend!";
+                $form_data['message'] = "You have already received credit from your friend!";
                 setcookie('sender_email','' , time()-1);
 
             }

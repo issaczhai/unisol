@@ -58,7 +58,7 @@ if($form_data['success']=="true"){
         $creditMgr->addCredit($sender_email, $email);        
         $customerMgr->updateCredit($email, 10.0);
         $form_data['status'] = 'success';
-        $form_data['message'] = "Congratulations! You have got <br> $10 credits from your friend!";
+        $form_data['message'] = "Congratulations! You have got $10 credits from your friend!";
         setcookie('sender_email','' , time()-1);
     }
     if(isset($_SESSION['temp_product_id_to_cart']) && !empty($_SESSION['temp_product_id_to_cart'])){

@@ -47,16 +47,16 @@ $(document).ready(function () {
         }else if(status === "fail"){
             $('#user_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
         }else if(status === "pending"){
-            $('#sign_in_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
+            $('#about_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
         }else{
-            $('#sign_in_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
+            $('#about_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
             $('#user_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
         }
         $('#popover_element').popover({content: message,html: true});
         $('#popover_element').popover('show');
         window.setTimeout(function(){
             $('#popover_element').popover('hide');
-        }, 6000); //6000 are the ms until the timeout is called
+        }, 900000); //6000 are the ms until the timeout is called
     }
     
 });
@@ -68,8 +68,9 @@ background-color: black;
 color: gainsboro;
 float: right;
 margin-top: 0px;
-max-width: 500px;
-max-height: 200px;
+width: 200px;
+height: 75px;
+word-break: keep-all;
 }
 .navbar-default{
     background-image: -webkit-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Safari 5.1 to 6.0 */
@@ -97,7 +98,7 @@ max-height: 200px;
 
                 <li><a href="./news.php"> NEWS</a></li>
 
-                <li><a href="#"> ABOUT US</a></li>
+                <li id="about_element"><a href="#"> ABOUT US</a></li>
                 <?php
             // if the user is not logged in
             if(empty($username)){
