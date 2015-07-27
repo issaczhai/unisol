@@ -237,6 +237,7 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
+        
         <div class="row">
             <div class="col-sm-12 col-md-10 col-md-offset-1">
                 <?php 
@@ -275,7 +276,7 @@ and open the template in the editor.
                            <tr>
                                 <td class="col-sm-1 col-md-1 text-center">
                                     <div class="checkbox-cartItem">
-                                      <input id="<?= $cboxid ?>" type="checkbox">
+                                      <input id="<?= $cboxid ?>" name="selectItem" type="checkbox" value="<?= $cboxid ?>">
                                       <label for="<?= $cboxid ?>"></label>
                                     </div>
                                 </td>
@@ -283,6 +284,7 @@ and open the template in the editor.
                                     <div class="media">
                                         <div class="cartItemImg" style="width:88px;height:88px;overflow:hidden;position:relative;float:left">
                                             <a href="./product_detail.php?selected_product_id=<?=$each_cart_item_id ?>&customer_id=<?=$userid ?>"> <img style="position:absolute !important;" src="./public_html/img/GE.png" onload="OnCartItemImageLoad(event)"> </a>
+                                            
                                         </div>
                                         <div class="media-body  text-center">
                                             
@@ -351,8 +353,8 @@ and open the template in the editor.
                                     <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                                 </button></td>
                                 <td>
-                                <button type="button" class="btn btn-checkOut" onclick="location.href = './payment.php';">
-                                    Checkout</span>
+                                <button type="button" class="btn btn-checkOut" onclick="proceedToPayment();">
+                                <span>Checkout</span>
                                 </button></td>
                             </tr>
                         </tbody>
@@ -466,6 +468,22 @@ and open the template in the editor.
         $('.confirmDeleteModal').modal('hide');
 
     });
+
+    function proceedToPayment(){
+        var checkoutList = [];
+        var cB = document.getElementsByName("selectItem");
+        for (i = 0; i < cB.length; i++) {
+            if (cB[i].checked) {
+                var id = cB[i].value.split("cbox")[0];
+                var item = { //Fetch form data
+                    'productId'     : id, //Store productId of item
+                    'quantity'   : $('#'+id+'qty').val() //Store quantity of item
+                };
+                checkoutList.push(item);
+            }
+        }
+        console.log(checkoutList);
+    }
 </script>
 
     </body>

@@ -34,19 +34,37 @@ and open the template in the editor.
     }
     include_once("./templates/header2.php");
     ?>
-      
-    <!--<form id="payment" action="./PayPal-PHP-SDK/sample/payments/CreatePayment.php" method="post" class="form-horizontal"> -->
-        <div class="col-lg-12">
-            <div class="page-header">
-                <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-map-marker"></i> Shipping Address </font>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                     Shipping Address
+    
+    <form id="payment" action="./paypal/payments/CreatePayment.php" method="post" class="form-horizontal">
+        <ul class="wizard">
+            <li>
+                <div class="col-lg-4">
+                    <div class="page-header">
+                        <font id="shippingInfo_tab" style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-map-marker"></i>&#160; Step.1 Shipping Address </font>
+                    </div>
                 </div>
-                <br>
+            </li>
+            <li>
+                <div class="col-lg-4">
+                    <div class="page-header">
+                        <font id="paymentInfoTab" style="color: #D8D8D8;font-weight: bold; font-size:17px"><i id="paymentInfoIcon" class="fa fa-credit-card" style="color: #D8D8D8"></i>&#160; Step.2 Payment Information </font>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="col-lg-4">
+                    <div class="page-header">
+                         <font id="emailInfoTab" style="color:#D8D8D8;font-weight: bold; font-size:17px"><i id="emailInfoIcon" class="fa fa-file-text-o" style="color: #D8D8D8"></i>&#160; Step.3 Receipt </font>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        
+        
+        <div class="tab-content">
+            
+        <div class="tab-pane fade active in col-lg-12" id="shippingInfo">
+            <div class="panel panel-default">
                 <!-- driver registration-->
                 <div class="panel-body">
     <!--                <form role="form" id="shippingform" class="form-horizontal">-->
@@ -102,24 +120,21 @@ and open the template in the editor.
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-lg-3 col-lg-offset-5">
+                                    <a class="btn btn-primary" style="width:100px" href="#paymentInfo" data-toggle="tab" onclick="showTab('paymentInfo');">Next</a>
+                                </div>
+                            </div>
                         </fieldset>
 
                     <!--</form>-->
                 </div>    
             </div>
         </div>
-        <!-- Credit card form -->
-		<form id="payment" action="./paypal/payments/CreatePayment.php" method="post" class="form-horizontal">
-        <div class="col-lg-12">
-            <div class="page-header">
-                 <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-credit-card"></i> Payment Information </font>
-            </div>
-        </div>
-        <div class="col-lg-12 col-md-6">
+        <!--<form id="payment" action="./paypal/payments/CreatePayment.php" method="post" class="form-horizontal">-->
+        
+        <div class="tab-pane fade col-lg-12 col-md-6" id="paymentInfo">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Payment Details</h3>
-                </div>
                 <div class="panel-body">
     <!--                <form role="form" id="payment-form" class="form-horizontal">-->
                         <fieldset>
@@ -148,7 +163,7 @@ and open the template in the editor.
                                 <div class="col-lg-5">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
-                                        <input type="text" class="form-control" name="cardNumber" placeholder="Valid Card Number" required autofocus data-stripe="number" autocomplete="off"/>
+                                        <input type="text" class="form-control" name="cardNumber" placeholder="Valid Card Number" required data-stripe="number" autocomplete="off"/>
                                     </div>
                                 </div>
                             </div>
@@ -173,22 +188,21 @@ and open the template in the editor.
                                 <p class="payment-errors"></p>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="col-lg-4 col-lg-offset-4">
+                                <a class="btn btn-default" style="width:100px" href="#shippingInfo" data-toggle="tab">Previous</a>
+                                <a class="btn btn-primary" style="width:100px" href="#emailInfo" data-toggle="tab" onclick="showTab('emailInfo');">Next</a>
+                            </div>
+                        </div>
     <!--                </form>-->
                 </div>
             </div>
         </div>
 
         <!-- receipt -->
-        <div class="col-lg-12">
-            <div class="page-header">
-                 <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-file-text-o"></i> Receipt </font>
-            </div>
-        </div>
-        <div class="col-lg-12 col-md-6">
+        
+        <div class="tab-pane fade col-lg-12 col-md-6" id="emailInfo">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Electronic Receipt for Purchase</h3>
-                </div>
                 <div class="panel-body">
     <!--                <form id="receipt-email" role="form" class="form-horizontal">-->
                         <fieldset>
@@ -199,12 +213,19 @@ and open the template in the editor.
                                     <input type="text" class="form-control" name="receiptemail" placeholder="example@gmail.com" autocomplete="off" />
                                 </div>
                             </div>
+                            <div class="form-group">
+                            <div class="col-lg-3 col-lg-offset-5">
+                                <a class="btn btn-default" style="width:100px" href="#paymentInfo" data-toggle="tab">Previous</a>
+                            </div>
+                        </div>
                         </fieldset>    
     <!--                </form>-->
                 </div>
             </div>
         </div>
 
+        </div> <!-- end of tab-content class -->
+        
         <!-- receipt -->
         <div class="col-lg-12">
             <div class="page-header">
@@ -233,20 +254,6 @@ and open the template in the editor.
                                     <td align="center">3</td>    
                                     <td align="center">4</td>
                                     <td align="center">5</td> 
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2</td>    
-                                    <td align="center">3</td>    
-                                    <td align="center">4</td>
-                                    <td align="center">5</td> 
-                                </tr>
-                                <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2</td>    
-                                    <td align="center">3</td>    
-                                    <td align="center">4</td>
-                                    <td align="center">5</td>  
                                 </tr>
                             </tbody>
                         </table>
@@ -461,6 +468,16 @@ and open the template in the editor.
         $('#resetBtn1').click(function() {
             $('#payment').data('bootstrapValidator').resetForm(true);
         });
+        
+    </script>
+    
+    <script>
+    function showTab(tabName){
+        var tab = document.getElementById(tabName+"Tab");
+        tab.style.color = "#008ba4";
+        var icon = document.getElementById(tabName+"Icon");
+        icon.removeAttribute("style");
+    }
     </script>
     </body>
 </html>
