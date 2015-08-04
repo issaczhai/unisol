@@ -9,9 +9,13 @@ session_start();
 $_SESSION["admin_id"] = "michael";
 include 'protect/admin_protect.php'; 
 
-foreach(glob($_SERVER['DOCUMENT_ROOT'].'/Manager/*.php') as $file) {
-     include_once $file;
-}
+include_once("./Manager/ConnectionManager.php");
+include_once("./Manager/ProductManager.php");
+include_once("./Manager/CreditManager.php");
+include_once("./Manager/FdpManager.php");
+include_once("./Manager/CustomerManager.php");
+include_once("./Manager/PhotoManager.php");
+include_once("./Manager/RewardManager.php");
 
 $admin = $_SESSION["admin_id"];
 
@@ -109,6 +113,9 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                     </li>
                     <li id="freeDeliveryPrice_tab">
                         <a href="#freeDeliveryPrice" data-toggle="tab"><i class="fa fa-fw fa-usd"></i> Free Delivery Price</a>
+                    </li>
+                    <li id="manageReward_tab">
+                        <a href="#manageReward" data-toggle="tab"><i class="fa fa-fw fa-trophy"></i> Manage Reward</a>
                     </li>
                 </ul>
             </div>
@@ -569,6 +576,69 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                     </div>
                 </div>
                 
+                
+                <!--manageReward tab content-->
+                <div class="tab-pane fade" id="manageReward">
+                    <div id="page-wrapper">
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h1 class="page-header">
+                                        Manage Reward
+                                    </h1>
+                                </div>
+                            </div>
+                            
+                            <!--Manage Reward TABLE ROW-->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> Reward Code List</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover table-striped" id="display_code">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="10%">S/N</th>
+                                                            <th width="40%">Code</th>
+                                                            <th width="30%">Beneficiaries</th>
+                                                            <th width="20%" style="text-align:center">Option</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        //$rewardMgr = new RewardManager();
+                                                        $rewardCodeList = ["1","3423"];
+                                                        foreach ($rewardCodeList as $rewardCode){
+                                                           
+                                                        ?>
+                                                           <tr>
+                                                               <td><?php echo ""; ?></td>
+                                                               <td><?php echo ""; ?></td>
+                                                               <td><?php echo ""; ?></td>
+                                                               <td style="text-align:center"><div class="btn"><span>Expire <i class="fa fa-trash-o"></i></span><input type="button" onclick="expireRewardCode();" value="Expire Code"/></div></td>
+                                                           </tr>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+<!--                                        <div class="text-right">
+                                                <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                        </div>
+                    </div>
+                        
+                </div>
                 <!-- /#wrapper -->
             </div>
         
