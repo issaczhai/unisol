@@ -15,7 +15,8 @@ and open the template in the editor.
         $project_id = filter_input(INPUT_GET, 'project_id');
         $projectMgr = new ProjectManager();
 
-        $project = $projectMgr->getProject($project_id);
+        $project = $projectMgr->getProject($project_id);    
+        $completionDate = date_create_from_format('Y-m-d H:i:s', $project['completion_date']);
         
     ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,7 +46,6 @@ and open the template in the editor.
         .main-image .detail-image{
             width:100%;
         }
-        
         .top-overlay{
             position:absolute;
             width:100%;
@@ -148,7 +148,7 @@ and open the template in the editor.
                             <li><?= $project['project_name'] ?></li>
                             <li>LOCATION: <?= $project['location'] ?></li>
                             <li>SIZE: <?= $project['size'] ?></li>
-                            <li>COMPLETION DATE: <?= $project['completion_date'] ?></li>
+                            <li>COMPLETION DATE: <?= date_format($completionDate, 'M Y') ?></li>
                         </ul>
                         <div class="thumbnails">
                         <div class="col-xs-6 col-md-4 detail-thumbnail">
