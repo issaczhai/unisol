@@ -26,14 +26,11 @@ and open the template in the editor.
     <link rel="stylesheet" href="./public_html/css/main.css">
     <link rel="stylesheet" href="./public_html/css/dmx_style.css">
     <style>
-        
-        .col-xs-12, .col-xs-6{
-            padding:0;
+        body{
+            padding-top: 102px;
         }
-        .wrapper{
-            width:100%;
-            padding-left: 0;
-            padding-right: 0;
+        .detail-thumbnail{
+            padding:0;
         }
         .search_box .form-control:focus{
             border-color: #cccccc;
@@ -59,7 +56,7 @@ and open the template in the editor.
         .frame-thin{
             position: absolute;
             margin-top: 67px;
-            height:453px;
+            height:442px;
             width:55%;
             background: none;
             z-index:1000;
@@ -83,7 +80,6 @@ and open the template in the editor.
        .frame-thick{
             position:relative;
             margin-top: -500px;
-            margin-right:0 !important;
             height:480px;
             padding-left:95%;
             z-index:1001;
@@ -97,8 +93,10 @@ and open the template in the editor.
             height:100%;
         }
         .detail-thumbnail{
+            cursor: pointer;
             padding:10px;
             margin-bottom: 10px;
+            z-index: 9999;
         }
         .inline-list{
             margin-top: 30px;
@@ -109,115 +107,95 @@ and open the template in the editor.
             list-style: none;
             margin-bottom: 15px;
         }
+        footer{
+            bottom: auto;
+            margin-top:152px; /* shift the footer under the project-overlay and leave 10px margin*/
+        }
     </style>
 
-
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    
     <meta charset="UTF-8">
     <title>Projects</title>
     </head>
     <body>
-        <div class="container-fluid wrapper">
+        <div class="wrapper">
             <?php
             include_once("./templates/new_header.html");
             ?>
-            <div class="top-overlay">
-            </div>
-
-            <div class="frame-thin">
-            </div>
-
-            <div class="row row-no-right-margin">
-                <!-- Carousel -->
-                
-                <div class="col-md-9 content-info">
-
-                    <div class="main-image">
-                        <img class="detail-image" src="./public_html/img/detailImg/sample1.jpg">
-                    </div>
-
-                    <div class="project-overlay">
-                        <h4><?= $project['project_name'] ?></h4>
-                        <p><?= $project['description'] ?></p>
-                    </div>
+            <div class="container-fluid">
+                <div class="row top-overlay">
                 </div>
 
-                <div class="col-md-3 project-info">
-                    <ul class="inline-list">
-                        <li><?= $project['project_name'] ?></li>
-                        <li>LOCATION: <?= $project['location'] ?></li>
-                        <li>SIZE: <?= $project['size'] ?></li>
-                        <li>COMPLETION DATE: <?= $project['completion_date'] ?></li>
-                    </ul>
-                    <div class="thumbnails">
-                    <div class="col-xs-6 col-md-4 detail-thumbnail">
-                        <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample1.jpg" src="./public_html/img/thumbnailImg/sample1.jpg">
-                    </div>
-                    <div class="col-xs-6 col-md-4 detail-thumbnail">
-                        <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample2.jpg" src="./public_html/img/thumbnailImg/sample2.jpg">
-                    </div>
-                    <div class="col-xs-6 col-md-4 detail-thumbnail">
-                        <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample4.jpg" src="./public_html/img/thumbnailImg/sample4.jpg">
-                    </div>
-                    <div class="col-xs-6 col-md-4 detail-thumbnail">
-                        <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample5.jpg" src="./public_html/img/thumbnailImg/sample5.jpg">
-                    </div>
-                    <div class="col-xs-6 col-md-4 detail-thumbnail">
-                        <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample6.jpg" src="./public_html/img/thumbnailImg/sample6.jpg">
-                    </div>
-                    <div class="col-xs-6 col-md-4 detail-thumbnail">
-                        <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample1.jpg" src="./public_html/img/thumbnailImg/sample1.jpg">
-                    </div>
-                    <div class="col-xs-6 col-md-4 detail-thumbnail">
-                        <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample2.jpg" src="./public_html/img/thumbnailImg/sample2.jpg">
-                    </div>
-                    <div class="col-xs-6 col-md-4 detail-thumbnail">
-                        <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample4.jpg" src="./public_html/img/thumbnailImg/sample4.jpg">
-                    </div>
-                    <div class="col-xs-6 col-md-4 detail-thumbnail">
-                        <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample5.jpg" src="./public_html/img/thumbnailImg/sample5.jpg">
-                    </div>
-                    </div>
+                <div class="row frame-thin">
                 </div>
 
-            </div>
-            <div class="row frame-thick pull-right">
-            </div>
-            <!--
-            <div class="row">
-                <div class="col-md-10 thumbnails">
-                    <div class="col-md-1">
+                <div class="row">
+                    <!-- Carousel -->
+                    
+                    <div class="col-md-9 content-info">
+
+                        <div class="main-image">
+                            <img class="detail-image" src="./public_html/img/detailImg/sample1.jpg">
+                        </div>
+
+                        <div class="project-overlay">
+                            <h4><?= $project['project_name'] ?></h4>
+                            <p><?= $project['description'] ?></p>
+                        </div>
                     </div>
-                    <div class="col-md-1">
+
+                    <div class="col-md-3 project-info">
+                        <ul class="inline-list">
+                            <li><?= $project['project_name'] ?></li>
+                            <li>LOCATION: <?= $project['location'] ?></li>
+                            <li>SIZE: <?= $project['size'] ?></li>
+                            <li>COMPLETION DATE: <?= $project['completion_date'] ?></li>
+                        </ul>
+                        <div class="thumbnails">
+                        <div class="col-xs-6 col-md-4 detail-thumbnail">
+                            <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample1.jpg" src="./public_html/img/thumbnailImg/sample1.jpg">
+                        </div>
+                        <div class="col-xs-6 col-md-4 detail-thumbnail">
+                            <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample2.jpg" src="./public_html/img/thumbnailImg/sample2.jpg">
+                        </div>
+                        <div class="col-xs-6 col-md-4 detail-thumbnail">
+                            <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample4.jpg" src="./public_html/img/thumbnailImg/sample4.jpg">
+                        </div>
+                        <div class="col-xs-6 col-md-4 detail-thumbnail">
+                            <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample5.jpg" src="./public_html/img/thumbnailImg/sample5.jpg">
+                        </div>
+                        <div class="col-xs-6 col-md-4 detail-thumbnail">
+                            <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample6.jpg" src="./public_html/img/thumbnailImg/sample6.jpg">
+                        </div>
+                        <div class="col-xs-6 col-md-4 detail-thumbnail">
+                            <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample1.jpg" src="./public_html/img/thumbnailImg/sample1.jpg">
+                        </div>
+                        <div class="col-xs-6 col-md-4 detail-thumbnail">
+                            <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample2.jpg" src="./public_html/img/thumbnailImg/sample2.jpg">
+                        </div>
+                        <div class="col-xs-6 col-md-4 detail-thumbnail">
+                            <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample4.jpg" src="./public_html/img/thumbnailImg/sample4.jpg">
+                        </div>
+                        <div class="col-xs-6 col-md-4 detail-thumbnail">
+                            <img class="thumbnail-link" data-img="./public_html/img/detailImg/sample5.jpg" src="./public_html/img/thumbnailImg/sample5.jpg">
+                        </div>
+                        </div>
                     </div>
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-1">
-                    </div>
+
+                </div>
+                <div class="row frame-thick pull-right">
                 </div>
             </div>
-            -->
         </div> 
     <?php
-        //include_once("./templates/footer.php");
+        include_once("./templates/footer.php");
     ?>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="./public_html/js/main.js"></script>
     <script>
-        $('.thumbnails').on('click','.thumbnail-link', function(){
-            console.log('called');
-            $('.main-image').src = $(this).attr('data-img');
+        $('.detail-thumbnail').on('click','.thumbnail-link', function(){
+            $('.detail-image').attr('src', $(this).attr('data-img'));
         });
     </script>
     </body>

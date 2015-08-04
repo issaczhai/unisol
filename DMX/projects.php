@@ -32,6 +32,12 @@ and open the template in the editor.
         <link rel="stylesheet" href="./public_html/css/main.css">
         <link rel="stylesheet" href="./public_html/css/dmx_style.css">
         <style>
+            /*html, body{
+                height: 100%;    
+            }*/
+            body{
+                padding-top: 102px;
+            }
             .search_box .form-control:focus{
                 border-color: #cccccc;
                 -webkit-box-shadow: none;
@@ -110,6 +116,9 @@ and open the template in the editor.
                 cursor: default;
                 background-color:#fff !important;
             }
+            footer{
+                bottom: auto;
+            }
             
         </style>
         
@@ -117,6 +126,7 @@ and open the template in the editor.
         <title>Projects</title>
     </head>
     <body>
+    <div class="wrapper">
     <?php
     include_once("./templates/new_header.html");
     ?>
@@ -243,10 +253,11 @@ and open the template in the editor.
                     
             </div>
         </div>
-        
-    <?php
-        //include_once("./templates/footer.php");
-    ?>
+        <?php
+            include_once("./templates/footer.php");
+        ?>
+    </div>
+    
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="./public_html/js/main.js"></script>

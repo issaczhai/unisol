@@ -47,7 +47,7 @@ and open the template in the editor.
                 display:table-cell;
                 vertical-align: bottom;
             }
-            #sidebar{
+            .sidebar{
                 background-color: #FAFAFA;
                 /*margin-right: 1px;*/
                 padding-top: 60px;
@@ -57,7 +57,7 @@ and open the template in the editor.
                 /*width: 196px;*/
                 height: 450px;
             }
-            #sidebar .collapser{
+            .sidebar .collapser{
                 cursor: pointer;
             }
             #contact{
@@ -147,7 +147,7 @@ and open the template in the editor.
         <div class='container-fluid'>
 			
             <div class='row'>
-                <div id='sidebar' class='col-md-2'>
+                <div class='col-md-2 sidebar'>
                     <div style='margin-top:8px'>
                         <table style="border-collapse: separate;border-spacing: 6px;">
                             <tr><td><a class="collapser" id="singapore" onclick="showRow('singapore')" style="color: #000000;"> +  SINGAPORE</a></td></tr>

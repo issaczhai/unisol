@@ -16,76 +16,141 @@ and open the template in the editor.
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="./public_html/css/carouselHome.css">
         <link rel="stylesheet" href="./public_html/css/main.css">
+        <link rel="stylesheet" href="./public_html/css/style.css">
+        <link rel="stylesheet" href="./public_html/css/dmx_style.css">
         <style>
-            @media screen and (min-width: 1367px){#myNavbar{margin-left:13%;margin-right:13%;}}
-            .search_box .form-control:focus{
-                border-color: #cccccc;
-                -webkit-box-shadow: none;
-                box-shadow: none;
+            html, body{
+                height: 100%;    
+            }
+            body{
+                padding-top: 102px
+            }
+            
+            .team-bonding-carousel{
+                padding:0;
+            }
+            .team-bonding-carousel img{
+                width:100%;
+            }
+            .title{
+                position: relative;
+                width: 100%;
+                display:table;
+                padding:0;
+                margin-top:10px;
+                margin-bottom: 15px;
+                height: 40px;
+                background-color: #BDBDBD;
+                color: #FFFFFF;
+                font-size: 18px;
+                bottom: 0;
+                text-align: center;
+                z-index: 1000;
+            }
+            #title-name{
+                position:relative;
+                display:table-cell;
+                vertical-align: bottom;
             }
         </style>
         <meta charset="UTF-8">
-        <title>DMX</title>
+        <title>DMX Services</title>
     </head>
     <body>
+        <div class="wrapper">
         <?php
-        include_once("./templates/header.php");
+        include_once("./templates/new_header.html");
         ?>
-        <div style="position:relative;width:100%;height:50px;background-color:#9E9E9E;margin-top:112px"></div>
-        <div style="position:absolute;width:90%;height:401px;background:none;margin-top:-42px;margin-left:10%;z-index:3;border-top:1px solid #474747;border-left:1px solid #474747"></div>
-        <div style="position:relative;width:100%;height:400px;background-color:#fff">
-          <div class="container">
-            <div class="row">
-                <div class="col-sm-2" style=";margin-top:-20px; margin-left:-15px">
-                   
-                    Service
-                    
+          <div class="container-fluid service-content-wrapper">
+            <div class="row no-margin-row">
+                <div class="col-xs-12 col-sm-12 col-md-2 service-sidebar">
+                        <div class="title"><h4 id='title-name'>SERVICES</h4></div>
+                        <ul class="service">
+                            <li>
+                               <button class="btn btn-service active-service" value="Dmxchange analyzes the Client’s future work place needs and space strategies for the impact they will have on the over all premises portfolio. 
+                                    Opportunities for alternative office solutions are explored to maximize the effectiveness of space usage. 
+                                    An optimum list of project requirements is proposed in close consultation with the Client to resolve potentially conflicting needs.">
+                               Strategic Space Planning</button> 
+                            </li>
+                            <li>
+                                <button class="btn btn-service" value="Dmxchange develops comparative base building analyses together with the Client’s real estate agents and advisors; test-fits workplace standards and detailed project requirement against alternative buildings; and assists the Client in selecting the building that best satisfies the Client’s objectives.">
+                                Design Development</button> 
+                            </li>
+                            <li>
+                                <button class="btn btn-service" value="Dmxchange provides documents and drawings indicating material and workmanship to confirm planning and design intent comprehensive for construction.">
+                                Construction Documentation</button> 
+                            </li>
+                            <li>
+                                <button class="btn btn-service" value="Dmxchange manages both the Pre-Construction stages - interior design, planning, IT, - and the Construction stage to ensure control of cost, control of time, and control of quality resulting in timely delivery and best value for money.">
+                                Project Management</button> 
+                            </li>
+                            <li>
+                                <button class="btn btn-service" value="Dmxchange provides technical project management services that ensure, through seamless integration with design compliance to local construction codes and regulations. We provides submissions to various Authority such as URA and FSSB">
+                                Authority Submission</button> 
+                            </li>
+                            <li>
+                                <button class="btn btn-service" value="Dmxchange’s service provides the ultimate result – correctly executed and on time. We believe in working directly with each trade and supplier to tightly control the budget, quality and timeliness of all construction.">
+                                Procurement and Construction</button> 
+                            </li>
+                            <li>
+                                <button class="btn btn-service" value="Dmxchange provides after service support and will make regular visit to the Client’s office after moved in to ensure all installation are in well order">
+                                Service Support</button> 
+                            </li>
+                        </ul>
                 </div>
                     
-                    <div class="col-sm-5" style=";margin-left:80px" >
-                        About Us About Us About Us About Us About Us About
-                        About Us About Us About Us Us About Us About Us About 
-                        About Us About Us About Us Us About Us About Us 
-                    </div>
+                <div class="col-xs-12 col-sm-12 col-md-5 aboutUs-text">
+                    <p>
+                        Dmxchange analyzes the Client’s future work place needs and space strategies for the impact they will have on the over all premises portfolio. 
+                        Opportunities for alternative office solutions are explored to maximize the effectiveness of space usage. 
+                        An optimum list of project requirements is proposed in close consultation with the Client to resolve potentially conflicting needs.
+                    </p>
+                     
+                </div>
                     
-                    <div class="col-sm-5"style=";margin-left:110px;">
-                        <div id="index-carousel" class="carousel slide" data-ride="carousel" >
-                         <!-- Indicators -->
+                <div class="col-xs-12 col-sm-12 col-md-5 team-bonding-carousel">
+                    <div id="index-carousel" class="carousel slide" data-ride="carousel" >
+                         <!-- Indicators
                             <ol class="carousel-indicators">
                                 <li data-target="#index-carousel" data-slide-to="0" class="active"></li>
                                 <li data-target="#index-carousel" data-slide-to="1"></li>
                                 <li data-target="#index-carousel" data-slide-to="2"></li>
                             </ol>
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner" >
-                                <div class="item active">
-                                    <img src="./public_html/img/team.png" alt="First slide">
-                                    <div class="carousel-caption"></div>
-                            <!-- Static Header -->
-                                </div>
-                                <div class="item">
-                                    <img src="./public_html/img/team.png" alt="Second slide">
-                                    <div class="carousel-caption"></div>
-
-                                </div>
-                                <div class="item">
-                                    <img src="./public_html/img/team.png" alt="Third slide">
-                                    <div class="carousel-caption"></div>
-                                </div>
+                          -->
+                        <div class="carousel-inner" >
+                            <div class="item active">
+                                <img src="./public_html/img/aboutImg/team1.jpg" alt="First slide">
+                                <div class='about-carousel-caption'>DMX</div> 
                             </div>
-                        <img src="./public_html/img/cover.png" style="position: absolute; margin-top: -400px"alt="team" />
+                            <div class="item">
+                                <img src="./public_html/img/aboutImg/team2.jpg" alt="Second slide">
+                                <div class='about-carousel-caption'>DMX</div>  
+                            </div>
+                            <div class="item">
+                                <img src="./public_html/img/aboutImg/team3.jpg" alt="Third slide">
+                                <div class='about-carousel-caption'>DMX</div> 
+                            </div>
+                        </div>
+                        <!--<img src="./public_html/img/cover.png" style="position: absolute; margin-top: -400px"alt="team" />-->
                     </div>
                 </div>
-            </div>
-                     
+            </div>   
+            <div class='row no-margin-row service-top-overlay'></div>
+            <div class='row service-hollow-frame pull-right no-margin-row'></div>
         </div>
-        <div style="position:absolute;width:100%;height:35px;background-color:#A8A8A8"></div>
+        </div>
         <?php
         include_once("./templates/footer.php");
         ?>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./public_html/js/main.js">
-    <link rel="stylesheet" href="./public_html/css/style.css">
+    <script src="./public_html/js/main.js"></script>
+    <script>
+    $('.service li').on('click','.btn-service', function(){
+        $('.aboutUs-text p').text(this.value);
+        $('.btn-service').removeClass('active-service');
+        $(this).addClass('active-service');
+    });
+    </script>
     </body>
 </html>
