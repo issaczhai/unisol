@@ -14,11 +14,25 @@ use PayPal\Api\Details;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
 use PayPal\Api\CreditCard;
+use PayPal\Api\CurrencyConversion;
 use PayPal\Api\Payer;
 use PayPal\Api\Payment;
 use PayPal\Api\FundingInstrument;
 use PayPal\Api\Transaction;
 use PayPal\Api\RedirectUrls;
+
+include_once("/../../Manager/ConnectionManager.php");
+include_once("/../../Manager/RewardManager.php");
+include_once("/../../Manager/CreditManager.php");
+include_once("/../../Manager/CustomerManager.php");
+if (!isset($_SESSION)) {
+  session_start();
+}
+$userid = null;
+$userid = $_SESSION["userid"];
+$rewardMgr = new RewardManager();
+$creditMgr = new CreditManager();
+$customerMgr = new CustomerManager();
 
 // ### CreditCard
 // A resource representing a credit card that can be
@@ -68,20 +82,54 @@ $payer->setPaymentMethod("credit_card")
 // ### Itemized information
 // (Optional) Lets you specify item wise
 // information
-$item1 = new Item();
-$item1->setName('powercube')
+$rewardCode = filter_input(INPUT_POST,'rewardCode');
+$invite = filter_input(INPUT_POST,'invite');
+$gift = null;
+if(!empty($rewardCode)){
+    $gift = $rewardMgr->getGiftByRewardCode($rewardCode);
+    $rewardMgr->addToHistory($userid, $rewardCode);
+}
+if(!empty($invite)){
+    $creditMgr->updateCreditStatusToTrue($invite, $userid);
+}
+
+
+$totalPrice = 0.0;
+$itemList = new ItemList();
+$listLength = filter_input(INPUT_POST,'listLength');
+$list=array();
+for ($x=1; $x<=intval($listLength); $x++) {
+    $item = new Item();
+    $product = filter_input(INPUT_POST,'product'.strval($x));
+    $quantity = intval(filter_input(INPUT_POST,'quantity'.strval($x)));
+    $priceSGD = doubleval(filter_input(INPUT_POST,'price'.strval($x)));
+    $url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDSGD%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+    $data = file_get_contents($url);
+    $jsonObj = json_decode($data,true);
+    $USDSGDRate = doubleval($jsonObj['query']['results']['rate']['Rate']);
+    $priceUSD = $priceSGD/$USDSGDRate;
+    $price = number_format($priceUSD,2,'.','');
+    var_dump($price);
+    $item->setName($product)
+    ->setCurrency('USD')
+    ->setQuantity($quantity)
+    ->setPrice($priceUSD);
+    $totalPrice+=($quantity*$price);
+    array_push($list, $item);
+}
+if($gift !== null){
+    $giftItem = new Item();
+    $giftItem->setName($gift["product"])
     ->setCurrency('USD')
     ->setQuantity(1)
-    ->setPrice(10);
-$item2 = new Item();
-$item2->setName('Cable')
-    ->setCurrency('USD')
-    ->setQuantity(5)
-    ->setPrice(2);
-
-$itemList = new ItemList();
-$itemList->setItems(array($item1, $item2));
-
+    ->setPrice(0.0);
+    array_push($list, $giftItem);
+}
+if(!empty($invite)){
+    $totalPrice-=10.0;
+}
+$itemList->setItems($list);
+var_dump($itemList);
 // ### Additional payment details
 // Use this optional field to set additional
 // payment information such as tax, shipping
@@ -97,7 +145,7 @@ $itemList->setItems(array($item1, $item2));
 // such as shipping, tax.
 $amount = new Amount();
 $amount->setCurrency("USD")
-    ->setTotal(20);
+    ->setTotal($totalPrice);
 //    ->setDetails($details);
 
 // ### Transaction
@@ -120,7 +168,6 @@ $payment->setIntent("sale")
     ->setPayer($payer)
     ->setTransactions(array($transaction))
 	->setRedirectUrls($redirectUrls);
-
 // For Sample Purposes Only.
 $request = clone $payment;
 
@@ -130,20 +177,19 @@ $request = clone $payment;
 // The return object contains the state.
 try {
     $payment->create($apiContext);
+    
 } catch (Exception $ex) {
     // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- 	ResultPrinter::printError('Create Payment Using Credit Card. If 500 Exception, try creating a new Credit Card using <a href="https://ppmts.custhelp.com/app/answers/detail/a_id/750">Step 4, on this link</a>, and using it.', 'Payment', null, $request, $ex);
+    //ResultPrinter::printError('Create Payment Using Credit Card. If 500 Exception, try creating a new Credit Card using <a href="https://ppmts.custhelp.com/app/answers/detail/a_id/750">Step 4, on this link</a>, and using it.', 'Payment', null, $request, $ex);
+    $redirectUrl=$payment->getRedirectUrls();
+    var_dump($redirectUrl->getCancelUrl());
+//header("Location: ".$redirectUrl->getCancelUrl());
     exit(1);
 }
-$redirectUrl='';
-foreach($payment->getLinks() as $link){
-	var_dump($link);
-	if($link->getRel() == 'approval_url'){
-		$redirectUrl = $link->getHref();
-	}
-}
+$redirectUrl=$payment->getRedirectUrls();
+var_dump($redirectUrl->getReturnUrl());
+//header("Location: ".$redirectUrl->getReturnUrl());
 
-//var_dump($redirectUrl);
 
 // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
 //ResultPrinter::printResult('Create Payment Using Credit Card', 'Payment', $payment->getId(), $request, $payment);

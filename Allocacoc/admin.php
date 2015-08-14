@@ -583,10 +583,18 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
 
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-10">
                                     <h1 class="page-header">
                                         Manage Reward
                                     </h1>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="page-header">
+                                        <div class="btn">
+                                            <span>Create Code <i class="fa fa-plus"></i></span>
+                                            <input type="button" data-toggle="modal" data-target="#createCodeModal" value="Create Code"/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             
@@ -596,6 +604,7 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> Reward Code List</h3>
+                                            
                                         </div>
                                         <div class="panel-body">
                                             <div class="table-responsive">
@@ -610,16 +619,18 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                     </thead>
                                                     <tbody>
                                                         <?php
-                                                        //$rewardMgr = new RewardManager();
-                                                        $rewardCodeList = ["1","3423"];
+                                                        $rewardMgr = new RewardManager();
+                                                        $rewardCodeList = $rewardMgr->getRewardCodeList();
+                                                        $codeCount = 0;
                                                         foreach ($rewardCodeList as $rewardCode){
-                                                           
+                                                           $codeCount+=1;
+                                                           $noOfBeneficiary = $rewardMgr->getNoOfBeneficiary($rewardCode);
                                                         ?>
                                                            <tr>
-                                                               <td><?php echo ""; ?></td>
-                                                               <td><?php echo ""; ?></td>
-                                                               <td><?php echo ""; ?></td>
-                                                               <td style="text-align:center"><div class="btn"><span>Expire <i class="fa fa-trash-o"></i></span><input type="button" onclick="expireRewardCode();" value="Expire Code"/></div></td>
+                                                               <td><?php echo $codeCount; ?></td>
+                                                               <td><?php echo $rewardCode; ?></td>
+                                                               <td><?php echo $noOfBeneficiary; ?></td>
+                                                               <td style="text-align:center"><div class="btn"><span>Remove <i class="fa fa-trash-o"></i></span><input type="button" onclick="removeRewardCode('<?php echo $rewardCode ?>');" value="Remove Code"/></div></td>
                                                            </tr>
                                                         <?php
                                                         }
@@ -632,6 +643,32 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                             </div>-->
                                         </div>
                                     </div>
+                                    
+                                    
+                                    <div id="createCodeModal" class="modal fade">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                                                    <h4 class="modal-title">Create Code</h4>
+                                                </div>
+                                                <form role="form" action="process_reward.php?operation=create" method="POST">
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="control-label">Please enter the number of reward code you want to create:</label>
+                                                            <input type="text" name="numberOfCode" class="form-control" id="numberOfCode" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn-danger btn-default" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-primary">Create</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                 
@@ -762,6 +799,12 @@ function populateEditField(product_id,p_name,p_price,p_color,p_stock,p_descripti
     
     document.getElementById("edit_product_stock").value = p_stock;
     document.getElementById("edit_product_description").value = p_description;
+}
+
+function removeRewardCode(code){
+    var operation = "remove";
+    document.location.href = 'process_reward.php?operation='+operation+'&code='+code;
+        
 }
 </script>
     </body>

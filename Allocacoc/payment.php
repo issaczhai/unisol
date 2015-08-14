@@ -21,7 +21,11 @@ and open the template in the editor.
     <body>
     <div class="container">      
     <?php
+    include_once("./protect.php");
+    include_once("./Manager/ConnectionManager.php");
     include_once("./Manager/ProductManager.php");
+    include_once("./Manager/CreditManager.php");
+    include_once("./Manager/PhotoManager.php");
     // Load the header
     $userid = null;
     $username = null;
@@ -32,10 +36,31 @@ and open the template in the editor.
         // $username is displayed in the header
         $username = substr($userid, 0, $pos);
     }
+    
+    $checkoutList = $_POST;
+    $productMgr = new ProductManager();
+    $photoMgr = new PhotoManager();
+    $list = [];
+    foreach ($checkoutList as $checkout){
+        $product = $productMgr->getProduct($checkout["productId"]);
+        $item=[];
+        $photoList = $photoMgr->getPhotos($product["product_id"]);
+        $item["product_id"] = $product["product_id"];
+        $item["thumbnail"] = $photoList["1"];
+        $item["product_name"] = $product["product_name"];
+        $item["quantity"] = $checkout["quantity"];
+        $item["price"] = $product["price"];
+        $item["subtotal"] = $checkout["quantity"] * $product["price"];
+        array_push($list,$item);
+    }
+    
     include_once("./templates/header2.php");
+    $creditMgr = new CreditManager();
+    $creditList = $creditMgr->getUnusedCreditListByReceiverId($userid);
     ?>
     
     <form id="payment" action="./paypal/payments/CreatePayment.php" method="post" class="form-horizontal">
+        
         <ul class="wizard">
             <li>
                 <div class="col-lg-4">
@@ -142,7 +167,7 @@ and open the template in the editor.
                                 <label class="col-lg-3 control-label">Payment Method</label>
                                 <div class="col-lg-5">
                                     <input type="radio" name="creditcard" value="visa"><img src="./public_html/img/visa-logo.png" alt="" height="50" width="50" />
-                                    &nbsp;&nbsp;<input type="radio" name="creditcard" value="master"><img src="./public_html/img/mastercard-logo.jpg" alt="" height="30" width="50" />
+                                    &nbsp;&nbsp;<input type="radio" name="creditcard" value="mastercard"><img src="./public_html/img/mastercard-logo.jpg" alt="" height="30" width="50" />
                                 </div>
                             </div>
 
@@ -226,6 +251,52 @@ and open the template in the editor.
 
         </div> <!-- end of tab-content class -->
         
+        <!-- promotion or reward code -->
+        <div class="col-lg-12">
+            <div class="page-header">
+                 <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-barcode"></i> Promotion & Reward Code </font>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Reward Code: </label>
+                            <div class="col-lg-6">
+                                <input type="text" id="rewardCode" name="rewardCode" class="form-control" onchange="disable('rewardCode','invite');checkRewardCode()"/>
+                            </div>
+                            <div id="codeCorrect" style="display:none;">
+                                <i class="fa fa-check" style="color: #2ca02c;font-size:24px;"></i>
+                                <span style="color: #2ca02c;"> Gift has been added to your order! </span>
+                            </div>
+                            <div id="codeIncorrect" style="display:none;">
+                                <i class="fa fa-times" style="color: #FF0000;font-size:24px;"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-6 control-label" for="">--OR--</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Invitation: </label>
+                            <div class="col-lg-6">
+                                <select name="invite" id="invite" class="form-control" onchange="disable('invite','rewardCode');">
+                                    <option value=""></option>
+                                    <?php
+                                    foreach($creditList as $credit){
+                                    ?>
+                                    <option value="<?php echo $credit["sender_id"]?>,<?php echo $credit["receiver_id"]?>"><?php echo $credit["sender_id"]?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        
         <!-- receipt -->
         <div class="col-lg-12">
             <div class="page-header">
@@ -241,20 +312,48 @@ and open the template in the editor.
                             <thead id="tablehead">
                                 <tr>
                                     <td align="center"></td>
-                                    <td align="center"><b>Product</b></td>
+                                    <td align="left"><b>Product</b></td>
                                     <td align="center"><b>Qty</b></td>
                                     <td align="center"><b>Price</b></td>
                                     <td align="center"><b>Total</b></td>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="orderTableBody">
+                                <?php
+                                if(sizeof($list) === 0){
+                                ?>
                                 <tr>
-                                    <td align="center">1</td>
-                                    <td align="center">2</td>    
-                                    <td align="center">3</td>    
-                                    <td align="center">4</td>
-                                    <td align="center">5</td> 
+                                    <td align="center"></td>
+                                    <td align="center"></td>    
+                                    <td align="center"></td>    
+                                    <td align="center"></td>
+                                    <td align="center"></td> 
                                 </tr>
+                                <?php
+                                }else{      
+                                ?>
+                            <input type="hidden" id="listLength" name="listLength" value="<?php echo sizeof($list);?>"/>
+                                <?php
+                                
+                                    $count = 0;
+                                    foreach($list as $item){
+                                    $count+=1;
+                                ?>
+                                <tr>
+                                    <td align="center" width="15%">
+                                        <div style="padding-left: 30px">
+                                            <img src="<?=$item["thumbnail"]?>" width="80px" height="80px">
+                                        </div>
+                                    </td>
+                                    <td align="left" width="15%" style="vertical-align:middle;"><?=$item["product_name"] ?><input id="product<?php echo strval($count)?>" name="product<?php echo strval($count)?>" type="hidden" value="<?=$item["product_name"] ?>"/></td>    
+                                    <td align="center" style="vertical-align:middle;"><?=$item["quantity"] ?><input id="quantity<?php echo strval($count)?>" name="quantity<?php echo strval($count)?>" type="hidden" value="<?=$item["quantity"] ?>"/></td>    
+                                    <td align="center" style="vertical-align:middle;">$<?=$item["price"] ?><input id="price<?php echo strval($count)?>" name="price<?php echo strval($count)?>" type="hidden" value="<?=$item["price"] ?>"/></td>
+                                    <td align="center" width="15%" style="vertical-align:middle;color:#008ba4;"><b>$<?=number_format($item["subtotal"],2,'.','') ?></b></td> 
+                                </tr>
+                                <?php
+                                    }
+                                }
+                                ?>
                             </tbody>
                         </table>
                         </div>
@@ -262,7 +361,6 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-
         <div class="form-group" >
             <div class="col-lg-8 col-lg-offset-5" style="margin-left: 400px">
                 <button type="submit" class="btn btn-primary btn-lg" id="paymentBtn">Go To Payment</button>
@@ -280,204 +378,6 @@ and open the template in the editor.
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <!--Registration Validation-->
     <script type="text/javascript" src="public_html/js/bootstrapValidator.js"></script>
-    
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#payment').bootstrapValidator({
-                message: 'This value is not valid',
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    firstname: {
-                        validators: {
-                            regexp: {
-                                regexp: /^[a-z\s]+$/i,
-                                message: 'The first name can only consist of alphabetical, space'
-                            },
-                            notEmpty: {
-                                message: 'The first name is required and cannot be empty'
-                            }
-                        }
-                    },
-                    lastname: {
-                        validators: {
-                            regexp: {
-                                regexp: /^[a-z\s]+$/i,
-                                message: 'The last name can only consist of alphabetical, space'
-                            },
-                            notEmpty: {
-                                message: 'The last name is required and cannot be empty'
-                            }
-                        }
-                    },
-                    phone: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The phone number is required and can\'t be empty'
-                            },
-                            digits: {
-                                message: 'The phone number can contain digits only'
-                            }
-                        }
-                    },
-                    address1:{
-                        validators:{
-                            notEmpty : {
-				message : 'The address is required and can\'t be empty'
-                            }
-                        }
-                    },
-                    postcode: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Postal Code is required and can\'t be empty'
-                            },
-                            digits: {
-                                message: 'Postal Code can contain digits only'
-                            }
-                        }
-                    },
-                    shipping_country:{
-                        validators:{
-                            notEmpty : {
-				message : 'Please select your country '
-                            }
-                        }
-                    },
-                    receiptemail:{
-                        validators:{
-                            notEmpty : {
-				message : 'The email address is required and can\'t be empty'
-                            },
-                            emailAddress : {
-				message : 'The input is not a valid email address'
-                            },
-                        }
-                    },
-                    cardHolder:{
-                        selector: '#cardHolder',
-                        validators: {
-                            notEmpty: {
-                                message: 'The card holder is required'
-                            },
-                            stringCase: {
-                                message: 'The card holder must contain upper case characters only',
-                                case: 'upper'
-                            }
-                        }
-                    },
-                    
-                    cardNumber: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The card number is required and can\'t be empty'
-                            },
-                            creditCard: {
-                                message: 'The credit card number is not valid'
-                            }
-                        }
-                    },
-                    
-                    expMonth: {
-                        selector: '[data-stripe="exp-month"]',
-                        validators: {
-                            notEmpty: {
-                                message: 'The expiration month is required'
-                            },
-                            digits: {
-                                message: 'The expiration month can contain digits only'
-                            },
-                            callback: {
-                                message: 'Expired',
-                                callback: function(value, validator) {
-                                    value = parseInt(value, 10);
-                                    var year         = validator.getFieldElements('expYear').val(),
-                                        currentMonth = new Date().getMonth() + 1,
-                                        currentYear  = new Date().getFullYear();
-                                    if (value < 0 || value > 12) {
-                                        return false;
-                                    }
-                                    if (year === '') {
-                                        return true;
-                                    }
-                                    year = parseInt(year, 10);
-                                    if (year > currentYear || (year === currentYear && value > currentMonth)) {
-                                        validator.updateStatus('expYear', 'VALID');
-                                        return true;
-                                    } else {
-                                        return false;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    
-                    expYear: {
-                        selector: '[data-stripe="exp-year"]',
-                        validators: {
-                            notEmpty: {
-                                message: 'The expiration year is required'
-                            },
-                            digits: {
-                                message: 'The expiration year can contain digits only'
-                            },
-                            callback: {
-                                message: 'Expired',
-                                callback: function(value, validator) {
-                                    value = parseInt(value, 10);
-                                    var month        = validator.getFieldElements('expMonth').val(),
-                                        currentMonth = new Date().getMonth() + 1,
-                                        currentYear  = new Date().getFullYear();
-                                    if (value < currentYear || value > currentYear + 10) {
-                                        return false;
-                                    }
-                                    if (month === '') {
-                                        return false;
-                                    }
-                                    month = parseInt(month, 10);
-                                    if (value > currentYear || (value === currentYear && month > currentMonth)) {
-                                        validator.updateStatus('expMonth', 'VALID');
-                                        return true;
-                                    } else {
-                                        return false;
-                                    }
-                                }
-                            }
-                        }
-                    },
-            
-                    cvCode: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The CV number is required'
-                            },
-                            cvv: {
-                                message: 'The value is not a valid CV',
-                                creditCardField: 'cardNumber'
-                            }
-                        }
-                    }
-                }
-            });
-            
-        });
-        
-        $('#resetBtn1').click(function() {
-            $('#payment').data('bootstrapValidator').resetForm(true);
-        });
-        
-    </script>
-    
-    <script>
-    function showTab(tabName){
-        var tab = document.getElementById(tabName+"Tab");
-        tab.style.color = "#008ba4";
-        var icon = document.getElementById(tabName+"Icon");
-        icon.removeAttribute("style");
-    }
-    </script>
+    <script type="text/javascript" src="public_html/js/payment.js"></script>
     </body>
 </html>

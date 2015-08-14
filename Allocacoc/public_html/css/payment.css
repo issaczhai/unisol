@@ -36,3 +36,14 @@ Paymeny.php
 .btn-group-lg>.btn, .btn-lg{
     border-radius: 0px
 }
+.wizard li {
+    display: inline;
+    width: auto;
+}
+.wizard a:hover{
+    text-decoration: none;
+}
+#orderTableBody{
+                font-family: "Century Gothic";
+                font-size: 15px;
+            }
