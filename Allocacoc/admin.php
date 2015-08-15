@@ -613,8 +613,8 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                         <tr>
                                                             <th width="10%">S/N</th>
                                                             <th width="40%">Code</th>
-                                                            <th width="30%">Beneficiaries</th>
-                                                            <th width="20%" style="text-align:center">Option</th>
+                                                            <th width="25%">Beneficiaries</th>
+                                                            <th width="25%" style="text-align:center" colspan="2">Option</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -630,7 +630,12 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                                <td><?php echo $codeCount; ?></td>
                                                                <td><?php echo $rewardCode; ?></td>
                                                                <td><?php echo $noOfBeneficiary; ?></td>
-                                                               <td style="text-align:center"><div class="btn"><span>Remove <i class="fa fa-trash-o"></i></span><input type="button" onclick="removeRewardCode('<?php echo $rewardCode ?>');" value="Remove Code"/></div></td>
+                                                               <td style="text-align:center">
+                                                                   <button class="btn-danger" type="button" onclick="removeRewardCode('<?php echo $rewardCode ?>');">Remove <i class="fa fa-trash-o"></i></button>
+                                                               </td>
+                                                               <td style="text-align:center">   
+                                                                    <input class="btn-primary" type="button" data-toggle="modal" data-target="#setGiftModal" value="Set Gift" onclick="setGift('<?php echo $rewardCode ?>');"/>
+                                                                </td>
                                                            </tr>
                                                         <?php
                                                         }
@@ -663,6 +668,41 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn-danger btn-default" data-dismiss="modal">Cancel</button>
                                                         <button type="submit" class="btn btn-primary">Create</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="setGiftModal" class="modal fade">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                                                    <h4 class="modal-title">Set Gift</h4>
+                                                </div>
+                                                <form role="form" action="process_reward.php?operation=setGift" method="POST" enctype="multipart/form-data">
+                                                    <input type="hidden" id="gift_code" name="gift_code" value=""/>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="gift_name" class="control-label">Gift Name:</label>
+                                                            <input type="text" name="gift_name" class="form-control" id="gift_name" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="gift_worth" class="control-label">Worth Price(SGD):</label>
+                                                            <input type="text" name="gift_worth" class="form-control" id="gift_worth" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="gift_photo" class="control-label">Gift Photo:  </label>
+                                                            <div class="btn" style="width:25%">
+                                                                <span>  Gift Photo (1:1) </span>
+                                                                <input type="file" name="gift_photo" id="gift_photo" required/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">OK</button>
                                                     </div> 
                                                 </form>
                                             </div>
@@ -805,6 +845,10 @@ function removeRewardCode(code){
     var operation = "remove";
     document.location.href = 'process_reward.php?operation='+operation+'&code='+code;
         
+}
+
+function setGift(code){
+    document.getElementById("gift_code").value = code;
 }
 </script>
     </body>

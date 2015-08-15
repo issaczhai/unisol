@@ -47,4 +47,29 @@ header("Location: admin.php");
     $gift = $rewardMgr->getGiftByRewardCode($code);
     echo json_encode($gift);
     exit;
+}else if($operation === "setGift"){
+    $code = filter_input(INPUT_POST,'gift_code');
+    $gift_name = filter_input(INPUT_POST,'gift_name');
+    $worth = filter_input(INPUT_POST,'gift_worth');
+    $picname = $_FILES["gift_photo"]['name']; 
+    $picsize = $_FILES["gift_photo"]['size'];
+    $pic_path = "";
+    var_dump(($picname != ""));
+    if ($picname != "") {
+        if ($picsize > 5120000) {  
+            echo 'image size cannot exceed 5m'; 
+            exit; 
+        } 
+        $type = strstr($picname, '.');  
+        if ($type != ".gif" && $type != ".jpg" && $type != ".png" && $type != ".jpeg") { 
+            echo 'invalid image type'; 
+            exit; 
+        }
+        $rand = rand(100, 999); 
+        $pics = $picname . date("YmdHis") . $rand . "gift" . $type;
+        $pic_path = "public_html/img/productImg/". $pics;
+        move_uploaded_file($_FILES["gift_photo"]['tmp_name'], $pic_path);
+    }
+    $rewardMgr->setGift($code, $gift_name, $worth, $pic_path);
+    header("Location: admin.php");
 }

@@ -136,4 +136,13 @@ class RewardManager {
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
+
+    function setGift($code,$product_name,$worth,$photo){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE reward SET product_name = ? , worth = ? , photo = ? WHERE code = ?");
+        $stmt->bind_param("ssss", $product_name, $worth, $photo, $code);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
 }
