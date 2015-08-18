@@ -38,6 +38,17 @@ class ProductManager {
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
+    function updateShoppingCartPayTime($customer_id,$product_id,$create_time){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE cart SET pay_time = ? WHERE customer_id = ? AND product_id = ? AND create_time = ?");
+        date_default_timezone_set('Asia/Singapore');
+        $pay_time=  date('Y-m-d H:i:s');
+        $stmt->bind_param("sss", $pay_time, $customer_id, $product_id,$create_time);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
     function retrieveFromShoppingCart($customer_id){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();

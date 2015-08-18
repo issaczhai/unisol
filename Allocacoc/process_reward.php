@@ -8,8 +8,7 @@ include_once("./Manager/RewardManager.php");
 if (!isset($_SESSION)) {
   session_start();
 }
-$userid = null;
-$userid = $_SESSION["userid"];
+
 $rewardMgr = new RewardManager();
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -28,6 +27,8 @@ header("Location: admin.php");
     $rewardMgr->createRewardCode($number);
     header("Location: admin.php");
 }else if ($operation === "check") {
+    $userid = null;
+    $userid = $_SESSION["userid"];
     $code = addslashes(filter_input(INPUT_POST, 'code'));
     $exist = $rewardMgr->checkCode($code);
     $used = $rewardMgr->checkHistory($userid, $code);

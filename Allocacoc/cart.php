@@ -10,7 +10,9 @@ and open the template in the editor.
     }
     include_once("./Manager/ConnectionManager.php");
     include_once("./Manager/ProductManager.php");
+    include_once("./Manager/PhotoManager.php");
     $productMgr = new ProductManager();
+    $photoMgr = new PhotoManager();
     $userid = null;
     $username = null;
     
@@ -34,7 +36,8 @@ and open the template in the editor.
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="./public_html/css/main.css">
         <link rel="stylesheet" href="./public_html/css/webShop.css">
-        
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script>
         function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
 
@@ -184,11 +187,12 @@ and open the template in the editor.
                                     $each_product_id = $each_cart_item['product_id'];
                                     $each_product_quantity = $each_cart_item['quantity'];
                                     $each_product_name = $productMgr->getProductName($each_product_id);
-
+                                    $photoList = $photoMgr->getPhotos($each_product_id);
+                                    $photo_url = $photoList["1"];
                             ?>
                                      <li class="notification">
                                         <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
-                                           <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                           <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                         </div>
                                         <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
                                             <br>
@@ -265,13 +269,16 @@ and open the template in the editor.
                             $each_cart_item_price_format = number_format($each_cart_item_price,2,'.','');
                             $each_cart_item_stock = $productMgr->getStock($each_cart_item_id);
                             $each_cart_item_qty = $each_cart_product['quantity'];
+                            $each_cart_item_create_time = $each_cart_product['create_time'];
                             $each_cart_item_total = $each_cart_item_price * $each_cart_item_qty;
                             $subtotal += $each_cart_item_total;
                             $qtyid = $each_cart_item_id.'qty';
+                            $timeid = $each_cart_item_id.'createtime';
                             $cboxid = $each_cart_item_id.'cbox';
                             $removeBtnid = $each_cart_item_id.'remove';
                             $each_cart_totalid = $each_cart_item_id.'total';
-
+                            $photoList = $photoMgr->getPhotos($each_cart_item_id);
+                            $photo_url = $photoList["1"];
                         ?>
                            <tr>
                                 <td class="col-sm-1 col-md-1 text-center">
@@ -283,7 +290,7 @@ and open the template in the editor.
                                 <td class="col-sm-8 col-md-5">
                                     <div class="media">
                                         <div class="cartItemImg" style="width:88px;height:88px;overflow:hidden;position:relative;float:left">
-                                            <a href="./product_detail.php?selected_product_id=<?=$each_cart_item_id ?>&customer_id=<?=$userid ?>"> <img style="position:absolute !important;" src="./public_html/img/GE.png" onload="OnCartItemImageLoad(event)"> </a>
+                                            <a href="./product_detail.php?selected_product_id=<?=$each_cart_item_id ?>&customer_id=<?=$userid ?>"> <img style="position:absolute !important;" src="<?=$photo_url?>" onload="OnCartItemImageLoad(event)"> </a>
                                             
                                         </div>
                                         <div class="media-body  text-center">
@@ -305,6 +312,7 @@ and open the template in the editor.
                                 </td>
                                 <td class="col-sm-7 col-md-2" style="text-align: center">
                                     <input type="text" style='text-align: center; border-radius:0' class="form-control" id="<?=$qtyid?>" onchange="change_qty('<?=$each_cart_item_id?>','<?=$each_cart_item_price_format ?>',this.value)" value="<?=$each_cart_item_qty ?>">
+                                    <input type="hidden" id="<?=$timeid?>" value="<?=$each_cart_item_create_time?>"/>
                                 </td>
                                 <td class="col-sm-1 col-md-1 text-center"><strong><?=number_format($each_cart_item_price,2,'.','') ?></strong></td>
                                 <td id='<?=$each_cart_totalid ?>' class="col-sm-1 col-md-1 text-center"><strong><?=number_format($each_cart_item_total,2,'.','')?></strong></td>
@@ -379,38 +387,11 @@ and open the template in the editor.
     $currentPage = "cart";
     include_once("./templates/footer.php");
     ?>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    
+    <script src="./public_html/js/jquery.redirect.js"></script>
     <script src="./public_html/js/main.js"></script>
     <script src="./public_html/js/allocacoc.js"></script>
 
-        <!-- display product detail modal
-    <script>
-        function getProductDetail(product_id){
-            $('#product_detail_modal_content').hide();
-            $('#product_detail_modal').modal('show');
-            $('#loaderID').show();
-            var customer_id = '<?=$userid?>';
-            if(customer_id===null){
-                customer_id = '';
-            }
-            var selected_product_id = 'selected_product_id=' + product_id + '&customer_id=' + customer_id;
-            
-            //event.preventDefault();
-            $.ajax({ //Process the form using $.ajax()
-                type      : 'POST', //Method type
-                url       : './process_product_detail.php', //Your form processing file URL
-                data      : selected_product_id,
-                cache     : false,
-                success   : function(html) {
-                                $('#loaderID').hide();
-                                $('#product_detail_modal_content').html(html);
-                                $('#product_detail_modal_content').show();
-                            }
-            });
-        }
-    </script>
-    -->
 <script>
     function change_qty(item_id,item_price,qty_to_change){
         $('#loader-overlay').css('display','block');
@@ -477,12 +458,15 @@ and open the template in the editor.
                 var id = cB[i].value.split("cbox")[0];
                 var item = { //Fetch form data
                     'productId'     : id, //Store productId of item
-                    'quantity'   : $('#'+id+'qty').val() //Store quantity of item
+                    'quantity'   : $('#'+id+'qty').val(), //Store quantity of item
+                    'create_time'   : $('#'+id+'createtime').val()
                 };
                 checkoutList.push(item);
             }
         }
-        console.log(checkoutList);
+        var data = JSON.stringify(checkoutList);
+        console.log(data);
+       $.redirect('payment.php', checkoutList);
     }
 </script>
 

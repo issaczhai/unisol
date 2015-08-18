@@ -40,7 +40,7 @@ class RewardManager {
                 $randomString .= $characters[rand(0, $charactersLength - 1)];
             }
             $stmt = $conn->prepare("INSERT INTO reward (code, product_name, worth, photo) VALUES (?,?,?,?)");
-            $stmt->bind_param("ssss", $randomString, "", "", "");
+            $stmt->bind_param("ssds", $randomString, "", 0.0, "");
             $stmt->execute();
         }
         

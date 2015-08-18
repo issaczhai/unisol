@@ -10,7 +10,9 @@ if (session_status()!=PHP_SESSION_ACTIVE) {
 }
 include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/ProductManager.php");
+include_once("./Manager/PhotoManager.php");
 $productMgr = new ProductManager();
+$photoMgr = new PhotoManager();
 $userid = null;
 $username = null;
 
@@ -44,7 +46,8 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
         <link rel="stylesheet" href="./public_html/css/main.css">
         <link rel="stylesheet" href="./public_html/css/webShop.css">
         <!--<link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">-->
-
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         
         <style>
             .navbar{opacity: 1;margin-bottom:0}
@@ -332,11 +335,12 @@ $results = $productMgr->getAllProduct();
                             $each_product_id = $each_cart_item['product_id'];
                             $each_product_quantity = $each_cart_item['quantity'];
                             $each_product_name = $productMgr->getProductName($each_product_id);
-
+                            $photoList = $photoMgr->getPhotos($each_product_id);
+                            $photo_url = $photoList["1"];
                     ?>
                              <li class="notification">
                                 <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
-                                   <a href="./product_detail.php?selected_product_id='<?=$each_product_id ?>'&customer_id='<?=$userid ?>'"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                   <a href="./product_detail.php?selected_product_id='<?=$each_product_id ?>'&customer_id='<?=$userid ?>'"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                 </div>
                                 <span>&nbsp;<a href="./product_detail.php?selected_product_id='<?=$each_product_id ?>'&customer_id='<?=$userid ?>'" style='font-size:12px'><?=$each_product_name ?></a></span>
                                     <br>
@@ -468,12 +472,14 @@ $results = $productMgr->getAllProduct();
                         $product_name = $eachProduct["product_name"];
                         $price = $eachProduct["price"];
                         $product_id = $eachProduct["product_id"];
+                        $photoList = $photoMgr->getPhotos($product_id);
+                        $photo_url = $photoList["1"];
                 ?>
                 <div class='col-sm-6'>
                     <div class='product-wrapper'>
                         <div class='product-img'>
                             <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>">
-                            <img src='./public_html/img/productImg/GE.png'>
+                            <img src='<?=$photo_url?>'>
                             </a>
                         </div>
                         <div class='product-summary'> 
@@ -519,8 +525,7 @@ include_once("./templates/footer.php");
 ?>
     <!-- Scripts -->        
     
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    
     <script src="./public_html/js/main.js"></script>
     <script src="./public_html/js/allocacoc.js"></script>
     

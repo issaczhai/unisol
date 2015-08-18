@@ -21,10 +21,12 @@ use PayPal\Api\FundingInstrument;
 use PayPal\Api\Transaction;
 use PayPal\Api\RedirectUrls;
 
-include_once("/../../Manager/ConnectionManager.php");
-include_once("/../../Manager/RewardManager.php");
-include_once("/../../Manager/CreditManager.php");
-include_once("/../../Manager/CustomerManager.php");
+include_once(__DIR__ . "/../../Manager/ConnectionManager.php");
+include_once(__DIR__ . "/../../Manager/RewardManager.php");
+include_once(__DIR__ . "/../../Manager/CreditManager.php");
+include_once(__DIR__ . "/../../Manager/CustomerManager.php");
+include_once(__DIR__ . "/../../Manager/OrderManager.php");
+include_once(__DIR__ . "/../../Manager/ProductManager.php");
 if (!isset($_SESSION)) {
   session_start();
 }
@@ -33,7 +35,8 @@ $userid = $_SESSION["userid"];
 $rewardMgr = new RewardManager();
 $creditMgr = new CreditManager();
 $customerMgr = new CustomerManager();
-
+$orderMgr = new OrderManager();
+$productMgr = new ProductManager();
 // ### CreditCard
 // A resource representing a credit card that can be
 // used to fund a payment.
@@ -93,13 +96,17 @@ if(!empty($invite)){
     $creditMgr->updateCreditStatusToTrue($invite, $userid);
 }
 
+/*********************************************************************************************************/
+
 
 $totalPrice = 0.0;
 $itemList = new ItemList();
 $listLength = filter_input(INPUT_POST,'listLength');
 $list=array();
+$orderList = array();
 for ($x=1; $x<=intval($listLength); $x++) {
     $item = new Item();
+    $product_id = filter_input(INPUT_POST,'product_id'.strval($x));
     $product = filter_input(INPUT_POST,'product'.strval($x));
     $quantity = intval(filter_input(INPUT_POST,'quantity'.strval($x)));
     $priceSGD = doubleval(filter_input(INPUT_POST,'price'.strval($x)));
@@ -109,27 +116,44 @@ for ($x=1; $x<=intval($listLength); $x++) {
     $USDSGDRate = doubleval($jsonObj['query']['results']['rate']['Rate']);
     $priceUSD = $priceSGD/$USDSGDRate;
     $price = number_format($priceUSD,2,'.','');
-    var_dump($price);
     $item->setName($product)
     ->setCurrency('USD')
     ->setQuantity($quantity)
     ->setPrice($priceUSD);
     $totalPrice+=($quantity*$price);
     array_push($list, $item);
+    
+    $order = [];
+    $order["product_id"] = $product_id;
+    $order["customer_id"] = $userid;
+    $order["quantity"] = $quantity;
+    $order["price"] = $price;
+    $order["add_to_cart_time"] = filter_input(INPUT_POST,'add_to_cart_time'.strval($x));
+    array_push($orderList, $order);
 }
 if($gift !== null){
     $giftItem = new Item();
-    $giftItem->setName($gift["product"])
+    $giftName = $gift["product"];
+    $giftItem->setName($giftName)
     ->setCurrency('USD')
     ->setQuantity(1)
     ->setPrice(0.0);
     array_push($list, $giftItem);
+    
+    $order = [];
+    $order["product_id"] = "gift";
+    $order["customer_id"] = $userid;
+    $order["quantity"] = 1;
+    $order["price"] = 0.0;
+    array_push($orderList, $order);
 }
 if(!empty($invite)){
     $totalPrice-=10.0;
 }
 $itemList->setItems($list);
-var_dump($itemList);
+
+/*********************************************************************************************************/
+
 // ### Additional payment details
 // Use this optional field to set additional
 // payment information such as tax, shipping
@@ -177,6 +201,23 @@ $request = clone $payment;
 // The return object contains the state.
 try {
     $payment->create($apiContext);
+    //Update Order in database
+    $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $order_id = '';
+    for ($j = 0; $j < 6; $j++) {
+        $order_id .= $characters[rand(0, $charactersLength - 1)];
+    }
+    date_default_timezone_set('Asia/Singapore');
+    $payment_time = date('Y-m-d H:i:s');
+    foreach($orderList as $order){
+        //Add order information into database
+        $orderMgr->addOrder($order_id, $order["customer_id"], $order["product_id"], $order["quantity"], $payment_time, $order["price"]);
+        if($order["product_id"] != "gift"){
+            //Update Customer Shopping cart
+            $productMgr->updateShoppingCartPayTime($order["customer_id"], $order["product_id"], $order["add_to_cart_time"]);
+        }
+    }
     
 } catch (Exception $ex) {
     // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
@@ -187,7 +228,6 @@ try {
     exit(1);
 }
 $redirectUrl=$payment->getRedirectUrls();
-var_dump($redirectUrl->getReturnUrl());
 //header("Location: ".$redirectUrl->getReturnUrl());
 
 

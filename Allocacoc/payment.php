@@ -51,6 +51,7 @@ and open the template in the editor.
         $item["quantity"] = $checkout["quantity"];
         $item["price"] = $product["price"];
         $item["subtotal"] = $checkout["quantity"] * $product["price"];
+        $item["add_to_cart_time"] = $checkout["create_time"];
         array_push($list,$item);
     }
     
@@ -339,6 +340,8 @@ and open the template in the editor.
                                     foreach($list as $item){
                                     $count+=1;
                                 ?>
+                                <input id="product_id<?php echo strval($count)?>" name="product_id<?php echo strval($count)?>" type="hidden" value="<?=$item["product_id"] ?>"/>
+                                <input id="add_to_cart_time<?php echo strval($count)?>" name="add_to_cart_time<?php echo strval($count)?>" type="hidden" value="<?=$item["add_to_cart_time"] ?>"/>
                                 <tr>
                                     <td align="center" width="15%">
                                         <div style="padding-left: 30px">

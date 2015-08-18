@@ -10,7 +10,9 @@ if (session_status()!=PHP_SESSION_ACTIVE) {
 }
 include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/ProductManager.php");
+include_once("./Manager/PhotoManager.php");
 $productMgr = new ProductManager();
+$photoMgr = new PhotoManager();
 $userid = null;
 $username = null;
 
@@ -25,8 +27,6 @@ if(isset($_SESSION["userid"]) && !empty($_SESSION["userid"])){
 }
 
 $selected_product_id = addslashes(filter_input(INPUT_GET, 'selected_product_id'));
-
-$productMgr = new ProductManager();
 $product_selected = $productMgr->getProduct($selected_product_id);
 $selected_product_name = $product_selected['product_name'];
 $selected_product_description = $product_selected['description'];
@@ -38,6 +38,10 @@ $selected_add_btn_id = $selected_product_id.'btn';
 //if the customer is not logged in, the default quantity of product in the cart is 0
 $selected_product_in_cart = 0;
 //if customer is logged in, check if the product is in the cart
+
+$selected_product_photoList = $photoMgr->getPhotos($selected_product_id);
+$selected_product_photo_url = $selected_product_photoList["2"];
+
 if(!empty($userid)){
     
     $selected_product_in_cart = $productMgr->retrieveItemQtyInShoppingCart($userid, $selected_product_id);
@@ -53,7 +57,8 @@ if(!empty($userid)){
     <link rel="stylesheet" href="./public_html/font-awesome-4.1.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./public_html/css/main.css">
     <link rel="stylesheet" href="./public_html/css/webShop.css">
-
+    <script src="./public_html/js/jquery-1.11.0.js"></script>
+    <script src="./public_html/js/bootstrap.min.js"></script> 
     <script>
     function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
 
@@ -162,11 +167,12 @@ if(!empty($userid)){
                                 $each_product_id = $each_cart_item['product_id'];
                                 $each_product_quantity = $each_cart_item['quantity'];
                                 $each_product_name = $productMgr->getProductName($each_product_id);
-
+                                $photoList = $photoMgr->getPhotos($each_product_id);
+                                $photo_url = $photoList["1"];
                         ?>
                                  <li class="notification">
                                     <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
-                                       <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                       <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                     </div>
                                     <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
                                         <br>
@@ -227,7 +233,7 @@ if(!empty($userid)){
     <div class="row">
         <div class="col-sm-10 product-detail">
             <div class="col-sm-4 img-detail">
-                <img src='./public_html/img/detailImg/typeG_Extended_S.jpg'>
+                <img src='<?=$selected_product_photo_url?>'/>
             </div>
 
             <div class="col-sm-8 product-overview">
@@ -369,8 +375,7 @@ if(!empty($userid)){
 $currentPage = "product";
 include_once("./templates/footer.php");
 ?>
-<script src="./public_html/js/jquery-1.11.0.js"></script>
-<script src="./public_html/js/bootstrap.min.js"></script> 
+
 <script src="./public_html/js/allocacoc.js"></script>
 <script>
 $(document).on('click', '.number-spinner button', function () {    

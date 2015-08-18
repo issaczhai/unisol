@@ -8,6 +8,25 @@
 
 class OrderManager {
     
+    function addOrder($order_id, $customer_id,$product_id,$quantity,$payment_time,$price){
+        $status = "pending";
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("INSERT INTO order (order_id, customer_id, product_id, quantity, price, payment_time, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssdds", $order_id, $customer_id, $product_id, $quantity,$price,$payment_time,$status);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
+    function updateOrderStatus($order_id,$status){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE order SET status = ? WHERE order_id = ?");
+        $stmt->bind_param("ss", $status,$order_id);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
     function getTop3Products(){
         $top_3_product_arr = [];
         $ConnectionManager = new ConnectionManager();
