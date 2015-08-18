@@ -182,8 +182,8 @@ $transaction->setAmount($amount)
     ->setInvoiceNumber(uniqid());
 
 $redirectUrls = new RedirectUrls();
-$redirectUrls->setReturnUrl('http://localhost/allocacoc/paymentSuccessful.php?status=approved')
-	->setCancelUrl('http://localhost/allocacoc/paymentSuccessful.php?status=rejected');	
+$redirectUrls->setReturnUrl('http://localhost/allocacoc/success.php')
+	->setCancelUrl('http://localhost/allocacoc/paymentSuccessful.php?status=approved');	
 // ### Payment
 // A Payment Resource; create one using
 // the above types and intent set to sale 'sale'
@@ -228,7 +228,7 @@ try {
     exit(1);
 }
 $redirectUrl=$payment->getRedirectUrls();
-//header("Location: ".$redirectUrl->getReturnUrl());
+header("location: ". $redirectUrl->getReturnUrl());
 
 
 // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY

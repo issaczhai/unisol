@@ -12,8 +12,8 @@ class OrderManager {
         $status = "pending";
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO order (order_id, customer_id, product_id, quantity, price, payment_time, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssdds", $order_id, $customer_id, $product_id, $quantity,$price,$payment_time,$status);
+        $stmt = $conn->prepare("INSERT INTO `order` (order_id, customer_id, product_id, quantity, price, payment_time, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssddss", $order_id, $customer_id, $product_id, $quantity,$price,$payment_time,$status);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }

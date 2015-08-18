@@ -15,6 +15,8 @@ and open the template in the editor.
         <!-- validation -->
         <link href="public_html/css/bootstrapValidator.css" rel="stylesheet">
         <link href="public_html/css/payment.css" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <title>Payment</title>
         
     </head>
@@ -372,13 +374,8 @@ and open the template in the editor.
         </div>  
     </form>
     </div>    
-    <?php
-//        $currentPage = "payment";
-//        include_once("./templates/footer.php");
-    ?>
-    <!-- Scripts -->        
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  
+    
     <!--Registration Validation-->
     <script type="text/javascript" src="public_html/js/bootstrapValidator.js"></script>
     <script type="text/javascript" src="public_html/js/payment.js"></script>

@@ -32,7 +32,8 @@ class ProductManager {
         $stmt = $conn->prepare("INSERT INTO cart (customer_id, product_id, quantity, create_time, pay_time) VALUES (?, ?, ?, ?, ?)");
         date_default_timezone_set('Asia/Singapore');
         $creat_time = date('Y-m-d H:i:s');
-        $pay_time= null;
+        $date = new DateTime('2000-01-01');
+        $pay_time = $date->format('Y-m-d H:i:s');
         $stmt->bind_param("ssiss", $customer_id, $product_id, $qty, $creat_time, $pay_time);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
@@ -43,8 +44,8 @@ class ProductManager {
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("UPDATE cart SET pay_time = ? WHERE customer_id = ? AND product_id = ? AND create_time = ?");
         date_default_timezone_set('Asia/Singapore');
-        $pay_time=  date('Y-m-d H:i:s');
-        $stmt->bind_param("sss", $pay_time, $customer_id, $product_id,$create_time);
+        $pay_time= date('Y-m-d H:i:s');
+        $stmt->bind_param("ssss", $pay_time, $customer_id, $product_id,$create_time);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
@@ -53,8 +54,10 @@ class ProductManager {
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $shopping_cart_products = array();
-        $stmt = $conn->prepare("SELECT * FROM cart WHERE customer_id=? ORDER BY create_time desc");
-        $stmt->bind_param("s", $customer_id);
+        $date = new DateTime('2000-01-01');
+        $var = $date->format('Y-m-d H:i:s');
+        $stmt = $conn->prepare("SELECT * FROM cart WHERE customer_id=? AND pay_time = ? ORDER BY create_time desc");
+        $stmt->bind_param("ss", $customer_id,$var);
         $stmt->execute();
         $stmt->bind_result($customer_id,$product_id,$quantity,$create_time,$pay_time);
         while ($stmt->fetch())
@@ -75,8 +78,10 @@ class ProductManager {
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $total = 0;
-        $stmt = $conn->prepare("SELECT quantity FROM cart WHERE customer_id=?");
-        $stmt->bind_param("s", $customer_id);
+        $date = new DateTime('2000-01-01');
+        $var = $date->format('Y-m-d H:i:s');
+        $stmt = $conn->prepare("SELECT quantity FROM cart WHERE customer_id=? AND pay_time = ?");
+        $stmt->bind_param("ss", $customer_id,$var);
         $stmt->execute();
         $stmt->bind_result($quantity);
         while ($stmt->fetch())
@@ -90,8 +95,10 @@ class ProductManager {
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $total = 0;
-        $stmt = $conn->prepare("SELECT count(*) FROM cart WHERE customer_id=?");
-        $stmt->bind_param("s", $customer_id);
+        $date = new DateTime('2000-01-01');
+        $var = $date->format('Y-m-d H:i:s');
+        $stmt = $conn->prepare("SELECT count(*) FROM cart WHERE customer_id = ? AND pay_time = ?");
+        $stmt->bind_param("ss", $customer_id,$var);
         $stmt->execute();
         $stmt->bind_result($quantity);
         while ($stmt->fetch())
@@ -105,8 +112,10 @@ class ProductManager {
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $productQty = 0;
-        $stmt = $conn->prepare("SELECT count(*) FROM cart WHERE customer_id=? AND product_id=?");
-        $stmt->bind_param("ss", $customer_id,$product_id);
+        $date = new DateTime('2000-01-01');
+        $var = $date->format('Y-m-d H:i:s');
+        $stmt = $conn->prepare("SELECT count(*) FROM cart WHERE customer_id=? AND product_id=? AND pay_time = ?");
+        $stmt->bind_param("sss", $customer_id,$product_id,$var);
         $stmt->execute();
         $stmt->bind_result($quantity);
         while ($stmt->fetch())
@@ -119,8 +128,10 @@ class ProductManager {
     function updateItemQty($customer_id,$item_id, $changed_qty){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("UPDATE cart SET quantity=? WHERE customer_id=? AND product_id=?");
-        $stmt->bind_param("iss", $changed_qty, $customer_id, $item_id);
+        $date = new DateTime('2000-01-01');
+        $var = $date->format('Y-m-d H:i:s');
+        $stmt = $conn->prepare("UPDATE cart SET quantity=? WHERE customer_id=? AND product_id=? AND pay_time = ?");
+        $stmt->bind_param("isss", $changed_qty, $customer_id, $item_id, $var);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
@@ -128,8 +139,10 @@ class ProductManager {
     function deleteCartItem($customer_id,$item_id){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("DELETE from cart WHERE customer_id=? AND product_id=?");
-        $stmt->bind_param("ss",$customer_id, $item_id);
+        $date = new DateTime('2000-01-01');
+        $var = $date->format('Y-m-d H:i:s');
+        $stmt = $conn->prepare("DELETE from cart WHERE customer_id=? AND product_id=? AND pay_time=?");
+        $stmt->bind_param("sss",$customer_id, $item_id,$var);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
