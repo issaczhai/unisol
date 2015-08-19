@@ -80,7 +80,7 @@ and open the template in the editor.
             }
             .overlay-carousel{
                 position:relative;
-                background: rgba(255, 255, 255, 0.6);
+                background: rgba(0, 0, 0, 0.6);
                 height:50px;
                 margin-top:-50px;
                 padding-top:16.5px;
@@ -94,7 +94,7 @@ and open the template in the editor.
                 margin-left:20px
             }
             .overlay-text{
-                color: #626262;
+                color: #fff;
                 font-weight: 400;
                 font-size: 16px;
             }
@@ -108,6 +108,9 @@ and open the template in the editor.
                 margin-top:-1.0000000000000001em;
             }
         </style>
+        
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> 
         <script>
         function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
 
@@ -320,9 +323,7 @@ and open the template in the editor.
     <?php
     $currentPage = "";
     include_once("./templates/footer.php");
-    ?>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>    
+    ?>   
     <script src="//vjs.zencdn.net/4.12/video.js"></script>   
     <script src="./public_html/js/main.js"></script>
     <script src="./public_html/js/allocacoc.js"></script>

@@ -182,7 +182,7 @@ if(!empty($userid)){
                             }
                         }else{
                         ?>
-                                 <li class="notification">
+                                <li class="notification empty-cart">
                                     <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
                                 </li>
                         <?php
