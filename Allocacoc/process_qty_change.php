@@ -30,10 +30,12 @@ if($stock>=$qty_to_change){
     }
 
     $total = $shipping_fee + $subtotal;
+    $cart_total_qty = $productMgr->retrieveTotalNumberOfItemsInShoppingCart($customer_id);
 
     $data_form['subtotal'] = number_format($subtotal,2,'.','');
     $data_form['shipping_fee'] = number_format($shipping_fee,2,'.','');
     $data_form['total'] = number_format($total,2,'.','');
+    $data_form['cart_total_qty'] = $cart_total_qty;
     $data_form['error'] = false;
     
 }else{

@@ -114,7 +114,7 @@ class ProductManager {
         $productQty = 0;
         $date = new DateTime('2000-01-01');
         $var = $date->format('Y-m-d H:i:s');
-        $stmt = $conn->prepare("SELECT count(*) FROM cart WHERE customer_id=? AND product_id=? AND pay_time = ?");
+        $stmt = $conn->prepare("SELECT quantity FROM cart WHERE customer_id=? AND product_id=? AND pay_time = ?");
         $stmt->bind_param("sss", $customer_id,$product_id,$var);
         $stmt->execute();
         $stmt->bind_result($quantity);

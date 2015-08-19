@@ -7,6 +7,8 @@
  */
 include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/ProductManager.php");
+include_once("./Manager/PhotoManager.php");
+$photoMgr = new PhotoManager();
 $product_id = addslashes(filter_input(INPUT_POST, 'selected_product_id'));
 $qty = intval(addslashes(filter_input(INPUT_POST, 'qty')));
 //$url = filter_input(INPUT_POST, 'url');
@@ -23,7 +25,8 @@ if(!empty($_SESSION["userid"])){
     $cart_data['error_not_logged_in']=false;
     //add product to the shopping cart
     $productMgr->addProductToShoppingCart($userid, $product_id, $qty);
-
+    $photoList = $photoMgr->getPhotos($product_id);
+    $photo_url = $photoList["1"];
     //get the number of item in customer's shopping cart
     $cart_qty = $productMgr->retrieveTotalNumberOfItemsInShoppingCart($userid);
     $cart_unique_qty = $productMgr->retrieveTotalNumberOfUniqueItemsInShoppingCart($userid);
@@ -34,6 +37,7 @@ if(!empty($_SESSION["userid"])){
     $cart_data['add_item_id'] = $product_id;
     $cart_data['item_qty'] = $item_qty;
     $cart_data['product_name'] = $product_name;
+    $cart_data['photo_url'] = $photo_url;
     $cart_data['userid'] = $userid;
 }else{
     $cart_data['error_not_logged_in']=true;

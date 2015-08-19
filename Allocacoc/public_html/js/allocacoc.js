@@ -100,14 +100,12 @@ $('#register').submit(function(event) { //Trigger on form submit
 // Add to cart
 var addToCart = function(product_id){
         if($('.cart-button').text() === 'proceed to checkout'){
-            console.log('coming here');
             window.location = './cart.php';
         }else{
                 
                 var qty_id = '#' + product_id + 'qty';
                 var qty = $(qty_id).val();
                 var product_to_add = 'selected_product_id=' + product_id + '&qty=' + qty;
-                console.log("add to cart is called");
                 $('#loader-overlay').css('display','block');
                 $.ajax({ //Process the form using $.ajax()
                     type      : 'POST', //Method type
@@ -124,6 +122,7 @@ var addToCart = function(product_id){
                                         product_name = jsonData.product_name,
                                         item_qty = jsonData.item_qty,
                                         add_product_id = jsonData.add_item_id,
+                                        photo_url = jsonData.photo_url,
                                         userid = jsonData.userid,
                                         product_url = './product_detail.php?selected_product_id='+ add_product_id + '&customer_id=' + userid;
 
@@ -137,9 +136,10 @@ var addToCart = function(product_id){
                                         if(cart_unique_qty < 6){
                                             var newNotification = $('.notification-template').clone();
                                             newNotification.find('.item-qty').text('Quantity:' + item_qty);
-                                            newNotification.find('.item-qty').prepend('&nbsp;');
+                                            //newNotification.find('.item-qty').prepend('&nbsp;');
                                             newNotification.find('.product-name-link').attr('href', product_url);
                                             newNotification.find('.product-img-link').attr('href', product_url);
+                                            newNotification.find('.cart-image').attr('src', photo_url);
                                             newNotification.find('.product-name-link').text(product_name);
                                             $('.last-notification').before(newNotification);
                                             newNotification.removeClass('notification-template');

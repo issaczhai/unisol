@@ -170,7 +170,7 @@ and open the template in the editor.
                             <?php
                             if(!empty($cart_items)){
                             ?>
-                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( <?=$cart_total_qty?> ) </span></a>
+                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span class='cart_total_qty'> ( <?=$cart_total_qty?> ) </span></a>
                             <?php
                             }else{
                             ?>
@@ -182,21 +182,22 @@ and open the template in the editor.
                                 <ul role="menu" class="sub-menu">
                             <?php
                             if(!empty($cart_items)){
-                                for($x=0;$x<min(4,count($cart_items));$x++){
+                                for($x=0;$x<min(4,count($cart_items));$x++){    
                                     $each_cart_item = $cart_items[$x];
                                     $each_product_id = $each_cart_item['product_id'];
                                     $each_product_quantity = $each_cart_item['quantity'];
                                     $each_product_name = $productMgr->getProductName($each_product_id);
                                     $photoList = $photoMgr->getPhotos($each_product_id);
                                     $photo_url = $photoList["1"];
+                                    $notification_quantity_id = 'notification_quantity'.$each_product_id;
                             ?>
-                                     <li class="notification">
+                                    <li class="notification">
                                         <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
                                            <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                         </div>
                                         <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
-                                            <br>
-                                            <span style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
+                                        <br>
+                                        <span id="<?=$notification_quantity_id ?>" style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
                                     </li>
                             <?php
                                 }
@@ -212,7 +213,7 @@ and open the template in the editor.
                                     <div class="btn-group-justified">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
-                                                    View All Items <span>(<?=$cart_total_qty ?>)</span>
+                                                    View All Items <span class='cart_total_qty'>(<?=$cart_total_qty ?>)</span>
                                             </button>
                                         </div>
                                     </div> 
@@ -418,12 +419,17 @@ and open the template in the editor.
                             $('#error_modal').modal('show');
                             $('#error_modal_content').show();
                         }else{
-                            var subtotal = jsonData.subtotal;
-                            var shipping_fee = jsonData.shipping_fee;
-                            var total = jsonData.total;
+                            var subtotal = jsonData.subtotal,
+                                shipping_fee = jsonData.shipping_fee,
+                                total = jsonData.total,
+                                cart_total_qty = jsonData.cart_total_qty,
+                                notification_quantity_id = '#notification_quantity' + item_id;
+
                             $('#subtotal').html('<Strong>'+subtotal+'</Strong>');
                             $('#shipping_cost').html('<Strong>'+shipping_fee+'</Strong>');
                             $('#total_cost').html('<Strong>'+total+'</Strong>');
+                            $('.cart_total_qty').text(' ( ' + cart_total_qty + ' ) ');
+                            $(notification_quantity_id).text(' Quantity: ' + qty_to_change);
                             $(each_cart_totalid).html('<Strong>'+price_formatted+'</Strong>'); 
                             
                         }

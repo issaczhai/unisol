@@ -176,7 +176,7 @@ if(!empty($userid)){
                                     </div>
                                     <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
                                         <br>
-                                        <span style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
+                                        <span style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
                                 </li>
                         <?php
                             }
@@ -190,7 +190,7 @@ if(!empty($userid)){
                         ?>
                             <li class="notification-template notification">
                                 <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
-                                   <a class="product-img-link" href="#"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                   <a class="product-img-link" href="#"><img class="cart-image" style="position:absolute !important;" src="" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                 </div>
                                 <span>&nbsp;<a class="product-name-link" href="#" style='font-size:12px'></a></span>
                                     <br>
@@ -260,7 +260,8 @@ if(!empty($userid)){
                                 <li><a href="#">25ft (3.5m) cable</a></li>
                             </ul>
                         </div>
-                        <div class="btn-group color-selection">
+                        <br>
+                        <!-- <div class="btn-group color-selection">
                                <div>choose color </div>
                                <div class="color">
                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
@@ -283,7 +284,7 @@ if(!empty($userid)){
                                    </label>
                                </div>
                                 
-                        </div>
+                        </div> -->
                         <?php 
                             if($selected_product_in_cart == 0){
                         ?>

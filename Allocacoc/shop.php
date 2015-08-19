@@ -253,7 +253,9 @@ $results = [];
 $results = $productMgr->getAllProduct();
 //}
 ?>
-<div id="loaderID" style="display:none;position:absolute; top:500px; left:50%; z-index:10; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
+<div id="loader-overlay">
+    <div style="position:relative;top:25%; left:50%; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
+</div>
  
 <!-- Content Modal-->
 <!--<div style='position:fixed;width:100%;margin-top:-20px;height:20px;background:#FFF;z-index:2'></div>-->
@@ -532,8 +534,7 @@ include_once("./templates/footer.php");
     <!-- Filter -->
     <script>
         function filter(filter_type) {
-            $('#main-content').hide();
-            $('#loaderID').show();
+            $('#loader-overlay').css('display','block');
             //set all link background and color to default
             $('.filter_link').css('background','#FFF');
             $('.filter_link').css('color','#B2B2B2');
@@ -558,7 +559,7 @@ include_once("./templates/footer.php");
                                 $('#loaderID').hide();
                                 $('#sort_type').text('Default Sorting');
                                 $(".features_items").html(html);
-                                $('#main-content').show();
+                                $('#loader-overlay').css('display','none');
                             }
             });
     }
@@ -566,8 +567,7 @@ include_once("./templates/footer.php");
     <!-- Sort -->
     <script>
         function sort(sort_type) {
-            $('#main-content').hide();
-            $('#loaderID').show();
+            $('#loader-overlay').css('display','block');
             //Validate fields if required using jQuery
             var filter_type = $('.active_filter').text();
             var customer_id = '<?=$userid?>';
@@ -588,7 +588,7 @@ include_once("./templates/footer.php");
                                     $('#sort_type').text('Default Sorting');
                                 }
                                 $(".features_items").html(html);
-                                $('#main-content').show();
+                                $('#loader-overlay').css('display','none');
                             }
             });
     }
