@@ -154,7 +154,7 @@ if(!empty($userid)){
                         <?php
                         }else{
                         ?>
-                        <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span class="cart-qty"> ( 0 ) </span></a>
+                        <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span class="cart-qty"></span></a>
                         <?php
                         }
                         ?>
@@ -170,13 +170,22 @@ if(!empty($userid)){
                                 $photoList = $photoMgr->getPhotos($each_product_id);
                                 $photo_url = $photoList["1"];
                         ?>
-                                 <li class="notification">
+                                <li class="notification">
                                     <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
                                        <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                     </div>
                                     <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
                                         <br>
                                         <span style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
+                                </li>
+                                <li class="notification last-notification">
+                                    <div class="btn-group-justified">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
+                                                    View All Items <span class="cart-qty">(<?=$cart_total_qty ?>)</span>
+                                            </button>
+                                        </div>
+                                    </div> 
                                 </li>
                         <?php
                             }
@@ -196,15 +205,7 @@ if(!empty($userid)){
                                     <br>
                                     <span class="item-qty" style='font-size:12px'>&nbsp;Quantity: </span>
                             </li>
-                            <li class="notification last-notification">
-                                <div class="btn-group-justified">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
-                                                View All Items <span class="cart-qty">(<?=$cart_total_qty ?>)</span>
-                                        </button>
-                                    </div>
-                                </div> 
-                            </li>
+                            
                         </ul>
                     </li> 
                     <?php 

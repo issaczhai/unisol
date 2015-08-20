@@ -174,7 +174,7 @@ and open the template in the editor.
                             <?php
                             }else{
                             ?>
-                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span> ( 0 ) </span></a>
+                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span></span></a>
                             <?php
                             }
                             ?>
@@ -199,6 +199,15 @@ and open the template in the editor.
                                         <br>
                                         <span id="<?=$notification_quantity_id ?>" style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
                                     </li>
+                                    <li class="notification">
+                                        <div class="btn-group-justified">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
+                                                        View All Items <span class='cart_total_qty'>(<?=$cart_total_qty ?>)</span>
+                                                </button>
+                                            </div>
+                                        </div> 
+                                    </li>
                             <?php
                                 }
                             }else{
@@ -209,15 +218,7 @@ and open the template in the editor.
                             <?php
                             }
                             ?>
-                                <li class="notification">
-                                    <div class="btn-group-justified">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
-                                                    View All Items <span class='cart_total_qty'>(<?=$cart_total_qty ?>)</span>
-                                            </button>
-                                        </div>
-                                    </div> 
-                                </li>
+                                
                             </ul>
                         </li> 
                         <?php 
