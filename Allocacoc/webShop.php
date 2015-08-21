@@ -10,7 +10,9 @@ and open the template in the editor.
     }
     include_once("./Manager/ConnectionManager.php");
     include_once("./Manager/ProductManager.php");
+    include_once("./Manager/PhotoManager.php");
     $productMgr = new ProductManager();
+    $photoMgr = new PhotoManager();
     $userid = null;
     $username = null;
     
@@ -233,11 +235,14 @@ and open the template in the editor.
                                             $each_product_id = $each_cart_item['product_id'];
                                             $each_product_quantity = $each_cart_item['quantity'];
                                             $each_product_name = $productMgr->getProductName($each_product_id);
-
+                                            $photoList = $photoMgr->getPhotos($each_product_id);
+                                            $photo_url = $photoList["1"];
                                     ?>
                                              <li class="notification">
                                                 <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
-                                                   <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="./public_html/img/GE.png" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                                   <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>">
+                                                   <img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" />
+                                                   </a>                             
                                                 </div>
                                                 <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
                                                     <br>
@@ -252,6 +257,10 @@ and open the template in the editor.
                                                 <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
                                             </li>
 
+                                    <?php
+                                    }
+                                    ?>
+                                            
                                             <li class="notification last-notification">
                                                 <div class="btn-group-justified">
                                                     <div class="btn-group">
@@ -261,10 +270,6 @@ and open the template in the editor.
                                                     </div>
                                                 </div> 
                                             </li>
-                                    <?php
-                                    }
-                                    ?>
-                                        
                                     </ul>
                                 </li> 
                                 <?php 

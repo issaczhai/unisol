@@ -208,6 +208,10 @@ and open the template in the editor.
                                         <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
                                     </li>
 
+                                    
+                            <?php
+                            }
+                            ?>
                                     <li class="notification last-notification">
                                         <div class="btn-group-justified">
                                             <div class="btn-group">
@@ -217,10 +221,6 @@ and open the template in the editor.
                                             </div>
                                         </div> 
                                     </li>
-                            <?php
-                            }
-                            ?>
-                                
                             </ul>
                         </li> 
                         <?php 
