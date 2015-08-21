@@ -347,22 +347,23 @@ $results = $productMgr->getAllProduct();
                                 <span>&nbsp;<a href="./product_detail.php?selected_product_id='<?=$each_product_id ?>'&customer_id='<?=$userid ?>'" style='font-size:12px'><?=$each_product_name ?></a></span>
                                     <br>
                                     <span style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
-                            </li>
-                            <li class="notification">
-                                <div class="btn-group-justified">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
-                                                View All Items <span>(<?=$cart_total_qty ?>)</span>
-                                        </button>
-                                    </div>
-                                </div> 
-                            </li>
+                            </li> 
                     <?php
                         }
                     }else{
                     ?>
                             <li class="notification">
                                 <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
+                            </li>
+
+                            <li class="notification last-notification">
+                                <div class="btn-group-justified">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
+                                                View All Items <span class="cart-qty">(<?=$cart_total_qty ?>)</span>
+                                        </button>
+                                    </div>
+                                </div> 
                             </li>
                     <?php
                     }
@@ -478,7 +479,7 @@ $results = $productMgr->getAllProduct();
                         $photoList = $photoMgr->getPhotos($product_id);
                         $photo_url = $photoList["1"];
                 ?>
-                <div class='col-sm-6'>
+                <div class='col-sm-6 each-product'>
                     <div class='product-wrapper'>
                         <div class='product-img'>
                             <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>">
@@ -486,7 +487,11 @@ $results = $productMgr->getAllProduct();
                             </a>
                         </div>
                         <div class='product-summary'> 
-                            <h5 class="product-name"><a href='./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>'><?= $product_name ?></a></h5>
+                            <h5 style="word-wrap:break-word" class="product-name">
+                            <a href='./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$userid ?>'>
+                            <?= $product_name ?>
+                            </a>
+                            </h5>
                             <h5 class="price">$<?= number_format($price,1,'.','') ?> <span> incl.VAT</span></h5>
                         </div>
                     </div>

@@ -178,22 +178,13 @@ if(!empty($userid)){
                                         <br>
                                         <span style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
                                 </li>
-                                <li class="notification last-notification">
-                                    <div class="btn-group-justified">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
-                                                    View All Items <span class="cart-qty">(<?=$cart_total_qty ?>)</span>
-                                            </button>
-                                        </div>
-                                    </div> 
-                                </li>
                         <?php
                             }
                         }else{
                         ?>
-                                <li class="notification empty-cart">
-                                    <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
-                                </li>
+                            <li class="notification empty-cart">
+                                <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
+                            </li>
                         <?php
                         }
                         ?>
@@ -204,6 +195,16 @@ if(!empty($userid)){
                                 <span>&nbsp;<a class="product-name-link" href="#" style='font-size:12px'></a></span>
                                     <br>
                                     <span class="item-qty" style='font-size:12px'>&nbsp;Quantity: </span>
+                            </li>
+
+                            <li class="notification last-notification">
+                                <div class="btn-group-justified">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
+                                                View All Items <span class="cart-qty">(<?=$cart_total_qty ?>)</span>
+                                        </button>
+                                    </div>
+                                </div> 
                             </li>
                             
                         </ul>

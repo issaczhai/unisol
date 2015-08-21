@@ -199,21 +199,23 @@ and open the template in the editor.
                                         <br>
                                         <span id="<?=$notification_quantity_id ?>" style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
                                     </li>
-                                    <li class="notification">
-                                        <div class="btn-group-justified">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
-                                                        View All Items <span class='cart_total_qty'>(<?=$cart_total_qty ?>)</span>
-                                                </button>
-                                            </div>
-                                        </div> 
-                                    </li>
+                                    
                             <?php
                                 }
                             }else{
                             ?>
-                                     <li class="notification">
+                                    <li class="notification">
                                         <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
+                                    </li>
+
+                                    <li class="notification last-notification">
+                                        <div class="btn-group-justified">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
+                                                        View All Items <span class="cart-qty">(<?=$cart_total_qty ?>)</span>
+                                                </button>
+                                            </div>
+                                        </div> 
                                     </li>
                             <?php
                             }

@@ -78,6 +78,9 @@ and open the template in the editor.
     text-align: center;
     text-decoration: none;
 }
+.each-product{
+    margin-bottom: 10px;
+}
 .product-summary, .product-img{
 
     display: inline-block;
@@ -85,7 +88,9 @@ and open the template in the editor.
 .product-summary{
     position: relative;
     top: 25%;
-    left: 10%;
+    left: 5%;
+    width:200px;
+    height:100px;
 }
 .product-overview{
     padding-top: 10px;
