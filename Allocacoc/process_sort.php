@@ -11,6 +11,8 @@ if (session_status()!=PHP_SESSION_ACTIVE) {
 }
 include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/ProductManager.php");
+include_once("./Manager/PhotoManager.php");
+$photoMgr = new PhotoManager();
 // define the filter type chosen before sort if any
 $filter_type_get = addslashes(filter_input(INPUT_POST, 'filter_type'));
 $customer_id = filter_input(INPUT_POST, 'customer_id');
@@ -79,12 +81,14 @@ if($filter_type=='all' && $sort_type!='default'){
             $product_name = $eachProduct["product_name"];
             $price = $eachProduct["price"];
             $product_id = $eachProduct["product_id"];
+            $photoList = $photoMgr->getPhotos($product_id);
+            $photo_url = $photoList["1"];
 ?>
             <div class='col-sm-6'>
                 <div class='product-wrapper'>
                     <div class='product-img'>
                         <a href="./product_detail.php?selected_product_id=<?=$product_id ?>&customer_id=<?=$customer_id ?>">
-                        <img src='./public_html/img/productImg/GE.png'>
+                            <img src='<?=$photo_url?>'>
                         </a>
                     </div>
                     <div class='product-summary'> 
