@@ -16,7 +16,7 @@ include_once("./Manager/FdpManager.php");
 include_once("./Manager/CustomerManager.php");
 include_once("./Manager/PhotoManager.php");
 include_once("./Manager/RewardManager.php");
-
+include_once("./Manager/OrderManager.php");
 $admin = $_SESSION["admin_id"];
 
 $productMgr = new ProductManager();
@@ -37,6 +37,18 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
     <head>
         <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script> 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.js"></script> 
+        <script>
+        $(window).load(function(){
+            var hash = window.location.hash;
+            if(hash != ''){
+                $("#dashboard").attr('class','tab-pane fade');
+                $("#dashboard_tab").attr('class', '');
+                $(hash).attr('class','tab-pane fade active in');
+                $(hash+"_tab").attr('class', 'active');
+            }
+            
+        });
+        </script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,7 +79,14 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
             .btn input{position: absolute;top: 0; right: 0;margin: 0;border:solid transparent; 
             opacity: 0;filter:alpha(opacity=0); cursor: pointer;} 
             .btn button{position: absolute;top: 0; right: 0;margin: 0;border:solid transparent; 
-            opacity: 0;filter:alpha(opacity=0); cursor: pointer;} 
+            opacity: 0;filter:alpha(opacity=0); cursor: pointer;}
+            
+            #displayPendingOrder th{
+                text-align:center;
+            }
+            #displayPendingOrder td{
+                text-align:center;
+            }
         </style>
         
     </head>
@@ -116,6 +135,9 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                     </li>
                     <li id="manageReward_tab">
                         <a href="#manageReward" data-toggle="tab"><i class="fa fa-fw fa-trophy"></i> Manage Reward</a>
+                    </li>
+                    <li id="manageOrder_tab">
+                        <a href="#manageOrder" data-toggle="tab"><i class="fa fa-fw fa-trophy"></i> Manage Order</a>
                     </li>
                 </ul>
             </div>
@@ -716,6 +738,142 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                     </div>
                         
                 </div>
+                
+                
+                <!--viewProduct tab content-->
+                <div class="tab-pane fade" id="manageOrder">
+                    <div id="page-wrapper">
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h1 class="page-header">
+                                        Manage Order
+                                    </h1>
+                                </div>
+                            </div>
+                            
+                            <!--VIEW PENDING ORDER TABLE ROW-->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-yellow">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><i class="fa fa-file-o fa-fw"></i> Pending Order List</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover table-striped" id="displayPendingOrder">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Order ID</th>
+                                                            <th>Customer ID</th>
+                                                            <th>Total Price</th>
+                                                            <th>Pay Time</th>
+                                                            <th>Status</th>
+                                                            <th width="10%">Option</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $orderMgr = new OrderManager();
+                                                        $pendingList = $orderMgr->getPendingOrder();
+                                                        foreach($pendingList as $pendingOrder){
+                                                            $pendingOrder_id = $pendingOrder["order_id"];
+                                                            $pendingOrder_customerId = $pendingOrder["customer_id"];
+                                                            $pendingOrder_status = $pendingOrder["status"];
+                                                            $pendingOrder_payTime = $pendingOrder["payment_time"];
+                                                            $pendingOrder_totalPrice = $pendingOrder["totalPrice"];
+                                                            $pendingOrder_itemList = $pendingOrder["itemList"];
+                                                            
+                                                        ?>
+                                                           <tr>
+                                                               <td><?=$pendingOrder_id?></td>
+                                                               <td><?=$pendingOrder_customerId?></td>
+                                                               <td><?=number_format($pendingOrder_totalPrice,2,'.','') ?></td>
+                                                               <td><?=$pendingOrder_payTime?></td>
+                                                               <td><?=$pendingOrder_status?></td>
+                                                               <td>
+                                                                   <button id="viewButton<?=$pendingOrder_id?>" style="width:50px" onclick="showOrder('<?=$pendingOrder_id?>')">View</button>
+                                                                   <button id="closeButton<?=$pendingOrder_id?>" style="display:none;width:50px" onclick="closeOrderDetail('<?=$pendingOrder_id ?>');">Close</button>
+                                                               </td>
+                                                           </tr>
+                                                           <tr id="orderDetail<?=$pendingOrder_id?>" style="display:none">
+                                                               <td colspan="6">
+                                                                   halo
+                                                               </td>
+                                                           </tr>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+<!--                                        <div class="text-right">
+                                                <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+                            
+                            
+                            <!--VIEW COMPLETED ORDER TABLE ROW-->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><i class="fa fa-file-text-o fa-fw"></i> Completed Order List</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover table-striped" id="displayCompletedOrder">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Order ID</th>
+                                                            <th>Customer ID</th>
+                                                            <th>Total Price</th>
+                                                            <th>Pay Time</th>
+                                                            <th width="10%">Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $sentList = $orderMgr->getSentOrder();
+                                                        foreach($sentList as $sentOrder){
+                                                            $sentOrder_id = $sentOrder["order_id"];
+                                                            $sentOrder_customerId = $sentOrder["customer_id"];
+                                                            $sentOrder_status = $sentOrder["status"];
+                                                            $sentOrder_payTime = $sentOrder["payment_time"];
+                                                            $sentOrder_totalPrice = $sentOrder["totalPrice"];
+                                                            $sentOrder_itemList = $sentOrder["itemList"];
+                                                            
+                                                        ?>
+                                                           <tr>
+                                                               <td><?=$sentOrder_id?></td>
+                                                               <td><?=$sentOrder_customerId?></td>
+                                                               <td><?=number_format($sentOrder_totalPrice,2,'.','') ?></td>
+                                                               <td><?=$sentOrder_payTime?></td>
+                                                               <td><?=$sentOrder_status?></td>
+                                                           </tr>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        <!-- /.container-fluid -->
+                    </div>
+                    <!-- /#page-wrapper -->
+                </div>
+                
                 <!-- /#wrapper -->
             </div>
         
@@ -849,6 +1007,18 @@ function removeRewardCode(code){
 
 function setGift(code){
     document.getElementById("gift_code").value = code;
+}
+
+function showOrder(o_id){
+    $("#orderDetail"+o_id).css('display','');
+    $("#viewButton"+o_id).css('display','none');
+    $("#closeButton"+o_id).css('display','');
+}
+
+function closeOrderDetail(o_id){
+    $("#orderDetail"+o_id).css('display','none');
+    $("#viewButton"+o_id).css('display','');
+    $("#closeButton"+o_id).css('display','none');
 }
 </script>
     </body>
