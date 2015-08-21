@@ -138,13 +138,13 @@ if(!empty($userid)){
             </div>
             
             <div class='allocacocLogo'>
-                <img src='public_html/img/allocacoc_NoText.png'><span class='logoText'>Webshop</span>
+                <a href='./index.php'><img src='public_html/img/allocacoc_NoText.png'></a>
             </div>
             
             <div class="col-sm-12 overlay">
                 <ul class="overlay-nav">
                     <li class="overlay-nav-item item-shop">
-                                <a class='overlay-text' href="./shop.php"><span></span>shop</a>
+                        <a class='overlay-text' href="./shop.php"><span></span>shop</a>
                     </li>
                     <li class="cart-dropdown overlay-nav-item item-cart" >
                         <?php
@@ -263,7 +263,7 @@ if(!empty($userid)){
                             </ul>
                         </div>
                         <br>
-                        <!-- <div class="btn-group color-selection">
+                        <div class="btn-group color-selection">
                                <div>choose color </div>
                                <div class="color">
                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
@@ -286,7 +286,7 @@ if(!empty($userid)){
                                    </label>
                                </div>
                                 
-                        </div> -->
+                        </div>
                         <?php 
                             if($selected_product_in_cart == 0){
                         ?>

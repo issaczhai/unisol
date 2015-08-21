@@ -19,9 +19,11 @@ var login = function() {
                             var pos = data.indexOf("{");
                             var dataValid = data.substring(pos);
                             var jsonData = eval("("+dataValid+")");
+                            
                             console.log(jsonData.exceed);
                             if (!jsonData.success) { 
                                     //If fails
+                                    $('#sign-in-btn').text('Sign In');
                                     $('#errorMsg').html(jsonData.errors); 
                                     
                             }else{
@@ -144,6 +146,7 @@ var addToCart = function(product_id){
                                             $('.last-notification').before(newNotification);
                                             newNotification.removeClass('notification-template');
                                         }
+                                        $('.empty-cart').remove();
                                         $('.number-spinner').hide(); 
                                         $('.cart-button').text('process to checkout');
                                         $('.cart-button').attr('onclick',"window.location='./cart.php'");

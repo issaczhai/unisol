@@ -28,7 +28,11 @@ if($stock>=$qty_to_change){
         $each_cart_item_total = $each_cart_item_price * $each_cart_item_qty;
         $subtotal += $each_cart_item_total;
     }
-
+    if($subtotal > 100){
+        $shipping_fee = 0;
+    }else{
+        $shipping_fee = 5;
+    }
     $total = $shipping_fee + $subtotal;
     $cart_total_qty = $productMgr->retrieveTotalNumberOfItemsInShoppingCart($customer_id);
 

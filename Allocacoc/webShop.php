@@ -207,7 +207,7 @@ and open the template in the editor.
                             </div>
                         </div>
                         <div class='allocacocLogo'>
-                            <img src='public_html/img/allocacoc_NoText.png'><span class='logoText'>Webshop</span>
+                            <a href='./index.php'><img src='public_html/img/allocacoc_NoText.png'></a>
                         </div>
                         <div class="overlay-carousel">
                             <ul class="overlay-nav">

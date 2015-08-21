@@ -158,7 +158,7 @@ and open the template in the editor.
                 </div>
                 
                 <div class='allocacocLogo'>
-                    <img src='public_html/img/allocacoc_NoText.png'><span class='logoText'>Webshop</span>
+                    <a href='./index.php'><img src='public_html/img/allocacoc_NoText.png'></a>
                 </div>
                 
                 <div class="col-sm-12 overlay">
@@ -328,6 +328,11 @@ and open the template in the editor.
                             </tr> 
 
                         <?php
+                        }
+                        if($subtotal > 100){
+                            $shipping_fee = 0;
+                        }else{
+                            $shipping_fee = 5;
                         }
                         $total = $subtotal + $shipping_fee;
                         ?>
