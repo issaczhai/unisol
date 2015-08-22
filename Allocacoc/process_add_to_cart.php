@@ -9,14 +9,17 @@ include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/ProductManager.php");
 include_once("./Manager/PhotoManager.php");
 $photoMgr = new PhotoManager();
+$productMgr = new ProductManager();
 $product_id = addslashes(filter_input(INPUT_POST, 'selected_product_id'));
 $qty = intval(addslashes(filter_input(INPUT_POST, 'qty')));
 //$url = filter_input(INPUT_POST, 'url');
 //print_r($url);
-$productMgr = new ProductManager();
 $stock = $productMgr->getStock($product_id);
 session_start();
 $userid = null;
+$addedQty = 0;
+$totalQty = 0;
+$qty_update = false;
 $cart_data = array();
 
 if(!empty($_SESSION["userid"])){
@@ -24,7 +27,15 @@ if(!empty($_SESSION["userid"])){
     $userid = $_SESSION["userid"];
     $cart_data['error_not_logged_in']=false;
     //add product to the shopping cart
-    $productMgr->addProductToShoppingCart($userid, $product_id, $qty);
+    if($productMgr->retrieveItemQtyInShoppingCart($userid, $product_id) > 0){
+        $addedQty = $productMgr->retrieveItemQtyInShoppingCart($userid, $product_id);
+        $totalQty = $addedQty + $qty;
+        $productMgr->updateItemQty($userid, $product_id, $totalQty);
+        $qty_update = true;
+    }else{
+
+        $productMgr->addProductToShoppingCart($userid, $product_id, $qty);
+    }
     $photoList = $photoMgr->getPhotos($product_id);
     $photo_url = $photoList["1"];
     //get the number of item in customer's shopping cart
@@ -39,6 +50,7 @@ if(!empty($_SESSION["userid"])){
     $cart_data['product_name'] = $product_name;
     $cart_data['photo_url'] = $photo_url;
     $cart_data['userid'] = $userid;
+    $cart_data['qty_update'] = $qty_update;
 }else{
     $cart_data['error_not_logged_in']=true;
     

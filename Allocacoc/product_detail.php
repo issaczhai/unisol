@@ -165,18 +165,19 @@ if(!empty($userid)){
                             for($x=0;$x<min(4,count($cart_items));$x++){
                                 $each_cart_item = $cart_items[$x];
                                 $each_product_id = $each_cart_item['product_id'];
+                                $cart_item_id = 'cartItem'.$each_product_id;
                                 $each_product_quantity = $each_cart_item['quantity'];
                                 $each_product_name = $productMgr->getProductName($each_product_id);
                                 $photoList = $photoMgr->getPhotos($each_product_id);
                                 $photo_url = $photoList["1"];
                         ?>
-                                <li class="notification">
+                                <li class="notification" data-itemid = '<?= $cart_item_id ?>' >
                                     <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
                                        <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                     </div>
                                     <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
                                         <br>
-                                        <span style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
+                                    <span class='item-qty' style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
                                 </li>
                         <?php
                             }
@@ -188,7 +189,7 @@ if(!empty($userid)){
                         <?php
                         }
                         ?>
-                            <li class="notification-template notification">
+                            <li class="notification-template notification" data-itemId = ''>
                                 <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
                                    <a class="product-img-link" href="#"><img class="cart-image" style="position:absolute !important;" src="" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                 </div>
@@ -264,7 +265,7 @@ if(!empty($userid)){
                         </div>
                         <br>
                         <div class="btn-group color-selection">
-                               <div>choose color </div>
+                               <div>Colors </div>
                                <div class="color">
                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
                                    <label for="inlineRadio3" style="background-color: rgb(31, 92, 153)">
@@ -287,31 +288,23 @@ if(!empty($userid)){
                                </div>
                                 
                         </div>
-                        <?php 
-                            if($selected_product_in_cart == 0){
-                        ?>
-                            <div class="input-group number-spinner">
-                                <span class="qty-text">qty  </span>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" data-dir="dwn" data-stock=''><span class="glyphicon glyphicon-minus"></span></button>
-                                </span>
-                                <input id='<?=$selected_product_qty_id ?>' type="text"  data-id='<?=$selected_qty_msg_id ?>' data-stock='<?=$selected_product_stock ?>' class="form-control text-center qty-input" value="1">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" data-dir="up" data-stock='<?=$selected_product_stock ?>'><span class="glyphicon glyphicon-plus"></span></button>
-                                </span>
+                       
+                        <div class="input-group number-spinner">
+                            <span class="qty-text">qty  </span>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" data-dir="dwn" data-stock=''><span class="glyphicon glyphicon-minus"></span></button>
+                            </span>
+                            <input id='<?=$selected_product_qty_id ?>' type="text"  data-id='<?=$selected_qty_msg_id ?>' data-stock='<?=$selected_product_stock ?>' class="form-control text-center qty-input" value="1">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" data-dir="up" data-stock='<?=$selected_product_stock ?>'><span class="glyphicon glyphicon-plus"></span></button>
+                            </span>
 
-                            </div>
+                        </div>
 
-                            <button id='<?=$selected_add_btn_id ?>' class="btn btn-default cart-button" onclick="addToCart('<?=$selected_product_id ?>')"> add to cart </button>
-                        <?php
-                            }else{
-                        ?>
-                            <button class="btn btn-default cart-button" onclick="javascript:window.location='./cart.php';"> <span>proceed to checkout</span> </button>
-                        <?php
-                            }
-                        ?>
+                        <button id='<?=$selected_add_btn_id ?>' class="btn cart-button" onclick="addToCart('<?=$selected_product_id ?>')"> add to cart </button>
                         
-
+                           <!--  <button class="btn btn-default cart-button" onclick="javascript:window.location='./cart.php';"> <span>proceed to checkout</span> </button> -->
+                        
                     </div>
               <!--  </form> -->
             </div>
