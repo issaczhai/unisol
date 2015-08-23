@@ -178,11 +178,12 @@ h1, h2, h3, h4, h5, h6 {
 .cart-dropdown ul.sub-menu {
 	position: absolute;
 	margin: 0;
+  top:50px;
 	left: 0;
 	background: #ffffff;
 	list-style: none;
 	padding: 0;
-	width: 260px;
+	width: 300px;
   border: 1px solid #DDDDDD;
 	display: none;
 	z-index: 10000;
@@ -227,15 +228,12 @@ h1, h2, h3, h4, h5, h6 {
   display:none;
 }
 
-.notification > span a{color:#525252 !important}
-.notification > span a:hover{color: #B82E8A !important;background:none !important;}
 .notification .btn-default{
   border-radius: 0;
   background-color: rgb(0, 89, 112);
   color: #fff;
 }
 
-.sub-menu > li{margin-bottom:5px}
 .sub-menu > li:last-child {margin-bottom:10px}
 .cartImg{border:1px solid #E6E6E6}
 .cartImg:hover{border: 1px solid #B82E8A}

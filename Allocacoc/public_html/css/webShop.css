@@ -45,15 +45,53 @@ and open the template in the editor.
     padding-top:16.5px;
     z-index:1000;
 }
+.notification .cart-text-wrap{
+    position:relative;
+    width: 200px;
+    height:50px;
+    display:inline-block;
+}
+.notification .cartImg{
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+}
+.notification .cart-item-text{
+    position: relative;
+    width: 200px;
+    height: 30px;
+    display: inline-block;
+    padding-left: 5px;
+    line-height: 100%;
+}
+.notification .cart-item-text a{color:#525252 !important}
+.notification .cart-item-text a:hover{color: #B82E8A !important;background:none !important}
+.notification .item-qty{
+    position: relative;
+    display: inline-block;
+    padding-left: 5px;
+}
+.tooltip-arrow{
+    border: solid;
+    border-color: rgb(0, 89, 112) transparent;
+    border-width: 0px 6px 6px 6px;
+    top: 44px;
+    content: "";
+    left: 12%;
+    position: absolute;
+    z-index: 99999;
+}
 .overlay-nav{
     padding-left:15px;
 }
 .overlay-nav-item{
-    display: inline;
-    margin-top:17px
+    display: inline-block;
 }
 .overlay-nav > li{
-    margin-left:20px
+    margin-left:20px;
+    height:33.5px;
 }
 .overlay-nav > li:nth-child(1){
     margin-left:0px
@@ -170,7 +208,7 @@ and open the template in the editor.
     float:none !important;
 }
 .number-spinner {
-    width:40%;
+    width:50%;
 }
 .number-spinner .input-group-btn .btn{
     border-radius: 0 !important;
@@ -180,11 +218,11 @@ and open the template in the editor.
     border-left:none;
 }
 .number-spinner .qty-text{
-    padding-right: 30px;
+    padding-right: 20px;
 }
 .cart-button{
     width: 40%;
-    border-radius: 18px;
+    border-radius: 0px;
     background-color: rgb(0, 89, 112);
     color:#fff;
 }

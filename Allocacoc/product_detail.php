@@ -142,6 +142,9 @@ if(!empty($userid)){
             </div>
             
             <div class="col-sm-12 overlay">
+                <div class='cart-notification'>
+                    <div class='tooltip-arrow'></div>
+                </div>
                 <ul class="overlay-nav">
                     <li class="overlay-nav-item item-shop">
                         <a class='overlay-text' href="./shop.php"><span></span>shop</a>
@@ -172,12 +175,15 @@ if(!empty($userid)){
                                 $photo_url = $photoList["1"];
                         ?>
                                 <li class="notification" data-itemid = '<?= $cart_item_id ?>' >
-                                    <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
+                                    <div class="cartImg">
                                        <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                     </div>
-                                    <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
-                                        <br>
-                                    <span class='item-qty' style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
+                                    <div class="cart-text-wrap">
+                                        <span class="cart-item-text">&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
+                                    
+                                        <span class='item-qty' style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
+                                    </div>
+                                    
                                 </li>
                         <?php
                             }
@@ -190,12 +196,11 @@ if(!empty($userid)){
                         }
                         ?>
                             <li class="notification-template notification" data-itemId = ''>
-                                <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
+                                <div class="cartImg">
                                    <a class="product-img-link" href="#"><img class="cart-image" style="position:absolute !important;" src="" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                 </div>
-                                <span>&nbsp;<a class="product-name-link" href="#" style='font-size:12px'></a></span>
-                                    <br>
-                                    <span class="item-qty" style='font-size:12px'>&nbsp;Quantity: </span>
+                                <span class="cart-item-text">&nbsp;<a class="product-name-link" href="#" style='font-size:12px'></a></span>
+                                <span class="item-qty" style='font-size:12px'>&nbsp;Quantity: </span>
                             </li>
 
                             <li class="notification last-notification">
@@ -290,7 +295,7 @@ if(!empty($userid)){
                         </div>
                        
                         <div class="input-group number-spinner">
-                            <span class="qty-text">qty  </span>
+                            <div class="qty-text">Quantity  </div>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" data-dir="dwn" data-stock=''><span class="glyphicon glyphicon-minus"></span></button>
                             </span>
