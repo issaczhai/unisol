@@ -200,7 +200,6 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid #DDDDDD;
   display: none;
 }
-
 .cart-dropdown:hover > ul.sub-menu, .nav.navbar-nav > li:hover > ul.sub-menu{
   display: block;
   -webkit-animation: fadeInUp 400ms;

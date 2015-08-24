@@ -129,6 +129,7 @@ var addToCart = function(product_id){
                                 photo_url = jsonData.photo_url,
                                 userid = jsonData.userid,
                                 qty_update = jsonData.qty_update,
+                                qty_to_change = jsonData.qty_to_change,
                                 product_url = './product_detail.php?selected_product_id='+ add_product_id + '&customer_id=' + userid;
                                 
                             if(jsonData.error_not_logged_in){
@@ -154,6 +155,9 @@ var addToCart = function(product_id){
                                 }else if(qty_update){
                                     $('.sub-menu').find('li[data-itemid=' + existed_item_id + ']').find('.item-qty').text('Quantity:' + item_qty);
                                 }
+                                $('.cart-notification .cart-qty-changed').text(qty_to_change);
+                                $(".cart-notification").css('display', 'block');
+                                $(".cart-notification").delay(5000).fadeOut();
                                 $('.empty-cart').remove();/*
                                 $('.number-spinner').hide(); 
                                 $('.cart-button').text('process to checkout');

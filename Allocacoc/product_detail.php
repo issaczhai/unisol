@@ -144,25 +144,35 @@ if(!empty($userid)){
             <div class="col-sm-12 overlay">
                 <div class='cart-notification'>
                     <div class='tooltip-arrow'></div>
+                    <svg width="100" height="100">
+                      <circle cx="50" cy="50" r="30" fill="rgb(0, 89, 112)" />
+                    <text class='cart-qty-changed' fill="#ffffff" text-anchor="middle" font-size="30" font-family="Verdana" x="50" y="62"></text>
+                    Sorry, your browser does not support inline SVG.
+                    </svg>
+                    <div class='cart-notification-text'>
+                        <h5>Item added to your cart</h5>
+                        <a href='./cart.php'>View your cart</a>
+                    </div>
                 </div>
                 <ul class="overlay-nav">
                     <li class="overlay-nav-item item-shop">
                         <a class='overlay-text' href="./shop.php"><span></span>shop</a>
                     </li>
+                    <?php
+                    if(empty($cart_items)){
+                    ?>
+                        <li class="overlay-nav-item item-cart" >
+                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart </a>
+                        </li>
+                    <?php
+                    }else{
+                    ?>
+                    
                     <li class="cart-dropdown overlay-nav-item item-cart" >
-                        <?php
-                        if(!empty($cart_items)){
-                        ?>
+                        
                         <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span class="cart-qty"> ( <?=$cart_total_qty?> ) </span></a>
-                        <?php
-                        }else{
-                        ?>
-                        <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span class="cart-qty"></span></a>
-                        <?php
-                        }
-                        ?>
-
-                            <ul role="menu" class="sub-menu">
+                        
+                        <ul role="menu" class="sub-menu">
                         <?php
                         if(!empty($cart_items)){
                             for($x=0;$x<min(4,count($cart_items));$x++){
@@ -207,7 +217,7 @@ if(!empty($userid)){
                                 <div class="btn-group-justified">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
-                                                View All Items <span class="cart-qty">(<?=$cart_total_qty ?>)</span>
+                                                Checkout <span class="cart-qty">(<?=$cart_total_qty ?>)</span>
                                         </button>
                                     </div>
                                 </div> 
@@ -215,6 +225,9 @@ if(!empty($userid)){
                             
                         </ul>
                     </li> 
+                    <?php
+                    }
+                    ?>
                     <?php 
                     if(empty($userid)){
                     ?>
@@ -402,6 +415,13 @@ $(document).on('click', '.number-spinner button', function () {
     }
     console.log(newVal);
     $('.number-spinner').find('input').val(newVal);
+});
+
+$(function (){
+    $('.cart-dropdown').on('mouseover', function(e){
+        console.log($(this).parents().find('ul.overlay-nav').siblings('.cart-notification'));
+        $(this).parents().find('ul.overlay-nav').siblings('.cart-notification').css('display', 'none');
+    });
 });
 
 function changeImg(source){

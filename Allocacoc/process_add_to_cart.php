@@ -51,6 +51,7 @@ if(!empty($_SESSION["userid"])){
     $cart_data['photo_url'] = $photo_url;
     $cart_data['userid'] = $userid;
     $cart_data['qty_update'] = $qty_update;
+    $cart_data['qty_to_change'] = $qty;
 }else{
     $cart_data['error_not_logged_in']=true;
     
