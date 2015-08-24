@@ -163,7 +163,7 @@ if(!empty($userid)){
                     ?>
                         <li class="overlay-nav-item item-cart" >
                             <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart </a>
-                        </li>
+                        </li>   
                     <?php
                     }else{
                     ?>
@@ -209,8 +209,10 @@ if(!empty($userid)){
                                 <div class="cartImg">
                                    <a class="product-img-link" href="#"><img class="cart-image" style="position:absolute !important;" src="" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                 </div>
-                                <span class="cart-item-text">&nbsp;<a class="product-name-link" href="#" style='font-size:12px'></a></span>
-                                <span class="item-qty" style='font-size:12px'>&nbsp;Quantity: </span>
+                                <div class="cart-text-wrap">
+                                    <span class="cart-item-text">&nbsp;<a class="product-name-link" href="#" style='font-size:12px'></a></span>
+                                    <span class="item-qty" style='font-size:12px'>&nbsp;Quantity: </span>
+                                </div>
                             </li>
 
                             <li class="notification last-notification">
@@ -227,8 +229,6 @@ if(!empty($userid)){
                     </li> 
                     <?php
                     }
-                    ?>
-                    <?php 
                     if(empty($userid)){
                     ?>
                     <li id="sign_in_element" class="overlay-nav-item">

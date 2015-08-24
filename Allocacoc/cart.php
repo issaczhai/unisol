@@ -166,64 +166,67 @@ and open the template in the editor.
                         <li class="overlay-nav-item item-shop">
                             <a class='overlay-text' href="./shop.php"><span></span>shop</a>
                         </li>
+                        <?php
+                        if(empty($cart_items)){
+                        ?>
+                            <li class="overlay-nav-item item-cart" >
+                                <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart </a>
+                            </li>
+                        <?php
+                        }else{
+                        ?>
+                        
                         <li class="cart-dropdown overlay-nav-item item-cart" >
+                            
+                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span class="cart-qty"> ( <?=$cart_total_qty?> ) </span></a>
+                            
+                            <ul role="menu" class="sub-menu">
                             <?php
                             if(!empty($cart_items)){
-                            ?>
-                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span class='cart_total_qty'> ( <?=$cart_total_qty?> ) </span></a>
-                            <?php
-                            }else{
-                            ?>
-                            <a class='overlay-text' href="./cart.php"><i class="fa fa-shopping-cart fa-lg"></i> Cart <span></span></a>
-                            <?php
-                            }
-                            ?>
-
-                                <ul role="menu" class="sub-menu">
-                            <?php
-                            if(!empty($cart_items)){
-                                for($x=0;$x<min(4,count($cart_items));$x++){    
+                                for($x=0;$x<min(4,count($cart_items));$x++){
                                     $each_cart_item = $cart_items[$x];
                                     $each_product_id = $each_cart_item['product_id'];
+                                    $cart_item_id = 'cartItem'.$each_product_id;
                                     $each_product_quantity = $each_cart_item['quantity'];
                                     $each_product_name = $productMgr->getProductName($each_product_id);
                                     $photoList = $photoMgr->getPhotos($each_product_id);
                                     $photo_url = $photoList["1"];
-                                    $notification_quantity_id = 'notification_quantity'.$each_product_id;
                             ?>
-                                    <li class="notification">
-                                        <div class="cartImg" style="width:50px;height:50px;float:left;overflow:hidden;position:relative;">
+                                    <li class="notification" data-itemid = '<?= $cart_item_id ?>' >
+                                        <div class="cartImg">
                                            <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                         </div>
-                                        <span>&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
-                                        <br>
-                                        <span id="<?=$notification_quantity_id ?>" style='font-size:12px'>&nbsp;Quantity: <?=$each_product_quantity ?></span>
+                                        <div class="cart-text-wrap">
+                                            <span class="cart-item-text">&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
+                                        
+                                            <span class='item-qty' style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
+                                        </div>
+                                        
                                     </li>
-                                    
                             <?php
                                 }
                             }else{
                             ?>
-                                    <li class="notification">
-                                        <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
-                                    </li>
-
-                                    
+                                <li class="notification empty-cart">
+                                    <span style='font-size:12px'>&nbsp;Start Shopping by Adding Product</span>
+                                </li>
                             <?php
                             }
                             ?>
-                                    <li class="notification last-notification">
-                                        <div class="btn-group-justified">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
-                                                        View All Items <span class="cart-qty">(<?=$cart_total_qty ?>)</span>
-                                                </button>
-                                            </div>
-                                        </div> 
-                                    </li>
+                                <li class="notification last-notification">
+                                    <div class="btn-group-justified">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default" onclick="location.href = './cart.php';">
+                                                    Checkout <span class="cart-qty">(<?=$cart_total_qty ?>)</span>
+                                            </button>
+                                        </div>
+                                    </div> 
+                                </li>
+                                
                             </ul>
                         </li> 
-                        <?php 
+                <?php
+                }
                 if(empty($userid)){
                 ?>
                 <li id="sign_in_element" class="overlay-nav-item">
@@ -299,7 +302,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="media-body  text-center">
                                             
-                                            <h4 class="media-heading"><a href="./product_detail.php?selected_product_id=<?=$each_cart_item_id ?>&customer_id=<?=$userid ?>"><?=$each_cart_item_name ?></a></h4>
+                                            <h5 class="media-heading"><a href="./product_detail.php?selected_product_id=<?=$each_cart_item_id ?>&customer_id=<?=$userid ?>"><?=$each_cart_item_name ?></a></h5>
                                             <?php
                                             if($each_cart_item_stock>0){
                                             ?>

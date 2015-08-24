@@ -137,7 +137,6 @@ var addToCart = function(product_id){
                                 $('#login_modal_content').show();
                             }else{
                                 $('.cart-qty').text('( ' + cart_qty + ' )');
-                                $('.cart-qty').css("color","rgb(0, 89, 112)");
                                 // cart item preview list contains max 5 items
                                 existed_item_id = 'cartItem' + add_product_id;
                                 if(cart_unique_qty < 6 && !qty_update){
