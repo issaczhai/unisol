@@ -16,11 +16,11 @@ class ProductManager {
     //put your code here
     
 
-    function addProduct($product_id, $product_name, $price, $color, $description, $stock){
+    function addProduct($product_id, $product_name, $symbol_code, $price, $color, $description, $stock){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO product (product_id, product_name, price, color, description, stock) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssd", $product_id, $product_name, $price, $color, $description, $stock);
+        $stmt = $conn->prepare("INSERT INTO product (product_id, product_name, symbol_code, price, color, description, stock) VALUES (?,?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssd", $product_id, $product_name, $symbol_code, $price, $color, $description, $stock);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
@@ -236,10 +236,11 @@ class ProductManager {
         $stmt = $conn->prepare("SELECT * FROM product WHERE product_id=?");
         $stmt->bind_param("s", $product_id);
         $stmt->execute();
-        $stmt->bind_result($product_id,$product_name,$price,$color,$description,$stock);
+        $stmt->bind_result($product_id,$product_name,$symbol_code,$price,$color,$description,$stock);
         while ($stmt->fetch())
         {   $product['product_id'] = $product_id;
             $product['product_name'] = $product_name;
+            $product['symbol_code'] = $symbol_code;
             $product['price'] = $price;
             $product['color'] = $color;
             $product['description'] = $description;
@@ -255,11 +256,12 @@ class ProductManager {
         $conn = $ConnectionMgr->getConnection();
         $stmt = $conn->prepare("SELECT * FROM product");
         $stmt->execute();
-        $stmt->bind_result($product_id,$product_name,$price,$color,$description,$stock);
+        $stmt->bind_result($product_id,$product_name,$symbol_code,$price,$color,$description,$stock);
         while ($stmt->fetch())
         {   $product = array();
             $product['product_id'] = $product_id;
             $product['product_name'] = $product_name;
+            $product['symbol_code'] = $symbol_code;
             $product['price'] = $price;
             $product['color'] = $color;
             $product['description'] = $description;
@@ -270,11 +272,11 @@ class ProductManager {
         return $product_arr;
     }
     
-    function updateProduct($product_id, $product_name, $price, $color, $description, $stock){
+    function updateProduct($product_id, $product_name, $symbol_code, $price, $color, $description, $stock){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("UPDATE product SET product_name=?, price=?, color=?, description=?, stock=? WHERE product_id=?");
-        $stmt->bind_param("ssssds", $product_name, $price, $color, $description, $stock,$product_id);
+        $stmt = $conn->prepare("UPDATE product SET product_name=?, symbol_code=?, price=?, color=?, description=?, stock=? WHERE product_id=?");
+        $stmt->bind_param("sssssds", $product_name, $symbol_code, $price, $color, $description, $stock,$product_id);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
@@ -287,11 +289,12 @@ class ProductManager {
         $stmt = $conn->prepare("SELECT * FROM product WHERE product_name LIKE ?");
         $stmt->bind_param("s", $filter_para);
         $stmt->execute();
-        $stmt->bind_result($product_id,$product_name,$price,$color,$description,$stock);
+        $stmt->bind_result($product_id,$product_name,$symbol_code,$price,$color,$description,$stock);
         while ($stmt->fetch())
         {   $product = array();
             $product['product_id'] = $product_id;
             $product['product_name'] = $product_name;
+            $product['symbol_code'] = $symbol_code;
             $product['price'] = $price;
             $product['color'] = $color;
             $product['description'] = $description;
@@ -310,11 +313,12 @@ class ProductManager {
         $stmt = $conn->prepare("SELECT * FROM product WHERE product_name LIKE ? ORDER BY price $sort_type");
         $stmt->bind_param("s", $filter_para);
         $stmt->execute();
-        $stmt->bind_result($product_id,$product_name,$price,$color,$description,$stock);
+        $stmt->bind_result($product_id,$product_name,$symbol_code,$price,$color,$description,$stock);
         while ($stmt->fetch())
         {   $product = array();
             $product['product_id'] = $product_id;
             $product['product_name'] = $product_name;
+            $product['symbol_code'] = $symbol_code;
             $product['price'] = $price;
             $product['color'] = $color;
             $product['description'] = $description;
@@ -331,11 +335,12 @@ class ProductManager {
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("SELECT * FROM product ORDER BY price $sort_type");
         $stmt->execute();
-        $stmt->bind_result($product_id,$product_name,$price,$color,$description,$stock);
+        $stmt->bind_result($product_id,$product_name,$symbol_code,$price,$color,$description,$stock);
         while ($stmt->fetch())
         {   $product = array();
             $product['product_id'] = $product_id;
             $product['product_name'] = $product_name;
+            $product['symbol_code'] = $symbol_code;
             $product['price'] = $price;
             $product['color'] = $color;
             $product['description'] = $description;

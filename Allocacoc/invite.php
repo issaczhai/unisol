@@ -1,7 +1,7 @@
 <?php
-foreach(glob($_SERVER['DOCUMENT_ROOT'].'/allocacoc/Manager/*.php') as $file) {
-     include_once $file;
-}
+include_once('./Manager/ConnectionManager.php');
+include_once('./Manager/CustomerManager.php');
+include_once('./Manager/CreditManager.php');
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,11 +14,10 @@ foreach(glob($_SERVER['DOCUMENT_ROOT'].'/allocacoc/Manager/*.php') as $file) {
         $invitation_link = 'invite.php?src='.$_GET['src'];
         #get sender information
         $sender = $customerMgr->getCustomerByInvitationLink($invitation_link);
-        var_dump($sender);
-        if(empty($sender)){
+        if($sender === []){
             #Situation 2: no such invitation exist. Redirect to index page with popup message
             $status = 'error';
-            $message = "There is error in your friend's referral!";
+            $message = "There's error in your friend's referral!";
             header("Location: index.php?status=$status&message=$message");
             exit;
         }
@@ -28,8 +27,7 @@ foreach(glob($_SERVER['DOCUMENT_ROOT'].'/allocacoc/Manager/*.php') as $file) {
         if(!empty($_SESSION["userid"])){
             #Situation 3: browser contains login information
             $receiver_email = $_SESSION["userid"];
-            
-            if($receiver_email === $sender_email){
+            if($receiver_email == $sender_email){
                 #Situation 7: receiver and sender share same email. It means it's an illegal self-referral
                 $status = 'fail';
                 $message = "Cyclic referral detected!";
@@ -38,20 +36,20 @@ foreach(glob($_SERVER['DOCUMENT_ROOT'].'/allocacoc/Manager/*.php') as $file) {
             }
             
             $status = $creditMgr->checkInvitationStatus($sender_email, $receiver_email);
-            if($status===null){
+            if($status==null){
                 #Situation 5: receiver has not accepted any credit from sender. Successfully receive credit and redirect to index
                 
                 $creditMgr->addCredit($sender_email, $receiver_email);
                 
                 $customerMgr->updateCredit($receiver_email, 10.0);
                 $status = 'success';
-                $message = "Congratulations! You have got $10 credits from your friend!";
+                $message = "Congratulations! You have got <br> $10 credits from your friend!";
                 header("Location: index.php?status=$status&message=$message");
                 exit;
             }else{
                 #Situation 6: receiver has already received credit from sender. Redirect to index and prompt error.
                 $status = 'fail';
-                $message = "You have already received credit from your friend!";
+                $message = "You have already received <br> credit from your friend!";
                 header("Location: index.php?status=$status&message=$message");
                 exit;
             }
@@ -63,6 +61,7 @@ foreach(glob($_SERVER['DOCUMENT_ROOT'].'/allocacoc/Manager/*.php') as $file) {
             setcookie('sender_email',$sender_email , time()+7200);
             header("Location: index.php?status=$status&message=$message");
             exit;
+            
         }
     }else{
         #Situation 1: no parameter in url or empty parameter in url

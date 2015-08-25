@@ -1,8 +1,6 @@
 <?php
-foreach(glob($_SERVER['DOCUMENT_ROOT'].'/Allocacoc/Manager/*.php') as $file) {
-     include_once $file;
-}
-
+include_once('./Manager/ConnectionManager.php');
+include_once('./Manager/FdpManager.php');
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,9 +8,18 @@ foreach(glob($_SERVER['DOCUMENT_ROOT'].'/Allocacoc/Manager/*.php') as $file) {
  */
 
 $fdpMgr = new FdpManager();
-$new_free_delivery_price = $_GET["new_free_delivery_price"];
+$operation = $_GET["operation"];
 
-$fdpMgr->updateFreeDeliveryPrice($new_free_delivery_price);
-header("Location: admin.php");
+if($operation == 'updateCutoff'){
+$new_cutoff = $_GET["new_cutoff"];
+$fdpMgr->updateCutoff($new_cutoff);
+header("Location: admin.php#freeDeliveryPrice");
+exit;
+}elseif($operation == 'updateCharge'){
+$new_charge = $_GET["new_charge"];
+$fdpMgr->updateCharge($new_charge);
+header("Location: admin.php#freeDeliveryPrice");
+exit;
+}
 
 ?>

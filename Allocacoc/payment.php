@@ -61,199 +61,71 @@ and open the template in the editor.
     $creditMgr = new CreditManager();
     $creditList = $creditMgr->getUnusedCreditListByReceiverId($userid);
     ?>
-    
-    <form id="payment" action="./paypal/payments/CreatePayment.php" method="post" class="form-horizontal">
-        
-        <ul class="wizard">
-            <li>
-                <div class="col-lg-4">
-                    <div class="page-header">
-                        <font id="shippingInfo_tab" style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-map-marker"></i>&#160; Step.1 Shipping Address </font>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="col-lg-4">
-                    <div class="page-header">
-                        <font id="paymentInfoTab" style="color: #D8D8D8;font-weight: bold; font-size:17px"><i id="paymentInfoIcon" class="fa fa-credit-card" style="color: #D8D8D8"></i>&#160; Step.2 Payment Information </font>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="col-lg-4">
-                    <div class="page-header">
-                         <font id="emailInfoTab" style="color:#D8D8D8;font-weight: bold; font-size:17px"><i id="emailInfoIcon" class="fa fa-file-text-o" style="color: #D8D8D8"></i>&#160; Step.3 Receipt </font>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        
-        
-        <div class="tab-content">
-            
-        <div class="tab-pane fade active in col-lg-12" id="shippingInfo">
-            <div class="panel panel-default">
-                <!-- driver registration-->
-                <div class="panel-body">
-    <!--                <form role="form" id="shippingform" class="form-horizontal">-->
-                        <fieldset>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Name*</label>
-                                <div class="col-lg-2">
-                                    <input type="text" name="firstname" class="form-control" placeholder="First name" autocomplete="off"/>
-                                </div>
-                                <div class="col-lg-2">
-                                    <input type="text" name="lastname" class="form-control" placeholder="Last name" autocomplete="off"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Phone*</label>
-                                <div class="col-lg-5">
-                                    <input type="text" name="phone" class="form-control" placeholder="Contact Number" autocomplete="off"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Company</label>
-                                <div class="col-lg-5">
-                                    <input type="text" name="company" class="form-control" placeholder="Company Name (Optional)"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Address*</label>
-                                <div class="col-lg-5">
-                                    <input type="text" name="address1" class="form-control" placeholder="Address Line 1"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label"></label>
-                                <div class="col-lg-5">
-                                    <input type="text" name="address2" class="form-control" placeholder="Address Line 2"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Code*</label>
-                                <div class="col-lg-5">
-                                    <input type="text" name="postcode" class="form-control" placeholder="Postal Code"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Country*</label>
-                                <div class="col-lg-3">
-                                    <select class="form-control" id="shipping_country" name="shipping_country" >
-                                        <option value=""> Choose Your Country </option>
-                                        <option value="sg"> Singapore </option>
-                                        <option value="cn"> China </option>
-                                        <option value="jp"> Japan </option> 
-                                        <option value="kr"> Korean </option> 
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-lg-3 col-lg-offset-5">
-                                    <a class="btn btn-primary" style="width:100px" href="#paymentInfo" data-toggle="tab" onclick="showTab('paymentInfo');">Next</a>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                    <!--</form>-->
-                </div>    
+      
+    <form id="paymentForm" action="https://securepayments.paypal.com/webapps/HostedSoleSolutionApp/webflow/sparta/hostedSoleSolutionProcess" method="post" class="form-horizontal">
+        <input type="hidden" name="cmd" value="_hosted-payment">
+        <input type="hidden" name="business" value="6USHCFXJ739JN">
+        <input type="hidden" name="paymentaction" value="sale">
+        <input type="hidden" name="return" value="https://gosg.net/success.php">
+        <input type="hidden" name="currency_code" value="SGD">
+        <div class="col-lg-12">
+            <div class="page-header">
+                 <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-map-marker"></i> Shipping Address </font>
             </div>
         </div>
-        <!--<form id="payment" action="./paypal/payments/CreatePayment.php" method="post" class="form-horizontal">-->
-        
-        <div class="tab-pane fade col-lg-12 col-md-6" id="paymentInfo">
+        <div class="col-lg-12 col-md-6">
             <div class="panel panel-default">
                 <div class="panel-body">
-    <!--                <form role="form" id="payment-form" class="form-horizontal">-->
-                        <fieldset>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Payment Method</label>
-                                <div class="col-lg-5">
-                                    <input type="radio" name="creditcard" value="visa"><img src="./public_html/img/visa-logo.png" alt="" height="50" width="50" />
-                                    &nbsp;&nbsp;<input type="radio" name="creditcard" value="mastercard"><img src="./public_html/img/mastercard-logo.jpg" alt="" height="30" width="50" />
-                                </div>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Name*</label>
+                            <div class="col-lg-2">
+                                <input type="text" name="first_name" class="form-control" placeholder="First name" autocomplete="off"/>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">FIRST NAME</label>
-                                <div class="col-lg-5">
-                                    <input type="text" class="form-control" id="cardHolderFN" name="cardHolderFN" autocomplete="off"/>
-                                </div>
+                            <div class="col-lg-2">
+                                <input type="text" name="last_name" class="form-control" placeholder="Last name" autocomplete="off"/>
                             </div>
-							<div class="form-group">
-                                <label class="col-lg-3 control-label">LAST NAME</label>
-                                <div class="col-lg-5">
-                                    <input type="text" class="form-control" id="cardHolderLN" name="cardHolderLN" autocomplete="off"/>
-                                </div>
+                        </div>
+<!--                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Phone*</label>
+                            <div class="col-lg-5">
+                                <input type="text" name="phone" class="form-control" placeholder="Contact Number" autocomplete="off"/>
                             </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">CARD NUMBER</label>
-                                <div class="col-lg-5">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
-                                        <input type="text" class="form-control" name="cardNumber" placeholder="Valid Card Number" required data-stripe="number" autocomplete="off"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">EXPIRATION DATE</label>
-                                <div class="col-lg-2">
-                                    <input type="text" class="form-control" name="expMonth" placeholder="MM" data-stripe="exp-month"/>
-                                </div>
-                                <div class="col-lg-2">
-                                    <input type="text" class="form-control" name="expYear" placeholder="YYYY" data-stripe="exp-year"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">CV CODE</label>
-                                <div class="col-lg-3">
-                                    <input type="text" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
-                                </div>
-                            </div>
-                        </fieldset>
-                        <div class="row" style="display:none;">
-                            <div class="col-xs-12">
-                                <p class="payment-errors"></p>
+                        </div>-->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Address*</label>
+                            <div class="col-lg-5">
+                                <input type="text" name="address1" class="form-control" placeholder="Address Line 1"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-lg-4 col-lg-offset-4">
-                                <a class="btn btn-default" style="width:100px" href="#shippingInfo" data-toggle="tab">Previous</a>
-                                <a class="btn btn-primary" style="width:100px" href="#emailInfo" data-toggle="tab" onclick="showTab('emailInfo');">Next</a>
+                            <label class="col-lg-3 control-label"></label>
+                            <div class="col-lg-5">
+                                <input type="text" name="address2" class="form-control" placeholder="Address Line 2"/>
                             </div>
                         </div>
-    <!--                </form>-->
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Code*</label>
+                            <div class="col-lg-5">
+                                <input type="text" name="zip" class="form-control" placeholder="Postal Code"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Country*</label>
+                            <div class="col-lg-3">
+                                <select class="form-control" id="country" name="country" >
+                                    <option value=""> Choose Your Country </option>
+                                    <option value="sg"> Singapore </option>
+                                    <option value="cn"> China </option>
+                                    <option value="jp"> Japan </option> 
+                                    <option value="kr"> Korean </option> 
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
         </div>
-
-        <!-- receipt -->
-        
-        <div class="tab-pane fade col-lg-12 col-md-6" id="emailInfo">
-            <div class="panel panel-default">
-                <div class="panel-body">
-    <!--                <form id="receipt-email" role="form" class="form-horizontal">-->
-                        <fieldset>
-                            <div class="form-group">
-                                <div class="col-lg-4">This receipt will be send to you after the order is shipped to your e-mail address. This receipt can be regarded as official documents and can be used for product warranty and maintenance requests</div>
-                                <label class="col-lg-2 control-label">E-mail*</label>
-                                <div class="col-lg-3">
-                                    <input type="text" class="form-control" name="receiptemail" placeholder="example@gmail.com" autocomplete="off" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                            <div class="col-lg-3 col-lg-offset-5">
-                                <a class="btn btn-default" style="width:100px" href="#paymentInfo" data-toggle="tab">Previous</a>
-                            </div>
-                        </div>
-                        </fieldset>    
-    <!--                </form>-->
-                </div>
-            </div>
-        </div>
-
-        </div> <!-- end of tab-content class -->
-        
         <!-- promotion or reward code -->
         <div class="col-lg-12">
             <div class="page-header">
@@ -281,7 +153,7 @@ and open the template in the editor.
                             <label class="col-lg-6 control-label" for="">--OR--</label>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Invitation: </label>
+                            <label class="col-lg-3 control-label">Choose Voucher From: </label>
                             <div class="col-lg-6">
                                 <select name="invite" id="invite" class="form-control" onchange="disable('invite','rewardCode');">
                                     <option value=""></option>
@@ -295,7 +167,39 @@ and open the template in the editor.
                                 </select>
                             </div>
                         </div>
+                        
                     </fieldset>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-12">
+            <div class="page-header">
+                 <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-credit-card"></i> Choose your payment method </font>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-lg-3">
+                            <label for="paypal">
+                                <input type="radio" name="bank" value="paypalsg" id="paypal" class="J_paypal">
+                                <img src="./public_html/img/visa-master.png" height="50px">
+                            </label>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="alipay">
+                                <input type="radio" name="bank" value="alipay" id="alipay" class="J_paypal">
+                                <img src="./public_html/img/alipay.png" alt="">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-3 col-lg-offset-9">
+                            <button class="btn btn-primary" style="width:150px" type="submit" name="METHOD">Pay</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -323,6 +227,7 @@ and open the template in the editor.
                             </thead>
                             <tbody id="orderTableBody">
                                 <?php
+                                $totalPrice = 0.0;
                                 if(sizeof($list) === 0){
                                 ?>
                                 <tr>
@@ -335,12 +240,13 @@ and open the template in the editor.
                                 <?php
                                 }else{      
                                 ?>
-                            <input type="hidden" id="listLength" name="listLength" value="<?php echo sizeof($list);?>"/>
+<!--                            <input type="hidden" id="listLength" name="listLength" value=""/>-->
                                 <?php
                                 
                                     $count = 0;
                                     foreach($list as $item){
                                     $count+=1;
+                                    $totalPrice += intval($item["quantity"]) * doubleval($item["price"]);
                                 ?>
                                 <input id="product_id<?php echo strval($count)?>" name="product_id<?php echo strval($count)?>" type="hidden" value="<?=$item["product_id"] ?>"/>
                                 <input id="add_to_cart_time<?php echo strval($count)?>" name="add_to_cart_time<?php echo strval($count)?>" type="hidden" value="<?=$item["add_to_cart_time"] ?>"/>
@@ -366,12 +272,13 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        <div class="form-group" >
+        <input type="hidden" name="subtotal" value="<?=$totalPrice?>">
+<!--        <div class="form-group" >
             <div class="col-lg-8 col-lg-offset-5" style="margin-left: 400px">
                 <button type="submit" class="btn btn-primary btn-lg" id="paymentBtn">Go To Payment</button>
                 <button type="button" class="btn btn-warning btn-lg" id="resetBtn1">Reset form</button>
             </div>
-        </div>  
+        </div>  -->
     </form>
     </div>    
   

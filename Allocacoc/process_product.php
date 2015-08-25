@@ -21,6 +21,10 @@ if ($operation === "add_product"){
     $product_name = filter_input(INPUT_POST,'product_name');
     $random_no = (string)rand(0,10000);
     $product_id = "AL".$random_no;
+    $symbol_code = filter_input(INPUT_POST,'symbol_code');
+    if(empty($symbol_code)){
+        $symbol_code='';
+    }
     $price = filter_input(INPUT_POST,'price');
     $color_count = 0;
     $color="";
@@ -35,8 +39,8 @@ if ($operation === "add_product"){
         }
     }
     $description = "";
-    if(!empty($_POST['add_product_description'])){
-        $description = $_POST['add_product_description'];
+    if(!empty($_POST['addTextarea'])){
+        $description = $_POST['addTextarea'];
     }
     $stock = 0.0;
     if(is_numeric(filter_input(INPUT_POST,'add_product_stock'))){
@@ -63,7 +67,7 @@ if ($operation === "add_product"){
             $pics = $picname . date("YmdHis") . $rand . $type;
             switch ($photo_name) {
                 case "1_photo_input":
-                    $pic_path = "public_html/img/productImg/". $pics;
+                    $pic_path = "public_html/img/giftImg/". $pics;
                     move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
                     $imgURL_1 = $pic_path;
                     break;
@@ -75,7 +79,7 @@ if ($operation === "add_product"){
             }
         }
     }
-    $productMgr->addProduct($product_id, $product_name, $price, $color, $description, $stock);
+    $productMgr->addProduct($product_id, $product_name, $symbol_code, $price, $color, $description, $stock);
     $photoMgr->AddPhoto($product_id, '1', $imgURL_1);
     $photoMgr->AddPhoto($product_id, '2', $imgURL_2);
 header("Location: admin.php");
@@ -83,6 +87,10 @@ header("Location: admin.php");
     $valid=true;
     $product_id = filter_input(INPUT_POST,'edit_product_id');
     $product_name = filter_input(INPUT_POST,'edit_product_name');
+    $symbol_code = filter_input(INPUT_POST,'edit_symbol_code');
+    if(empty($symbol_code)){
+        $symbol_code='';
+    }
     $price = filter_input(INPUT_POST,'edit_price');
     $color_count = 0;
     $color="";
@@ -99,10 +107,9 @@ header("Location: admin.php");
             }   
         }
     }
-    //echo $color;
     $description = "";
-    if(!empty($_POST['edit_product_description'])){
-        $description = $_POST['edit_product_description'];
+    if(!empty($_POST['editTextarea'])){
+        $description = $_POST['editTextarea'];
     }
     $stock = 0.0;
     if(is_numeric(filter_input(INPUT_POST,'edit_product_stock'))){
@@ -111,7 +118,7 @@ header("Location: admin.php");
         $valid = false;
     }
     
-    $productMgr->updateProduct($product_id, $product_name, $price, $color, $description, $stock);
+    $productMgr->updateProduct($product_id, $product_name, $symbol_code, $price, $color, $description, $stock);
     $photo_name_arr = ['edit_1_photo_input','edit_2_photo_input'];
     $imgURL_1=$imgURL_2="";
 

@@ -29,13 +29,14 @@ $total_no_invitation = $creditMgr->getNoOfInvitation();
 
 $fdpMgr = new FdpManager();
 
-$current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
-
+$current_cutoff = $fdpMgr->getCutoff();
+$current_charge = $fdpMgr->getCharge();
 ?>
 
 <html>   
     <head>
-        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script> 
+<!--        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
+        <script type="text/javascript" src="public_html/js/jquery-1.11.0.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.js"></script> 
         <script>
         $(window).load(function(){
@@ -68,6 +69,20 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
         <!-- Custom Fonts -->
         <link href="public_html/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         
+        <!-- JhtmlArea related script and style -->
+        <script type="text/javascript" src="public_html/jhtmlarea/scripts/jquery-ui-1.7.2.custom.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="public_html/jhtmlarea/style/jqueryui/ui-lightness/jquery-ui-1.7.2.custom.css"/>
+        <script type="text/javascript" src="public_html/jhtmlarea/scripts/jHtmlArea-0.8.js"></script>
+        <link rel="stylesheet" type="text/css" href="public_html/jhtmlarea/style/jHtmlArea.css"/>
+        <style type="text/css">
+            div.jHtmlArea .ToolBar ul li a.video
+            {
+                background: url(public_html/jhtmlarea/style/youtube-icon.png) no-repeat;
+                background-position: 0 0;
+            }
+
+            div.jHtmlArea { border: solid 1px #ccc;background-color: #ffffff; }
+        </style>
         <style>
             .btn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block; 
             *display:inline;padding:4px 10px 4px;font-size:14px;line-height:18px; 
@@ -90,9 +105,20 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
         </style>
         
     </head>
-    
-   
     <body>
+        <script type="text/javascript">
+        $(function() {
+            $("#add_product_description").htmlarea({
+                toolbar: [
+                    ["bold", "italic", "underline", "|", "forecolor"],
+                    ["superscript","p","increasefontsize","decreasefontsize"],
+                    ["orderedlist","unorderedlist","indent","outdent"],
+                    ["justifyleft","justifycenter","justifyright"],
+                    ["link", "unlink", "image","horizontalrule","html"]
+                ]
+            }); // Initialize jHtmlArea's with all default values
+        });
+        </script>
         <div id="wrapper">
 
         <!-- Navigation -->
@@ -251,12 +277,18 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-hover table-striped" id="add_product_table">
                                                     <tbody>
-                                                        <form id='addProductForm' method='POST' enctype='multipart/form-data' action='process_product.php'>
+                                                    <form id='addProductForm' onsubmit="return populateAddJhtmlArea()" method='POST' enctype='multipart/form-data' action='process_product.php'>
                                                             <input type='hidden' name='operation' value='add_product'/>
                                                         <tr>
                                                         <td>Product Name</td>
                                                         <td>
                                                             <input id="product_name" type="text" name="product_name" maxlength="50" required/>
+                                                        </td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td>Symbol Code</td>
+                                                        <td>
+                                                            <input id="symbol_code" type="text" name="symbol_code" maxlength="50"/>
                                                         </td>
                                                         </tr>
                                                         <tr>
@@ -283,18 +315,6 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                                 </tr>
                                                             </table>
                                                         </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Description</td>					
-                                                            <td>
-                                                                <textarea rows="5" cols="55" id="add_product_description" name="add_product_description"></textarea>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Stock</td>
-                                                            <td>
-                                                                <input type='text' id='add_product_stock' name='add_product_stock' required/>
-                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Photo</td>
@@ -325,6 +345,19 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Description</td>					
+                                                            <td>
+                                                                <textarea style="width: 700px; height: 250px;" id="add_product_description" name="add_product_description"></textarea>
+                                                                <input type="hidden" value="" id="addTextarea" name="addTextarea"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Stock</td>
+                                                            <td>
+                                                                <input type='text' id='add_product_stock' name='add_product_stock' required/>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -378,6 +411,7 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                         <tr>
                                                             <th>Product ID</th>
                                                             <th>Product Name</th>
+                                                            <th>Symbol Code</th>
                                                             <th>Price</th>
                                                             <th>Color</th>
                                                             <th>Stock</th>
@@ -391,9 +425,10 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                            
                                                            $p_id = $product["product_id"];
                                                            $p_name = $product["product_name"];
+                                                           $p_symbol_code = $product["symbol_code"];
                                                            $p_price = $product["price"];
                                                            $p_color = $product["color"];
-                                                           $description = $product["description"];
+                                                           $description = htmlentities($product["description"]);
                                                            $p_stock = $product["stock"];
                                                            $photo_url_arr = [];
                                                            $photo_url_arr =$photoMgr->getPhotos($p_id);
@@ -401,10 +436,11 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                            <tr>
                                                                <td><?php echo $p_id; ?></td>
                                                                <td><?php echo $p_name; ?></td>
+                                                               <td><?php echo $p_symbol_code; ?></td>
                                                                <td><?php echo $p_price; ?></td>
                                                                <td><?php echo $p_color; ?></td>
                                                                <td><?php echo $p_stock; ?></td>
-                                                               <td><div class="btn"><span>Edit<i class="fa fa-edit"></i></span><input type="button" onclick="showEditTab();populateEditField('<?php echo $p_id ?>','<?php echo $p_name ?>','<?php echo $p_price ?>','<?php echo $p_color ?>','<?php echo $p_stock ?>','<?php echo $description ?>','<?php echo $photo_url_arr['1'] ?>','<?php echo $photo_url_arr['2'] ?>');" value="Edit Product"/></div></td>
+                                                               <td><div class="btn"><span>Edit<i class="fa fa-edit"></i></span><input type="button" onclick="showEditTab();populateEditField('<?php echo $p_id ?>','<?php echo $p_name ?>','<?php echo $p_symbol_code ?>','<?php echo $p_price ?>','<?php echo $p_color ?>','<?php echo $p_stock ?>','<?php echo $description ?>','<?php echo $photo_url_arr['1'] ?>','<?php echo $photo_url_arr['2'] ?>');" value="Edit Product"/></div></td>
                                                            </tr>
                                                         <?php
                                                         }
@@ -451,13 +487,19 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                 <table class="table table-bordered table-hover table-striped" id="edit_product">
                                                     
                                                     <tbody>
-                                                    <form id='editProductForm' enctype='multipart/form-data' method='POST' action='process_product.php'>
+                                                    <form id='editProductForm' onsubmit="return populateEditJhtmlArea()" enctype='multipart/form-data' method='POST' action='process_product.php'>
                                                         <input type='hidden' id='operation' name='operation' value='edit_product'/>
                                                         <input type='hidden' id='edit_product_id' name='edit_product_id'/>
                                                         <tr>
                                                             <td>Product Name</td>
                                                             <td>
                                                                 <input id="edit_product_name" type="text" name="edit_product_name" maxlength="50" required/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Product Name</td>
+                                                            <td>
+                                                                <input id="edit_symbol_code" type="text" name="edit_symbol_code" maxlength="50"/>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -486,26 +528,12 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Description</td>					
-                                                            <td>
-                                                                <textarea rows="5" cols="55" id="edit_product_description" name="edit_product_description"></textarea>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Stock</td>
-                                                            <td>
-                                                                <input type='text' id='edit_product_stock' name='edit_product_stock' required/>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
                                                             <td>Photo</td>
                                                             <td>
                                                                 <table width="100%">
                                                                     <tbody>
                                                                         <tr>
                                                                             <td width="20%">
-                                                                                
-                                                                                
                                                                                 <div class="btn" style="width:80%">
                                                                                 <span>  Photo 1  </span>
                                                                                 <input type="file" name="edit_1_photo_input" id="edit_1_photo_input" onchange="check('edit_1_photo')"/>
@@ -532,6 +560,19 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Description</td>					
+                                                            <td>
+                                                                <textarea style="width: 700px; height: 250px;" id="edit_product_description" name="edit_product_description"></textarea>
+                                                                <input type="hidden" value="" id="editTextarea" name="editTextarea"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Stock</td>
+                                                            <td>
+                                                                <input type='text' id='edit_product_stock' name='edit_product_stock' required/>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -562,7 +603,7 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h1 class="page-header">
-                                        Free Delivery Price
+                                        Delivery
                                     </h1>
                                 </div>
                             </div>
@@ -570,21 +611,41 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped" id="display_product">
+                                        <table class="table table-bordered table-hover table-striped" id="cutOffPriceTable">
                                             <thead>
                                                 <tr>
-                                                    <th width="60%">Current Free Delivery Price</th>
+                                                    <th width="60%">Current Cut-off Price</th>
                                                     <th width="40%">Option</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                <td> $ <span id="current_free_delivery_fee"><?php echo $current_free_delivery_fee; ?></span>
-                                                    <input id="free_delivery_price_entry" name="new_free_delivery_price" type="text" style="display:none;"></input>
-                                                    <button id="confirm_free_delivery_price_change" style="display:none" onclick="update_free_delivery_price()">OK</button>
+                                                <td> $ <span id="current_cutoff"><?php echo $current_cutoff; ?></span>
+                                                    <input id="current_cutoff_entry" name="current_cutoff_entry" type="text" style="display:none;"></input>
+                                                    <button id="confirm_cutoff_change" style="display:none" onclick="update_cutoff()">OK</button>
                                                 </td>
                                                 <td>
-                                                    <div class="btn" style="background: #0083C9"><span> Edit <i class="fa fa-edit"></i></span><input type="button" name='show_update_free_delivery_price_button' onclick="show_update_free_delivery_price_input()" value='Update'/></div>
+                                                    <div class="btn" style="background: #0083C9"><span> Edit <i class="fa fa-edit"></i></span><input type="button" name='show_update_cutoff_button' onclick="show_update_cutoff_input()" value='Update'/></div>
+                                                </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                        <table class="table table-bordered table-hover table-striped" id="deliveryChargeTable">
+                                            <thead>
+                                                <tr>
+                                                    <th width="60%">Current Delivery Charge</th>
+                                                    <th width="40%">Option</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                <td> $ <span id="current_charge"><?php echo $current_charge; ?></span>
+                                                    <input id="charge_entry" name="charge_entry" type="text" style="display:none;"></input>
+                                                    <button id="confirm_charge_change" style="display:none" onclick="update_charge()">OK</button>
+                                                </td>
+                                                <td>
+                                                    <div class="btn" style="background: #0083C9"><span> Edit <i class="fa fa-edit"></i></span><input type="button" name='show_update_charge_button' onclick="show_update_charge_input()" value='Update'/></div>
                                                 </td>
                                                 </tr>
                                             </tbody>
@@ -878,11 +939,6 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
             </div>
         
         </div>
-        
-
-
-<!-- jQuery Version 1.11.0 -->
-
 
 <!-- Bootstrap Core JavaScript -->
 <script src="public_html/js/bootstrap.min.js"></script>
@@ -891,135 +947,8 @@ $current_free_delivery_fee = $fdpMgr->getFreeDeliveryPrice();
 <script src="public_html/js/plugins/morris/raphael.min.js"></script>
 <script src="public_html/js/plugins/morris/morris.min.js"></script>
 <script src="public_html/js/plugins/morris/morris-data.js"></script>
-        
-<script>
 
-function check(id){
-    var fd = new FormData(document.getElementById("addProductForm"));
-    $.ajax({
-        type: 'post',
-        url: 'check_photo.php?photo='+id+'_input',
-        data: fd,
-        dataType: 'json',
-        contentType: false,
-        processData: false,
-        error: function(data){
-            console.log(data.responseText);
-            document.getElementById(id+'_close').style.display="block";
-            document.getElementById(id+'_check').style.display="none";
-        },
-        success: function(data){
-            document.getElementById(id+'_check').style.display="block";
-            document.getElementById(id+'_close').style.display="none";
-
-        }
-    });
-}
-
-
-function show_update_free_delivery_price_input(){
-    $('#confirm_free_delivery_price_change').css('display','');
-    $('#free_delivery_price_entry').css('display','');
-    $('#current_free_delivery_fee').css('display','none');
-    
-
-}
-
-function update_free_delivery_price(){
-    var new_free_delivery_priceStr = "";
-    var  new_free_delivery_price;
-    if($( "#free_delivery_price_entry" ).val()!==null){
-        new_free_delivery_priceStr = $('#free_delivery_price_entry').val();
-    }
-    var valid = true;
-    
-    if(isNaN(new_free_delivery_priceStr)){
-        valid = false;
-
-    }else{ 
-        if(new_free_delivery_priceStr.length>0){
-            new_free_delivery_price = parseFloat(new_free_delivery_priceStr);	
-        }else{
-            valid = false;
-
-        }
-    }
-    $('#confirm_free_delivery_price_change').css('display','none');
-    $('#free_delivery_price_entry').css('display','none');
-    $('#current_free_delivery_fee').css('display','');
-    if(valid){
-        var redirect_path= './process_free_delivery_price.php?new_free_delivery_price='+new_free_delivery_price;
-        
-        document.location.href =redirect_path;
-    }
-    
-}
-
-function showEditTab(){
-    document.getElementById("editProduct").className = "tab-pane fade active in";
-    document.getElementById("viewProduct").className = "tab-pane fade";
-}
-
-
-
-function hideEditTab(){
-    document.getElementById("editProduct").className = "tab-pane fade";
-    document.getElementById("viewProduct").className = "tab-pane fade active in";
-}
-
-function populateEditField(product_id,p_name,p_price,p_color,p_stock,p_description,url1,url2){
-    document.getElementById("edit_product_id").value = product_id;
-    document.getElementById("edit_product_name").value = p_name;
-    document.getElementById("edit_price").value = p_price;
-    var color_arr = p_color.split(',');
-    for(i=1;i<9;i++){
-        if($.inArray(document.getElementById("edit_color"+i).value,color_arr) !== -1){
-            document.getElementById("edit_color"+i).checked = true;
-        }   
-    }
-    var photo_url_array = [url1,url2];
-    
-    for (i=0;i<2;i++){
-        var angle = '';
-        switch(i) {
-            case 0:
-                angle = '1';
-                break;
-            case 1:
-                angle = '2';
-                break;
-        }
-        if(photo_url_array[i]){
-            document.getElementById("imgURL_"+angle+"_thumbnail").src =photo_url_array[i];
-        }
-        
-    }
-    
-    document.getElementById("edit_product_stock").value = p_stock;
-    document.getElementById("edit_product_description").value = p_description;
-}
-
-function removeRewardCode(code){
-    var operation = "remove";
-    document.location.href = 'process_reward.php?operation='+operation+'&code='+code;
-        
-}
-
-function setGift(code){
-    document.getElementById("gift_code").value = code;
-}
-
-function showOrder(o_id){
-    $("#orderDetail"+o_id).css('display','');
-    $("#viewButton"+o_id).css('display','none');
-    $("#closeButton"+o_id).css('display','');
-}
-
-function closeOrderDetail(o_id){
-    $("#orderDetail"+o_id).css('display','none');
-    $("#viewButton"+o_id).css('display','');
-    $("#closeButton"+o_id).css('display','none');
-}
-</script>
+<!-- All Javascript function in admin.php -->
+<script src="public_html/js/admin.js"></script>
     </body>
 </html>

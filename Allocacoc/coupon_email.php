@@ -30,7 +30,7 @@ $message = '<html>
                     <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc; border-collapse: collapse;">
                         <tr>
                             <td align="center">
-                                <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Standard+Romantic.png" alt="" width="600" height="300" style="display: block;" />
+                                <a href="'.strip_tags($invitation_link).'"><img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Standard+Romantic.png" alt="" width="600" height="300" style="display: block;" /></a>
                             </td>
                         </tr>
                         <tr>
@@ -43,7 +43,7 @@ $message = '<html>
                                     </tr>
                                     <tr>
                                         <td style="padding: 20px 0 30px 0; color: #FFFFFF; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                            <p>Please click the invitation link <b>'.strip_tags($invitation_link).'</b> to get your credits</p>
+                                            <p>Please click <a href="'.strip_tags($invitation_link).'">here</a> to get your credits</p>
                                         </td>
                                     </tr>
                                     
