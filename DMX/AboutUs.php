@@ -11,8 +11,6 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-        <!-- Optional theme -->
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="./public_html/css/carouselHome.css">
         <link rel="stylesheet" href="./public_html/css/main.css">
@@ -25,9 +23,7 @@ and open the template in the editor.
             body{
                 padding-top: 102px
             }
-            .team-bonding-carousel{
-                padding:0;
-            }
+            
             .title{
                 position: relative;
                 display:table;
@@ -47,6 +43,57 @@ and open the template in the editor.
                 vertical-align: bottom;
             }
         </style>
+
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                var viewportHeight = window.innerHeight,
+                    viewportWidth = window.innerWidth,
+                    imgHeight,
+                    marginTop;
+                if(viewportWidth <= 1366 && viewportWidth > 767){
+                    
+                    imgHeight = viewportHeight - 104 - 140;
+                    marginTop = -imgHeight;
+                    $('.team-bonding-carousel img').height(imgHeight);
+                    $('.about-top-overlay').css('margin-top', marginTop);
+                    $('.about-hollow-frame').height(imgHeight - 12);
+                    $('.about-hollow-frame').css('margin-top', marginTop + 10);
+                }else if(viewportWidth > 1366){
+                    imgHeight = 667 - 104 - 140;
+                    marginTop = -imgHeight;
+                    $('.navbar-nav').addClass('navbar-right');
+                    $('.team-bonding-carousel img').height(imgHeight);
+                    $('.about-top-overlay').css('margin-top', marginTop);
+                    $('.about-hollow-frame').height(imgHeight - 12);
+                    $('.about-hollow-frame').css('margin-top', marginTop + 10);
+                }
+                $(window).on('resize', function(e){
+                    viewportWidth = window.innerWidth;
+                    viewportHeight = window.innerHeight;
+                    if(viewportWidth > 1366){
+                        $('.navbar-nav').addClass('navbar-right');
+                        imgHeight = 667 - 104 - 140;
+                        marginTop = -imgHeight;
+                        $('.navbar-nav').addClass('navbar-right');
+                        $('.team-bonding-carousel img').height(imgHeight);
+                        $('.about-top-overlay').css('margin-top', marginTop);
+                        $('.about-hollow-frame').height(imgHeight - 12);
+                        $('.about-hollow-frame').css('margin-top', marginTop + 10);
+                    }else if(viewportWidth <= 1366 && viewportWidth > 767){
+                        $('.navbar-nav').removeClass('navbar-right');
+                        imgHeight = viewportHeight - 104 - 140;
+                        marginTop = -imgHeight;
+                        $('.team-bonding-carousel img').height(imgHeight);
+                        $('.about-top-overlay').css('margin-top', marginTop);
+                        $('.about-hollow-frame').height(imgHeight - 12);
+                        $('.about-hollow-frame').css('margin-top', marginTop + 10);
+                    }
+                });
+            });
+        </script>
         <meta charset="UTF-8">
         <title>About DMX</title>
     </head>
@@ -55,19 +102,27 @@ and open the template in the editor.
         <?php
         include_once("./templates/new_header.html");
         ?>
-          <div class="container-fluid">
-            <div class="row">
+          <div class="container-fluid content content-wrapper">
+            <div class="row no-margin-row">
                 <div class="col-xs-12 col-sm-12 col-md-1 title">
                         <span id="title-name">ABOUT US<span>
                 </div>
                     
                 <div class="col-xs-12 col-sm-6 col-md-5 aboutUs-text">
-                    Design Media Xchange is an indigenous culture of both architecture + interior . 
-                    It has developed by a team of aberrant individuals from different backgrounds and exposures from the west and the east. 
-                    We believe in innovations and in transforming design disciplines by applying newest technologies to achieve aesthetic and functionality of designs. 
-                    DMXCHANGE is a turnkey design firm , an array of stylistic metaphors and precedents that contrives an essential qualities of design, 
-                    project management, adhering client’s budgetary needs and conceive an essential qualities of design to the inhabitants . 
-                    DMXCHANGE is recognized for its commercial, retail, corporate, conversion projects and including residential work.
+                    <p class="typography-2">
+                        Design Media Xchange is an indigenous culture of both architecture + interior. 
+                        It has developed by a team of aberrant individuals from different backgrounds and exposures from the west and the east.
+                    </p>
+                    <p class="typography-2">
+                        We believe in innovations and in transforming design disciplines by applying newest technologies to achieve aesthetic and functionality of designs.
+                    </p>
+                    <p class="typography-2">
+                        DMXCHANGE is a turnkey design firm , an array of stylistic metaphors and precedents that contrives an essential qualities of design, 
+                        project management, adhering client’s budgetary needs and conceive an essential qualities of design to the inhabitants.
+                    </p>
+                    <p class="typography-2">
+                        DMXCHANGE is recognized for its commercial, retail, corporate, conversion projects and including residential work.
+                    </p>
                 </div>
                     
                 <div class="col-xs-12 col-sm-6 col-md-6 team-bonding-carousel">
@@ -97,15 +152,13 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>   
-            <div class='row about-top-overlay'></div>    
-            <div class='row about-hollow-frame pull-right'></div>
+            <div class='row about-top-overlay no-margin-row'></div>    
+            <div class='row about-hollow-frame pull-right no-margin-row'></div>
         </div>
         </div>
         <?php
         include_once("./templates/footer.php");
         ?>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./public_html/js/main.js">
+    <script src="./public_html/js/main.js"></script>
     </body>
 </html>

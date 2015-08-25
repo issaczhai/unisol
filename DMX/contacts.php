@@ -16,7 +16,12 @@ and open the template in the editor.
         <link rel="stylesheet" href="./public_html/css/main.css">
         <link rel="stylesheet" href="./public_html/css/dmx_style.css">
         <style>
-            @media screen and (min-width: 1367px){#myNavbar{margin-left:13%;margin-right:13%;}}
+            /*html, body{
+                height: 100%;    
+            } */ 
+            body{
+                padding-top: 102px;
+            }
             .search_box .form-control:focus{
                 border-color: #cccccc;
                 -webkit-box-shadow: none;
@@ -28,8 +33,7 @@ and open the template in the editor.
             #subscribe_btn{
                 border-radius:0;
             }
-        </style>
-        <style>
+
             #title{
                 position: relative;
                 display:table;
@@ -39,7 +43,7 @@ and open the template in the editor.
                 font-size: 19px;
                 bottom: 0;
                 text-align: center;
-                margin-top: -440px;
+                margin-top: -490px;
                 z-index: 1000;
             }
             #title-name{
@@ -49,13 +53,11 @@ and open the template in the editor.
             }
             .sidebar{
                 background-color: #FAFAFA;
-                /*margin-right: 1px;*/
                 padding-top: 60px;
-                padding-left:20px;
+                padding-left:10px;
                 padding-right:0;
                 font-size: 14px;
-                /*width: 196px;*/
-                height: 450px;
+                height: 500px;
             }
             .sidebar .collapser{
                 cursor: pointer;
@@ -63,20 +65,29 @@ and open the template in the editor.
             #contact{
                 background-color: #FAFAFA;
                 padding-top: 60px;
-                /*width: 230px;*/
-                height: 450px;
-                /*margin-right: 1px;*/
+                padding-right:0;
+                padding-left: 0;
+                height: 500px;
+                text-align: center
             }
             .enquiry-form{
                 background-color: #E6E6E6;
                 padding-top: 60px;
                 padding-right:0;
-                height: 450px;
+                height: 500px;
                 margin-top: 0;
             }
             .enquiry-form form{
                 position:relative;
-                z-index:9999;
+                z-index:1;
+            }
+            .enquiry-submitBtn{
+                border-color:transparent; 
+                background-color: #fff
+            }
+            .enquiry-submitBtn:hover{
+                background-color: rgb(76, 76, 76);
+                color: #fff;
             }
             .profile-image{
                 width: 60px;
@@ -90,12 +101,61 @@ and open the template in the editor.
                 margin-top:5px;
                 margin-left:-30px;
                 padding:0;
-                height:250px;
-                z-index:9999;
+                height:350px;
+                z-index:1;
             }
         </style>
 		<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script>
+        /*$(document).ready(function(){
+                var viewportHeight = window.innerHeight,
+                    viewportWidth = window.innerWidth,
+                    sidebarWidthWithPadding = $('.sidebar').width() + 20,
+                    marginTop,
+                    height;
+                    console.log(viewportHeight);
+                if(viewportWidth <= 1366 && viewportWidth > 767){
+                    $('.navbar-nav').removeClass('navbar-right');
+                    height = viewportHeight - 104 - 140 - 60;
+                }else if(viewportWidth > 1366){
+                    $('.navbar-nav').addClass('navbar-right');
+                    height = 667 - 104 - 140 - 60;
+                }
+
+                marginTop = -height;
+                $('#contact').height(height);
+                $('.sidebar').height(height);
+                $('.enquiry-form').height(height);
+                $('.contact-top-overlay').css('margin-top', marginTop - 60);
+                $('#title').css('margin-top', marginTop + 10 - 60);
+                $('.contact-hollow-frame').height(height + 60 - 10 -2);
+                $('.contact-hollow-frame').css('margin-top', marginTop - 60 + 10);
+                $('.contact-hollow-frame').css('padding-left', viewportWidth - sidebarWidthWithPadding);
+
+                $(window).on('resize', function(e){
+                    viewportWidth = window.innerWidth;
+                    viewportHeight = window.innerHeight;
+                    if(viewportWidth > 1366){
+                        $('.navbar-nav').addClass('navbar-right');
+                        height = 667 - 104 - 140 - 60;
+                    }else if(viewportWidth <= 1366 && viewportWidth > 767){
+                        $('.navbar-nav').removeClass('navbar-right');
+                        height = viewportHeight - 104 - 140 - 60;
+                    }
+                    marginTop = -height;
+                    $('#contact').height(height);
+                    $('.sidebar').height(height);
+                    $('.enquiry-form').height(height);
+                    $('.contact-top-overlay').css('margin-top', marginTop - 60);
+                    $('#title').css('margin-top', marginTop + 10 - 60);
+                    $('.contact-hollow-frame').height(height + 60 - 10 - 2);
+                    $('.contact-hollow-frame').css('margin-top', marginTop - 60 + 10);
+                    $('.contact-hollow-frame').css('padding-left', viewportWidth - sidebarWidthWithPadding);
+                });
+                
+            });*/
+        </script>
         <script src="http://maps.googleapis.com/maps/api/js"></script>
         <?php
             //$address = $dlocation; // Google HQ
@@ -141,6 +201,7 @@ and open the template in the editor.
         <title>Contacts</title>
     </head>
     <body>
+        <div class='wrapper'>
         <?php
         include_once("./templates/new_header.html");
         ?>
@@ -206,10 +267,38 @@ and open the template in the editor.
                     </div>
                 </div>
                 <div id='contact' class='col-md-2'>
-                    <div class="row" id="contact-title" style="padding-top: 8px;padding-left: 15px;font-size: 18px">
+                    <div class="row contact-title">
                         MARKETING
                     </div>
-                    <div id="contact-content">
+                    <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                        <div class="flipper">
+                            <div class="front">
+                                <img src="./public_html/img/qiaojian.jpg">
+                            </div>
+                            <div class="back">
+                                <!-- back content -->
+                                <h5>George Qiao</h5>
+                                <p>Email: <a href="mailto:jackyfeng1218@gmail.com?subject=Enquiry">qiaojian@dmx.com</a></p>
+                                <p>TEL: +65 8888888</p>
+                                <p>FAX: +65 8888888</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                        <div class="flipper">
+                            <div class="front">
+                                <img src="./public_html/img/qiaojian.jpg">
+                            </div>
+                            <div class="back">
+                                <!-- back content -->
+                                <h5>George Qiao</h5>
+                                <p>Email: <a href="mailto:jackyfeng1218@gmail.com?subject=Enquiry">qiaojian@dmx.com</a></p>
+                                <p>TEL: +65 8888888</p>
+                                <p>FAX: +65 8888888</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div id="contact-content">
                         <table style="border-collapse: separate;width: 100%;border-spacing: 0 20px">
                             <tbody>
                                 <tr>
@@ -262,12 +351,12 @@ and open the template in the editor.
                             </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class='col-md-8 enquiry-form'>
                 
-                    <div id="form_div" class="col-md-8" style='margin-top:5px;margin-left: 8px;' >
+                    <div id="form_div" class="col-md-7" style='padding:0'>
                         <form id="contactForm" action="" method="post">
                         <table width="90%" style="border-collapse: separate;border-spacing: 20px;">
                                 <tbody>
@@ -289,11 +378,11 @@ and open the template in the editor.
                                 </tr>
                                 <tr>
                                         <td width="15%" valign="top">MESSAGE</td>
-                                        <td width="85%" align="left"><textarea name="message" id="message" rows="7" cols="70" style="background-color: #ffffff"></textarea></td>
+                                        <td width="85%" align="left"><textarea name="message" id="message" rows="5" cols="70" style="background-color: #ffffff"></textarea></td>
                                 </tr>
                                 <tr>
                                         <td colspan="2" align="right">
-                                        <input type="submit" value=" SUBMIT " style="border-color:transparent;"/>
+                                        <input class="enquiry-submitBtn" type="submit" value=" SUBMIT " />
                                         </td>
                                 </tr>
                                 </tbody>
@@ -302,20 +391,22 @@ and open the template in the editor.
                     </div>
 
                     <!-- <div id="map" style='margin-top:5px;' class='col-md-3'> -->
-                        <div id="map_canvas" class="col-md-4">
+                        <div id="map_canvas" class="col-md-5">
                             
                         </div>
                     <!-- </div> -->
                 </div>
             </div>
 
-            <div class='row' style='position:relative;height:50px;margin-top:-450px;background-color: rgba(76, 76, 76,0.6);z-index:1000'>
+            <div class='row contact-top-overlay'>
                 <div id="title" class="col-md-2">
                 <span id="title-name">CONTACTS<span>
                 </div>
             </div>
-            <div class='row pull-right' style='position:relative;background:none;height:440px;margin-top:-440px;border-top: 2px #FFF solid; border-left: 2px #FFF solid;padding-left:1125px;z-index:1000'>
+            <div class='row pull-right contact-hollow-frame'>
             </div>
+        </div>
+
         </div>
         <?php
         include_once("./templates/footer.php");

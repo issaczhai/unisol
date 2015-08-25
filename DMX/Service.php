@@ -26,12 +26,6 @@ and open the template in the editor.
                 padding-top: 102px
             }
             
-            .team-bonding-carousel{
-                padding:0;
-            }
-            .team-bonding-carousel img{
-                width:100%;
-            }
             .title{
                 position: relative;
                 width: 100%;
@@ -53,6 +47,59 @@ and open the template in the editor.
                 vertical-align: bottom;
             }
         </style>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                var viewportHeight = window.innerHeight,
+                    viewportWidth = window.innerWidth,
+                    imgHeight,
+                    marginTop;
+                    console.log(viewportHeight);
+                if(viewportWidth <= 1366 && viewportWidth > 767){
+                    imgHeight = viewportHeight - 104 - 140;
+                    marginTop = -imgHeight;
+                    $('.team-bonding-carousel img').height(imgHeight);
+                    $('.service-top-overlay').css('margin-top', marginTop);
+                    $('.service-hollow-frame').height(imgHeight - 12);
+                    $('.service-hollow-frame').css('margin-top', marginTop + 10);
+                }else if(viewportWidth > 1366){
+                    imgHeight = 667 - 104 - 140;
+                    marginTop = -imgHeight;
+                    console.log(imgHeight);
+                    console.log(marginTop);
+                    $('.navbar-nav').addClass('navbar-right');
+                    $('.team-bonding-carousel img').height(imgHeight);
+                    $('.service-top-overlay').css('margin-top', marginTop);
+                    $('.service-hollow-frame').height(imgHeight - 12);
+                    $('.service-hollow-frame').css('margin-top', marginTop + 10);
+                }
+                $(window).on('resize', function(e){
+                    viewportWidth = window.innerWidth;
+                    viewportHeight = window.innerHeight;
+                    if(viewportWidth > 1366){
+                        $('.navbar-nav').addClass('navbar-right');
+                        imgHeight = 667 - 104 - 140;
+                        marginTop = -imgHeight;
+                        $('.navbar-nav').addClass('navbar-right');
+                        $('.team-bonding-carousel img').height(imgHeight);
+                        $('.service-top-overlay').css('margin-top', marginTop);
+                        $('.service-hollow-frame').height(imgHeight - 12);
+                        $('.service-hollow-frame').css('margin-top', marginTop + 10);
+                    }else if(viewportWidth <= 1366 && viewportWidth > 767){
+                        $('.navbar-nav').removeClass('navbar-right');
+                        imgHeight = viewportHeight - 104 - 140;
+                        marginTop = -imgHeight;
+                        $('.team-bonding-carousel img').height(imgHeight);
+                        $('.service-top-overlay').css('margin-top', marginTop);
+                        $('.service-hollow-frame').height(imgHeight - 12);
+                        $('.service-hollow-frame').css('margin-top', marginTop + 10);
+                    }
+                });
+                
+            });
+        </script>
         <meta charset="UTF-8">
         <title>DMX Services</title>
     </head>
@@ -61,49 +108,50 @@ and open the template in the editor.
         <?php
         include_once("./templates/new_header.html");
         ?>
-          <div class="container-fluid service-content-wrapper">
+          <div class="container-fluid content-wrapper">
             <div class="row no-margin-row">
                 <div class="col-xs-12 col-sm-12 col-md-2 service-sidebar">
                         <div class="title"><h4 id='title-name'>SERVICES</h4></div>
                         <ul class="service">
                             <li>
-                               <button class="btn btn-service active-service" value="Dmxchange analyzes the Client’s future work place needs and space strategies for the impact they will have on the over all premises portfolio. 
+                               <button class="btn btn-service active-service" data-title="Strategic Space Planning" value="Dmxchange analyzes the Client’s future work place needs and space strategies for the impact they will have on the over all premises portfolio. 
                                     Opportunities for alternative office solutions are explored to maximize the effectiveness of space usage. 
                                     An optimum list of project requirements is proposed in close consultation with the Client to resolve potentially conflicting needs.">
                                Strategic Space Planning</button> 
                             </li>
                             <li>
-                                <button class="btn btn-service" value="Dmxchange develops comparative base building analyses together with the Client’s real estate agents and advisors; test-fits workplace standards and detailed project requirement against alternative buildings; and assists the Client in selecting the building that best satisfies the Client’s objectives.">
+                                <button class="btn btn-service" data-title="Design Development" value="Dmxchange develops comparative base building analyses together with the Client’s real estate agents and advisors; test-fits workplace standards and detailed project requirement against alternative buildings; and assists the Client in selecting the building that best satisfies the Client’s objectives.">
                                 Design Development</button> 
                             </li>
                             <li>
-                                <button class="btn btn-service" value="Dmxchange provides documents and drawings indicating material and workmanship to confirm planning and design intent comprehensive for construction.">
+                                <button class="btn btn-service" data-title="Construction Documentation" value="Dmxchange provides documents and drawings indicating material and workmanship to confirm planning and design intent comprehensive for construction.">
                                 Construction Documentation</button> 
                             </li>
                             <li>
-                                <button class="btn btn-service" value="Dmxchange manages both the Pre-Construction stages - interior design, planning, IT, - and the Construction stage to ensure control of cost, control of time, and control of quality resulting in timely delivery and best value for money.">
+                                <button class="btn btn-service" data-title="Project Management" value="Dmxchange manages both the Pre-Construction stages - interior design, planning, IT, - and the Construction stage to ensure control of cost, control of time, and control of quality resulting in timely delivery and best value for money.">
                                 Project Management</button> 
                             </li>
                             <li>
-                                <button class="btn btn-service" value="Dmxchange provides technical project management services that ensure, through seamless integration with design compliance to local construction codes and regulations. We provides submissions to various Authority such as URA and FSSB">
+                                <button class="btn btn-service" data-title="Authority Submission" value="Dmxchange provides technical project management services that ensure, through seamless integration with design compliance to local construction codes and regulations. We provides submissions to various Authority such as URA and FSSB">
                                 Authority Submission</button> 
                             </li>
                             <li>
-                                <button class="btn btn-service" value="Dmxchange’s service provides the ultimate result – correctly executed and on time. We believe in working directly with each trade and supplier to tightly control the budget, quality and timeliness of all construction.">
+                                <button class="btn btn-service" data-title="Procurement and Construction" value="Dmxchange’s service provides the ultimate result – correctly executed and on time. We believe in working directly with each trade and supplier to tightly control the budget, quality and timeliness of all construction.">
                                 Procurement and Construction</button> 
                             </li>
                             <li>
-                                <button class="btn btn-service" value="Dmxchange provides after service support and will make regular visit to the Client’s office after moved in to ensure all installation are in well order">
+                                <button class="btn btn-service" data-title="Service Support" value="Dmxchange provides after service support and will make regular visit to the Client’s office after moved in to ensure all installation are in well order">
                                 Service Support</button> 
                             </li>
                         </ul>
                 </div>
                     
                 <div class="col-xs-12 col-sm-12 col-md-5 aboutUs-text">
-                    <p>
+                    <h1 class="custom-header-2">Strategic Space Planning</h1>
+                    <p class="typography-1">
                         Dmxchange analyzes the Client’s future work place needs and space strategies for the impact they will have on the over all premises portfolio. 
-                        Opportunities for alternative office solutions are explored to maximize the effectiveness of space usage. 
-                        An optimum list of project requirements is proposed in close consultation with the Client to resolve potentially conflicting needs.
+                        <br>Opportunities for alternative office solutions are explored to maximize the effectiveness of space usage. 
+                        <br>An optimum list of project requirements is proposed in close consultation with the Client to resolve potentially conflicting needs.
                     </p>
                      
                 </div>
@@ -142,12 +190,11 @@ and open the template in the editor.
         <?php
         include_once("./templates/footer.php");
         ?>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="./public_html/js/main.js"></script>
     <script>
     $('.service li').on('click','.btn-service', function(){
         $('.aboutUs-text p').text(this.value);
+        $('.aboutUs-text .custom-header-2').text($(this).attr('data-title'));
         $('.btn-service').removeClass('active-service');
         $(this).addClass('active-service');
     });

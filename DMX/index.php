@@ -16,56 +16,70 @@ and open the template in the editor.
         <link rel="stylesheet" href="./public_html/css/main.css">
         <link rel="stylesheet" href="./public_html/css/dmx_style.css">
         <style>
+            /*html, body{
+                height: 100%;    
+            }*/
+            body{
+                padding-top: 106px
+            }
             .carousel-indicators li{
                 border:none;
+            }
+            .carousel-inner img {
+                max-height:430px;
             }
         </style>
         <meta charset="UTF-8">
         <title>DMX</title>
     </head>
     <body>
+        <div class='wrapper'>
         <?php
         include_once("./templates/new_header.html");
         ?>
-        <div style="position:absolute;width:85%;height:375px;background:none;margin-top:40px;margin-left:15%;z-index:3;border-top:2px solid #ffffff;border-left:2px solid #ffffff"></div>
-    	<div id="index-carousel" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#index-carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#index-carousel" data-slide-to="1"></li>
-                <li data-target="#index-carousel" data-slide-to="2"></li>
-            </ol>
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                
-                <div style="position:absolute;width:100%;height:40px;background-color:#000000;z-index:1;opacity:0.5"></div>
-                <div style="position:absolute;width:1120px;height:250px;background:none;z-index:2;border:1px solid #ffffff"></div>
-                <div class="item active">
-                    <img src="http://unsplash.s3.amazonaws.com/batch%209/barcelona-boardwalk.jpg" alt="First slide">
-                    <div class="carousel-caption"></div>
-            <!-- Static Header -->
+        <div class='content-wrapper'>
+            <div style="position:relative; width:100%;height:10px; background-color: rgb(117, 117, 117)"></div>
+            <div style="position:absolute;right:0;height:380px;background:none;margin-top:50px;padding-left:90%;z-index:3;border-top:3px solid #ffffff;border-left:3px solid #ffffff"></div>
+        	<div id="index-carousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#index-carousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#index-carousel" data-slide-to="1"></li>
+                    <li data-target="#index-carousel" data-slide-to="2"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    
+                    <div style="position:absolute;width:100%;height:50px;background-color:#000000;z-index:1;opacity:0.5"></div>
+                    <div style="position:absolute;width:96%;height:300px;background:none;z-index:2;border:1px solid #ffffff; border-left: 0"></div>
+                    <div class="item active">
+                        <img src="http://unsplash.s3.amazonaws.com/batch%209/barcelona-boardwalk.jpg" alt="First slide">
+                        <div class="carousel-caption"></div>
+                <!-- Static Header -->
 
-                </div>
-                <div class="item">
-                    <img src="http://unsplash.s3.amazonaws.com/batch%209/barcelona-boardwalk.jpg" alt="Second slide">
-                    <div class="carousel-caption"></div>
+                    </div>
+                    <div class="item">
+                        <img src="http://unsplash.s3.amazonaws.com/batch%209/barcelona-boardwalk.jpg" alt="Second slide">
+                        <div class="carousel-caption"></div>
 
+                    </div>
+                    <div class="item">
+                        <img src="http://unsplash.s3.amazonaws.com/batch%209/barcelona-boardwalk.jpg" alt="Third slide">
+                        <div class="carousel-caption"></div>
+                    </div>
                 </div>
-                <div class="item">
-                    <img src="http://unsplash.s3.amazonaws.com/batch%209/barcelona-boardwalk.jpg" alt="Third slide">
-                    <div class="carousel-caption"></div>
-                </div>
-            </div>
-            <!-- Controls 
-            <a class="left carousel-control" href="#index-carousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a class="right carousel-control" href="#index-carousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            </a>
-            -->
-        </div><!-- /carousel -->
-        <div style="position:absolute;width:100%;height:35px;background-color:#c3c3c3"></div>
+                <!-- Controls 
+                <a class="left carousel-control" href="#index-carousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#index-carousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+                -->
+            </div><!-- /carousel -->
+            <div style="position:relative;width:100%;height:50px;background-color:#c3c3c3"></div>
+        </div>
+        </div>
         <?php
         include_once("./templates/footer.php");
         ?>

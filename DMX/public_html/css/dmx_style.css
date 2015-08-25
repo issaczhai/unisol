@@ -1,34 +1,48 @@
 /**** Header ****/
 #DMXNavbar{
+
     border:none;
-    background: -webkit-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); /* Standard syntax */
+    /* 
+    background: -webkit-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); For Safari 5.1 to 6.0 
+    background: -o-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223));  For Opera 11.1 to 12.0 
+    background: -moz-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); For Firefox 3.6 to 15
+    background: linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); Standard syntax */
+    background-image: url('../img/header.jpg');
+    background-repeat: no-repeat;
+    top:4px;
 }
 
 .navbar-dmx .navbar-brand{
     padding-top:0;
-    padding-left:0;
+    padding-left:15px;
 }
 .navbar-dmx .navbar-collapse{
     padding-right: 0;
 }
+.navbar-dmx .navbar-nav{
+    margin-left: 300px;
+}
+.navbar-dmx .navbar-nav li a{
+    color: #000;
+}
+.navbar-dmx .navbar-nav li a:hover{
+    color: #fff;
+}
 
-.navbar-dmx .divider{
+/*.navbar-dmx .divider{
     position:relative;
-    width:77%;
-    margin-top: -50px;
+    width:76%;
+    margin-top: -35px;
     z-index:1000;
     border-top:1px solid rgba(81, 81, 81, 0.5);
-}
+}*/
 /**** Footer ****/
 footer{
 
     /* Set the fixed height of the footer here */
-    position:absolute;
+    position:relative;
     width:100%;
-    bottom: 0;
+    bottom: auto;
     height:142px;
     background-color: rgba(223, 223, 223, 0.9);
 }
@@ -40,10 +54,10 @@ footer{
 }
 .single-widget h2{
     margin-top: 10px;
-    /*color: #fff;*/
+    color: #000;
 }
 .single-widget ul li{
-    /*color: #fff;*/
+    color: #000;
 }
 
 .certificate-logo{
@@ -90,6 +104,13 @@ h5{
     margin-right:0;
 }
 
+.team-bonding-carousel{
+    padding:0;
+}
+
+.team-bonding-carousel img{
+    width: 100%;
+}
 /**** Service page ****/
 .btn-service{
     border-radius: 0;
@@ -97,46 +118,192 @@ h5{
 }
 .btn-service:hover{
     background-color: rgba(204, 204, 204, 0.5);
+    transform: rotateY(360deg);
+}
+.btn-service {
+    transition: 0.8s;
+    transform-style: preserve-3d;
 }
 .active-service{
     background-color: rgba(51, 51, 51, 0.8);
     color: #fff !important;
 }
 
+.typography-1{
+    color: #4c4a37; 
+    font-family: 'Open sans', sans-serif; 
+    font-size: 16px; 
+    line-height: 32px; 
+    margin: 0 0 24px;
+    text-align: center;
+}
+.typography-2{
+    color: #4c4a37; 
+    font-family: 'Verdana', sans-serif; 
+    font-size: 14px; 
+    line-height: 26px; 
+    text-indent: 30px; 
+    margin: 0;
+}
+.custom-header-1{
+    color: #d04764; 
+    font-family: 'Lobster', cursive; 
+    font-size: 36px; 
+    font-weight: normal; 
+    line-height: 48px; 
+    margin: 0 0 18px; 
+    text-shadow: 1px 0 0 #fff; 
+    text-align: center;
+}
+.custom-header-2{
+    font-size: 30px; 
+    letter-spacing: -1px; 
+    color: #d04764; 
+    text-transform: uppercase; 
+    text-shadow: 1px 1px 0 #000;
+    margin: 10px 0 24px; 
+    line-height: 50px;
+    text-align: center;
+}
+
+/**** Contact Page ****/
+.contact-title{
+
+    padding-top: 8px;
+    padding-left: 15px;
+    font-size: 18px;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.flip-container, .front, .back {
+    position:relative;
+    width: 180px;
+    height: 180px;
+    z-index:2;
+    margin: 0 auto
+}
+/* entire container, keeps perspective */
+.flip-container {
+    perspective: 1000;
+    margin-bottom: 15px;
+}
+/* flip the pane when hovered */
+.flip-container:hover .flipper, .flip-container.hover .flipper {
+    transform: rotateY(180deg);
+}
+
+/* flip speed goes here */
+.flipper {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+
+    position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+    backface-visibility: hidden;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+    z-index: 1;
+    /* for firefox 31 */
+    transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+    transform: rotateY(180deg);
+}
+
+.contact-top-overlay{
+    position:relative;
+    height:50px;
+    margin-top: -500px; 
+    background-color: rgba(76, 76, 76,0.6);
+    z-index:0
+}
+
+.contact-hollow-frame{
+    position:relative;
+    background:none;
+    margin-top: -490px; 
+    border-top: 2px #FFF solid; 
+    border-left: 2px #FFF solid;
+    padding-left:1122px;
+    height:490px;
+    z-index:0
+}
+
 /****    large screen   ****/
-@media screen and (min-width: 1366px){
-    body{
-        max-width: 1366px;
+@media screen and (min-width: 1367px){
+    .wrapper{
+        margin-bottom: 30px;
+    }
+    .content, .content-wrapper, footer{
+        width: 1366px !important;
+        margin:0 auto !important;
     }
     .navbar-dmx{
+        width: 1366px !important;
         min-height:92px;
         border-radius: 0;
+        margin:0 auto !important;
     }
-    .navbar-dmx .navbar-nav li a, .navbar-dmx .navbar-header{
-        line-height: 92px;
-        height:92px;
+    /*.navbar-dmx .navbar-nav li a, .navbar-dmx .navbar-header{
+        
+    }*/
+    .navbar-dmx .navbar-nav li a{
+
+        height: 25px;
+        padding-bottom: 0;
+        padding-top: 0;
+        z-index: 9999;
+        margin-top: 67px;  
     }
     .navbar-dmx .navbar-nav li{
+        line-height: 92px;
+        height:92px;
         padding-left: 30px;
         padding-right: 30px
     }
     .project-overlay{
         position:relative;
-        height: 120px;
-        margin-top: -120px;
+        height: 80px;
+        margin-top: -80px;
         padding-left: 110px;
         padding-top: 10px;
-        background-color: rgba(204, 204, 204, 0.5);
-        z-index: 9999;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
     }
-
+    .project-overlay h5, .project-overlay p{
+        color: #fff;
+    }
+    .project-overlay h5{
+        text-align: left;
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
 } 
 
 /****    desktop   ****/
 @media screen and (min-width: 767px){
+
     .wrapper{
-        min-height: 100%;
-        margin-bottom: -142px;
+        /*min-height: 100%;
+        margin-bottom: -142px;*/
+        margin-bottom: 30px
+    }
+    .content-wrapper{
+        position:relative;
+
+        padding:0;
     }
     /**** HEADER ****/
     .navbar{
@@ -150,37 +317,56 @@ h5{
     .navbar-dmx .navbar-content{
         padding:0;
     }
-    .navbar-dmx .navbar-nav li a, .navbar-dmx .navbar-header{
+    /*.navbar-dmx .navbar-nav li a, .navbar-dmx .navbar-header{
         line-height: 92px;
         height:92px;
+    }*/
+    .navbar-dmx .navbar-nav li a{
+
+        height: 25px;
+        padding-bottom: 0;
+        padding-top: 0;
+        z-index: 9999;
+        margin-top: 67px;  
     }
     .navbar-dmx .navbar-nav li{
+        line-height: 92px;
+        height:92px;
         padding-left: 30px;
-        padding-right: 30px
+        padding-right: 30px;
     }
 
     .project-overlay{
         position:relative;
-        height: 120px;
-        margin-top: -120px;
+        height: 80px;
+        margin-top: -80px;
         padding-left: 110px;
         padding-top: 10px;
-        background-color: rgba(204, 204, 204, 0.5);
-        z-index: 9999;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
     }
-
+    .project-overlay h5, .project-overlay p{
+        color: #fff;
+    }
+    .project-overlay h5{
+        text-align: left;
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
     /**** about us page ****/
     .about-top-overlay{
         position:relative;
         height:50px;
-        margin-top:-380px;
         background-color: rgba(76, 76, 76,0.6);
         z-index:-1;
     }
     
     .aboutUs-text{
         padding-top: 60px;
+        position:relative;
+        height:423px;
     }
+    
     .about-carousel-caption{
         position:absolute;
         width:100%;
@@ -197,33 +383,28 @@ h5{
     .about-hollow-frame{
         position:relative;
         background:none;
-        height:365px;
-        margin-top:-365px;
-        border-top: 2px #FFF solid; 
-        border-left: 2px #FFF solid;
-        padding-left:1252px;
+        border-top: 2px rgb(220, 220, 220) solid; 
+        border-left: 2px rgb(220, 220, 220) solid;
+        padding-left:1235px;
         z-index:1000;
     }
     /**** service page ****/
-    .service-content-wrapper{
-        position:relative;
-        padding:0;
-    }
+   
     .service-top-overlay{
         position:relative;
         height:50px;
-        margin-top:-408px;
+        /*margin-top:-408px;*/
         background-color: rgba(76, 76, 76,0.6);
         z-index:-1;
     }
     .service-hollow-frame{
         position:relative;
         background:none;
-        height: 398px;
-        margin-top:-398px;
-        border-top: 2px #FFF solid; 
-        border-left: 2px #FFF solid;
-        padding-left: calc(1366px - 227.656px - 2px);
+        /*height: 398px;
+        margin-top:-398px;*/
+        border-top: 2px rgb(220, 220, 220) solid; 
+        border-left: 2px rgb(220, 220, 220) solid;
+        padding-left: calc(1366px - 226.656px - 2px - 15px);
         z-index:1000;
     }
     .service-sidebar{
@@ -250,6 +431,9 @@ h5{
 }
 /****    mobile   ****/
 @media screen and (max-width: 767px){
+    #DMXNavbar{
+        top:0;
+    }
     .navbar-dmx .divider{
         display:none;
     }
@@ -264,7 +448,15 @@ h5{
         height: 50px;
         margin-top: -60px;
         padding-left: 20px;
-        background-color: rgba(204, 204, 204, 0.5);
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .project-overlay h5, .project-overlay p{
+        color: #fff;
+    }
+    .project-overlay h5{
+        text-align: left;
+        margin-top: 0;
+        margin-bottom: 5px;
     }
     .detail-thumbnail{
         text-align: center;

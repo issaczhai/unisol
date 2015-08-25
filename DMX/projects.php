@@ -32,11 +32,13 @@ and open the template in the editor.
         <link rel="stylesheet" href="./public_html/css/main.css">
         <link rel="stylesheet" href="./public_html/css/dmx_style.css">
         <style>
-            /*html, body{
-                height: 100%;    
-            }*/
+            
             body{
-                padding-top: 102px;
+                padding-top: 106px;
+            }
+            /**** change the divider width as the side scroll bar existence ****/
+            .navbar-dmx .divider{
+                width: 75.7%;
             }
             .search_box .form-control:focus{
                 border-color: #cccccc;
@@ -52,12 +54,15 @@ and open the template in the editor.
             .btn-default{
                 border-radius: 0;
             }
+            .alphabet{
+                color: #000;
+            }
             .project{
                 float:none;
                 display:inline-block;
                 width: 200px;
                 margin-right:10px;
-                margin-bottom: 15px;
+                margin-bottom: 8px;
                 padding:0;
                 overflow: hidden
             }
@@ -104,6 +109,9 @@ and open the template in the editor.
                 line-height:2em;
                 z-index:1000
             }
+            /*.projectName-overlay span:hover{
+                color: rgb(255, 0, 0);
+            }*/
             .project-pagination{
                 float:none;
                 margin:0 auto;
@@ -130,10 +138,10 @@ and open the template in the editor.
     <?php
     include_once("./templates/new_header.html");
     ?>
-        <div class='container-fluid'>
+        <div class='container-fluid content'>
             <div class='row' style='height:50px;background-color: rgb(153, 153, 153)'>
             </div>
-            <div class='row pull-right' style='height:40px;margin-top:-40px;background:none;border-top: 1px #FFF solid; border-left: 1px #FFF solid;padding-left:1151px'>
+            <div class='row pull-right' style='height:40px;margin-top:-40px;background:none;border-top: 1px #FFF solid; border-left: 1px #FFF solid;padding-left:84%'>
             </div>
             <div class='row' style='margin-top:30px'>
                 <div id='sidebar' class='col-md-2'>
@@ -191,6 +199,10 @@ and open the template in the editor.
                                        <li><a class='alphabet' href="#w">W</a></li>
                                        <li><a class='alphabet' href="#x">X</a></li>
                                        <li><a class='alphabet' href="#y">Y</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <ul class="list-inline">
                                        <li><a class='alphabet' href="#z">Z</a></li>
                                     </ul>
                                 </li>
