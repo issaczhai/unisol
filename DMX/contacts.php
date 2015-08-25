@@ -267,7 +267,7 @@ and open the template in the editor.
                     </div>
                 </div>
                 <div id='contact' class='col-md-2'>
-                    <div class="row contact-title">
+                    <div class="contact-title">
                         MARKETING
                     </div>
                     <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
