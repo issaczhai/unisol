@@ -35,7 +35,6 @@ $current_charge = $fdpMgr->getCharge();
 
 <html>   
     <head>
-<!--        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
         <script type="text/javascript" src="public_html/js/jquery-1.11.0.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.js"></script> 
         <script>
@@ -69,20 +68,19 @@ $current_charge = $fdpMgr->getCharge();
         <!-- Custom Fonts -->
         <link href="public_html/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         
-        <!-- JhtmlArea related script and style -->
-        <script type="text/javascript" src="public_html/jhtmlarea/scripts/jquery-ui-1.7.2.custom.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="public_html/jhtmlarea/style/jqueryui/ui-lightness/jquery-ui-1.7.2.custom.css"/>
-        <script type="text/javascript" src="public_html/jhtmlarea/scripts/jHtmlArea-0.8.js"></script>
-        <link rel="stylesheet" type="text/css" href="public_html/jhtmlarea/style/jHtmlArea.css"/>
-        <style type="text/css">
-            div.jHtmlArea .ToolBar ul li a.video
-            {
-                background: url(public_html/jhtmlarea/style/youtube-icon.png) no-repeat;
-                background-position: 0 0;
-            }
-
-            div.jHtmlArea { border: solid 1px #ccc;background-color: #ffffff; }
-        </style>
+        <!-- nicEditor Script -->
+        <script src="public_html/js/nicEdit.js" type="text/javascript"></script>
+	<script type="text/javascript">
+            bkLib.onDomLoaded(nicEditors.allTextAreas);
+//            $(function() {
+//                var myNicEditor = new nicEditor();
+//                bkLib.onDomLoaded(function() {
+//                    //myNicEditor.setPanel('myNicPanel');
+//                    myNicEditor.panelInstance('add_product_description');
+//               });
+//           });
+        </script>
+        
         <style>
             .btn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block; 
             *display:inline;padding:4px 10px 4px;font-size:14px;line-height:18px; 
@@ -106,19 +104,17 @@ $current_charge = $fdpMgr->getCharge();
         
     </head>
     <body>
-        <script type="text/javascript">
+<!--        <script type="text/javascript">
         $(function() {
             $("#add_product_description").htmlarea({
                 toolbar: [
-                    ["bold", "italic", "underline", "|", "forecolor"],
-                    ["superscript","p","increasefontsize","decreasefontsize"],
-                    ["orderedlist","unorderedlist","indent","outdent"],
+                    ["bold", "italic", "underline", "|", "forecolor","|","superscript","p", "h1", "h2", "h3","|","orderedlist","unorderedlist","indent","outdent"],
                     ["justifyleft","justifycenter","justifyright"],
                     ["link", "unlink", "image","horizontalrule","html"]
                 ]
             }); // Initialize jHtmlArea's with all default values
         });
-        </script>
+        </script>-->
         <div id="wrapper">
 
         <!-- Navigation -->

@@ -27,7 +27,6 @@ function check(id){
     });
 }
 
-
 function show_update_cutoff_input(){
     $('#confirm_cutoff_change').css('display','');
     $('#current_cutoff_entry').css('display','');
@@ -143,17 +142,8 @@ function populateEditField(product_id,p_name,p_symbol,p_price,p_color,p_stock,p_
     
     document.getElementById("edit_product_stock").value = p_stock;
     document.getElementById("edit_product_description").value = p_description;
-    
-    $("#edit_product_description").htmlarea({
-        toolbar: [
-            ["bold", "italic", "underline", "|", "forecolor"],
-            ["superscript","p","increasefontsize","decreasefontsize"],
-            ["orderedlist","unorderedlist","indent","outdent"],
-            ["justifyleft","justifycenter","justifyright"],
-            ["link", "unlink", "image","horizontalrule","html"]
-        ]
-    }); // Initialize jHtmlArea's with all default values
-    
+    var myEditor = nicEditors.findEditor('edit_product_description');
+    myEditor.setContent($('#edit_product_description').val());
 }
 
 function removeRewardCode(code){
@@ -179,11 +169,12 @@ function closeOrderDetail(o_id){
 }
 
 function populateAddJhtmlArea(){
-    document.getElementById('addTextarea').value = $('#add_product_description').htmlarea('html');
+    document.getElementById('addTextarea').value = nicEditors.findEditor('add_product_description').getContent();
     return true;
 }
 
 function populateEditJhtmlArea(){
-    document.getElementById('editTextarea').value = $('#edit_product_description').htmlarea('html');
+    document.getElementById('editTextarea').value = nicEditors.findEditor('edit_product_description').getContent();
     return true;
 }
+
