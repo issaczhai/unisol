@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 function check(id){
     var fd = new FormData(document.getElementById("addProductForm"));
     $.ajax({
@@ -15,14 +14,48 @@ function check(id){
         contentType: false,
         processData: false,
         error: function(data){
-            console.log(data.responseText);
             document.getElementById(id+'_close').style.display="block";
             document.getElementById(id+'_check').style.display="none";
+            var index = id.indexOf("_");
+            if(index != -1){
+               $('#color'+id.substring(0,index)).attr({
+                    'disabled': 'disabled'
+                }); 
+            }
         },
         success: function(data){
             document.getElementById(id+'_check').style.display="block";
             document.getElementById(id+'_close').style.display="none";
+            var index = id.indexOf("_");
+            if(index != -1){
+               $('#color'+id.substring(0,index)).removeAttr('disabled'); 
+            }
+        }
+    });
+}
 
+function editCheck(id){
+    var fd = new FormData(document.getElementById("editProductForm"));
+    $.ajax({
+        type: 'post',
+        url: 'check_photo.php?photo='+id+'_input',
+        data: fd,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        error: function(xhr, status, error){
+            console.log("hhjhj");
+            document.getElementById(id+'_close').style.display="block";
+            document.getElementById(id+'_check').style.display="none";
+            document.getElementById(id+'_a').style.display="none";
+            var err = eval("(" + xhr.responseText + ")");
+            console.log(err.Message);
+            console.log("sdsd");
+        },
+        success: function(data){
+            document.getElementById(id+'_check').style.display="block";
+            document.getElementById(id+'_close').style.display="none";
+            document.getElementById(id+'_a').style.display="none";
         }
     });
 }
@@ -111,35 +144,24 @@ function hideEditTab(){
     document.getElementById("viewProduct").className = "tab-pane fade active in";
 }
 
-function populateEditField(product_id,p_name,p_symbol,p_price,p_color,p_stock,p_description,url1,url2){
+function populateEditField(product_id,p_name,p_symbol,p_price,p_color,p_stock,p_description,photo_array_url_str){
     document.getElementById("edit_product_id").value = product_id;
     document.getElementById("edit_product_name").value = p_name;
     document.getElementById("edit_symbol_code").value = p_symbol;
     document.getElementById("edit_price").value = p_price;
     var color_arr = p_color.split(',');
-    for(i=1;i<9;i++){
-        if($.inArray(document.getElementById("edit_color"+i).value,color_arr) !== -1){
-            document.getElementById("edit_color"+i).checked = true;
-        }   
+    var photo_url_array = $.parseJSON("{"+photo_array_url_str+"}");
+    /**************************************Populate thumbnail and photo and color**************************************/
+    document.getElementById("edit_thumbnail_photo_preview").src = photo_url_array['thumbnail'];
+    for (var i = 0; i < color_arr.length; i++) {
+        var photo_url = photo_url_array[color_arr[i]];
+        var id = i + 1;
+        document.getElementById("edit_"+id.toString()+"_photo_color").value = color_arr[i];
+        document.getElementById("edit_"+id.toString()+"_photo_color").style.backgroundColor = "#"+color_arr[i];
+        document.getElementById("edit_"+id.toString()+"_photo_original_color").value = color_arr[i];
+        document.getElementById("edit_"+id.toString()+"_photo_preview").src = photo_url;
     }
-    var photo_url_array = [url1,url2];
-    
-    for (i=0;i<2;i++){
-        var angle = '';
-        switch(i) {
-            case 0:
-                angle = '1';
-                break;
-            case 1:
-                angle = '2';
-                break;
-        }
-        if(photo_url_array[i]){
-            document.getElementById("imgURL_"+angle+"_thumbnail").src =photo_url_array[i];
-        }
-        
-    }
-    
+/*************************************************************************************/
     document.getElementById("edit_product_stock").value = p_stock;
     document.getElementById("edit_product_description").value = p_description;
     var myEditor = nicEditors.findEditor('edit_product_description');

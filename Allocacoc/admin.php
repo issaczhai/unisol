@@ -68,17 +68,13 @@ $current_charge = $fdpMgr->getCharge();
         <!-- Custom Fonts -->
         <link href="public_html/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         
+        <!-- JS Color Picker -->
+        <script type="text/javascript" src="public_html/js/jscolor.js"></script>
+        
         <!-- nicEditor Script -->
         <script src="public_html/js/nicEdit.js" type="text/javascript"></script>
 	<script type="text/javascript">
             bkLib.onDomLoaded(nicEditors.allTextAreas);
-//            $(function() {
-//                var myNicEditor = new nicEditor();
-//                bkLib.onDomLoaded(function() {
-//                    //myNicEditor.setPanel('myNicPanel');
-//                    myNicEditor.panelInstance('add_product_description');
-//               });
-//           });
         </script>
         
         <style>
@@ -104,17 +100,6 @@ $current_charge = $fdpMgr->getCharge();
         
     </head>
     <body>
-<!--        <script type="text/javascript">
-        $(function() {
-            $("#add_product_description").htmlarea({
-                toolbar: [
-                    ["bold", "italic", "underline", "|", "forecolor","|","superscript","p", "h1", "h2", "h3","|","orderedlist","unorderedlist","indent","outdent"],
-                    ["justifyleft","justifycenter","justifyright"],
-                    ["link", "unlink", "image","horizontalrule","html"]
-                ]
-            }); // Initialize jHtmlArea's with all default values
-        });
-        </script>-->
         <div id="wrapper">
 
         <!-- Navigation -->
@@ -294,49 +279,85 @@ $current_charge = $fdpMgr->getCharge();
                                                         </td>
                                                         </tr>
                                                         <tr>
-                                                        <td>Color</td>
+                                                        <td>Shop Thumbnail</br>(167 x 167)</td>
                                                         <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td><input type="checkbox" class="add_product_checkbox" id="color" name="color[]" value="ffffff">White</td>
-                                                                    <td><input type="checkbox" class="add_product_checkbox" id="color" name="color[]" value="000000">Black</td>
-                                                                    <td><input type="checkbox" class="add_product_checkbox" id="color" name="color[]" value="c0c0c0">Silver</td>
-                                                                    <td><input type="checkbox" class="add_product_checkbox" id="color" name="color[]" value="808080">Gray</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><input type="checkbox" class="add_product_checkbox" id="color" name="color[]" value="ff0000">Red</td>
-                                                                    <td><input type="checkbox" class="add_product_checkbox" id="color" name="color[]" value="f0f8ff">Blue</td>
-                                                                    <td><input type="checkbox" class="add_product_checkbox" id="color" name="color[]" value="008000">Green</td>
-                                                                    <td><input type="checkbox" class="add_product_checkbox" id="color" name="color[]" value="ffa500">Orange</td>
-                                                                </tr>
-                                                            </table>
+                                                            <div class="btn" style="width:20%">
+                                                            <span>  Upload </span>
+                                                            <input type="file" name="thumbnail_photo_input" id="1_photo_input" onchange="check('thumbnail_photo')"/>
+                                                            </div>
+                                                            <div id="thumbnail_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
+                                                            <div id="thumbnail_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
+
                                                         </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Photo</td>
+                                                            <td>Photo and Color</br>(280 x 280)</td>
                                                             <td>
-                                                                <table width="100%">
+                                                                <table width="40%">
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td width="40%">
-                                                                                
-                                                                                
-                                                                                <div class="btn" style="width:80%">
-                                                                                <span>  Photo (167 x 167) </span>
+                                                                            <th width="25%">Select</th>
+                                                                            <th width="50%">Status</th>
+                                                                            <th width="25%">Representing Color</th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="btn">
+                                                                                <span>  Select </span>
                                                                                 <input type="file" name="1_photo_input" id="1_photo_input" onchange="check('1_photo')"/>
                                                                                 </div>
+                                                                            </td>
+                                                                            <td>
                                                                                 <div id="1_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
                                                                                 <div id="1_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-
                                                                             </td>
-                                                                            <td width="40%">
-                                                                                <div class="btn" style="width:80%">
-                                                                                <span>  Photo (280 x 280) </span>
+                                                                            <td>
+                                                                                <input class="color" id="color1" name="color1" disabled="disabled"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="btn">
+                                                                                <span>  Select </span>
                                                                                 <input type="file" name="2_photo_input" id="2_photo_input" onchange="check('2_photo')"/>
                                                                                 </div>
+                                                                            </td>
+                                                                            <td>
                                                                                 <div id="2_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
                                                                                 <div id="2_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" id="color1" name="color2" class="color" disabled="disabled"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="btn">
+                                                                                <span>  Select </span>
+                                                                                <input type="file" name="3_photo_input" id="3_photo_input" onchange="check('3_photo')"/>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div id="3_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
+                                                                                <div id="3_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" id="color3" name="color3" class="color" disabled="disabled"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="btn">
+                                                                                <span>  Select </span>
+                                                                                <input type="file" name="4_photo_input" id="4_photo_input" onchange="check('4_photo')"/>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div id="4_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
+                                                                                <div id="4_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" id="color4" name="color4" class="color" disabled="disabled"/>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -426,8 +447,8 @@ $current_charge = $fdpMgr->getCharge();
                                                            $p_color = $product["color"];
                                                            $description = htmlentities($product["description"]);
                                                            $p_stock = $product["stock"];
-                                                           $photo_url_arr = [];
-                                                           $photo_url_arr =$photoMgr->getPhotos($p_id);
+                                                           $photo_url_arr = $photoMgr->getPhotos($p_id);
+                                                           $photo_url_string = str_replace('"', "&quot;", str_replace(array("{","}"),"",json_encode($photo_url_arr)));
                                                         ?>
                                                            <tr>
                                                                <td><?php echo $p_id; ?></td>
@@ -436,7 +457,7 @@ $current_charge = $fdpMgr->getCharge();
                                                                <td><?php echo $p_price; ?></td>
                                                                <td><?php echo $p_color; ?></td>
                                                                <td><?php echo $p_stock; ?></td>
-                                                               <td><div class="btn"><span>Edit<i class="fa fa-edit"></i></span><input type="button" onclick="showEditTab();populateEditField('<?php echo $p_id ?>','<?php echo $p_name ?>','<?php echo $p_symbol_code ?>','<?php echo $p_price ?>','<?php echo $p_color ?>','<?php echo $p_stock ?>','<?php echo $description ?>','<?php echo $photo_url_arr['1'] ?>','<?php echo $photo_url_arr['2'] ?>');" value="Edit Product"/></div></td>
+                                                               <td><div class="btn"><span>Edit<i class="fa fa-edit"></i></span><input type="button" onclick="showEditTab();populateEditField('<?php echo $p_id ?>','<?php echo $p_name ?>','<?php echo $p_symbol_code ?>','<?php echo $p_price ?>','<?php echo $p_color ?>','<?php echo $p_stock ?>','<?php echo $description ?>','<?php echo $photo_url_string; ?>');" value="Edit Product"/></div></td>
                                                            </tr>
                                                         <?php
                                                         }
@@ -481,7 +502,6 @@ $current_charge = $fdpMgr->getCharge();
                                         <div class="panel-body">
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-hover table-striped" id="edit_product">
-                                                    
                                                     <tbody>
                                                     <form id='editProductForm' onsubmit="return populateEditJhtmlArea()" enctype='multipart/form-data' method='POST' action='process_product.php'>
                                                         <input type='hidden' id='operation' name='operation' value='edit_product'/>
@@ -505,58 +525,108 @@ $current_charge = $fdpMgr->getCharge();
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Color</td>
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td><input type="checkbox" class="edit_product_checkbox" id="edit_color1" name="edit_color[]" value="ffffff">White</td>
-                                                                        <td><input type="checkbox" class="edit_product_checkbox" id="edit_color2" name="edit_color[]" value="000000">Black</td>
-                                                                        <td><input type="checkbox" class="edit_product_checkbox" id="edit_color3" name="edit_color[]" value="c0c0c0">Silver</td>
-                                                                        <td><input type="checkbox" class="edit_product_checkbox" id="edit_color4" name="edit_color[]" value="808080">Gray</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><input type="checkbox" class="edit_product_checkbox" id="edit_color5" name="edit_color[]" value="ff0000">Red</td>
-                                                                        <td><input type="checkbox" class="edit_product_checkbox" id="edit_color6" name="edit_color[]" value="f0f8ff">Blue</td>
-                                                                        <td><input type="checkbox" class="edit_product_checkbox" id="edit_color7" name="edit_color[]" value="008000">Green</td>
-                                                                        <td><input type="checkbox" class="edit_product_checkbox" id="edit_color8" name="edit_color[]" value="ffa500">Orange</td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
+                                                        <td>Shop Thumbnail</br>(167 x 167)</td>
+                                                        <td>
+                                                            <div class="btn" style="width:20%">
+                                                            <span>  Upload </span>
+                                                            <input type="file" name="edit_thumbnail_photo_input" id="edit_thumbnail_photo_input" onchange="editCheck('edit_thumbnail_photo')"/>
+                                                            </div>
+                                                            <div id="edit_thumbnail_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
+                                                            <div id="edit_thumbnail_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
+                                                            <a class="thumbnail" id="edit_thumbnail_photo_a" style="width:25%">
+                                                                <img id="edit_thumbnail_photo_preview" src="./public_html/img/no-image.png" alt="..." height="50px" width="50px">
+                                                            </a>
+                                                        </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Photo</td>
-                                                            <td>
-                                                                <table width="100%">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td width="20%">
-                                                                                <div class="btn" style="width:80%">
-                                                                                <span>  Photo 1  </span>
-                                                                                <input type="file" name="edit_1_photo_input" id="edit_1_photo_input" onchange="check('edit_1_photo')"/>
-                                                                                </div>
-                                                                                <div id="edit_1_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
-                                                                                <div id="edit_1_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-<!--                                                                                <input type="hidden" id="imgURL_overall"/>-->
-                                                                                <a class="thumbnail">
-                                                                                    <img id="imgURL_1_thumbnail" src="./public_html/img/no-image.png" alt="..." height="100" width="100">
-                                                                                </a>
-                                                                            </td>
-                                                                            <td width="20%">
-                                                                                <div class="btn" style="width:80%">
-                                                                                <span>  Photo 2  </span>
-                                                                                <input type="file" name="edit_2_photo_input" id="edit_2_photo_input" onchange="check('edit_2_photo')"/>
-                                                                                </div>
-                                                                                <div id="edit_2_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
-                                                                                <div id="edit_2_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
-<!--                                                                                <input type="hidden" id="imgURL_left"/>-->
-                                                                                <a class="thumbnail">
-                                                                                    <img id="imgURL_2_thumbnail" src="./public_html/img/no-image.png" alt="..." height="100" width="100">
-                                                                                </a>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
+                                                        <td>Photo and Color</br>(280 x 280)</td>
+                                                        <td>
+                                                            <table width="50%">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th width="25%">Select</th>
+                                                                        <th width="50%">Status</th>
+                                                                        <th width="25%">Representing Color</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="btn">
+                                                                            <span>  Select </span>
+                                                                            <input type="file" name="edit_1_photo_input" id="edit_1_photo_input" onchange="editCheck('edit_1_photo')"/>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div id="edit_1_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
+                                                                            <div id="edit_1_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
+                                                                            <a class="thumbnail" id="edit_1_photo_a" style="width:50%">
+                                                                                <img id="edit_1_photo_preview" src="./public_html/img/no-image.png" alt="..." height="50px" width="50px">
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input class="color" id="edit_1_photo_color" name="edit_1_photo_color"/>
+                                                                            <input class="hidden" id="edit_1_photo_original_color" name="edit_1_photo_original_color"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="btn">
+                                                                            <span>  Select </span>
+                                                                            <input type="file" name="edit_2_photo_input" id="edit_2_photo_input" onchange="editCheck('edit_2_photo')"/>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div id="edit_2_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
+                                                                            <div id="edit_2_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
+                                                                            <a class="thumbnail" id="edit_2_photo_a" style="width:50%">
+                                                                                <img id="edit_2_photo_preview" src="./public_html/img/no-image.png" alt="..." height="50px" width="50px">
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input class="color" id="edit_2_photo_color" name="edit_2_photo_color"/>
+                                                                            <input class="hidden" id="edit_2_photo_original_color" name="edit_2_photo_original_color"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="btn">
+                                                                            <span>  Select </span>
+                                                                            <input type="file" name="edit_3_photo_input" id="edit_3_photo_input" onchange="editCheck('edit_3_photo')"/>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div id="edit_3_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
+                                                                            <div id="edit_3_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
+                                                                            <a class="thumbnail" id="edit_3_photo_a" style="width:50%">
+                                                                                <img id="edit_3_photo_preview" src="./public_html/img/no-image.png" alt="..." height="50px" width="50px">
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input class="color" id="edit_3_photo_color" name="edit_3_photo_color"/>
+                                                                            <input class="hidden" id="edit_3_photo_original_color" name="edit_3_photo_original_color"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="btn">
+                                                                            <span>  Select </span>
+                                                                            <input type="file" name="edit_4_photo_input" id="edit_4_photo_input" onchange="editCheck('edit_4_photo')"/>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div id="edit_4_photo_check" style="display:none;"><i class="fa fa-check"></i></div>
+                                                                            <div id="edit_4_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
+                                                                            <a class="thumbnail" id="edit_4_photo_a" style="width:50%">
+                                                                                <img id="edit_4_photo_preview" src="./public_html/img/no-image.png" alt="..." height="50px" width="50px">
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input class="color" id="edit_4_photo_color" name="edit_4_photo_color"/>
+                                                                            <input class="hidden" id="edit_4_photo_original_color" name="edit_4_photo_original_color"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Description</td>					
@@ -577,7 +647,6 @@ $current_charge = $fdpMgr->getCharge();
                                                         </tr>
                                                     </form>
                                                     </tbody>
-                                                    
                                                 </table>
                                             </div>
                                         </div>
