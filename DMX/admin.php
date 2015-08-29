@@ -289,11 +289,15 @@ $(document).ready( function() {
 });
 
 function checkThumbnail(id){
-    document.getElementById("thumbnail"+id+'_span').innerHTML = '<i class="fa fa-check"></i>';
+    var i = document.createElement("i");
+    i.setAttribute('class',"fa fa-check");
+    document.getElementById("thumbnail"+id+'_span').appendChild(i);
 }
 
 function checkHD(id){
-    document.getElementById("hd"+id+'_span').innerHTML = '<i class="fa fa-check"></i>';
+    var i = document.createElement("i");
+    i.setAttribute('class',"fa fa-check");
+    document.getElementById("hd"+id+'_span').appendChild(i);
 }
 
 function DeleteProject(){

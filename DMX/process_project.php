@@ -30,12 +30,14 @@ $country = filter_input(INPUT_POST,'country');
 $location = filter_input(INPUT_POST,'location');
 $size = filter_input(INPUT_POST,'size');
 $completion_date = filter_input(INPUT_POST,'completion_date');
+$date = new DateTime($completion_date);
+$date = $date->format('Y-m-d H:i:s');
 $description = "";
     if(!empty($_POST['description'])){
         $description = $_POST['description'];
     }
-$projectMgr->addProject($project_id, $project_name, $type, $year, $country, $size, $location, $completion_date, $description);
-
+$projectMgr->addProject($project_id, $project_name, $type, $year, $country, $size, $location, $date, $description);
+$count=0;
 $noOfPhoto = 20;
 for ($x = 1; $x <= $noOfPhoto; $x++){
     $hdId="hd".strval($x)."_input";
@@ -43,6 +45,7 @@ for ($x = 1; $x <= $noOfPhoto; $x++){
     
     $hdPicname = $_FILES[$hdId]['name'];
     if ($hdPicname != "") {
+        $count++;
         $type = strstr($hdPicname, '.');  
         if ($type != ".gif" && $type != ".jpg" && $type != ".png") { 
             echo 'invalid image type'; 
@@ -55,7 +58,7 @@ for ($x = 1; $x <= $noOfPhoto; $x++){
         }
         $pic_path = "public_html/img/projectImg/". $project_id . "/". $pics;
         move_uploaded_file($_FILES[$hdId]['tmp_name'], $pic_path);
-        $photoMgr->AddPhoto($project_id, "hd".strval($x), $pic_path);
+        $photoMgr->AddPhoto($project_id, "hd".strval($count), $pic_path);
     }
     
     $thumbnailPicname = $_FILES[$thumbnailId]['name'];
@@ -72,7 +75,7 @@ for ($x = 1; $x <= $noOfPhoto; $x++){
         }
         $pic_path = "public_html/img/projectImg/". $project_id . "/". $pics;
         move_uploaded_file($_FILES[$thumbnailId]['tmp_name'], $pic_path);
-        $photoMgr->AddPhoto($project_id, "thumbnail".strval($x), $pic_path);
+        $photoMgr->AddPhoto($project_id, "thumbnail".strval($count), $pic_path);
     }
 }
 $msg="Project added successfully!";
