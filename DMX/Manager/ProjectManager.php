@@ -17,7 +17,7 @@ class ProjectManager {
     function addProject($project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO project (project_id, project_name, type, year, country, location, size, completion_date, description) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO project (project_id, project_name, type, year, country, location, size, completion_date, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssssss", $project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
@@ -38,9 +38,9 @@ class ProjectManager {
             $project['year'] = $year;
             $project['country'] = $country;
             $project['location'] = $location;
-			$project['size'] = $size;
+            $project['size'] = $size;
             $project['completion_date'] = $completion_date;
-			$project['description'] = $description;
+            $project['description'] = $description;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
         return $project;
@@ -81,38 +81,6 @@ class ProjectManager {
         }
         $ConnectionMgr->closeConnection($stmt, $conn);
         return $totalNo;
-    }
-    
-    function getTypeList(){
-        $type_arr = array();
-        $ConnectionMgr = new ConnectionManager();
-        $conn = $ConnectionMgr->getConnection();
-        $stmt = $conn->prepare("SELECT DISTINCT type FROM project");
-        $stmt->execute();
-        $stmt->bind_result($type);
-        while ($stmt->fetch())
-        {   
-            $project_type = $type;
-            array_push($type_arr,$project_type);
-        }
-        $ConnectionMgr->closeConnection($stmt, $conn);
-        return $type_arr;
-    }
-	
-	function getYearList(){
-        $year_arr = array();
-        $ConnectionMgr = new ConnectionManager();
-        $conn = $ConnectionMgr->getConnection();
-        $stmt = $conn->prepare("SELECT DISTINCT year FROM project ORDER BY year DESC");
-        $stmt->execute();
-        $stmt->bind_result($year);
-        while ($stmt->fetch())
-        {   
-            $project_year = $year;
-            array_push($year_arr,$project_year);
-        }
-        $ConnectionMgr->closeConnection($stmt, $conn);
-        return $year_arr;
     }
     
     function getPaginatedResults($pageNo, $itemPerPage){
@@ -198,5 +166,45 @@ class ProjectManager {
         return $projectArr;
     }
     
+	
+	function getTypeList(){
+        $type_arr = array();
+        $ConnectionMgr = new ConnectionManager();
+        $conn = $ConnectionMgr->getConnection();
+        $stmt = $conn->prepare("SELECT DISTINCT type FROM project");
+        $stmt->execute();
+        $stmt->bind_result($type);
+        while ($stmt->fetch())
+        {   
+            $project_type = $type;
+            array_push($type_arr,$project_type);
+        }
+        $ConnectionMgr->closeConnection($stmt, $conn);
+        return $type_arr;
+    }
+	
+	function getYearList(){
+        $year_arr = array();
+        $ConnectionMgr = new ConnectionManager();
+        $conn = $ConnectionMgr->getConnection();
+        $stmt = $conn->prepare("SELECT DISTINCT year FROM project ORDER BY year DESC");
+        $stmt->execute();
+        $stmt->bind_result($year);
+        while ($stmt->fetch())
+        {   
+            $project_year = $year;
+            array_push($year_arr,$project_year);
+        }
+        $ConnectionMgr->closeConnection($stmt, $conn);
+        return $year_arr;
+    }
     
+    function deleteProject($project_id){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("DELETE FROM project WHERE project_id = ?");
+        $stmt->bind_param("s", $project_id);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
 }

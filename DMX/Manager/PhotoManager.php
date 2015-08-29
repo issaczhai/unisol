@@ -38,11 +38,43 @@ class PhotoManager {
         return $photo_arr;
     }
     
+    function getAllPhotosInJson(){
+        $fullList = [];
+        $reference = "";
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM photo");
+        $stmt->execute();
+        $stmt->bind_result($project_id, $photo_no, $photo_url);
+        while ($stmt-> fetch())
+        {   
+            if($reference != $project_id){
+                $reference = $project_id;
+            }
+            $fullList[$reference][$photo_no] = $photo_url;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return json_encode($fullList);
+    }
+    
     function update($project_id,$photo_no,$new_url){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("UPDATE photo SET photo_url=? WHERE project_id=? AND photo_no=?");
         $stmt->bind_param("sss", $new_url, $project_id,$photo_no);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
+    function deletePhoto($project_id){
+        $urlList=self::getPhotos($project_id);
+        foreach ($urlList as $url){
+            unlink($url);
+        }
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("DELETE FROM photo WHERE project_id = ?");
+        $stmt->bind_param("s", $project_id);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }

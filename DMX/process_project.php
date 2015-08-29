@@ -13,12 +13,16 @@ $photoMgr = new PhotoManager();
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+$operation="";
 $operation = filter_input(INPUT_POST,'operation');
+if($operation==""){
+    $operation = $_GET['operation'];
+}
 
-if ($operation === "add_product"){
+if ($operation === "create"){
 $valid=true;
 $random_no = (string)rand(0,10000);
-$project_id = "AL".$random_no;
+$project_id = "P".$random_no;
 $project_name = filter_input(INPUT_POST,'name');
 $type = $_POST['type'];
 $year = filter_input(INPUT_POST,'year');
@@ -31,33 +35,56 @@ $description = "";
         $description = $_POST['description'];
     }
 $projectMgr->addProject($project_id, $project_name, $type, $year, $country, $size, $location, $completion_date, $description);
-$count=0;
-$countStr='';
-$photo_name_arr = ['photo1','photo2','photo3','photo4','photo5','photo6','photo7','photo8','photo9','photo10','photo11','photo12','photo13','photo14','photo15'];
-foreach ($photo_name_arr as $photo_name){
-	$picname = $_FILES[$photo_name]['name']; 
-	$picsize = $_FILES[$photo_name]['size'];
-	if ($picname != "") {
-		//if ($picsize > 5120000) {  
-		//	echo 'image size cannot exceed 5m'; 
-		//	exit; 
-		//} 
-		$type = strstr($picname, '.');  
-		if ($type != ".gif" && $type != ".jpg" && $type != ".png") { 
-			echo 'invalid image type'; 
-			exit; 
-		}
-		$rand = rand(1000, 9999); 
-		$pics = date("YmdHis") . $rand . $type;
 
-		$pic_path = "image/". $pics;
-		move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
-		$count+=1;
-		$countStr = strval($count);
-		$photoMgr->AddPhoto($project_id, $countStr, $pic_path);
-	}
-}
+$noOfPhoto = 20;
+for ($x = 1; $x <= $noOfPhoto; $x++){
+    $hdId="hd".strval($x)."_input";
+    $thumbnailId="thumbnail".strval($x)."_input";
     
-header("Location: admin.html");
+    $hdPicname = $_FILES[$hdId]['name'];
+    if ($hdPicname != "") {
+        $type = strstr($hdPicname, '.');  
+        if ($type != ".gif" && $type != ".jpg" && $type != ".png") { 
+            echo 'invalid image type'; 
+            exit; 
+        }
+        $rand = rand(1000, 9999); 
+        $pics = date("YmdHis") . $rand ."hd". $type;
+        if (!file_exists("public_html/img/projectImg/". $project_id)){
+            mkdir("public_html/img/projectImg/".$project_id ,0777, true);
+        }
+        $pic_path = "public_html/img/projectImg/". $project_id . "/". $pics;
+        move_uploaded_file($_FILES[$hdId]['tmp_name'], $pic_path);
+        $photoMgr->AddPhoto($project_id, "hd".strval($x), $pic_path);
+    }
+    
+    $thumbnailPicname = $_FILES[$thumbnailId]['name'];
+    if ($thumbnailPicname != "") {
+        $type = strstr($thumbnailPicname, '.');  
+        if ($type != ".gif" && $type != ".jpg" && $type != ".png") { 
+            echo 'invalid image type'; 
+            exit; 
+        }
+        $rand = rand(1000, 9999); 
+        $pics = date("YmdHis") . $rand ."thumbnail". $type;
+        if (!file_exists("public_html/img/projectImg/". $project_id)){
+            mkdir("public_html/img/projectImg/".$project_id ,0777, true);
+        }
+        $pic_path = "public_html/img/projectImg/". $project_id . "/". $pics;
+        move_uploaded_file($_FILES[$thumbnailId]['tmp_name'], $pic_path);
+        $photoMgr->AddPhoto($project_id, "thumbnail".strval($x), $pic_path);
+    }
+}
+$msg="Project added successfully!";
+header("Location: admin.php?message=".$msg);
+}elseif ($operation === "delete"){
+    $projectIdList_str = $_GET['projectIdList'];
+    $projectIdList=explode(",",$projectIdList_str);
+    foreach($projectIdList as $id){
+        $projectMgr->deleteProject($id);
+        $photoMgr->deletePhoto($id);
+    }
+$msg="Project deleted successfully!";
+header("Location: admin.php?message=".$msg);
 }
 ?>
