@@ -78,6 +78,25 @@ for ($x = 1; $x <= $noOfPhoto; $x++){
         $photoMgr->AddPhoto($project_id, "thumbnail".strval($count), $pic_path);
     }
 }
+
+$displayPic = $_FILES["display"]['name'];
+if ($displayPic != "") {
+    $count++;
+    $type = strstr($displayPic, '.');  
+    if ($type != ".gif" && $type != ".jpg" && $type != ".png") { 
+        echo 'invalid image type'; 
+        exit; 
+    }
+    $rand = rand(1000, 9999); 
+    $pics = date("YmdHis") . $rand ."display". $type;
+    if (!file_exists("public_html/img/projectImg/". $project_id)){
+        mkdir("public_html/img/projectImg/".$project_id ,0777, true);
+    }
+    $pic_path = "public_html/img/projectImg/". $project_id . "/". $pics;
+    move_uploaded_file($_FILES["display"]['tmp_name'], $pic_path);
+    $photoMgr->AddPhoto($project_id, "display", $pic_path);
+}
+
 $msg="Project added successfully!";
 header("Location: admin.php?message=".$msg);
 }elseif ($operation === "delete"){

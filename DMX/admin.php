@@ -191,6 +191,13 @@ $photoListJson = $photoMgr->getAllPhotosInJson();
                                 }
                             }
                             ?>
+                            
+                            <div class="form-group">
+                                <span class="btn btn-warning btn-file" id="display_span">
+                                    Project Page Display 
+                                    <input type="file" id=display" name="display" onchange="checkDisplay()">
+                                </span>
+                            </div>
                             <input type="submit" class="btn btn-primary" value="Create">
                             </form>
                         </div><!--//content-->
@@ -292,6 +299,12 @@ function checkThumbnail(id){
     var i = document.createElement("i");
     i.setAttribute('class',"fa fa-check");
     document.getElementById("thumbnail"+id+'_span').appendChild(i);
+}
+
+function checkDisplay(){
+    var i = document.createElement("i");
+    i.setAttribute('class',"fa fa-check");
+    document.getElementById("display_span").appendChild(i);
 }
 
 function checkHD(id){
