@@ -5,6 +5,7 @@ if (session_status()!=PHP_SESSION_ACTIVE) {
 }
 include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/ProjectManager.php");
+include_once("./Manager/PhotoManager.php");
 
 //Get page number from Ajax
 if(isset($_POST["page"])){
@@ -15,6 +16,8 @@ if(isset($_POST["page"])){
 }
 
 $projectMgr = new ProjectManager();
+$photoMgr = new PhotoManager();
+
 $itemPerPage = 10;
 $results = [];
 $filteredProjects = [];
@@ -58,9 +61,23 @@ if(!empty($results)) {
         foreach ($results as $eachProject){
             $project_name = $eachProject["project_name"];
             $project_id = $eachProject["project_id"];
+            $displayURL = $photoMgr->getProjectDisplay($project_id);
 ?>
             <div class='col-md-2 project' style='height:200px;'>
-                <a href="./project_detail.php?project_id=<?=$project_id ?>"><img class="project-image" style="width:200px;height:200px" src="./public_html/img/sample1.jpg" alt="" /></a>
+<?php
+                if(isset($displayURL)){
+?>
+                <a href="./project_detail.php?project_id=<?=$project_id ?>"><img src="<?= $displayURL ?>" alt=""/></a>
+<?php
+
+                }else{
+?>
+                <a href="./project_detail.php?project_id=<?=$project_id ?>"><img src="./public_html/img/AET1/aet1_2.jpg" alt=""/></a>
+<?php
+
+                }
+
+?>              
                 <div class="projectName-overlay"><a href="./project_detail.php?project_id=<?=$project_id ?>"><span><?=$project_name ?></span></a></div>
                 <div class="project-location-overlay">
                     <h4><a href='#'>Location 1</a></h4>

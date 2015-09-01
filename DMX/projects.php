@@ -61,10 +61,16 @@ and open the template in the editor.
                 float:none;
                 display:inline-block;
                 width: 200px;
+                height: 200px;
                 margin-right:10px;
                 margin-bottom: 8px;
                 padding:0;
                 overflow: hidden
+            }
+            .project img{
+                position:absolute;
+                height: 200px;
+                width:200px;
             }
             .project-location-overlay{
                 -webkit-transition: all 0.7s ease;
@@ -95,8 +101,8 @@ and open the template in the editor.
                 
             }
             .projectName-overlay{
-                position:absolute;
-                margin-top:-30px;
+                position:relative;
+                margin-top:170px;
                 height:30px;
                 text-align:center;
                 width:100%;
@@ -130,6 +136,70 @@ and open the template in the editor.
             
         </style>
         
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script>
+        function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
+
+            var result = { width: 0, height: 0, fScaleToTargetWidth: true };
+
+            if ((srcwidth <= 0) || (srcheight <= 0) || (targetwidth <= 0) || (targetheight <= 0)) {
+                return result;
+            }
+
+            // scale to the target width
+            var scaleX1 = targetwidth;
+            var scaleY1 = (srcheight * targetwidth) / srcwidth;
+
+            // scale to the target height
+            var scaleX2 = (srcwidth * targetheight) / srcheight;
+            var scaleY2 = targetheight;
+
+            // now figure out which one we should use
+            var fScaleOnWidth = (scaleX2 > targetwidth);
+            if (fScaleOnWidth) {
+                fScaleOnWidth = fLetterBox;
+            }
+            else {
+               fScaleOnWidth = !fLetterBox;
+            }
+
+            if (fScaleOnWidth===true) {
+                result.width = Math.floor(scaleX1);
+                result.height = Math.floor(scaleY1);
+                result.fScaleToTargetWidth = true;
+            }
+            else {
+                result.width = Math.floor(scaleX2);
+                result.height = Math.floor(scaleY2);
+                result.fScaleToTargetWidth = false;
+            }
+            result.targetleft = Math.floor((targetwidth - result.width) / 2);
+            result.targettop = Math.floor((targetheight - result.height) / 2);
+
+            return result;
+        }
+        </script>
+        <script>
+        function OnProjectImageLoad(evt) {
+            var img = evt.currentTarget;
+
+            // what's the size of this image and it's parent
+            var w = img.naturalWidth;
+            var h = img.naturalHeight;
+            var tw = $(".project-image").width();
+            var th = $(".project-image").height();
+
+            // compute the new size and offsets
+            var result = ScaleImage(w, h, tw, th, true);
+
+            // adjust the image coordinates and size
+            $(img).width(result.width);
+            $(img).height(result.height);
+            $(img).css("left", result.targetleft);
+            $(img).css("top", result.targettop);
+        }
+        </script>
         <meta charset="UTF-8">
         <title>Projects</title>
     </head>
@@ -270,9 +340,8 @@ and open the template in the editor.
         ?>
     </div>
     
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="./public_html/js/main.js"></script>
+    <script src="./public_html/js/dmx.js"></script>
     <script>
         
         $('#all').on('click','.sort-value',function(){

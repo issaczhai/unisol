@@ -97,9 +97,7 @@ h5{
     text-align: center;
     margin-top: 0
 }
-.no-margin-row{
-    margin:0;
-}
+
 .row-no-right-margin{
     margin-right:0;
 }
@@ -233,18 +231,91 @@ h5{
     position:relative;
     background:none;
     margin-top: -490px; 
-    border-top: 2px #FFF solid; 
-    border-left: 2px #FFF solid;
+    border-top: 2px rgb(220, 220, 220) solid; 
+    border-left: 2px rgb(220, 220, 220) solid;
     padding-left:1122px;
     height:490px;
     z-index:0
 }
 
+    /**** about us page ****/
+    .about-top-overlay{
+        position:relative;
+        height:50px;
+        background-color: rgba(76, 76, 76,0.6);
+        z-index:-1;
+    }
+    
+    .aboutUs-text{
+        padding-top: 60px;
+        position:relative;
+        height:423px;
+    }
+    
+    .about-carousel-caption{
+        position:absolute;
+        width:100%;
+        top: 0;
+        background-color: rgba(76, 76, 76,0.6);
+        height: 50px;
+        font-size: 18px;
+        color: #FFFFFF;
+        text-align: left;
+        padding-top: 20px;
+        padding-left: 10px;
+        z-index:1000 !important;
+    }
+    .about-hollow-frame{
+        position:relative;
+        background:none;
+        border-top: 2px rgb(220, 220, 220) solid; 
+        border-left: 2px rgb(220, 220, 220) solid;
+        padding-left:1250px;
+        z-index:1000;
+    }
+    /**** service page ****/
+   
+    .service-top-overlay{
+        position:relative;
+        height:50px;
+        /*margin-top:-408px;*/
+        background-color: rgba(76, 76, 76,0.6);
+        z-index:-1;
+    }
+    .service-hollow-frame{
+        position:relative;
+        background:none;
+        /*height: 398px;
+        margin-top:-398px;*/
+        border-top: 2px rgb(220, 220, 220) solid; 
+        border-left: 2px rgb(220, 220, 220) solid;
+        padding-left: calc(1366px - 226.656px - 2px);
+        z-index:1000;
+    }
+    .service-sidebar{
+        padding:0;
+    }
+    .service{
+        padding-left:5px;
+        padding-right:5px;
+    }
+    .service li{
+        list-style: none;
+        margin-bottom:15px;
+    }
+    .service li .btn{
+        width: 100%;
+    }
+
+    /**** project detail ****/
+    .detail-thumbnail{
+        position:relative;
+        height: 100px;
+    }
+
 /****    large screen   ****/
 @media screen and (min-width: 1367px){
-    .wrapper{
-        margin-bottom: 30px;
-    }
+    
     .content, .content-wrapper, footer{
         width: 1366px !important;
         margin:0 auto !important;
@@ -269,8 +340,8 @@ h5{
     .navbar-dmx .navbar-nav li{
         line-height: 92px;
         height:92px;
-        padding-left: 30px;
-        padding-right: 30px
+        padding-left: 45px;
+        padding-right: 45px;
     }
     .project-overlay{
         position:relative;
@@ -281,23 +352,27 @@ h5{
         background-color: rgba(0, 0, 0, 0.5);
         z-index: 1000;
     }
-    .project-overlay h5, .project-overlay p{
+    .project-overlay h4, .project-overlay p{
         color: #fff;
     }
-    .project-overlay h5{
+    .project-overlay h4{
         text-align: left;
         margin-top: 0;
         margin-bottom: 5px;
     }
+
+    .contact-hollow-frame{
+        padding-left: 1137px;
+    }
 } 
 
 /****    desktop   ****/
-@media screen and (min-width: 767px){
+@media screen and (max-width: 1366px){
 
     .wrapper{
         /*min-height: 100%;
-        margin-bottom: -142px;*/
-        margin-bottom: 30px
+        margin-bottom: -142px;
+        margin-bottom: 30px*/
     }
     .content-wrapper{
         position:relative;
@@ -331,8 +406,8 @@ h5{
     .navbar-dmx .navbar-nav li{
         line-height: 92px;
         height:92px;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 45px;
+        padding-right: 45px;
     }
 
     .project-overlay{
@@ -344,83 +419,19 @@ h5{
         background-color: rgba(0, 0, 0, 0.5);
         z-index: 1000;
     }
-    .project-overlay h5, .project-overlay p{
+    .project-overlay h4, .project-overlay p{
         color: #fff;
     }
-    .project-overlay h5{
+    .project-overlay h4{
         text-align: left;
         margin-top: 0;
         margin-bottom: 5px;
     }
-    /**** about us page ****/
-    .about-top-overlay{
-        position:relative;
-        height:50px;
-        background-color: rgba(76, 76, 76,0.6);
-        z-index:-1;
-    }
-    
-    .aboutUs-text{
-        padding-top: 60px;
-        position:relative;
-        height:423px;
-    }
-    
-    .about-carousel-caption{
-        position:absolute;
-        width:100%;
-        top: 0;
-        background-color: rgba(76, 76, 76,0.6);
-        height: 50px;
-        font-size: 18px;
-        color: #FFFFFF;
-        text-align: left;
-        padding-top: 20px;
-        padding-left: 10px;
-        z-index:1000 !important;
-    }
-    .about-hollow-frame{
-        position:relative;
-        background:none;
-        border-top: 2px rgb(220, 220, 220) solid; 
-        border-left: 2px rgb(220, 220, 220) solid;
-        padding-left:1235px;
-        z-index:1000;
-    }
-    /**** service page ****/
-   
-    .service-top-overlay{
-        position:relative;
-        height:50px;
-        /*margin-top:-408px;*/
-        background-color: rgba(76, 76, 76,0.6);
-        z-index:-1;
-    }
-    .service-hollow-frame{
-        position:relative;
-        background:none;
-        /*height: 398px;
-        margin-top:-398px;*/
-        border-top: 2px rgb(220, 220, 220) solid; 
-        border-left: 2px rgb(220, 220, 220) solid;
-        padding-left: calc(1366px - 226.656px - 2px - 15px);
-        z-index:1000;
-    }
-    .service-sidebar{
-        padding:0;
-    }
-    .service{
-        padding-left:5px;
-        padding-right:5px;
-    }
-    .service li{
-        list-style: none;
-        margin-bottom:15px;
-    }
-    .service li .btn{
-        width: 100%;
-    }
 
+    .no-margin-row{
+        margin-left:0;
+        margin-right:0;
+    }
     /**** FOOTER ****/
     .footer-certificate{
         padding-right: 0;
@@ -449,10 +460,10 @@ h5{
         padding-left: 20px;
         background-color: rgba(0, 0, 0, 0.5);
     }
-    .project-overlay h5, .project-overlay p{
+    .project-overlay h4, .project-overlay p{
         color: #fff;
     }
-    .project-overlay h5{
+    .project-overlay h4{
         text-align: left;
         margin-top: 0;
         margin-bottom: 5px;

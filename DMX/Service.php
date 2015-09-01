@@ -191,6 +191,7 @@ and open the template in the editor.
         include_once("./templates/footer.php");
         ?>
     <script src="./public_html/js/main.js"></script>
+    <script src="./public_html/js/dmx.js"></script>
     <script>
     $('.service li').on('click','.btn-service', function(){
         $('.aboutUs-text p').text(this.value);

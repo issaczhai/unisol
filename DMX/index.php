@@ -22,6 +22,9 @@ and open the template in the editor.
             body{
                 padding-top: 106px
             }
+            .wrapper{
+                margin-bottom: 30px;
+            }
             .carousel-indicators li{
                 border:none;
             }
@@ -39,7 +42,7 @@ and open the template in the editor.
         ?>
         <div class='content-wrapper'>
             <div style="position:relative; width:100%;height:10px; background-color: rgb(117, 117, 117)"></div>
-            <div style="position:absolute;right:0;height:380px;background:none;margin-top:50px;padding-left:90%;z-index:3;border-top:3px solid #ffffff;border-left:3px solid #ffffff"></div>
+            <div style="position:absolute;right:0;height:424px;background:none;margin-top:50px;padding-left:90%;z-index:3;border-top:3px solid #ffffff;border-left:3px solid #ffffff"></div>
         	<div id="index-carousel" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
@@ -51,20 +54,20 @@ and open the template in the editor.
                 <div class="carousel-inner">
                     
                     <div style="position:absolute;width:100%;height:50px;background-color:#000000;z-index:1;opacity:0.5"></div>
-                    <div style="position:absolute;width:96%;height:300px;background:none;z-index:2;border:1px solid #ffffff; border-left: 0"></div>
+                    <div style="position:absolute;width:96%;height:340px;background:none;z-index:2;border:1px solid #ffffff; border-left: 0"></div>
                     <div class="item active">
-                        <img src="http://unsplash.s3.amazonaws.com/batch%209/barcelona-boardwalk.jpg" alt="First slide">
+                        <img src="./public_html/img/indexImg/1.jpg" alt="First slide">
                         <div class="carousel-caption"></div>
                 <!-- Static Header -->
 
                     </div>
                     <div class="item">
-                        <img src="http://unsplash.s3.amazonaws.com/batch%209/barcelona-boardwalk.jpg" alt="Second slide">
+                        <img src="./public_html/img/indexImg/2.jpg" alt="Second slide">
                         <div class="carousel-caption"></div>
 
                     </div>
                     <div class="item">
-                        <img src="http://unsplash.s3.amazonaws.com/batch%209/barcelona-boardwalk.jpg" alt="Third slide">
+                        <img src="./public_html/img/indexImg/3.jpg" alt="Third slide">
                         <div class="carousel-caption"></div>
                     </div>
                 </div>
@@ -77,7 +80,7 @@ and open the template in the editor.
                 </a>
                 -->
             </div><!-- /carousel -->
-            <div style="position:relative;width:100%;height:50px;background-color:#c3c3c3"></div>
+            <div style="position:relative;width:100%;height:50px;background-color:rgb(176, 176, 176)"></div>
         </div>
         </div>
         <?php
@@ -86,5 +89,6 @@ and open the template in the editor.
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="./public_html/js/main.js"></script>
+    <script src="./public_html/js/dmx.js"></script>
     </body>
 </html>

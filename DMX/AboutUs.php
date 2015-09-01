@@ -160,5 +160,6 @@ and open the template in the editor.
         include_once("./templates/footer.php");
         ?>
     <script src="./public_html/js/main.js"></script>
+    <script src="./public_html/js/dmx.js"></script>
     </body>
 </html>

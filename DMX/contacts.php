@@ -107,6 +107,7 @@ and open the template in the editor.
         </style>
 		<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="./public_html/js/dmx.js"></script>
         <script>
         /*$(document).ready(function(){
                 var viewportHeight = window.innerHeight,
@@ -205,9 +206,9 @@ and open the template in the editor.
         <?php
         include_once("./templates/new_header.html");
         ?>
-        <div class='container-fluid'>
+        <div class='container-fluid content-wrapper'>
 			
-            <div class='row'>
+            <div class='row  no-margin-row'>
                 <div class='col-md-2 sidebar'>
                     <div style='margin-top:8px'>
                         <table style="border-collapse: separate;border-spacing: 6px;">
@@ -398,12 +399,12 @@ and open the template in the editor.
                 </div>
             </div>
 
-            <div class='row contact-top-overlay'>
+            <div class='row contact-top-overlay  no-margin-row'>
                 <div id="title" class="col-md-2">
                 <span id="title-name">CONTACTS<span>
                 </div>
             </div>
-            <div class='row pull-right contact-hollow-frame'>
+            <div class='row pull-right contact-hollow-frame  no-margin-row'>
             </div>
         </div>
 
