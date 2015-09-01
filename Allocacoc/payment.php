@@ -258,7 +258,7 @@ and open the template in the editor.
                                     </td>
                                     <td align="left" width="15%" style="vertical-align:middle;"><?=$item["product_name"] ?><input id="product<?php echo strval($count)?>" name="product<?php echo strval($count)?>" type="hidden" value="<?=$item["product_name"] ?>"/></td>    
                                     <td align="center" style="vertical-align:middle;"><?=$item["quantity"] ?><input id="quantity<?php echo strval($count)?>" name="quantity<?php echo strval($count)?>" type="hidden" value="<?=$item["quantity"] ?>"/></td>    
-                                    <td align="center" style="vertical-align:middle;">$<?=$item["price"] ?><input id="price<?php echo strval($count)?>" name="price<?php echo strval($count)?>" type="hidden" value="<?=$item["price"] ?>"/></td>
+                                    <td align="center" style="vertical-align:middle;">$<?=number_format($item["price"],2,'.','') ?><input id="price<?php echo strval($count)?>" name="price<?php echo strval($count)?>" type="hidden" value="<?=$item["price"] ?>"/></td>
                                     <td align="center" width="15%" style="vertical-align:middle;color:#008ba4;"><b>$<?=number_format($item["subtotal"],2,'.','') ?></b></td> 
                                 </tr>
                                 <?php

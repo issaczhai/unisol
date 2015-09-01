@@ -253,6 +253,7 @@
             <div class="control-group">
               <div class="controls">
                   <p style="color:#FF0000"id="errorMsgRegister"></p>
+                  <p style="color:#62c462"id="activateMsgRegister"></p>
               </div>
             </div>
             <!-- Text input-->
@@ -279,18 +280,6 @@
               </div>
             </div>
             
-            <!-- Multiple Radios (inline)
-            <br>
-            <div class="control-group">
-              <label class="control-label" for="humancheck">Humanity Check:</label>
-              <div class="controls">
-                <label class="radio inline" for="humancheck-0">
-                  <input type="radio" name="humancheck" id="humancheck-0" value="robot" checked="checked">I'm a Robot</label>
-                <label class="radio inline" for="humancheck-1">
-                  <input type="radio" name="humancheck" id="humancheck-1" value="human">I'm Human</label>
-              </div>
-            </div>
-             -->
             <!-- Button -->
             <div class="control-group">
               <label class="control-label" for="confirmsignup"></label>

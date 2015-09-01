@@ -82,16 +82,21 @@ $('#register').submit(function(event) { //Trigger on form submit
                         }else{
                             var status = jsonData.status;
                             var message = jsonData.message;
+                            console.log(status);
                             if (typeof status === 'undefined'){
                                 status = '';
                             }
                             if (typeof message === 'undefined'){
                                 message = '';
                             }
-                            if(status !== ''){
+                            if(status === 'success'){
                                 window.location='./index.php?status='+status+'&message='+message;
+                            }
+                            console.log(status);
+                            if(status === 'unverified'){
+                                $('#activateMsgRegister').html(message);
                             }else{
-                                window.location='./index.php';
+                                //window.location='./index.php';
                             }
                         }
                     }

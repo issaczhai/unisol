@@ -454,7 +454,7 @@ $current_charge = $fdpMgr->getCharge();
                                                                <td><?php echo $p_id; ?></td>
                                                                <td><?php echo $p_name; ?></td>
                                                                <td><?php echo $p_symbol_code; ?></td>
-                                                               <td><?php echo $p_price; ?></td>
+                                                               <td><?php echo number_format($p_price,2,'.',''); ?></td>
                                                                <td><?php echo $p_color; ?></td>
                                                                <td><?php echo $p_stock; ?></td>
                                                                <td><div class="btn"><span>Edit<i class="fa fa-edit"></i></span><input type="button" onclick="showEditTab();populateEditField('<?php echo $p_id ?>','<?php echo $p_name ?>','<?php echo $p_symbol_code ?>','<?php echo $p_price ?>','<?php echo $p_color ?>','<?php echo $p_stock ?>','<?php echo $description ?>','<?php echo $photo_url_string; ?>');" value="Edit Product"/></div></td>

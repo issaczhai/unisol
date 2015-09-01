@@ -13,14 +13,14 @@
  */
 class CustomerManager {
     //put your code here
-    function addCustomer($customer_id,$customer_password,$alternative_email,$credit,$invitation_link){
+    function addCustomer($customer_id,$customer_password,$alternative_email,$credit,$invitation_link,$verify){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $first_name = "";
         $last_name = "";
         $contact_no = "";
-        $stmt = $conn->prepare("INSERT INTO customer (customer_id,password,alternative_email,first_name,last_name,contact_no,credit,invitation_link) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssds", $customer_id,$customer_password,$alternative_email,$first_name,$last_name,$contact_no,$credit,$invitation_link);
+        $stmt = $conn->prepare("INSERT INTO customer (customer_id,password,alternative_email,first_name,last_name,contact_no,credit,invitation_link,verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)");
+        $stmt->bind_param("ssssssdss", $customer_id,$customer_password,$alternative_email,$first_name,$last_name,$contact_no,$credit,$invitation_link,$verify);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
@@ -165,10 +165,11 @@ class CustomerManager {
     
     function getCustomer($customer_id){
         $customer = [];
+        $verify="true";
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM customer WHERE customer_id=?");
-        $stmt->bind_param("s", $customer_id);
+        $stmt = $conn->prepare("SELECT * FROM customer WHERE customer_id=? AND verified = ?");
+        $stmt->bind_param("ss", $customer_id,$verify);
         $stmt->execute();
         $stmt->bind_result($customer_id,$password,$alternative_email,$first_name,$last_name,$contact_no,$credit,$invitation_link);
         while ($stmt->fetch())
@@ -211,12 +212,13 @@ class CustomerManager {
     
     function getCustomerByIDPassword($customer_id,$password){
         $customer = [];
+        $verify="true";
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM customer WHERE customer_id=? AND password=?");
-        $stmt->bind_param("ss", $customer_id,$password);
+        $stmt = $conn->prepare("SELECT * FROM customer WHERE customer_id=? AND password=? AND verified = ?");
+        $stmt->bind_param("sss", $customer_id,$password,$verify);
         $stmt->execute();
-        $stmt->bind_result($customer_id,$password,$alternative_email,$first_name,$last_name,$contact_no,$credit,$invitation_link);
+        $stmt->bind_result($customer_id,$password,$alternative_email,$first_name,$last_name,$contact_no,$credit,$invitation_link,$verify);
         while ($stmt->fetch())
         {   $customer['customer_id'] = $customer_id;
             $customer['password'] = $password;
@@ -226,7 +228,7 @@ class CustomerManager {
             $customer['contact_no'] = $contact_no;
             $customer['credit'] = $credit;
             $customer['invitation_link'] = $invitation_link;
-
+            $customer['verify'] = $verify;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
         return $customer;
@@ -270,6 +272,16 @@ class CustomerManager {
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("UPDATE customer SET password=? WHERE customer_id = ?");
         $stmt->bind_param("ss", $customer_password,$customer_id);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
+    function activateAccount($customer_id){
+        $verified="true";
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE customer SET verified=? WHERE customer_id = ?");
+        $stmt->bind_param("ss", $verified,$customer_id);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
