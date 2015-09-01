@@ -150,7 +150,6 @@ and open the template in the editor.
             background-color:#fff !important;
         }
         footer{
-            margin-top: 30px;
             bottom: auto;
         }
     </style>
@@ -342,7 +341,8 @@ and open the template in the editor.
                 <div class="frame-thick pull-right">
                 </div>
             </div>
-        </div> 
+        </div>
+    </div> 
     <?php
         include_once("./templates/footer.php");
     ?>
