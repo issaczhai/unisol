@@ -201,7 +201,7 @@ header("Location: admin.php#viewProduct");
                     $imgColor = $_POST['edit_1_photo_color'];
                     $imgOriginalColor = $_POST['edit_1_photo_original_color'];
                     $key = array_search($imgOriginalColor, $colorArr);
-                    if($key == false){
+                    if($key === false){
                         $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
                         array_push($colorArr, $imgColor);
                     }else{
@@ -218,7 +218,7 @@ header("Location: admin.php#viewProduct");
                     $imgColor = $_POST['edit_2_photo_color'];
                     $imgOriginalColor = $_POST['edit_2_photo_original_color'];
                     $key = array_search($imgOriginalColor, $colorArr);
-                    if($key == false){
+                    if($key === false){
                         $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
                         array_push($colorArr, $imgColor);
                     }else{
@@ -234,7 +234,7 @@ header("Location: admin.php#viewProduct");
                     $imgColor = $_POST['edit_3_photo_color'];
                     $imgOriginalColor = $_POST['edit_3_photo_original_color'];
                     $key = array_search($imgOriginalColor, $colorArr);
-                    if($key == false){
+                    if($key === false){
                         $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
                         array_push($colorArr, $imgColor);
                     }else{
@@ -250,7 +250,7 @@ header("Location: admin.php#viewProduct");
                     $imgColor = $_POST['edit_4_photo_color'];
                     $imgOriginalColor = $_POST['edit_4_photo_original_color'];
                     $key = array_search($imgOriginalColor, $colorArr);
-                    if($key == false){
+                    if($key === false){
                         $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
                         array_push($colorArr, $imgColor);
                     }else{
