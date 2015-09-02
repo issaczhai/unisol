@@ -273,6 +273,9 @@ if(!empty($userid)){
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
+                                <?php
+                                    
+                                ?>
                                 <li><a href="#">10ft (2.0m) cable</a></li>
                                 <li><a href="#">15ft (2.5m) cable</a></li>
                                 <li><a href="#">20ft (3.0m) cable</a></li>
@@ -282,19 +285,21 @@ if(!empty($userid)){
                         <br>
                         <div class="btn-group color-selection">
                                <div>Colors </div>
-                               
                                <?php
                                foreach($selected_product_colorList as $selected_product_color){
+                                    $inlineRadioId = 'inlineRadio'.$selected_product_id;
                                ?>
-                               <div class="color">
-                                   <input type="hidden" name="inlineRadioOptions" id="inlineRadio" value="<?=$selected_product_photoList[$selected_product_color]?>">
-                                   <label for="inlineRadio" style="background-color: #<?=$selected_product_color?>">
-                                   </label>
-                               </div>
+                                   <div class="color" data-image="<?=$selected_product_photoList[$selected_product_color]?>">
+                                       <input class="color-input" type="hidden" name="inlineRadioOptions" id="<?= $inlineRadioId ?>" value="<?=$selected_product_photoList[$selected_product_color]?>">
+                                       <label for="<?= $inlineRadioId ?>" style="background-color: #<?=$selected_product_color?>">
+                                       </label>
+
+                                   </div>
+                                
                                <?php
                                }
                                ?>
-                               
+                                
                         </div>
                        
                         <div class="input-group number-spinner">
@@ -414,9 +419,14 @@ $(function (){
     });
 });
 
-function changeImg(source){
-    document.getElementById('display_img').src = source;
-}
+$(function (){
+    $("body").delegate('.color', 'click', function(){
+        console.log($(this));
+        $('.color').removeClass('color-highlight');
+        $(this).addClass('color-highlight');
+        $('#displayPhoto').attr('src', $(this).attr('data-image'));
+    });
+});
 </script>
 </body>
 </html>

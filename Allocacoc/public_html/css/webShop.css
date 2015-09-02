@@ -216,6 +216,12 @@ and open the template in the editor.
     border:1px solid rgb(219, 219, 219);
     margin-right: 5px;
 }
+.color-selection .color:hover{
+    border:1px solid rgb(0, 89, 112);
+}
+.color-selection .color-highlight{
+    border:1px solid rgb(0, 89, 112);
+}
 .color-selection{
     padding-left: 0;
 }
