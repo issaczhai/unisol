@@ -190,7 +190,7 @@ and open the template in the editor.
                                     $each_product_quantity = $each_cart_item['quantity'];
                                     $each_product_name = $productMgr->getProductName($each_product_id);
                                     $photoList = $photoMgr->getPhotos($each_product_id);
-                                    $photo_url = $photoList["1"];
+                                    $photo_url = $photoList["thumbnail"];
                             ?>
                                     <li class="notification" data-itemid = '<?= $cart_item_id ?>' >
                                         <div class="cartImg">
@@ -285,7 +285,7 @@ and open the template in the editor.
                             $removeBtnid = $each_cart_item_id.'remove';
                             $each_cart_totalid = $each_cart_item_id.'total';
                             $photoList = $photoMgr->getPhotos($each_cart_item_id);
-                            $photo_url = $photoList["1"];
+                            $photo_url = $photoList["thumbnail"];
                         ?>
                            <tr>
                                 <td class="col-sm-1 col-md-1 text-center">

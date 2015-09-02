@@ -48,7 +48,7 @@ and open the template in the editor.
         $item=[];
         $photoList = $photoMgr->getPhotos($product["product_id"]);
         $item["product_id"] = $product["product_id"];
-        $item["thumbnail"] = $photoList["1"];
+        $item["thumbnail"] = $photoList["thumbnail"];
         $item["product_name"] = $product["product_name"];
         $item["quantity"] = $checkout["quantity"];
         $item["price"] = $product["price"];

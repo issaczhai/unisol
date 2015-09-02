@@ -40,7 +40,8 @@ $selected_product_in_cart = 0;
 //if customer is logged in, check if the product is in the cart
 
 $selected_product_photoList = $photoMgr->getPhotos($selected_product_id);
-$selected_product_photo_url = $selected_product_photoList["2"];
+$selected_product_colorStr = $productMgr->getColor($selected_product_id);
+$selected_product_colorList = explode(",",$selected_product_colorStr);
 
 if(!empty($userid)){
     
@@ -182,7 +183,7 @@ if(!empty($userid)){
                                 $each_product_quantity = $each_cart_item['quantity'];
                                 $each_product_name = $productMgr->getProductName($each_product_id);
                                 $photoList = $photoMgr->getPhotos($each_product_id);
-                                $photo_url = $photoList["1"];
+                                $photo_url = $photoList["thumbnail"];
                         ?>
                                 <li class="notification" data-itemid = '<?= $cart_item_id ?>' >
                                     <div class="cartImg">
@@ -254,7 +255,7 @@ if(!empty($userid)){
     <div class="row">
         <div class="col-sm-10 product-detail">
             <div class="col-sm-4 img-detail">
-                <img src='<?=$selected_product_photo_url?>'/>
+                <img id="displayPhoto" src='<?=$selected_product_photoList[$selected_product_colorList[0]]?>'/>
             </div>
 
             <div class="col-sm-8 product-overview">
@@ -272,9 +273,6 @@ if(!empty($userid)){
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <?php
-                                    
-                                ?>
                                 <li><a href="#">10ft (2.0m) cable</a></li>
                                 <li><a href="#">15ft (2.5m) cable</a></li>
                                 <li><a href="#">20ft (3.0m) cable</a></li>
@@ -284,27 +282,19 @@ if(!empty($userid)){
                         <br>
                         <div class="btn-group color-selection">
                                <div>Colors </div>
+                               
+                               <?php
+                               foreach($selected_product_colorList as $selected_product_color){
+                               ?>
                                <div class="color">
-                                   <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                   <label for="inlineRadio3" style="background-color: rgb(31, 92, 153)">
+                                   <input type="hidden" name="inlineRadioOptions" id="inlineRadio" value="<?=$selected_product_photoList[$selected_product_color]?>">
+                                   <label for="inlineRadio" style="background-color: #<?=$selected_product_color?>">
                                    </label>
                                </div>
-                               <div class="color">
-                                   <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1">
-                                   <label for="inlineRadio3" style="background-color: rgb(31, 92, 153)">
-                                   </label>
-                               </div>
-                               <div class="color">
-                                   <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1">
-                                   <label for="inlineRadio3" style="background-color: rgb(31, 92, 153)">
-                                   </label>
-                               </div>
-                               <div class="color">
-                                   <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1">
-                                   <label for="inlineRadio3" style="background-color: rgb(31, 92, 153)">
-                                   </label>
-                               </div>
-                                
+                               <?php
+                               }
+                               ?>
+                               
                         </div>
                        
                         <div class="input-group number-spinner">

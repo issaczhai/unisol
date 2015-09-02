@@ -340,7 +340,7 @@ $results = $productMgr->getAllProduct();
                             $each_product_quantity = $each_cart_item['quantity'];
                             $each_product_name = $productMgr->getProductName($each_product_id);
                             $photoList = $photoMgr->getPhotos($each_product_id);
-                            $photo_url = $photoList["1"];
+                            $photo_url = $photoList["thumbnail"];
                     ?>
                             <li class="notification" data-itemid = '<?= $cart_item_id ?>' >
                                 <div class="cartImg">
@@ -420,56 +420,7 @@ $results = $productMgr->getAllProduct();
     </div>
     </div>
     <div class="row" style='margin-top:20px'>
-        <!-- Side panel 
-        <div  id="sidebar" class="col-sm-2">
-            <div class="btn-group-justified">
-                <div class="btn-group sort-panel">
-                    <button type="button" class="btn btn-default dropdown-toggle"
-                            data-toggle="dropdown">
-                            <span class="sort-value" id='sort_type'>Default Sorting</span> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" style="width:100%">
-                        <li><a href="./shop.php">Default Sorting</a></li>
-                        <li><a href="javascript:sort('priceLH');">Price: Low To High</a></li>
-                        <li><a href="javascript:sort('priceHL');">Price: High To Low</a></li>
-                    </ul>
-                </div>
-            </div>
-            <br>
-            <div class="btn-group-justified">
-                <div class="btn-group sort-panel">
-                    <button type="button" class="btn btn-default" value="allproducts" onclick="filter('allproducts')">
-                            <span class="sort-value">All Products</span>
-                    </button>
-                </div>
-            </div>
-            <br>
-            <div class="btn-group-justified">
-                <div class="btn-group sort-panel">
-                    <button type="button" class="btn btn-default" onclick="filter('PowerCube')"> 
-                            <span class="sort-value">PowerCube Family</span>
-                    </button>
-                </div>
-            </div>
-            <br>
-            <div class="btn-group-justified">
-                <div class="btn-group sort-panel">
-                    <button type="button" class="btn btn-default" onclick="filter('ReWirable')">
-                            <span class="sort-value">ReWirable Family</span>
-                    </button>
-                </div>
-            </div>
-            <br>
-            <div class="btn-group-justified">
-                <div class="btn-group sort-panel">
-                    <button type="button" class="btn btn-default" onclick="filter('Remote')">
-                            <span class="sort-value">Remote Family</span>
-                    </button>
-                </div>
-            </div>
-            
-        </div>
-        -->
+        
         <div class="col-sm-10" id="main-content">
             
             <div class="features_items">
@@ -482,7 +433,7 @@ $results = $productMgr->getAllProduct();
                         $price = $eachProduct["price"];
                         $product_id = $eachProduct["product_id"];
                         $photoList = $photoMgr->getPhotos($product_id);
-                        $photo_url = $photoList["1"];
+                        $photo_url = $photoList["thumbnail"];
                 ?>
                 <div class='col-sm-6 each-product'>
                     <div class='product-wrapper'>
