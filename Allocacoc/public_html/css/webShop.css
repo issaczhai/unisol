@@ -262,6 +262,12 @@ and open the template in the editor.
     margin:0 auto;
     border-top: 1px solid #EDEDED;
     padding-top: 50px;
+    padding-bottom: 50px;
+}
+.description-title{
+    float:none;
+    margin:0 auto;
+    padding-top: 20px;
 }
 .single-characteristic{
     margin-bottom: 50px;

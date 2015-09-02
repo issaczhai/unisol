@@ -326,58 +326,12 @@ if(!empty($userid)){
         
     </div>
     <div class="row">
-        <div class="col-sm-10  product-description">
-            <div class="row single-characteristic">
-                <div class="col-sm-2">
-                <img src='./public_html/img/questionMark.png'>
-                </div>
-
-                <div class="col-sm-10 char-description">
-                <p>
-                    <?= $selected_product_description ?>
-                </p>
-                </div>
-            </div>
-            
-            <div class="row single-characteristic">
-                <div class="col-sm-2">
-                <img src='./public_html/img/lightBulb.png'>
-                </div>
-
-                <div class="col-sm-10 char-description">
-                    <h4><?= $selected_product_name ?></h4>
-                </div>
-            </div>
-
-            <div class="row single-characteristic">
-                <div class="col-sm-2">
-                <img src='./public_html/img/tick-lg.png'>
-                </div>
-
-                <div class="col-sm-10 char-description">
-                    <ul>
-                        <li>Provides five additional outlets, and can expand to even more outlets when combined</li>
-                        <li>Prevents plugs from blocking each other, due to cubic shape</li>
-                        <li>Compact design</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="row single-characteristic">
-                <div class="col-sm-2">
-                <img src='./public_html/img/star.png'>
-                </div>
-
-                <div class="col-sm-10 char-description">
-                    <ul>
-                        <li>Provides five additional outlets, and can expand to even more outlets when combined</li>
-                        <li>Prevents plugs from blocking each other, due to cubic shape</li>
-                        <li>Compact design</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="col-sm-10 description-title">
+            <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-info-circle"></i> Item Description </font>
         </div>
-        
+        <div class="col-sm-10 product-description">
+                <?= $selected_product_description ?>
+        </div>
     </div>
 </div>
 <?php
