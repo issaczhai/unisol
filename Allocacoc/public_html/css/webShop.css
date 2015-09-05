@@ -217,6 +217,7 @@ and open the template in the editor.
     margin-right: 5px;
 }
 .color-selection .color:hover{
+    cursor: pointer;
     border:1px solid rgb(0, 89, 112);
 }
 .color-selection .color-highlight{

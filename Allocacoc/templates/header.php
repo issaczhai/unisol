@@ -129,18 +129,19 @@ word-break: keep-all;
                         for($x=0;$x<min(4,count($cart_items));$x++){
                             $each_cart_item = $cart_items[$x];
                             $each_product_id = $each_cart_item['product_id'];
-                            $cart_item_id = 'cartItem'.$each_product_id;
+                            $each_product_color = $each_cart_item['color'];
+                            $cart_item_id = 'cartItem'.$each_product_id.$each_product_color;
                             $each_product_quantity = $each_cart_item['quantity'];
                             $each_product_name = $productMgr->getProductName($each_product_id);
                             $photoList = $photoMgr->getPhotos($each_product_id);
-                            $photo_url = $photoList["thumbnail"];
+                            $photo_url = $photoList[$each_product_color];
                     ?>
                             <li class="notification" data-itemid = '<?= $cart_item_id ?>' >
                                 <div class="cartImg">
-                                   <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                   <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>&color=<?=$each_product_color ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                 </div>
                                 <div class="cart-text-wrap">
-                                    <span class="cart-item-text">&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
+                                    <span class="cart-item-text">&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>&color=<?=$each_product_color ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
                                 
                                     <span class='item-qty' style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
                                 </div>

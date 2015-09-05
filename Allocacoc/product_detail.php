@@ -27,6 +27,7 @@ if(isset($_SESSION["userid"]) && !empty($_SESSION["userid"])){
 }
 
 $selected_product_id = addslashes(filter_input(INPUT_GET, 'selected_product_id'));
+$selected_product_color = addslashes(filter_input(INPUT_GET, 'color'));
 $product_selected = $productMgr->getProduct($selected_product_id);
 $selected_product_name = $product_selected['product_name'];
 $selected_product_description = $product_selected['description'];
@@ -43,9 +44,11 @@ $selected_product_photoList = $photoMgr->getPhotos($selected_product_id);
 $selected_product_colorStr = $productMgr->getColor($selected_product_id);
 $selected_product_colorList = explode(",",$selected_product_colorStr);
 
+$color = (!empty($selected_product_color)) ? $selected_product_color : $selected_product_colorList[0];
+
 if(!empty($userid)){
     
-    $selected_product_in_cart = $productMgr->retrieveItemQtyInShoppingCart($userid, $selected_product_id);
+    $selected_product_in_cart = $productMgr->retrieveItemQtyInShoppingCart($userid, $selected_product_id, $color);
     
 }
 
@@ -179,18 +182,19 @@ if(!empty($userid)){
                             for($x=0;$x<min(4,count($cart_items));$x++){
                                 $each_cart_item = $cart_items[$x];
                                 $each_product_id = $each_cart_item['product_id'];
-                                $cart_item_id = 'cartItem'.$each_product_id;
+                                $each_product_color = $each_cart_item['color'];
+                                $cart_item_id = 'cartItem'.$each_product_id.$each_product_color;
                                 $each_product_quantity = $each_cart_item['quantity'];
                                 $each_product_name = $productMgr->getProductName($each_product_id);
                                 $photoList = $photoMgr->getPhotos($each_product_id);
-                                $photo_url = $photoList["thumbnail"];
+                                $photo_url = $photoList[$each_product_color];
                         ?>
                                 <li class="notification" data-itemid = '<?= $cart_item_id ?>' >
                                     <div class="cartImg">
-                                       <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                       <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>&color=<?=$each_product_color ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                     </div>
                                     <div class="cart-text-wrap">
-                                        <span class="cart-item-text">&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
+                                        <span class="cart-item-text">&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>&color=<?=$each_product_color ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
                                     
                                         <span class='item-qty' style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
                                     </div>
@@ -255,7 +259,7 @@ if(!empty($userid)){
     <div class="row">
         <div class="col-sm-10 product-detail">
             <div class="col-sm-4 img-detail">
-                <img id="displayPhoto" src='<?=$selected_product_photoList[$selected_product_colorList[0]]?>'/>
+                <img id="displayPhoto" src='<?=$selected_product_photoList[$color]?>'/>
             </div>
 
             <div class="col-sm-8 product-overview">
@@ -288,15 +292,25 @@ if(!empty($userid)){
                                <?php
                                foreach($selected_product_colorList as $selected_product_color){
                                     $inlineRadioId = 'inlineRadio'.$selected_product_id;
+                                    if($selected_product_color == $color){
+                                    //highlight the first color or selected color
                                ?>
-                                   <div class="color" data-image="<?=$selected_product_photoList[$selected_product_color]?>">
+                                    <div class="color color-highlight" data-color="<?= $selected_product_color ?>" data-image="<?=$selected_product_photoList[$selected_product_color]?>">
                                        <input class="color-input" type="hidden" name="inlineRadioOptions" id="<?= $inlineRadioId ?>" value="<?=$selected_product_photoList[$selected_product_color]?>">
                                        <label for="<?= $inlineRadioId ?>" style="background-color: #<?=$selected_product_color?>">
                                        </label>
-
+                                    </div>
+                               <?php         
+                                    }else{
+                               ?>
+                                   <div class="color" data-color="<?= $selected_product_color ?>" data-image="<?=$selected_product_photoList[$selected_product_color]?>">
+                                       <input class="color-input" type="hidden" name="inlineRadioOptions" id="<?= $inlineRadioId ?>" value="<?=$selected_product_photoList[$selected_product_color]?>">
+                                       <label for="<?= $inlineRadioId ?>" style="background-color: #<?=$selected_product_color?>">
+                                       </label>
                                    </div>
                                 
                                <?php
+                                    }
                                }
                                ?>
                                 
@@ -375,7 +389,6 @@ $(function (){
 
 $(function (){
     $("body").delegate('.color', 'click', function(){
-        console.log($(this));
         $('.color').removeClass('color-highlight');
         $(this).addClass('color-highlight');
         $('#displayPhoto').attr('src', $(this).attr('data-image'));

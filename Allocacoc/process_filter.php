@@ -33,7 +33,7 @@ if($filter_type=='allproducts'){
             $price = $eachProduct["price"];
             $product_id = $eachProduct["product_id"];
             $photoList = $photoMgr->getPhotos($product_id);
-            $photo_url = $photoList["1"];
+            $photo_url = $photoList["thumbnail"];
 ?>
             <div class='col-sm-6'>
                 <div class='product-wrapper'>

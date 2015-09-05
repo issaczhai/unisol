@@ -110,9 +110,11 @@ var addToCart = function(product_id){
             window.location = './cart.php';
         }else{*/
                 
-        var qty_id = '#' + product_id + 'qty';
-        var qty = $(qty_id).val();
-        var product_to_add = 'selected_product_id=' + product_id + '&qty=' + qty;
+        var qty_id = '#' + product_id + 'qty',
+            qty = $(qty_id).val(),
+            color = $('.color-highlight').attr('data-color');
+            product_to_add = 'selected_product_id=' + product_id + '&qty=' + qty + '&color=' + color;
+
         $('#loader-overlay').css('display','block');
         $.ajax({ //Process the form using $.ajax()
             type      : 'POST', //Method type
@@ -135,6 +137,7 @@ var addToCart = function(product_id){
                                 userid = jsonData.userid,
                                 qty_update = jsonData.qty_update,
                                 qty_to_change = jsonData.qty_to_change,
+                                color = jsonData.product_color,
                                 product_url = './product_detail.php?selected_product_id='+ add_product_id + '&customer_id=' + userid;
                                 
                             if(jsonData.error_not_logged_in){
@@ -143,7 +146,7 @@ var addToCart = function(product_id){
                             }else{
                                 $('.cart-qty').text('( ' + cart_qty + ' )');
                                 // cart item preview list contains max 5 items
-                                existed_item_id = 'cartItem' + add_product_id;
+                                existed_item_id = 'cartItem' + add_product_id + color;
                                 if(cart_unique_qty < 6 && !qty_update){
                                     var newNotification = $('.notification-template').clone();
                                     

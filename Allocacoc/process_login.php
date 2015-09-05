@@ -52,17 +52,18 @@ if($customer !== []){
         
     }
     if(isset($_SESSION['temp_product_id_to_cart']) && !empty($_SESSION['temp_product_id_to_cart'])){
-        if($productMgr->retrieveItemQtyInShoppingCart($userid, $_SESSION['temp_product_id_to_cart']) > 0){
-            $addedQty = $productMgr->retrieveItemQtyInShoppingCart($userid, $_SESSION['temp_product_id_to_cart']);
+        if($productMgr->retrieveItemQtyInShoppingCart($userid, $_SESSION['temp_product_id_to_cart'], $_SESSION['temp_product_color_to_cart']) > 0){
+            $addedQty = $productMgr->retrieveItemQtyInShoppingCart($userid, $_SESSION['temp_product_id_to_cart'], $_SESSION['temp_product_color_to_cart']);
             $totalQty = $addedQty + $_SESSION['temp_product_qty_to_cart'];
-            $productMgr->updateItemQty($userid, $_SESSION['temp_product_id_to_cart'], $totalQty);
+            $productMgr->updateItemQty($userid, $_SESSION['temp_product_color_to_cart'], $_SESSION['temp_product_id_to_cart'], $totalQty);
         }else{
 
-            $productMgr->addProductToShoppingCart($userid, $_SESSION['temp_product_id_to_cart'], $_SESSION['temp_product_qty_to_cart']);
+            $productMgr->addProductToShoppingCart($userid, $_SESSION['temp_product_id_to_cart'], $_SESSION['temp_product_qty_to_cart'], $_SESSION['temp_product_color_to_cart']);
         }
         
         unset($_SESSION['temp_product_id_to_cart']);
         unset($_SESSION['temp_product_qty_to_cart']);
+        unset($_SESSION['temp_product_color_to_cart']);
     }
 }else{
     $form_data['success'] = false;

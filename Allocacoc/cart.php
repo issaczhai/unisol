@@ -186,23 +186,25 @@ and open the template in the editor.
                                 for($x=0;$x<min(4,count($cart_items));$x++){
                                     $each_cart_item = $cart_items[$x];
                                     $each_product_id = $each_cart_item['product_id'];
-                                    $cart_item_id = 'cartItem'.$each_product_id;
+                                    $each_product_color = $each_cart_item['color'];
+                                    $cart_item_id = 'cartItem'.$each_product_id.$each_product_color;
+                                    $item_quantity_id = $each_product_id.$each_product_color.'cartQty';
                                     $each_product_quantity = $each_cart_item['quantity'];
                                     $each_product_name = $productMgr->getProductName($each_product_id);
                                     $photoList = $photoMgr->getPhotos($each_product_id);
-                                    $photo_url = $photoList["thumbnail"];
-                            ?>
-                                    <li class="notification" data-itemid = '<?= $cart_item_id ?>' >
-                                        <div class="cartImg">
-                                           <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
-                                        </div>
-                                        <div class="cart-text-wrap">
-                                            <span class="cart-item-text">&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
-                                        
-                                            <span class='item-qty' style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
-                                        </div>
-                                        
-                                    </li>
+                                    $photo_url = $photoList[$each_product_color];
+                        ?>
+                                <li class="notification" data-itemid = '<?= $cart_item_id ?>' >
+                                    <div class="cartImg">
+                                       <a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>&color=<?=$each_product_color ?>"><img class="cart-image" style="position:absolute !important;" src="<?=$photo_url?>" alt="" onload="OnCartImageLoad(event);" /></a>                             
+                                    </div>
+                                    <div class="cart-text-wrap">
+                                        <span class="cart-item-text">&nbsp;<a href="./product_detail.php?selected_product_id=<?=$each_product_id ?>&customer_id=<?=$userid ?>&color=<?=$each_product_color ?>" style='font-size:12px'><?=$each_product_name ?></a></span>
+                                    
+                                        <span id="<?=$item_quantity_id ?>" class='item-qty' style='font-size:12px'>&nbsp;Quantity:&nbsp;<?=$each_product_quantity ?></span>
+                                    </div>
+                                    
+                                </li>
                             <?php
                                 }
                             }else{
@@ -271,6 +273,7 @@ and open the template in the editor.
                         $shipping_fee = 0;
                         foreach($cart_items as $each_cart_product){
                             $each_cart_item_id = $each_cart_product['product_id'];
+                            $each_product_color = $each_cart_product['color'];
                             $each_cart_item_name = $productMgr->getProductName($each_cart_item_id);
                             $each_cart_item_price = $productMgr->getPrice($each_cart_item_id);
                             $each_cart_item_price_format = number_format($each_cart_item_price,2,'.','');
@@ -279,13 +282,13 @@ and open the template in the editor.
                             $each_cart_item_create_time = $each_cart_product['create_time'];
                             $each_cart_item_total = $each_cart_item_price * $each_cart_item_qty;
                             $subtotal += $each_cart_item_total;
-                            $qtyid = $each_cart_item_id.'qty';
-                            $timeid = $each_cart_item_id.'createtime';
-                            $cboxid = $each_cart_item_id.'cbox';
-                            $removeBtnid = $each_cart_item_id.'remove';
-                            $each_cart_totalid = $each_cart_item_id.'total';
+                            $qtyid = $each_cart_item_id.$each_product_color.'qty';
+                            $timeid = $each_cart_item_id.$each_product_color.'createtime';
+                            $cboxid = $each_cart_item_id.$each_product_color.'cbox';
+                            $removeBtnid = $each_cart_item_id.$each_product_color.'remove';
+                            $each_cart_totalid = $each_cart_item_id.$each_product_color.'total';
                             $photoList = $photoMgr->getPhotos($each_cart_item_id);
-                            $photo_url = $photoList["thumbnail"];
+                            $photo_url = $photoList[$each_product_color];
                         ?>
                            <tr>
                                 <td class="col-sm-1 col-md-1 text-center">
@@ -297,12 +300,12 @@ and open the template in the editor.
                                 <td class="col-sm-8 col-md-5">
                                     <div class="media">
                                         <div class="cartItemImg" style="width:88px;height:88px;overflow:hidden;position:relative;float:left">
-                                            <a href="./product_detail.php?selected_product_id=<?=$each_cart_item_id ?>&customer_id=<?=$userid ?>"> <img style="position:absolute !important;" src="<?=$photo_url?>" onload="OnCartItemImageLoad(event)"> </a>
+                                            <a href="./product_detail.php?selected_product_id=<?=$each_cart_item_id ?>&customer_id=<?=$userid ?>&color=<?=$each_product_color ?>"> <img style="position:absolute !important;" src="<?=$photo_url?>" onload="OnCartItemImageLoad(event)"> </a>
                                             
                                         </div>
                                         <div class="media-body  text-center">
                                             
-                                            <h5 class="media-heading"><a href="./product_detail.php?selected_product_id=<?=$each_cart_item_id ?>&customer_id=<?=$userid ?>"><?=$each_cart_item_name ?></a></h5>
+                                            <h5 class="media-heading"><a href="./product_detail.php?selected_product_id=<?=$each_cart_item_id ?>&customer_id=<?=$userid ?>&color=<?=$each_product_color ?>"><?=$each_cart_item_name ?></a></h5>
                                             <?php
                                             if($each_cart_item_stock>0){
                                             ?>
@@ -318,7 +321,7 @@ and open the template in the editor.
                                     </div>
                                 </td>
                                 <td class="col-sm-7 col-md-2" style="text-align: center">
-                                    <input type="text" style='text-align: center; border-radius:0' class="form-control" id="<?=$qtyid?>" onchange="change_qty('<?=$each_cart_item_id?>','<?=$each_cart_item_price_format ?>',this.value)" value="<?=$each_cart_item_qty ?>">
+                                    <input type="text" style='text-align: center; border-radius:0' class="form-control" id="<?=$qtyid?>" onchange="change_qty('<?=$each_cart_item_id?>','<?=$each_cart_item_price_format ?>',this.value, '<?=$each_product_color ?>')" value="<?=$each_cart_item_qty ?>">
                                     <input type="hidden" id="<?=$timeid?>" value="<?=$each_cart_item_create_time?>"/>
                                 </td>
                                 <td class="col-sm-1 col-md-1 text-center"><strong><?=number_format($each_cart_item_price,2,'.','') ?></strong></td>
@@ -405,14 +408,15 @@ and open the template in the editor.
     <script src="./public_html/js/allocacoc.js"></script>
 
 <script>
-    function change_qty(item_id,item_price,qty_to_change){
+    function change_qty(item_id,item_price,qty_to_change, item_color){
         $('#loader-overlay').css('display','block');
         var customer_id = '<?=$userid?>';
-        var changed_product_id = 'changed_item_id=' + item_id + '&qty_to_change=' + qty_to_change + '&customer_id=' + customer_id;
+        var changed_product_id = 'changed_item_id=' + item_id + '&qty_to_change=' + qty_to_change + 
+                                '&customer_id=' + customer_id + '&color=' + item_color;
         
         var price = qty_to_change * item_price;
         var price_formatted = price.toFixed(2);
-        var each_cart_totalid = '#' + item_id + 'total';
+        var each_cart_totalid = '#' + item_id + item_color +　'total';
         $.ajax({ //Process the form using $.ajax()
         type      : 'POST', //Method type
         url       : './process_qty_change.php', //Your form processing file URL
@@ -421,10 +425,8 @@ and open the template in the editor.
         success   : function(data) {
                         
                         $('#loader-overlay').css('display','none');
-                        console.log(data);
                         var pos = data.indexOf("{");
                         var dataValid = data.substring(pos);
-                        console.log(dataValid);
                         var jsonData = eval("("+dataValid+")");
                         if(jsonData.error){
                             $('#error_modal').modal('show');
@@ -434,12 +436,13 @@ and open the template in the editor.
                                 shipping_fee = jsonData.shipping_fee,
                                 total = jsonData.total,
                                 cart_total_qty = jsonData.cart_total_qty,
-                                notification_quantity_id = '#notification_quantity' + item_id;
-
+                                notification_quantity_id = '#' + item_id + item_color + 'cartQty';
+                                console.log(notification_quantity_id + ' ' + qty_to_change);
                             $('#subtotal').html('<Strong>'+subtotal+'</Strong>');
                             $('#shipping_cost').html('<Strong>'+shipping_fee+'</Strong>');
                             $('#total_cost').html('<Strong>'+total+'</Strong>');
-                            $('.cart_total_qty').text(' ( ' + cart_total_qty + ' ) ');
+                            $('.cart-qty').text(' ( ' + cart_total_qty + ' ) ');
+                            console.log($(".item-qty"));
                             $(notification_quantity_id).text(' Quantity: ' + qty_to_change);
                             $(each_cart_totalid).html('<Strong>'+price_formatted+'</Strong>'); 
                             

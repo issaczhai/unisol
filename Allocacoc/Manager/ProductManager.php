@@ -26,15 +26,15 @@ class ProductManager {
     }
     
     
-    function addProductToShoppingCart($customer_id,$product_id,$qty){
+    function addProductToShoppingCart($customer_id,$product_id,$qty, $color){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO cart (customer_id, product_id, quantity, create_time, pay_time) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO cart (customer_id, product_id, color, quantity, create_time, pay_time) VALUES (?, ?, ?, ?, ?, ?)");
         date_default_timezone_set('Asia/Singapore');
         $creat_time = date('Y-m-d H:i:s');
         $date = new DateTime('2000-01-01');
         $pay_time = $date->format('Y-m-d H:i:s');
-        $stmt->bind_param("ssiss", $customer_id, $product_id, $qty, $creat_time, $pay_time);
+        $stmt->bind_param("sssiss", $customer_id, $product_id, $color, $qty, $creat_time, $pay_time);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
@@ -59,12 +59,13 @@ class ProductManager {
         $stmt = $conn->prepare("SELECT * FROM cart WHERE customer_id=? AND pay_time = ? ORDER BY create_time desc");
         $stmt->bind_param("ss", $customer_id,$var);
         $stmt->execute();
-        $stmt->bind_result($customer_id,$product_id,$quantity,$create_time,$pay_time);
+        $stmt->bind_result($customer_id,$product_id,$color,$quantity,$create_time,$pay_time);
         while ($stmt->fetch())
         {
             $product = array();
             $product['customer_id'] = $customer_id;
             $product['product_id'] = $product_id;
+            $product['color'] = $color;
             $product['quantity'] = $quantity;
             $product['create_time'] = $create_time;
             $product['pay_time'] = $pay_time;
@@ -108,14 +109,14 @@ class ProductManager {
         return $total;
     }
     
-    function retrieveItemQtyInShoppingCart($customer_id,$product_id){
+    function retrieveItemQtyInShoppingCart($customer_id,$product_id, $color){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $productQty = 0;
         $date = new DateTime('2000-01-01');
         $var = $date->format('Y-m-d H:i:s');
-        $stmt = $conn->prepare("SELECT quantity FROM cart WHERE customer_id=? AND product_id=? AND pay_time = ?");
-        $stmt->bind_param("sss", $customer_id,$product_id,$var);
+        $stmt = $conn->prepare("SELECT quantity FROM cart WHERE customer_id=? AND product_id=? AND color=? AND pay_time = ?");
+        $stmt->bind_param("ssss", $customer_id,$product_id,$color,$var);
         $stmt->execute();
         $stmt->bind_result($quantity);
         while ($stmt->fetch())
@@ -125,24 +126,24 @@ class ProductManager {
         return $productQty;
     }
     
-    function updateItemQty($customer_id,$item_id, $changed_qty){
+    function updateItemQty($customer_id, $color, $item_id, $changed_qty){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $date = new DateTime('2000-01-01');
         $var = $date->format('Y-m-d H:i:s');
-        $stmt = $conn->prepare("UPDATE cart SET quantity=? WHERE customer_id=? AND product_id=? AND pay_time = ?");
-        $stmt->bind_param("isss", $changed_qty, $customer_id, $item_id, $var);
+        $stmt = $conn->prepare("UPDATE cart SET quantity=? WHERE customer_id=? AND product_id=? AND color=? AND pay_time = ?");
+        $stmt->bind_param("issss", $changed_qty, $customer_id, $item_id, $color, $var);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
-    function deleteCartItem($customer_id,$item_id){
+    function deleteCartItem($customer_id,$item_id, $color){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $date = new DateTime('2000-01-01');
         $var = $date->format('Y-m-d H:i:s');
-        $stmt = $conn->prepare("DELETE from cart WHERE customer_id=? AND product_id=? AND pay_time=?");
-        $stmt->bind_param("sss",$customer_id, $item_id,$var);
+        $stmt = $conn->prepare("DELETE from cart WHERE customer_id=? AND product_id=? AND color=? AND pay_time=?");
+        $stmt->bind_param("ssss",$customer_id, $item_id, $color, $var);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }

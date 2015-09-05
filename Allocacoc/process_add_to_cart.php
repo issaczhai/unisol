@@ -11,6 +11,7 @@ include_once("./Manager/PhotoManager.php");
 $photoMgr = new PhotoManager();
 $productMgr = new ProductManager();
 $product_id = addslashes(filter_input(INPUT_POST, 'selected_product_id'));
+$color = addslashes(filter_input(INPUT_POST, 'color'));
 $qty = intval(addslashes(filter_input(INPUT_POST, 'qty')));
 //$url = filter_input(INPUT_POST, 'url');
 //print_r($url);
@@ -27,21 +28,21 @@ if(!empty($_SESSION["userid"])){
     $userid = $_SESSION["userid"];
     $cart_data['error_not_logged_in']=false;
     //add product to the shopping cart
-    if($productMgr->retrieveItemQtyInShoppingCart($userid, $product_id) > 0){
-        $addedQty = $productMgr->retrieveItemQtyInShoppingCart($userid, $product_id);
+    if($productMgr->retrieveItemQtyInShoppingCart($userid, $product_id, $color) > 0){
+        $addedQty = $productMgr->retrieveItemQtyInShoppingCart($userid, $product_id, $color);
         $totalQty = $addedQty + $qty;
-        $productMgr->updateItemQty($userid, $product_id, $totalQty);
+        $productMgr->updateItemQty($userid, $color, $product_id, $totalQty);
         $qty_update = true;
     }else{
 
-        $productMgr->addProductToShoppingCart($userid, $product_id, $qty);
+        $productMgr->addProductToShoppingCart($userid, $product_id, $qty, $color);
     }
     $photoList = $photoMgr->getPhotos($product_id);
-    $photo_url = $photoList["1"];
+    $photo_url = $photoList[$color];
     //get the number of item in customer's shopping cart
     $cart_qty = $productMgr->retrieveTotalNumberOfItemsInShoppingCart($userid);
     $cart_unique_qty = $productMgr->retrieveTotalNumberOfUniqueItemsInShoppingCart($userid);
-    $item_qty = $productMgr->retrieveItemQtyInShoppingCart($userid, $product_id);
+    $item_qty = $productMgr->retrieveItemQtyInShoppingCart($userid, $product_id, $color);
     $product_name = $productMgr->getProductName($product_id);
     $cart_data['cart_qty'] = $cart_qty;
     $cart_data['cart_unique_qty'] = $cart_unique_qty;
@@ -52,11 +53,13 @@ if(!empty($_SESSION["userid"])){
     $cart_data['userid'] = $userid;
     $cart_data['qty_update'] = $qty_update;
     $cart_data['qty_to_change'] = $qty;
+    $cart_data['product_color'] = $color;
 }else{
     $cart_data['error_not_logged_in']=true;
     
     $_SESSION['temp_product_id_to_cart'] = $product_id;
     $_SESSION['temp_product_qty_to_cart'] = $qty;
+    $_SESSION['temp_product_color_to_cart'] = $color;
     /*
     $url=$url.'?user=no';
     header("Location: $url");
