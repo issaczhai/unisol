@@ -87,10 +87,11 @@ $photoListJson = $photoMgr->getAllPhotosInJson();
             <div class="primary col-md-7 col-sm-12 col-xs-12">
                 <section class="about section">
                     <div class="section-inner">
-                        <h2 class="heading">New Project</h2>
+                        <h2 class="heading" id="heading">New Project</h2>
                         <div class="content">
                             <form id="upload_project" method="post" enctype="multipart/form-data" action="process_project.php">
                             <input type="hidden" name="operation" id="operation" value="create">
+                            <input type="hidden" name="edit_id" id="edit_id">
                             <div class="form-group">
                                     <label for="name">Name:</label>
                                     <input type="text" class="form-control" name="name" id="name">
@@ -141,6 +142,7 @@ $photoListJson = $photoMgr->getAllPhotosInJson();
                                             HD <?=$x?> 
                                             <input type="file" id="<?=$hdId?>" name="<?=$hdId?>" onchange="checkHD('<?=strval($x)?>')">
                                         </span>
+                                        <button type="button" id="hd<?=strval($x)?>_delete" style="display:none" onclick="deletePhoto('<?=strval($x)?>')">x</button>
                                     <?php 
                                 }elseif($remainder == 0){
                                         ?>  
@@ -148,6 +150,7 @@ $photoListJson = $photoMgr->getAllPhotosInJson();
                                                 HD <?=$x?> 
                                                 <input type="file" id="<?=$hdId?>" name="<?=$hdId?>" onchange="checkHD('<?=strval($x)?>')">
                                             </span>
+                                            <button type="button" id="hd<?=strval($x)?>_delete" style="display:none" onclick="deletePhoto('<?=strval($x)?>')">x</button>
                                         </div>
                                     <?php 
                                 }else{
@@ -156,6 +159,7 @@ $photoListJson = $photoMgr->getAllPhotosInJson();
                                             HD <?=$x?> 
                                             <input type="file" id="<?=$hdId?>" name="<?=$hdId?>" onchange="checkHD('<?=strval($x)?>')">
                                         </span>
+                                        <button type="button" id="hd<?=strval($x)?>_delete" style="display:none" onclick="deletePhoto('<?=strval($x)?>')">x</button>
                                     <?php
                                 }
                             }
@@ -198,7 +202,7 @@ $photoListJson = $photoMgr->getAllPhotosInJson();
                                     <input type="file" id=display" name="display" onchange="checkDisplay()">
                                 </span>
                             </div>
-                            <input type="submit" class="btn btn-primary" value="Create">
+                            <input type="submit" class="btn btn-primary" value="OK">
                             </form>
                         </div><!--//content-->
                     </div><!--//section-inner-->                 
@@ -229,7 +233,7 @@ $photoListJson = $photoMgr->getAllPhotosInJson();
                                                 <td><input type="checkbox" class="projectList_id" value="<?=$project["project_id"]?>"></td>
                                                 <td><?=$project["project_id"]?></td>
                                                 <td><?=$project["project_name"]?></td>
-                                                <td>Edit</td>
+                                                <td><button class="btn" onclick="populate('<?=$project["project_id"]?>');">Edit</button></td>
                                             </tr>
                                         <?php
                                         }
@@ -296,18 +300,21 @@ $(document).ready( function() {
 });
 
 function checkThumbnail(id){
+    $('#thumbnail'+id+'_span img').remove();
     var i = document.createElement("i");
     i.setAttribute('class',"fa fa-check");
     document.getElementById("thumbnail"+id+'_span').appendChild(i);
 }
 
 function checkDisplay(){
+    $('#display_span img').remove();
     var i = document.createElement("i");
     i.setAttribute('class',"fa fa-check");
     document.getElementById("display_span").appendChild(i);
 }
 
 function checkHD(id){
+    $('#hd'+id+'_span img').remove();
     var i = document.createElement("i");
     i.setAttribute('class',"fa fa-check");
     document.getElementById("hd"+id+'_span').appendChild(i);
@@ -330,6 +337,78 @@ function DeleteProject(){
         alert("You have not selected any projects to delete");
     }
 }
+
+function populate(id){
+    var postData = {'projectid': id};
+    var operation = 'populate';
+    $.ajax({ //Process the form using $.ajax()
+        type      : 'POST', //Method type
+        url       : './process_project.php?operation='+operation, //Your form processing file URL
+        data      : postData, //Forms name
+        success   : function(data) {
+            var pos = data.indexOf("{");
+            var dataValid = data.substring(pos);
+            var jsonData = eval("("+dataValid+")");
+            //console.log(jsonData.exceed);
+            console.log(jsonData);
+            //populate data
+            document.getElementById('edit_id').value = jsonData['project_id'];
+            document.getElementById('name').value = jsonData['project_name'];
+            document.getElementById('type').value = jsonData['type'];
+            document.getElementById('year').value = jsonData['year'];
+            document.getElementById('country').value = jsonData['country'];
+            document.getElementById('location').value = jsonData['location'];
+            document.getElementById('size').value = jsonData['size'];
+            document.getElementById('completion_date').value = jsonData['completion_date'];
+            document.getElementById('description').value = jsonData['description'];
+            /************populate photo*****************/
+            $('span img').remove();
+            var photo_arr = jsonData['photo_arr'];
+            for (var key in photo_arr) {
+                var br = document.createElement("br");
+                var span = document.getElementById(key+'_span');
+//                if(span.getElementsByTagName("img").length>0){
+//                    $('#'+key+'_span img').remove();
+//                }
+                var img = document.createElement("img");
+                img.setAttribute('height',"80px");
+                img.setAttribute('width',"80px");
+                img.setAttribute('src',photo_arr[key]);
+                span.appendChild(br);
+                span.appendChild(img);
+                $('#'+key+'_delete').css("display","block");
+            }
+            /******************************************/
+            
+            //change user displayand form element attribute
+            document.getElementById('heading').innerHTML='Edit Project '+id;
+            document.getElementById('operation').value = 'edit';
+            
+        }
+    });
+    event.preventDefault(); //Prevent the default submit
+}
+
+function deletePhoto(photo_no){
+    var edit_id = document.getElementById('edit_id').value;
+    var postData = {'editid': edit_id,'photo_no':photo_no};
+    var operation = "deletePhoto";
+    $.ajax({ //Process the form using $.ajax()
+        type      : 'POST', //Method type
+        url       : './process_project.php?operation='+operation, //Your form processing file URL
+        data      : postData, //Forms name
+        success   : function(data) {
+//            var pos = data.indexOf("{");
+//            var dataValid = data.substring(pos);
+//            var jsonData = eval("("+dataValid+")");
+            $('#hd'+photo_no+'_span img').remove();
+            $('#thumbnail'+photo_no+'_span img').remove();
+            $('#hd'+photo_no+'_delete').css('display','none');
+        }
+    });
+    event.preventDefault(); //Prevent the default submit
+}
+
 </script>
    
 </body>

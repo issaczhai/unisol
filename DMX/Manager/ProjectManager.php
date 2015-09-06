@@ -43,6 +43,9 @@ class ProjectManager {
             $project['description'] = $description;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
+        $photoMgr = new PhotoManager();
+        $photo_arr = $photoMgr->getPhotosByProject($project_id);
+        $project['photo_arr'] = $photo_arr;
         return $project;
     }
     
@@ -106,11 +109,11 @@ class ProjectManager {
         return $project_arr;
     }
     
-    function updateProduct($product_id, $product_name, $price, $color, $description, $stock){
+    function updateProject($project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("UPDATE product SET product_name=?, price=?, color=?, description=?, stock=? WHERE product_id=?");
-        $stmt->bind_param("ssssds", $product_name, $price, $color, $description, $stock,$product_id);
+        $stmt = $conn->prepare("UPDATE project SET project_name=?, type=?, year=?, country=?, location=?, size=?, completion_date=?, description=? WHERE project_id=?");
+        $stmt->bind_param("sssssssss", $project_name, $type, $year, $country, $location, $size, $completion_date, $description, $project_id);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
