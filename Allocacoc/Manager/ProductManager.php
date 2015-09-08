@@ -142,8 +142,8 @@ class ProductManager {
         $conn = $ConnectionManager->getConnection();
         $date = new DateTime('2000-01-01');
         $var = $date->format('Y-m-d H:i:s');
-        $stmt = $conn->prepare("DELETE from cart WHERE customer_id=? AND product_id=? AND color=? AND pay_time=?");
-        $stmt->bind_param("ssss",$customer_id, $item_id, $color, $var);
+        $stmt = $conn->prepare("DELETE from cart WHERE customer_id=? AND product_id=? AND color=?");
+        $stmt->bind_param("sss",$customer_id, $item_id, $color);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }

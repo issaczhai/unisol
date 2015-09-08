@@ -138,7 +138,7 @@ var addToCart = function(product_id){
                                 qty_update = jsonData.qty_update,
                                 qty_to_change = jsonData.qty_to_change,
                                 color = jsonData.product_color,
-                                product_url = './product_detail.php?selected_product_id='+ add_product_id + '&customer_id=' + userid;
+                                product_url = './product_detail.php?selected_product_id='+ add_product_id + '&customer_id=' + userid + '&color=' + color;
                                 
                             if(jsonData.error_not_logged_in){
                                 $('#sign_in_modal').modal('show');
@@ -151,7 +151,7 @@ var addToCart = function(product_id){
                                     var newNotification = $('.notification-template').clone();
                                     
                                     newNotification.find('.item-qty').text('Quantity:' + item_qty);
-                                    notification.data('itemid', existed_item_id);
+                                    newNotification.data('itemid', existed_item_id);
                                     //newNotification.find('.item-qty').prepend('&nbsp;');
                                     newNotification.find('.product-name-link').attr('href', product_url);
                                     newNotification.find('.product-img-link').attr('href', product_url);
@@ -165,10 +165,7 @@ var addToCart = function(product_id){
                                 $('.cart-notification .cart-qty-changed').text(qty_to_change);
                                 $(".cart-notification").css('display', 'block');
                                 $(".cart-notification").delay(5000).fadeOut();
-                                $('.empty-cart').remove();/*
-                                $('.number-spinner').hide(); 
-                                $('.cart-button').text('process to checkout');
-                                $('.cart-button').attr('onclick',"window.location='./cart.php'");*/
+                                $('.empty-cart').remove();
                             }
                         }
         });

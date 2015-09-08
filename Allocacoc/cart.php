@@ -327,7 +327,7 @@ and open the template in the editor.
                                 <td class="col-sm-1 col-md-1 text-center"><strong><?=number_format($each_cart_item_price,2,'.','') ?></strong></td>
                                 <td id='<?=$each_cart_totalid ?>' class="col-sm-1 col-md-1 text-center"><strong><?=number_format($each_cart_item_total,2,'.','')?></strong></td>
                                 <td class="col-sm-1 col-md-1">
-                                <button type="button" id='<?=$removeBtnid?>' class="btn btn-remove">
+                                <button type="button" id='<?=$removeBtnid?>' data-color='<?=$each_product_color ?>' class="btn btn-remove">
                                 <!-- onclick="location.href='./process_item_remove.php?remove_item_id=<?=$each_cart_item_id?>&customer_id=<?=$userid?>'" -->
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button></td>
@@ -437,12 +437,10 @@ and open the template in the editor.
                                 total = jsonData.total,
                                 cart_total_qty = jsonData.cart_total_qty,
                                 notification_quantity_id = '#' + item_id + item_color + 'cartQty';
-                                console.log(notification_quantity_id + ' ' + qty_to_change);
                             $('#subtotal').html('<Strong>'+subtotal+'</Strong>');
                             $('#shipping_cost').html('<Strong>'+shipping_fee+'</Strong>');
                             $('#total_cost').html('<Strong>'+total+'</Strong>');
                             $('.cart-qty').text(' ( ' + cart_total_qty + ' ) ');
-                            console.log($(".item-qty"));
                             $(notification_quantity_id).text(' Quantity: ' + qty_to_change);
                             $(each_cart_totalid).html('<Strong>'+price_formatted+'</Strong>'); 
                             
@@ -454,14 +452,17 @@ and open the template in the editor.
     }
 
     $('.btn-remove').on('click', function(){
-        $('.confirmDeleteModal').attr('id', this.id.substr(0, this.id.length - 6));
+        var id = this.id;
+        $('.confirmDeleteModal').attr('id', id.substr(0, id.length - 6));
+        $('.confirmDeleteModal').data('color', $(this).data('color'));
         $('.confirmDeleteModal').modal('show');
     });
     $('.btn-delete-item').on('click', function(){
-        var product_id = $('.confirmDeleteModal').attr('id');
-        console.log(product_id);
+        var confirmModalId = $('.confirmDeleteModal').attr('id');
+            product_id = confirmModalId.substr(0, confirmModalId.length - 6),
+            color = $('.confirmDeleteModal').data('color');
         //$('.confirmDeleteModal').modal('hide');
-        location.href ="./process_item_remove.php?remove_item_id=" + product_id +"&customer_id=<?=$userid?>";
+        location.href ="./process_item_remove.php?remove_item_id=" + product_id +"&customer_id=<?=$userid?>&color=" + color;
 
     });
     $('.btn-cancel-delete').on('click', function(){

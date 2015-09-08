@@ -210,7 +210,7 @@ if(!empty($userid)){
                         <?php
                         }
                         ?>
-                            <li class="notification-template notification" data-itemId = ''>
+                            <li class="notification-template notification" data-itemid = ''>
                                 <div class="cartImg">
                                    <a class="product-img-link" href="#"><img class="cart-image" style="position:absolute !important;" src="" alt="" onload="OnCartImageLoad(event);" /></a>                             
                                 </div>
