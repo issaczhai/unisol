@@ -43,7 +43,7 @@ $(document).ready(function () {
     }
     
     
-    if(message!=="" && message!==null){
+    /*if(message!=="" && message!==null){
         if(status === "success"){
             $('#user_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
         }else if(status === "fail"){
@@ -59,10 +59,25 @@ $(document).ready(function () {
         window.setTimeout(function(){
             $('#popover_element').popover('hide');
         }, 900000); //6000 are the ms until the timeout is called
+    }*/
+    if(message!=="" && message!==null){
+        if(status === "success"){
+            console.log('success');
+            $('.referal-symbol img').attr('src', '.public_html/css/img/tick_green.png');
+        }else if(status === "fail"){
+            console.log('fail');
+            $('.referal-symbol img').attr('src', '.public_html/css/img/exclamation_red.png');
+        }else if(status === "pending"){
+            console.log('pending');
+            $('.referal-symbol img').attr('src', '.public_html/css/img/exclamation_red.png');
+        }else{
+            console.log('out of 3 conditions!');
+        }
+        $('.referal-notification-text h5').text(message);
+        $('.referal-notification').css('display', block);
+        $(".cart-notification").delay(6000).fadeOut(); //6000 are the ms until the timeout is called
     }
-    
 });
-
 </script>
 <style>
 .popover {
@@ -102,13 +117,13 @@ word-break: keep-all;
 
                 <li id="about_element"><a href="#"> ABOUT US</a></li>
                 <?php
-            // if the user is not logged in
-            if(empty($username)){
-                ?>
-                <li id="sign_in_element"><a href="#signup" data-toggle="modal" data-target=".bs-modal-sm" > SIGN IN</a></li>
-                <?php
-            // user logged in
-            }else{
+                // if the user is not logged in
+                if(empty($username)){
+                    ?>
+                    <li id="sign_in_element"><a href="#signup" data-toggle="modal" data-target=".bs-modal-sm" > SIGN IN</a></li>
+                    <?php
+                // user logged in
+                }else{
 
                 if(empty($cart_items)){
                 ?>
@@ -181,3 +196,16 @@ word-break: keep-all;
         </div>
     </div>
 </nav><!--/header-middle-->
+<div class='referal-notification'>
+    <!-- <svg width="100" height="100">
+      <circle cx="50" cy="50" r="30" fill="rgb(0, 89, 112)" />
+    <text class='cart-qty-changed' fill="#ffffff" text-anchor="middle" font-size="30" font-family="Verdana" x="50" y="62"></text>
+    Sorry, your browser does not support inline SVG.
+    </svg> -->
+    <div class='referal-symbol'>
+        <img src="./public_html/img/tick_green.png"/>
+    </div>
+    <div class='referal-notification-text'>
+        <h5></h5>
+    </div>
+</div>
