@@ -63,18 +63,18 @@ $(document).ready(function () {
     if(message!=="" && message!==null){
         if(status === "success"){
             console.log('success');
-            $('.referal-symbol img').attr('src', '.public_html/css/img/tick_green.png');
+            $('.referal-symbol img').attr('src', './public_html/img/tick_green.png');
         }else if(status === "fail"){
             console.log('fail');
-            $('.referal-symbol img').attr('src', '.public_html/css/img/exclamation_red.png');
+            $('.referal-symbol img').attr('src', './public_html/img/exclamation_red.png');
         }else if(status === "pending"){
             console.log('pending');
-            $('.referal-symbol img').attr('src', '.public_html/css/img/exclamation_red.png');
+            $('.referal-symbol img').attr('src', './public_html/img/exclamation_red.png');
         }else{
             console.log('out of 3 conditions!');
         }
         $('.referal-notification-text h5').text(message);
-        $('.referal-notification').css('display', block);
+        $('.referal-notification').css('display', 'block');
         $(".cart-notification").delay(6000).fadeOut(); //6000 are the ms until the timeout is called
     }
 });
