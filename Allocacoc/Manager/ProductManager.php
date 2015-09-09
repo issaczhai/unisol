@@ -230,6 +230,22 @@ class ProductManager {
         return $color;
     }
     
+    function getProductSymbolCode($product_id){
+        $code = "";
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT symbol_code FROM product WHERE product_id=?");
+        $stmt->bind_param("s", $product_id);
+        $stmt->execute();
+        $stmt->bind_result($symbol_code);
+        while ($stmt->fetch())
+        {
+            $code = $symbol_code;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $code;
+    }
+    
     function getProduct($product_id){
         $product = [];
         $ConnectionManager = new ConnectionManager();
@@ -351,4 +367,72 @@ class ProductManager {
         $ConnectionManager->closeConnection($stmt, $conn);
         return $product_arr;
     }
+    
+    function addProductColorOptionalCode($product_id, $color, $color_optional_code){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("INSERT INTO optional_code (product_id, color, optional_code) VALUES (?,?, ?)");
+        $stmt->bind_param("sss", $product_id, $color, $color_optional_code);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
+    function updateProductColorOptionalCode($product_id, $color, $color_optional_code){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE optional_code SET optional_code = ? WHERE product_id = ? AND color = ?");
+        $stmt->bind_param("sss", $color_optional_code, $product_id, $color);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
+    function getAllColorOptionalCodeByProduct($product_id){
+        $fullList = [];
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT color, optional_code FROM optional_code WHERE product_id=?");
+        $stmt->bind_param("s", $product_id);
+        $stmt->execute();
+        $stmt->bind_result($color, $optional_code);
+        while ($stmt-> fetch())
+        {   
+            $fullList[$color] = $optional_code;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $fullList;
+    }
+    
+    function getColorOptionalCodeByProductColor($product_id,$color){
+        $code = '';
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT optional_code FROM optional_code WHERE product_id = ? AND color = ?");
+        $stmt->bind_param("ss", $product_id,$color);
+        $stmt->execute();
+        $stmt->bind_result($optional_code);
+        while ($stmt-> fetch())
+        {   
+            $code = $optional_code;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $code;
+    }
+    
+    function getFullCodeByProductColor($product_id,$color){
+        $product = self::getProductSymbolCode($product_id);
+        $color_code = '';
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT optional_code FROM optional_code WHERE product_id = ? AND color = ?");
+        $stmt->bind_param("ss", $product_id,$color);
+        $stmt->execute();
+        $stmt->bind_result($optional_code);
+        while ($stmt-> fetch())
+        {   
+            $color_code = $optional_code;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $product."-".$color_code;
+    }
+    
 }

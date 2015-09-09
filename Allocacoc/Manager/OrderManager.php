@@ -8,12 +8,12 @@
 
 class OrderManager {
     
-    function addOrder($order_id, $customer_id,$product_id,$quantity,$payment_time,$price){
+    function addOrder($order_id, $customer_id,$product_id,$color,$quantity,$payment_time,$price,$address_no){
         $status = "pending";
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO `order` (order_id, customer_id, product_id, quantity, price, payment_time, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssddss", $order_id, $customer_id, $product_id, $quantity,$price,$payment_time,$status);
+        $stmt = $conn->prepare("INSERT INTO `order` (order_id, customer_id, product_id, color, quantity, price,address_no, payment_time, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssddiss", $order_id, $customer_id, $product_id,$color,$quantity,$price,$address_no,$payment_time,$status);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
@@ -54,7 +54,7 @@ class OrderManager {
             $stmt = $conn->prepare("SELECT * FROM `order` WHERE `order_id` = ? AND `status` = 'pending'");
             $stmt->bind_param("s", $o_id);
             $stmt->execute();
-            $stmt->bind_result($order_id,$customer_id,$product_id,$quantity,$price,$payment_time,$status);
+            $stmt->bind_result($order_id,$customer_id,$product_id,$color,$quantity,$price,$address_no,$payment_time,$status);
             while ($stmt->fetch())
             {   $count+=1;
                 if($count == 1){
@@ -66,12 +66,14 @@ class OrderManager {
                 }
                 $item = array();
                 $item['product_id'] = $product_id;
+                $item['color']=$color;
                 $item['quantity'] = $quantity;
                 $item['price'] = $price;
                 $totalPrice += doubleval($price) * intval($quantity);
                 array_push($itemList,$item);
             }
             if($count!=0){
+                $order['address_no'] = $address_no;
                 $order['totalPrice'] = $totalPrice;
                 $order["itemList"] = $itemList;
                 array_push($order_arr,$order);
@@ -107,10 +109,11 @@ class OrderManager {
             $conn = $ConnectionMgr->getConnection();
             $count=0;
             $itemList = array();
+            $totalPrice = 0.0;
             $stmt = $conn->prepare("SELECT * FROM `order` WHERE `order_id` = ? AND `status` = 'sent'");
             $stmt->bind_param("s", $o_id);
             $stmt->execute();
-            $stmt->bind_result($order_id,$customer_id,$product_id,$quantity,$price,$payment_time,$status);
+            $stmt->bind_result($order_id,$customer_id,$product_id,$color,$quantity,$price,$address_no,$payment_time,$status);
             while ($stmt->fetch())
             {   $count+=1;
                 if($count == 1){
@@ -122,19 +125,22 @@ class OrderManager {
                 }
                 $item = array();
                 $item['product_id'] = $product_id;
+                $item['color']=$color;
                 $item['quantity'] = $quantity;
                 $item['price'] = $price;
                 $totalPrice += doubleval($price) * intval($quantity);
                 array_push($itemList,$item);
             }
             if($count!=0){
+                $order['address_no'] = $address_no;
                 $order['totalPrice'] = $totalPrice;
                 $order["itemList"] = $itemList;
-                array_push($order_arr,$order); 
+                array_push($order_arr,$order);
             }
             
             $ConnectionMgr->closeConnection($stmt, $conn);
         }
+        
         
         return $order_arr;
     }

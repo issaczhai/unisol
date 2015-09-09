@@ -17,6 +17,7 @@ include_once("./Manager/CustomerManager.php");
 include_once("./Manager/PhotoManager.php");
 include_once("./Manager/RewardManager.php");
 include_once("./Manager/OrderManager.php");
+include_once("./Manager/AddressManager.php");
 $admin = $_SESSION["admin_id"];
 
 $productMgr = new ProductManager();
@@ -76,6 +77,9 @@ $current_charge = $fdpMgr->getCharge();
 	<script type="text/javascript">
             bkLib.onDomLoaded(nicEditors.allTextAreas);
         </script>
+        
+        <!-- redirect script -->
+        <script src="./public_html/js/jquery.redirect.js"></script>
         
         <style>
             .btn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block; 
@@ -267,7 +271,7 @@ $current_charge = $fdpMgr->getCharge();
                                                         </td>
                                                         </tr>
                                                         <tr>
-                                                        <td>Symbol Code</td>
+                                                        <td>Product Optional Code</td>
                                                         <td>
                                                             <input id="symbol_code" type="text" name="symbol_code" maxlength="50"/>
                                                         </td>
@@ -293,12 +297,13 @@ $current_charge = $fdpMgr->getCharge();
                                                         <tr>
                                                             <td>Photo and Color</br>(280 x 280)</td>
                                                             <td>
-                                                                <table width="40%">
+                                                                <table width="60%">
                                                                     <tbody>
                                                                         <tr>
-                                                                            <th width="25%">Select</th>
-                                                                            <th width="50%">Status</th>
-                                                                            <th width="25%">Representing Color</th>
+                                                                            <th width="20%">Select</th>
+                                                                            <th width="15%">Status</th>
+                                                                            <th width="45%">Representing Color</th>
+                                                                            <th width="30%">Color Code</th>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>
@@ -313,6 +318,9 @@ $current_charge = $fdpMgr->getCharge();
                                                                             </td>
                                                                             <td>
                                                                                 <input class="color" id="color1" name="color1" disabled="disabled"/>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" id="color_symbol_code1" name="color_symbol_code1" disabled="disabled"/>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -329,6 +337,9 @@ $current_charge = $fdpMgr->getCharge();
                                                                             <td>
                                                                                 <input type="text" id="color1" name="color2" class="color" disabled="disabled"/>
                                                                             </td>
+                                                                            <td>
+                                                                                <input type="text" id="color_symbol_code2" name="color_symbol_code2" disabled="disabled"/>
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>
@@ -344,6 +355,9 @@ $current_charge = $fdpMgr->getCharge();
                                                                             <td>
                                                                                 <input type="text" id="color3" name="color3" class="color" disabled="disabled"/>
                                                                             </td>
+                                                                            <td>
+                                                                                <input type="text" id="color_symbol_code3" name="color_symbol_code3" disabled="disabled"/>
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>
@@ -358,6 +372,9 @@ $current_charge = $fdpMgr->getCharge();
                                                                             </td>
                                                                             <td>
                                                                                 <input type="text" id="color4" name="color4" class="color" disabled="disabled"/>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" id="color_symbol_code4" name="color_symbol_code4" disabled="disabled"/>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -439,7 +456,6 @@ $current_charge = $fdpMgr->getCharge();
                                                         <?php
                                                         $photoMgr = new PhotoManager();
                                                         foreach ($product_list as $product){
-                                                           
                                                            $p_id = $product["product_id"];
                                                            $p_name = $product["product_name"];
                                                            $p_symbol_code = $product["symbol_code"];
@@ -449,6 +465,9 @@ $current_charge = $fdpMgr->getCharge();
                                                            $p_stock = $product["stock"];
                                                            $photo_url_arr = $photoMgr->getPhotos($p_id);
                                                            $photo_url_string = str_replace('"', "&quot;", str_replace(array("{","}"),"",json_encode($photo_url_arr)));
+                                                           $p_color_optional_code_arr = $productMgr->getAllColorOptionalCodeByProduct($p_id);
+                                                           $p_color_optional_code_string = str_replace('"', "&quot;", str_replace(array("{","}"),"",json_encode($p_color_optional_code_arr)));
+                                                           
                                                         ?>
                                                            <tr>
                                                                <td><?php echo $p_id; ?></td>
@@ -457,7 +476,7 @@ $current_charge = $fdpMgr->getCharge();
                                                                <td><?php echo number_format($p_price,2,'.',''); ?></td>
                                                                <td><?php echo $p_color; ?></td>
                                                                <td><?php echo $p_stock; ?></td>
-                                                               <td><div class="btn"><span>Edit<i class="fa fa-edit"></i></span><input type="button" onclick="showEditTab();populateEditField('<?php echo $p_id ?>','<?php echo $p_name ?>','<?php echo $p_symbol_code ?>','<?php echo $p_price ?>','<?php echo $p_color ?>','<?php echo $p_stock ?>','<?php echo $description ?>','<?php echo $photo_url_string; ?>');" value="Edit Product"/></div></td>
+                                                               <td><div class="btn"><span>Edit<i class="fa fa-edit"></i></span><input type="button" onclick="showEditTab();populateEditField('<?php echo $p_id ?>','<?php echo $p_name ?>','<?php echo $p_symbol_code ?>','<?php echo $p_price ?>','<?php echo $p_color ?>','<?php echo $p_stock ?>','<?php echo $description ?>','<?php echo $photo_url_string; ?>','<?php echo $p_color_optional_code_string; ?>');" value="Edit Product"/></div></td>
                                                            </tr>
                                                         <?php
                                                         }
@@ -541,12 +560,13 @@ $current_charge = $fdpMgr->getCharge();
                                                         <tr>
                                                         <td>Photo and Color</br>(280 x 280)</td>
                                                         <td>
-                                                            <table width="50%">
+                                                            <table width="65%">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <th width="25%">Select</th>
-                                                                        <th width="50%">Status</th>
-                                                                        <th width="25%">Representing Color</th>
+                                                                        <th width="15%">Select</th>
+                                                                        <th width="45%">Status</th>
+                                                                        <th width="20%">Representing Color</th>
+                                                                        <th width="20%">Color Code</th>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -565,6 +585,9 @@ $current_charge = $fdpMgr->getCharge();
                                                                         <td>
                                                                             <input class="color" id="edit_1_photo_color" name="edit_1_photo_color"/>
                                                                             <input class="hidden" id="edit_1_photo_original_color" name="edit_1_photo_original_color"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" id="edit_color_symbol_code1" name="edit_color_symbol_code1"/>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -585,6 +608,9 @@ $current_charge = $fdpMgr->getCharge();
                                                                             <input class="color" id="edit_2_photo_color" name="edit_2_photo_color"/>
                                                                             <input class="hidden" id="edit_2_photo_original_color" name="edit_2_photo_original_color"/>
                                                                         </td>
+                                                                        <td>
+                                                                            <input type="text" id="edit_color_symbol_code2" name="edit_color_symbol_code2"/>
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -604,6 +630,9 @@ $current_charge = $fdpMgr->getCharge();
                                                                             <input class="color" id="edit_3_photo_color" name="edit_3_photo_color"/>
                                                                             <input class="hidden" id="edit_3_photo_original_color" name="edit_3_photo_original_color"/>
                                                                         </td>
+                                                                        <td>
+                                                                            <input type="text" id="edit_color_symbol_code3" name="edit_color_symbol_code3"/>
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -622,6 +651,9 @@ $current_charge = $fdpMgr->getCharge();
                                                                         <td>
                                                                             <input class="color" id="edit_4_photo_color" name="edit_4_photo_color"/>
                                                                             <input class="hidden" id="edit_4_photo_original_color" name="edit_4_photo_original_color"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" id="edit_color_symbol_code4" name="edit_color_symbol_code4"/>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -902,6 +934,7 @@ $current_charge = $fdpMgr->getCharge();
                                                     <tbody>
                                                         <?php
                                                         $orderMgr = new OrderManager();
+                                                        $addressMgr = new AddressManager();
                                                         $pendingList = $orderMgr->getPendingOrder();
                                                         foreach($pendingList as $pendingOrder){
                                                             $pendingOrder_id = $pendingOrder["order_id"];
@@ -910,6 +943,7 @@ $current_charge = $fdpMgr->getCharge();
                                                             $pendingOrder_payTime = $pendingOrder["payment_time"];
                                                             $pendingOrder_totalPrice = $pendingOrder["totalPrice"];
                                                             $pendingOrder_itemList = $pendingOrder["itemList"];
+                                                            $pendingOrder_address=$addressMgr->getGeneralAddress($pendingOrder_customerId,  intval($pendingOrder['address_no']));
                                                             
                                                         ?>
                                                            <tr>
@@ -925,7 +959,34 @@ $current_charge = $fdpMgr->getCharge();
                                                            </tr>
                                                            <tr id="orderDetail<?=$pendingOrder_id?>" style="display:none">
                                                                <td colspan="6">
-                                                                   halo
+                                                                   <table width="30%">
+                                                                       <tr>
+                                                                           <th>Item</th>
+                                                                           <th>Quantity</th>
+                                                                           <th>Price</th>
+                                                                       </tr>
+                                                                       <?php
+                                                                       foreach($pendingOrder_itemList as $item){
+                                                                       ?>
+                                                                       <tr>
+                                                                            <td><?=($productMgr->getProductSymbolCode($item['product_id']))."-".(($productMgr->getAllColorOptionalCodeByProduct($item['product_id'])[$item['color']]))?></td>
+                                                                            <td><?=$item['quantity']?></td>
+                                                                            <td><?=number_format($item['price'],2,'.','')?></td>
+                                                                       </tr>
+                                                                       <?php
+                                                                       }
+                                                                       ?>
+                                                                       <tr>
+                                                                           <td colspan="3">
+                                                                               <?=$pendingOrder_address?>
+                                                                           </td>
+                                                                       </tr>
+                                                                   </table>
+                                                                   <table width="100%">
+                                                                       <tr>
+                                                                           <td style="text-align: right"> <button class="btn btn-warning" type="button" onclick="printDeliveryLabel('<?=$pendingOrder_id?>')">Print Delivery Label</button> </td>
+                                                                       </tr>
+                                                                   </table>
                                                                </td>
                                                            </tr>
                                                         <?php

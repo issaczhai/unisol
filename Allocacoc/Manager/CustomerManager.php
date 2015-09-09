@@ -171,7 +171,7 @@ class CustomerManager {
         $stmt = $conn->prepare("SELECT * FROM customer WHERE customer_id=? AND verified = ?");
         $stmt->bind_param("ss", $customer_id,$verify);
         $stmt->execute();
-        $stmt->bind_result($customer_id,$password,$alternative_email,$first_name,$last_name,$contact_no,$credit,$invitation_link);
+        $stmt->bind_result($customer_id,$password,$alternative_email,$first_name,$last_name,$contact_no,$credit,$invitation_link,$verified);
         while ($stmt->fetch())
         {   $customer['customer_id'] = $customer_id;
             $customer['password'] = $password;

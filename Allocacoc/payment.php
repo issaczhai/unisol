@@ -43,13 +43,15 @@ and open the template in the editor.
     $productMgr = new ProductManager();
     $photoMgr = new PhotoManager();
     $list = [];
+    //var_dump($checkoutList);
     foreach ($checkoutList as $checkout){
         $product = $productMgr->getProduct($checkout["productId"]);
         $item=[];
         $photoList = $photoMgr->getPhotos($product["product_id"]);
         $item["product_id"] = $product["product_id"];
-        $item["thumbnail"] = $photoList["thumbnail"];
         $item["product_name"] = $product["product_name"];
+        $item["color"]=$checkout["color"];
+        $item["thumbnail"] = $photoList[$item["color"]];
         $item["quantity"] = $checkout["quantity"];
         $item["price"] = $product["price"];
         $item["subtotal"] = $checkout["quantity"] * $product["price"];
@@ -249,6 +251,7 @@ and open the template in the editor.
                                     $totalPrice += intval($item["quantity"]) * doubleval($item["price"]);
                                 ?>
                                 <input id="product_id<?php echo strval($count)?>" name="product_id<?php echo strval($count)?>" type="hidden" value="<?=$item["product_id"] ?>"/>
+                                <input id="product_color<?php echo strval($count)?>" name="product_color<?php echo strval($count)?>" type="hidden" value="<?=$item["color"] ?>"/>
                                 <input id="add_to_cart_time<?php echo strval($count)?>" name="add_to_cart_time<?php echo strval($count)?>" type="hidden" value="<?=$item["add_to_cart_time"] ?>"/>
                                 <tr>
                                     <td align="center" width="15%">

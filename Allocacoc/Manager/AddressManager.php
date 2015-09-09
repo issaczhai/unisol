@@ -63,4 +63,38 @@ class AddressManager {
         $ConnectionManager->closeConnection($stmt, $conn);
         return $address_list;
     }
+    
+    function getGeneralAddress($customer_id,$address_no){
+        
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM address WHERE customer_id=? AND address_no=?");
+        $stmt->bind_param("si", $customer_id,$address_no);
+        $stmt->execute();
+        $stmt->bind_result($address_no,$customer_id,$first_name,$last_name,$street,$block_no,$floor,$unit,$building_name,$company_name,$postal_code,$instruction);
+        $address = '';
+        while ($stmt->fetch())
+        {   
+            $address =  $floor.'-'.$unit.' Blk'.$block_no.' '.$building_name.' '.$street.' Singapore '.$postal_code;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $address;
+    }
+    
+    function getPostalCode($customer_id,$address_no){
+        
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT postal_code FROM address WHERE customer_id=? AND address_no=?");
+        $stmt->bind_param("si", $customer_id,$address_no);
+        $stmt->execute();
+        $stmt->bind_result($postal_code);
+        $postalcode = '';
+        while ($stmt->fetch())
+        {   
+            $postalcode = $postal_code;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $postalcode;
+    }
 }

@@ -284,7 +284,7 @@ and open the template in the editor.
                             $subtotal += $each_cart_item_total;
                             $qtyid = $each_cart_item_id.$each_product_color.'qty';
                             $timeid = $each_cart_item_id.$each_product_color.'createtime';
-                            $cboxid = $each_cart_item_id.$each_product_color.'cbox';
+                            $cboxid = $each_cart_item_id."/".$each_product_color.'cbox';
                             $removeBtnid = $each_cart_item_id.$each_product_color.'remove';
                             $each_cart_totalid = $each_cart_item_id.$each_product_color.'total';
                             $photoList = $photoMgr->getPhotos($each_cart_item_id);
@@ -476,11 +476,13 @@ and open the template in the editor.
         var cB = document.getElementsByName("selectItem");
         for (i = 0; i < cB.length; i++) {
             if (cB[i].checked) {
-                var id = cB[i].value.split("cbox")[0];
+                var id = cB[i].value.split("/")[0];
+                var color = cB[i].value.split("/")[1].split("cbox")[0];
                 var item = { //Fetch form data
                     'productId'     : id, //Store productId of item
-                    'quantity'   : $('#'+id+'qty').val(), //Store quantity of item
-                    'create_time'   : $('#'+id+'createtime').val()
+                    'color'         : color,
+                    'quantity'   : $('#'+id+color+'qty').val(), //Store quantity of item
+                    'create_time'   : $('#'+id+color+'createtime').val()
                 };
                 checkoutList.push(item);
             }

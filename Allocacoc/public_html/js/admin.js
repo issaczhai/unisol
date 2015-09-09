@@ -20,7 +20,10 @@ function check(id){
             if(index != -1){
                $('#color'+id.substring(0,index)).attr({
                     'disabled': 'disabled'
-                }); 
+                });
+                $('#color_symbol_code'+id.substring(0,index)).attr({
+                    'disabled': 'disabled'
+                });
             }
         },
         success: function(data){
@@ -29,6 +32,7 @@ function check(id){
             var index = id.indexOf("_");
             if(index != -1){
                $('#color'+id.substring(0,index)).removeAttr('disabled'); 
+               $('#color_symbol_code'+id.substring(0,index)).removeAttr('disabled'); 
             }
         }
     });
@@ -44,13 +48,10 @@ function editCheck(id){
         contentType: false,
         processData: false,
         error: function(xhr, status, error){
-            console.log("hhjhj");
             document.getElementById(id+'_close').style.display="block";
             document.getElementById(id+'_check').style.display="none";
             document.getElementById(id+'_a').style.display="none";
             var err = eval("(" + xhr.responseText + ")");
-            console.log(err.Message);
-            console.log("sdsd");
         },
         success: function(data){
             document.getElementById(id+'_check').style.display="block";
@@ -144,23 +145,26 @@ function hideEditTab(){
     document.getElementById("viewProduct").className = "tab-pane fade active in";
 }
 
-function populateEditField(product_id,p_name,p_symbol,p_price,p_color,p_stock,p_description,photo_array_url_str){
+function populateEditField(product_id,p_name,p_symbol,p_price,p_color,p_stock,p_description,photo_array_url_str,color_optional_code_string){
     document.getElementById("edit_product_id").value = product_id;
     document.getElementById("edit_product_name").value = p_name;
     document.getElementById("edit_symbol_code").value = p_symbol;
     document.getElementById("edit_price").value = p_price;
     var color_arr = p_color.split(',');
     var photo_url_array = $.parseJSON("{"+photo_array_url_str+"}");
+    var color_optional_code_array = $.parseJSON("{"+color_optional_code_string+"}");
     /**************************************Populate thumbnail and photo and color**************************************/
     document.getElementById("edit_thumbnail_photo_preview").src = photo_url_array['thumbnail'];
     for (var i = 0; i < color_arr.length; i++) {
         var photo_url = photo_url_array[color_arr[i]];
+        var color_optional_code = color_optional_code_array[color_arr[i]];
         var id = i + 1;
         document.getElementById("edit_"+id.toString()+"_photo_color").value = color_arr[i];
         document.getElementById("edit_"+id.toString()+"_photo_color").style.backgroundColor = "#"+color_arr[i];
         document.getElementById("edit_"+id.toString()+"_photo_original_color").value = color_arr[i];
+        document.getElementById("edit_color_symbol_code"+id.toString()).value = color_optional_code;
         document.getElementById("edit_"+id.toString()+"_photo_preview").src = photo_url;
-    }
+    }   
 /*************************************************************************************/
     document.getElementById("edit_product_stock").value = p_stock;
     document.getElementById("edit_product_description").value = p_description;
@@ -200,3 +204,6 @@ function populateEditJhtmlArea(){
     return true;
 }
 
+function printDeliveryLabel(pendingOrder_id){
+    $.redirect('print.php', pendingOrder_id);
+}
