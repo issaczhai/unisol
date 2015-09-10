@@ -70,6 +70,7 @@ if ($operation === "add_product"){
     
     $photo_name_arr = ['1_photo_input','2_photo_input','3_photo_input','4_photo_input'];
     $imgURL_arr = [];
+    $colorOptionalCode_arr = [];
     $imgColor="";
     foreach ($photo_name_arr as $photo_name){
         $picname = $_FILES[$photo_name]['name'];
@@ -92,24 +93,28 @@ if ($operation === "add_product"){
                     move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
                     $imgColor = $_POST['color1'];
                     $imgURL_arr[$imgColor]=$pic_path;
+                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code1'];
                     break;
                 case "2_photo_input":
                     $pic_path = "public_html/img/detailImg/". $pics;
                     move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
                     $imgColor = $_POST['color2'];
                     $imgURL_arr[$imgColor]=$pic_path;
+                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code2'];
                     break;
                 case "3_photo_input":
                     $pic_path = "public_html/img/detailImg/". $pics;
                     move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
                     $imgColor = $_POST['color3'];
                     $imgURL_arr[$imgColor]=$pic_path;
+                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code3'];
                     break;
                 case "4_photo_input":
                     $pic_path = "public_html/img/detailImg/". $pics;
                     move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
                     $imgColor = $_POST['color4'];
                     $imgURL_arr[$imgColor]=$pic_path;
+                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code4'];
                     break; 
             }
         }
@@ -121,6 +126,7 @@ if ($operation === "add_product"){
     $photoMgr->AddPhoto($product_id, 'thumbnail', $imgURL_thumbnail);
     foreach($colorArr as $color){
         $photoMgr->AddPhoto($product_id, $color, $imgURL_arr[$color]);
+        $productMgr->addProductColorOptionalCode($product_id, $color, $colorOptionalCode_arr[$color]);
     }
 header("Location: admin.php#viewProduct");
 
@@ -173,9 +179,9 @@ header("Location: admin.php#viewProduct");
             unlink($existingPhotoList['thumbnail']);
         }
     }
+    
     $originalColorStr = $productMgr->getColor($product_id);
     $colorArr = explode(",", $originalColorStr);
-    
     $photo_name_arr = ['edit_1_photo_input','edit_2_photo_input','edit_3_photo_input','edit_4_photo_input'];
     $imgColor="";
     $imgOriginalColor="";
@@ -204,11 +210,13 @@ header("Location: admin.php#viewProduct");
                     if($key === false){
                         $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
                         array_push($colorArr, $imgColor);
+                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code1']);
                     }else{
                         unset($colorArr[$key]);
                         array_push($colorArr, $imgColor);
                         $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path); 
                         unlink($existingPhotoList[$imgOriginalColor]);
+                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code1']);
                     }
                     
                     break;
@@ -221,11 +229,13 @@ header("Location: admin.php#viewProduct");
                     if($key === false){
                         $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
                         array_push($colorArr, $imgColor);
+                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code2']);
                     }else{
                         unset($colorArr[$key]);
                         array_push($colorArr, $imgColor);
                         $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path);
                         unlink($existingPhotoList[$imgOriginalColor]);
+                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code2']);
                     }
                     break;
                 case "edit_3_photo_input":
@@ -237,11 +247,13 @@ header("Location: admin.php#viewProduct");
                     if($key === false){
                         $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
                         array_push($colorArr, $imgColor);
+                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code3']);
                     }else{
                         unset($colorArr[$key]);
                         array_push($colorArr, $imgColor);
                         $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path);
                         unlink($existingPhotoList[$imgOriginalColor]);
+                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code3']);
                     }
                     break;
                 case "edit_4_photo_input":
@@ -253,10 +265,13 @@ header("Location: admin.php#viewProduct");
                     if($key === false){
                         $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
                         array_push($colorArr, $imgColor);
+                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code4']);
                     }else{
                         unset($colorArr[$key]);
                         array_push($colorArr, $imgColor);
                         $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path); 
+                        unlink($existingPhotoList[$imgOriginalColor]);
+                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code4']);
                     }
                     break;
             }
@@ -277,5 +292,40 @@ header("Location: admin.php#viewProduct");
     $productMgr->addProductToShoppingCart($customer_id, $product_id, $qty);
     //$_SESSION["message_add_cart"] = "Your Selected Prodcut has been added";
 	//header("Location: testAddToCart.php");
+}elseif ($operation === "deletePhoto"){
+    $product_id = addslashes(filter_input(INPUT_POST, 'product_id'));
+    $photo_type = addslashes(filter_input(INPUT_POST, 'photo_type'));
+    $photoMgr->deletePhoto($product_id,$photo_type);
+    $color_str = $productMgr->getColor($product_id);
+    $color_arr = explode(",", $color_str);
+    if (($key = array_search($photo_type, $color_arr)) !== false) {
+        unset($color_arr[$key]);
+    }
+    $new_color_str = implode(",", $color_arr);
+    $productMgr->updateColor($product_id, $new_color_str);
+    $productMgr->deleteColorOptionalCodeByProductColor($product_id, $photo_type);
+    $return = [];
+    $return['status']='success';
+    echo json_encode($return);
+}elseif ($operation === "updateColor"){
+    $product_id = addslashes(filter_input(INPUT_POST, 'product_id'));
+    $new_color = addslashes(filter_input(INPUT_POST, 'new_color'));
+    $old_color = addslashes(filter_input(INPUT_POST, 'old_color'));
+    $color_str = $productMgr->getColor($product_id);
+    $new_color_str = str_replace($old_color,$new_color,$color_str);
+    $productMgr->updateColor($product_id, $new_color_str);
+    $productMgr->updateColorInOptionalCodeTable($product_id, $new_color, $old_color);
+    $photoMgr->updateColorInPhotoTable($product_id, $new_color, $old_color);
+    $return = [];
+    $return['status']='success';
+    echo json_encode($return);
+}elseif ($operation === "updateColorSymbolCode"){
+    $product_id = addslashes(filter_input(INPUT_POST, 'product_id'));
+    $color = addslashes(filter_input(INPUT_POST, 'color'));
+    $symbol_code = addslashes(filter_input(INPUT_POST, 'symbol_code'));
+    $productMgr->updateProductColorOptionalCode($product_id, $color, $symbol_code);
+    $return = [];
+    $return['status']='success';
+    echo json_encode($return);
 }
 ?>

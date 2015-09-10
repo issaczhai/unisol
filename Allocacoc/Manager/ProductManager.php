@@ -230,6 +230,15 @@ class ProductManager {
         return $color;
     }
     
+    function updateColor($product_id,$new_color_string){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE product SET color = ? WHERE product_id=?");
+        $stmt->bind_param("ss",$new_color_string,$product_id);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
     function getProductSymbolCode($product_id){
         $code = "";
         $ConnectionManager = new ConnectionManager();
@@ -418,6 +427,16 @@ class ProductManager {
         return $code;
     }
     
+    function deleteColorOptionalCodeByProductColor($product_id,$color){
+        $code = '';
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("DELETE FROM optional_code WHERE product_id = ? AND color = ?");
+        $stmt->bind_param("ss", $product_id,$color);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
     function getFullCodeByProductColor($product_id,$color){
         $product = self::getProductSymbolCode($product_id);
         $color_code = '';
@@ -435,4 +454,12 @@ class ProductManager {
         return $product."-".$color_code;
     }
     
+    function updateColorInOptionalCodeTable($product_id,$new_color,$old_color){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE optional_code SET color = ? WHERE product_id = ? AND color = ?");
+        $stmt->bind_param("sss", $new_color, $product_id, $old_color);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
 }

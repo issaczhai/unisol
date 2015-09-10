@@ -566,7 +566,8 @@ $current_charge = $fdpMgr->getCharge();
                                                                         <th width="15%">Select</th>
                                                                         <th width="45%">Status</th>
                                                                         <th width="20%">Representing Color</th>
-                                                                        <th width="20%">Color Code</th>
+                                                                        <th width="15%">Color Code</th>
+                                                                        <th width="5%"></th>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -583,11 +584,14 @@ $current_charge = $fdpMgr->getCharge();
                                                                             </a>
                                                                         </td>
                                                                         <td>
-                                                                            <input class="color" id="edit_1_photo_color" name="edit_1_photo_color"/>
+                                                                            <input class="color" id="edit_1_photo_color" name="edit_1_photo_color" onchange="updateColor('1')" disabled="disabled"/>
                                                                             <input class="hidden" id="edit_1_photo_original_color" name="edit_1_photo_original_color"/>
                                                                         </td>
                                                                         <td>
-                                                                            <input type="text" id="edit_color_symbol_code1" name="edit_color_symbol_code1"/>
+                                                                            <input type="text" id="edit_color_symbol_code1" name="edit_color_symbol_code1" onchange="updateColorSymbolCode('1')" disabled="disabled"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button type="button" id="edit_1_photo_delete" style="display:none" onclick="deletePhoto('1')">x</button>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -605,11 +609,14 @@ $current_charge = $fdpMgr->getCharge();
                                                                             </a>
                                                                         </td>
                                                                         <td>
-                                                                            <input class="color" id="edit_2_photo_color" name="edit_2_photo_color"/>
+                                                                            <input class="color" id="edit_2_photo_color" name="edit_2_photo_color" onchange="updateColor('2')" disabled="disabled"/>
                                                                             <input class="hidden" id="edit_2_photo_original_color" name="edit_2_photo_original_color"/>
                                                                         </td>
                                                                         <td>
-                                                                            <input type="text" id="edit_color_symbol_code2" name="edit_color_symbol_code2"/>
+                                                                            <input type="text" id="edit_color_symbol_code2" name="edit_color_symbol_code2" onchange="updateColorSymbolCode('2')" disabled="disabled"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button type="button" id="edit_2_photo_delete" style="display:none" onclick="deletePhoto('2')">x</button>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -627,11 +634,14 @@ $current_charge = $fdpMgr->getCharge();
                                                                             </a>
                                                                         </td>
                                                                         <td>
-                                                                            <input class="color" id="edit_3_photo_color" name="edit_3_photo_color"/>
+                                                                            <input class="color" id="edit_3_photo_color" name="edit_3_photo_color" onchange="updateColor('3')" disabled="disabled"/>
                                                                             <input class="hidden" id="edit_3_photo_original_color" name="edit_3_photo_original_color"/>
                                                                         </td>
                                                                         <td>
-                                                                            <input type="text" id="edit_color_symbol_code3" name="edit_color_symbol_code3"/>
+                                                                            <input type="text" id="edit_color_symbol_code3" name="edit_color_symbol_code3" onchange="updateColorSymbolCode('3')" disabled="disabled"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button type="button" id="edit_3_photo_delete" style="display:none" onclick="deletePhoto('3')">x</button>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -649,11 +659,14 @@ $current_charge = $fdpMgr->getCharge();
                                                                             </a>
                                                                         </td>
                                                                         <td>
-                                                                            <input class="color" id="edit_4_photo_color" name="edit_4_photo_color"/>
+                                                                            <input class="color" id="edit_4_photo_color" name="edit_4_photo_color" onchange="updateColor('4')" disabled="disabled"/>
                                                                             <input class="hidden" id="edit_4_photo_original_color" name="edit_4_photo_original_color"/>
                                                                         </td>
                                                                         <td>
-                                                                            <input type="text" id="edit_color_symbol_code4" name="edit_color_symbol_code4"/>
+                                                                            <input type="text" id="edit_color_symbol_code4" name="edit_color_symbol_code4" onchange="updateColorSymbolCode('4')" disabled="disabled"/>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button type="button" id="edit_4_photo_delete" style="display:none" onclick="deletePhoto('4')">x</button>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -961,7 +974,7 @@ $current_charge = $fdpMgr->getCharge();
                                                                <td colspan="6">
                                                                    <table width="30%">
                                                                        <tr>
-                                                                           <th>Item</th>
+                                                                           <th style="text-align: left">Item</th>
                                                                            <th>Quantity</th>
                                                                            <th>Price</th>
                                                                        </tr>
@@ -969,7 +982,7 @@ $current_charge = $fdpMgr->getCharge();
                                                                        foreach($pendingOrder_itemList as $item){
                                                                        ?>
                                                                        <tr>
-                                                                            <td><?=($productMgr->getProductSymbolCode($item['product_id']))."-".(($productMgr->getAllColorOptionalCodeByProduct($item['product_id'])[$item['color']]))?></td>
+                                                                            <td style="text-align: left"><?=($productMgr->getProductSymbolCode($item['product_id']))."-".(($productMgr->getAllColorOptionalCodeByProduct($item['product_id'])[$item['color']]))?></td>
                                                                             <td><?=$item['quantity']?></td>
                                                                             <td><?=number_format($item['price'],2,'.','')?></td>
                                                                        </tr>
@@ -977,14 +990,17 @@ $current_charge = $fdpMgr->getCharge();
                                                                        }
                                                                        ?>
                                                                        <tr>
-                                                                           <td colspan="3">
-                                                                               <?=$pendingOrder_address?>
-                                                                           </td>
+                                                                           
                                                                        </tr>
                                                                    </table>
                                                                    <table width="100%">
                                                                        <tr>
-                                                                           <td style="text-align: right"> <button class="btn btn-warning" type="button" onclick="printDeliveryLabel('<?=$pendingOrder_id?>')">Print Delivery Label</button> </td>
+                                                                           <td><strong>Address</strong></td>
+                                                                           <td style="text-align: left;width:90%" colspan="2"><?=$pendingOrder_address?></td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                           <td style="text-align: right" colspan="2"> <a class="btn btn-default" style="color:#fff" target="_blank" href="https://app.detrack.com/tracking/c2ed7ab0c381d61e1959731ff286cbb0ba590cb4?q=<?=$pendingOrder_id?>">Track</a> </td>
+                                                                           <td style="text-align: right;width:10%"> <button class="btn btn-info" type="button" onclick="printDeliveryLabel('<?=$pendingOrder_id?>')">Print Delivery Label</button> </td>
                                                                        </tr>
                                                                    </table>
                                                                </td>

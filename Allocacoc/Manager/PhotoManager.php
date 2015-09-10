@@ -65,4 +65,25 @@ class PhotoManager {
         return $exist;
     }
     
+    function deletePhoto($product_id,$photo_type){
+        $photo_arr = self::getPhotos($product_id);
+        unlink($photo_arr[$photo_type]);
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("DELETE FROM photo where product_id = ? AND photo_type = ?");
+        $stmt->bind_param("ss", $product_id,$photo_type);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+        
+    }
+    
+    function updateColorInPhotoTable($product_id,$new_color,$old_color){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE photo SET photo_type = ? WHERE product_id = ? AND photo_type = ?");
+        $stmt->bind_param("sss", $new_color, $product_id, $old_color);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
 }
