@@ -443,6 +443,7 @@ $current_charge = $fdpMgr->getCharge();
                                                 <table class="table table-bordered table-hover table-striped" id="display_product">
                                                     <thead>
                                                         <tr>
+                                                            <th> </th>
                                                             <th>Product ID</th>
                                                             <th>Product Name</th>
                                                             <th>Symbol Code</th>
@@ -470,6 +471,7 @@ $current_charge = $fdpMgr->getCharge();
                                                            
                                                         ?>
                                                            <tr>
+                                                               <td><input type="checkbox" class="productList_id" value="<?=$p_id?>"></td>
                                                                <td><?php echo $p_id; ?></td>
                                                                <td><?php echo $p_name; ?></td>
                                                                <td><?php echo $p_symbol_code; ?></td>
@@ -481,6 +483,11 @@ $current_charge = $fdpMgr->getCharge();
                                                         <?php
                                                         }
                                                         ?>
+                                                           <tr>
+                                                               <td colspan="8">
+                                                                   <button class="btn-danger" onclick="DeleteProduct()">Delete Selected Product</button>
+                                                               </td>
+                                                           </tr>
                                                     </tbody>
                                                 </table>
                                             </div>

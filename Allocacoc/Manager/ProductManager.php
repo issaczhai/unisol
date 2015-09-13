@@ -25,6 +25,14 @@ class ProductManager {
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
+    function deleteProduct($product_id){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("DELETE FROM product WHERE product_id = ?");
+        $stmt->bind_param("s", $product_id);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
     
     function addProductToShoppingCart($customer_id,$product_id,$qty, $color){
         $ConnectionManager = new ConnectionManager();
@@ -433,6 +441,15 @@ class ProductManager {
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("DELETE FROM optional_code WHERE product_id = ? AND color = ?");
         $stmt->bind_param("ss", $product_id,$color);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
+    function deleteAllColorOptionalCodeByProduct($product_id){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("DELETE FROM optional_code WHERE product_id = ?");
+        $stmt->bind_param("s", $product_id);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }

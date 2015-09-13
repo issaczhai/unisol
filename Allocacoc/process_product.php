@@ -13,7 +13,11 @@ $photoMgr = new PhotoManager();
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+$operation = '';
 $operation = filter_input(INPUT_POST,'operation');
+if ($operation === ''){
+    $operation = $_GET['operation'];
+}
 //echo $operation;
 
 if ($operation === "add_product"){
@@ -327,5 +331,15 @@ header("Location: admin.php#viewProduct");
     $return = [];
     $return['status']='success';
     echo json_encode($return);
+}elseif ($operation === "deleteProduct"){
+    $productIdList_str = $_GET['productIdList'];
+    $productIdList=explode(",",$productIdList_str);
+    foreach($productIdList as $id){
+        $productMgr->deleteProduct($product_id);//delete from product table
+        $photoMgr->deleteAllPhotosByProduct($id);//delete from photo table
+        $productMgr->deleteAllColorOptionalCodeByProduct($id);//delete from optional_code table
+        
+    }
+header("Location: admin.php#viewProduct");
 }
 ?>

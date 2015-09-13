@@ -86,4 +86,17 @@ class PhotoManager {
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
+    function deleteAllPhotosByProduct($product_id){
+        $photoList=self::getPhotos($product_id);
+        foreach ($photoList as $url){
+            unlink($url);
+        }
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("DELETE FROM photo WHERE product_id = ?");
+        $stmt->bind_param("s", $product_id);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
 }

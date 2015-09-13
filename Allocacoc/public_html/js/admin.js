@@ -286,3 +286,21 @@ function updateColorSymbolCode(no){
     });
     event.preventDefault(); //Prevent the default submit
 }
+
+function DeleteProduct(){
+    var productId_array = [];
+    $('.productList_id:checked').each(function () {
+        var e = $(this);
+        productId_array.push(e.val());
+    });
+    
+    if(productId_array.length !== 0){
+        var productId_str = productId_array.toString();
+        var operation = 'deleteProduct';
+        var redirect_path= './process_product.php?operation='+operation+'&productIdList='+productId_str;
+        console.log(redirect_path);
+        document.location.href =redirect_path;
+    }else{
+        alert("You have not selected any projects to delete");
+    }
+}
