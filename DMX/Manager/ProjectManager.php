@@ -49,11 +49,36 @@ class ProjectManager {
         return $project;
     }
     
+    function getProjectWithProjectName($project_name){
+        $project_arr = array();
+        $ConnectionMgr = new ConnectionManager();
+        $conn = $ConnectionMgr->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM project WHERE project_name = ?");
+        $stmt->bind_param("s", $project_name);
+        $stmt->execute();
+        $stmt->bind_result($project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description);
+        while ($stmt->fetch())
+        {   
+            $project['project_id'] = $project_id;
+            $project['project_name'] = $project_name;
+            $project['type'] = $type;
+            $project['year'] = $year;
+            $project['country'] = $country;
+            $project['location'] = $location;
+            $project['size'] = $size;
+            $project['completion_date'] = $completion_date;
+            $project['description'] = $description;
+            array_push($project_arr,$project);
+        }
+        $ConnectionMgr->closeConnection($stmt, $conn);
+        return $project_arr;
+    }
+
     function getAllProjects(){
         $project_arr = array();
         $ConnectionMgr = new ConnectionManager();
         $conn = $ConnectionMgr->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM project");
+        $stmt = $conn->prepare("SELECT * FROM project GROUP BY project_name");
         $stmt->execute();
         $stmt->bind_result($project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description);
         while ($stmt->fetch())
@@ -76,7 +101,7 @@ class ProjectManager {
         $totalNo = 0;
         $ConnectionMgr = new ConnectionManager();
         $conn = $ConnectionMgr->getConnection();
-        $stmt = $conn->prepare("SELECT count(*) FROM project");
+        $stmt = $conn->prepare("SELECT count(DISTINCT project_name) FROM project");
         $stmt->execute();
         $stmt->bind_result($count);
         while ($stmt->fetch())
@@ -90,7 +115,7 @@ class ProjectManager {
         $project_arr = array();
         $ConnectionMgr = new ConnectionManager();
         $conn = $ConnectionMgr->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM project ORDER BY project_name ASC LIMIT ".$pageNo.",".$itemPerPage);
+        $stmt = $conn->prepare("SELECT * FROM project GROUP BY project_name ORDER BY project_name ASC LIMIT ".$pageNo.",".$itemPerPage);
         $stmt->execute();
         $stmt->bind_result($project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description);
         while ($stmt->fetch())
@@ -122,7 +147,7 @@ class ProjectManager {
         $projectArr = [];
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM project WHERE ".$filterType."=?");
+        $stmt = $conn->prepare("SELECT * FROM project WHERE ".$filterType."=? GROUP BY project_name");
         $stmt->bind_param("s",$filterValue);
         $stmt->execute();
         $stmt->bind_result($project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description);
@@ -148,7 +173,7 @@ class ProjectManager {
         $filter_para = $filterValue.'%';
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM project WHERE project_name LIKE ?");
+        $stmt = $conn->prepare("SELECT * FROM project WHERE project_name LIKE ? GROUP BY project_name");
         $stmt->bind_param("s",$filter_para);
         $stmt->execute();
         $stmt->bind_result($project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description);

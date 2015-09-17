@@ -204,11 +204,28 @@ and open the template in the editor.
         <title>Projects</title>
     </head>
     <body>
+    <div class="modal fade confirmSubscribeModal" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Subscription</h4>
+          </div>
+          <div class="modal-body">
+            <p>Congradulations! You have successfully subscribed to our newsletter!</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="wrapper">
     <?php
     include_once("./templates/new_header.html");
     ?>
         <div class='container-fluid content'>
+            <div class="above-header-bg">
+            </div>
+            <div class="below-header-bg">
+            </div>
             <div class='row' style='height:50px;background-color: rgb(153, 153, 153)'>
             </div>
             <div class='row pull-right' style='height:40px;margin-top:-40px;background:none;border-top: 1px #FFF solid; border-left: 1px #FFF solid;padding-left:84%'>

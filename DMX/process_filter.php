@@ -5,11 +5,13 @@ if (session_status()!=PHP_SESSION_ACTIVE) {
 }
 include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/ProjectManager.php");
+include_once("./Manager/PhotoManager.php");
 $filterType = addslashes(filter_input(INPUT_POST, 'filterType'));
 $filterValue = filter_input(INPUT_POST, 'filterValue');
 // PAGE NUMBER IS SET TO 1
 $pageNumber = filter_input(INPUT_POST, 'page');
 $projectMgr = new ProjectManager();
+$photoMgr = new PhotoManager();
 $filteredProjects = [];
 $results = [];
 $itemPerPage = 10;
@@ -43,9 +45,23 @@ if(!empty($results)) {
             //$_SESSION['results'] = $filteredProjects;
             $project_name = $eachProject["project_name"];
             $project_id = $eachProject["project_id"];
+            $displayURL = $photoMgr->getProjectDisplay($project_id);
 ?>
             <div class='col-md-2 project' style='height:200px;'>
-                <a href="./project_detail.php?project_id=<?=$project_id ?>"><img class="project-image" style="width:200px;height:200px" src="./public_html/img/sample1.jpg" alt="" /></a>
+                <?php
+                if(isset($displayURL)){
+?>
+                <a href="./project_detail.php?project_id=<?=$project_id ?>"><img src="<?= $displayURL ?>" alt=""/></a>
+<?php
+
+                }else{
+?>
+                <a href="./project_detail.php?project_id=<?=$project_id ?>"><img src="./public_html/img/Dredging/projectImg/dt_1.jpg" alt=""/></a>
+<?php
+
+                }
+
+?>  
                 <div class="projectName-overlay"><a href="./project_detail.php?project_id=<?=$project_id ?>"><span><?=$project_name ?></span></a></div>
                 <div class="project-location-overlay">
                     <h4><a href='#'>Location 1</a></h4>

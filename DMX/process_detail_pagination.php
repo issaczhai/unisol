@@ -111,7 +111,7 @@ function paginate_function($item_per_page, $currentPage, $total_records, $totalP
         }
         if($currentPage < $totalPages){ 
                 
-                $next_link = ($i > $totalPages)? $totalPages : $i;
+                $next_link = ($currentPage + 1 > $totalPages)? $totalPages : ($currentPage+1);
                 $pagination .= '<li><a href="#" data-page="'.$next_link.'" title="Next">&gt;</a></li>'; //next link
                 $pagination .= '<li class="last"><a href="#" data-page="'.$totalPages.'" title="Last">&raquo;</a></li>'; //last link
         }

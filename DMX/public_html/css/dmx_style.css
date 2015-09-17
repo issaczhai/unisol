@@ -28,7 +28,24 @@
 .navbar-dmx .navbar-nav li a:hover{
     color: #fff;
 }
-
+.above-header-bg{
+    position: fixed;
+    background-color: #fff;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    z-index: 9999;
+}
+.below-header-bg{
+    position: fixed;
+    background-color: #fff;
+    top:96px;
+    left: 0;
+    width:100%;
+    height: 10px;
+    z-index: 9999;
+}
 /*.navbar-dmx .divider{
     position:relative;
     width:76%;
@@ -71,6 +88,20 @@ footer{
     bottom:10px;
     right:0;
     text-align: center;
+    color: #000;
+}
+.footer-social-btns{
+    position:absolute;
+    bottom:30px;
+    right:0;
+    text-align: left;
+}
+.footer-social-btns h5{
+    text-align: left;
+    padding-left: 33px;
+    font-weight: 400;
+    color: #000;
+
 }
 .footer-copyright .copyright-text{
     /*color: #fff;*/
@@ -133,7 +164,7 @@ h5{
     font-size: 16px; 
     line-height: 32px; 
     margin: 0 0 24px;
-    text-align: center;
+    text-align: justify;
 }
 .typography-2{
     color: #4c4a37; 
@@ -141,6 +172,7 @@ h5{
     font-size: 14px; 
     line-height: 26px; 
     text-indent: 30px; 
+    text-align: justify;
     margin: 0;
 }
 .custom-header-1{
@@ -154,11 +186,11 @@ h5{
     text-align: center;
 }
 .custom-header-2{
+    color: #d04764;
     font-size: 30px; 
+    font-weight: 300;
     letter-spacing: -1px; 
-    color: #d04764; 
     text-transform: uppercase; 
-    text-shadow: 1px 1px 0 #000;
     margin: 10px 0 24px; 
     line-height: 50px;
     text-align: center;
@@ -238,81 +270,214 @@ h5{
     z-index:0
 }
 
-    /**** about us page ****/
-    .about-top-overlay{
-        position:relative;
-        height:50px;
-        background-color: rgba(76, 76, 76,0.6);
-        z-index:-1;
-    }
-    
-    .aboutUs-text{
-        padding-top: 60px;
-        position:relative;
-        height:423px;
-    }
-    
-    .about-carousel-caption{
-        position:absolute;
-        width:100%;
-        top: 0;
-        background-color: rgba(76, 76, 76,0.6);
-        height: 50px;
-        font-size: 18px;
-        color: #FFFFFF;
-        text-align: left;
-        padding-top: 20px;
-        padding-left: 10px;
-        z-index:1000 !important;
-    }
-    .about-hollow-frame{
-        position:relative;
-        background:none;
-        border-top: 2px rgb(220, 220, 220) solid; 
-        border-left: 2px rgb(220, 220, 220) solid;
-        padding-left:1250px;
-        z-index:1000;
-    }
-    /**** service page ****/
-   
-    .service-top-overlay{
-        position:relative;
-        height:50px;
-        /*margin-top:-408px;*/
-        background-color: rgba(76, 76, 76,0.6);
-        z-index:-1;
-    }
-    .service-hollow-frame{
-        position:relative;
-        background:none;
-        /*height: 398px;
-        margin-top:-398px;*/
-        border-top: 2px rgb(220, 220, 220) solid; 
-        border-left: 2px rgb(220, 220, 220) solid;
-        padding-left: calc(1366px - 226.656px - 2px);
-        z-index:1000;
-    }
-    .service-sidebar{
-        padding:0;
-    }
-    .service{
-        padding-left:5px;
-        padding-right:5px;
-    }
-    .service li{
-        list-style: none;
-        margin-bottom:15px;
-    }
-    .service li .btn{
-        width: 100%;
-    }
+.contact-address{
+    position: absolute;
+    bottom: 40px;
+    right: 156px;
+}
 
-    /**** project detail ****/
-    .detail-thumbnail{
-        position:relative;
-        height: 100px;
-    }
+/**** about us page ****/
+.about-top-overlay{
+    position:relative;
+    height:50px;
+    background-color: rgba(76, 76, 76,0.6);
+    z-index:-1;
+}
 
+.aboutUs-text{
+    padding-top: 60px;
+    position:relative;
+    height:423px;
+}
+
+.about-carousel-caption{
+    position:absolute;
+    width:100%;
+    top: 0;
+    background-color: rgba(76, 76, 76,0.6);
+    height: 50px;
+    font-size: 18px;
+    color: #FFFFFF;
+    text-align: left;
+    padding-top: 20px;
+    padding-left: 10px;
+    z-index:1000 !important;
+}
+.about-hollow-frame{
+    position:relative;
+    background:none;
+    border-top: 2px rgb(220, 220, 220) solid; 
+    border-left: 2px rgb(220, 220, 220) solid;
+    padding-left:1235px;
+    z-index:1000;
+}
+
+.team-header{
+    text-align: center;
+}
+.service-details {
+width: 460px;
+height: 230px;  
+overflow: hidden;
+position: relative;
+display:inline-block;
+margin-left: 55px;
+margin-bottom: 15px;
+}
+
+.service-details img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: inherit;
+    width: 230px;
+    height: 100%;
+    float: left;
+    transition: all 0.8s;
+    -moz-transition: all 0.8s;
+
+}
+
+.service-details:hover img {
+    /*opacity: 0.4 !important;*/
+}
+
+.service-details .service-hover-text h3 {
+    padding: 0px;
+    margin: 0px;
+    font-size: 25px;
+  font-weight:300;
+    font-family: "Open Sans";
+}
+
+.service-details .service-hover-text h4 {
+    padding: 0px;
+    padding-bottom: 13px;
+    margin: 0px;
+    font-size: 14px;
+  letter-spacing: 3px;
+    width: 90%;
+    font-family: "Open Sans";
+  text-transform:uppercase;
+    border-bottom: 2px solid #000;
+}
+
+.service-details .service-hover-text p {
+    padding-top: 13px;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: "Open Sans";
+}
+
+
+.service-details .service-hover-text{
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    padding: 3% 4%;
+    background: #D90E0E;
+    color: rgba(255,255,255,1);
+/*  display: none;*/
+    transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.4s;
+}
+
+.service-details:hover .service-hover-text {
+    display: block !important;
+    color: rgba(255,255,255,1);
+    background:rgba(217,14,14,0.85);
+    left: 0px;
+    top: 0px;
+}
+
+
+.service-details .service-text {
+    width: 50%;
+    height: inherit;
+    background: #000;
+    float: left;
+    position: absolute;
+    left: 50%;
+}
+
+.service-details .service-text p {
+    padding:100px 0px 0px 20px;
+    font-size: 24px;
+    font-family: "Open Sans";
+  font-weight:700;
+    color: #fff;
+}
+
+.service-details .service-text p span {
+    font-family: "Open Sans" !important;
+}
+
+.service-details .service-text a , .service-white .service-text {
+    padding: 0px 0px 0px 20px;
+    font-size: 14px !important;
+    color:#FF5A22 !important;
+    font-family: "Open Sans" !important;
+    text-decoration: none !important; 
+}
+
+.service-details .service-text {
+    float: left;
+} 
+
+.service-white {
+    background: #eee !important;
+    width: 50% !important;
+    height: inherit !important;
+}
+
+.service-white p {
+    color: #000 !important;
+}
+/**** service page ****/
+
+.service-top-overlay{
+    position:relative;
+    height:50px;
+    /*margin-top:-408px;*/
+    background-color: rgba(76, 76, 76,0.6);
+    z-index:-1;
+}
+.service-hollow-frame{
+    position:relative;
+    background:none;
+    /*height: 398px;
+    margin-top:-398px;*/
+    border-top: 2px rgb(220, 220, 220) solid; 
+    border-left: 2px rgb(220, 220, 220) solid;
+    padding-left: calc(1366px - 226.656px - 2px);
+    z-index:1000;
+}
+.service-sidebar{
+    padding:0;
+}
+.service{
+    padding-left:5px;
+    padding-right:5px;
+}
+.service li{
+    list-style: none;
+    margin-bottom:15px;
+}
+.service li .btn{
+    width: 100%;
+}
+
+/**** project detail ****/
+.detail-thumbnail{
+    position:relative;
+    height: 100px;
+}
+
+.content{
+    position: relative;
+}
 /****    large screen   ****/
 @media screen and (min-width: 1367px){
     
@@ -340,8 +505,8 @@ h5{
     .navbar-dmx .navbar-nav li{
         line-height: 92px;
         height:92px;
-        padding-left: 45px;
-        padding-right: 45px;
+        padding-left: 35px;
+        padding-right: 35px;
     }
     .project-overlay{
         position:relative;
@@ -363,6 +528,9 @@ h5{
 
     .contact-hollow-frame{
         padding-left: 1137px;
+    }
+    .about-hollow-frame{
+        padding-left:1250px;
     }
 } 
 
@@ -406,8 +574,8 @@ h5{
     .navbar-dmx .navbar-nav li{
         line-height: 92px;
         height:92px;
-        padding-left: 45px;
-        padding-right: 45px;
+        padding-left: 35px;
+        padding-right: 35px;
     }
 
     .project-overlay{

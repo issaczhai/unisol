@@ -37,7 +37,81 @@ class PhotoManager {
         $ConnectionManager->closeConnection($stmt, $conn);
         return $photo_arr;
     }
-    
+    function getTotalNumberOfThumbnailPhotosOfProject($project_id){
+        $totalNo = 0;
+        $ConnectionMgr = new ConnectionManager();
+        $conn = $ConnectionMgr->getConnection();
+        $stmt = $conn->prepare("SELECT count(*) FROM photo WHERE project_id=? AND photo_no LIKE 'thumbnail%' ");
+        $stmt->bind_param("s", $project_id);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        while ($stmt->fetch())
+        {   
+            $totalNo = $count;
+        }
+        $ConnectionMgr->closeConnection($stmt, $conn);
+        return $totalNo;
+    }
+    function getProjectDisplay($project_id){
+        $display_url = null;
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT photo_url FROM photo where project_id = ? AND photo_no = 'display' ");
+        $stmt->bind_param("s", $project_id);
+        $stmt->execute();
+        $stmt->bind_result($photo_url);
+        while ($stmt-> fetch())
+        {   
+            $display_url = $photo_url;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $display_url;
+    }
+    function getThumbnailPhotosByid($project_id){
+        $photo_arr = [];
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT photo_url FROM photo where project_id = ? AND photo_no LIKE 'thumbnail%' ");
+        $stmt->bind_param("s", $project_id);
+        $stmt->execute();
+        $stmt->bind_result($photo_url);
+        while ($stmt-> fetch())
+        {   
+            array_push($photo_arr,$photo_url);
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $photo_arr;
+    }
+    function getHDPhotosByid($project_id){
+        $photo_arr = [];
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT photo_url FROM photo WHERE project_id = ? AND photo_no LIKE 'hd%' ");
+        $stmt->bind_param("s", $project_id);
+        $stmt->execute();
+        $stmt->bind_result($photo_url);
+        while ($stmt-> fetch())
+        {   
+            array_push($photo_arr,$photo_url);
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $photo_arr;
+    }
+    function getPaginatedResults($pageNo, $photoPerPage, $project_id){
+        $photo_arr = array();
+        $ConnectionMgr = new ConnectionManager();
+        $conn = $ConnectionMgr->getConnection();
+        $stmt = $conn->prepare("SELECT photo_url FROM photo WHERE project_id = ? AND photo_no LIKE 'thumbnail%' ORDER BY photo_no ASC LIMIT ".$pageNo.",".$photoPerPage);
+        $stmt->bind_param("s", $project_id);
+        $stmt->execute();
+        $stmt->bind_result($photo_url);        
+        while ($stmt->fetch())
+        {   
+            array_push($photo_arr,$photo_url);
+        }
+        $ConnectionMgr->closeConnection($stmt, $conn);
+        return $photo_arr;
+    }
     function getAllPhotosInJson(){
         $fullList = [];
         $reference = "";

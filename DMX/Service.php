@@ -104,11 +104,26 @@ and open the template in the editor.
         <title>DMX Services</title>
     </head>
     <body>
+        <div class="modal fade confirmSubscribeModal" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Subscription</h4>
+              </div>
+              <div class="modal-body">
+                <p>Congradulations! You have successfully subscribed to our newsletter!</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="wrapper">
         <?php
         include_once("./templates/new_header.html");
         ?>
           <div class="container-fluid content-wrapper">
+            <div class="row above-header-bg">
+            </div>
             <div class="row no-margin-row">
                 <div class="col-xs-12 col-sm-12 col-md-2 service-sidebar">
                         <div class="title"><h4 id='title-name'>SERVICES</h4></div>

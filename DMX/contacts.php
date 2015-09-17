@@ -160,7 +160,7 @@ and open the template in the editor.
         <script src="http://maps.googleapis.com/maps/api/js"></script>
         <?php
             //$address = $dlocation; // Google HQ
-            $prepAddr = str_replace(' ','+','75 Duxton Road Singapore 089534');
+            $prepAddr = str_replace(' ','+','8 Jalan Kilang Barat Singapore 159351');
             $geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
             $output = json_decode($geocode);
             $latitude = $output->results[0]->geometry->location->lat;
@@ -202,12 +202,42 @@ and open the template in the editor.
         <title>Contacts</title>
     </head>
     <body>
+        <div class="modal fade confirmSubscribeModal" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Subscription</h4>
+              </div>
+              <div class="modal-body">
+                <p>Congradulations! You have successfully subscribed to our newsletter!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade confirmEnquiryModal" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Enquiry Sent</h4>
+              </div>
+              <div class="modal-body">
+                <p>Thanks for enquiry! Our service team will contact you shortly. </p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class='wrapper'>
         <?php
         include_once("./templates/new_header.html");
         ?>
         <div class='container-fluid content-wrapper'>
-			
+			<div class="above-header-bg">
+            </div>
+            <div class="below-header-bg">
+            </div>
             <div class='row  no-margin-row'>
                 <div class='col-md-2 sidebar'>
                     <div style='margin-top:8px'>
@@ -299,66 +329,12 @@ and open the template in the editor.
                             </div>
                         </div>
                     </div>
-                    <!-- <div id="contact-content">
-                        <table style="border-collapse: separate;width: 100%;border-spacing: 0 20px">
-                            <tbody>
-                                <tr>
-                                <td><img class="profile-image" src="https://media.licdn.com/mpr/mpr/shrink_100_100/p/6/005/090/0fe/084b18b.jpg"/></td>
-                                <td style="padding-left: 10px">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="2">Zhang Jiahang</td>
-                                            </tr>
-                                            <tr>
-                                                <td>EMAIL:</td>
-                                                <td>123@123.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TEL:</td>
-                                                <td>12332112</td>
-                                            </tr>
-                                            <tr>
-                                                <td>FAX:</td>
-                                                <td>12345678</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><img class="profile-image" src="https://s-media-cache-ak0.pinimg.com/avatars/bodui_1368172952_140.jpg"/></td>
-                                <td style="padding-left: 10px">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="2">Bie Yaqing</td>
-                                            </tr>
-                                            <tr>
-                                                <td>EMAIL:</td>
-                                                <td>sb@sb.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>TEL:</td>
-                                                <td>54213</td>
-                                            </tr>
-                                            <tr>
-                                                <td>FAX:</td>
-                                                <td>594213</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div> -->
                 </div>
 
                 <div class='col-md-8 enquiry-form'>
                 
                     <div id="form_div" class="col-md-7" style='padding:0'>
-                        <form id="contactForm" action="" method="post">
+                        <form id="contactForm" action="./process_send_email.php" method="post">
                         <table width="90%" style="border-collapse: separate;border-spacing: 20px;">
                                 <tbody>
                                 <tr>
@@ -392,9 +368,12 @@ and open the template in the editor.
                     </div>
 
                     <!-- <div id="map" style='margin-top:5px;' class='col-md-3'> -->
-                        <div id="map_canvas" class="col-md-5">
-                            
-                        </div>
+                    <div id="map_canvas" class="col-md-5">
+                        
+                    </div>
+                    <div class="contact-address">
+                        <p>8 Jalan Kilang Barat Singapore 159351</p>
+                    </div>
                     <!-- </div> -->
                 </div>
             </div>
@@ -413,6 +392,6 @@ and open the template in the editor.
         include_once("./templates/footer.php");
         ?>
     
-    
+        <script src="./public_html/js/dmx.js"></script>
     </body>
 </html>

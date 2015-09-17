@@ -36,11 +36,28 @@ and open the template in the editor.
         <title>DMX</title>
     </head>
     <body>
+        <div class="modal fade confirmSubscribeModal" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Subscription</h4>
+              </div>
+              <div class="modal-body">
+                <p>Congradulations! You have successfully subscribed to our newsletter!</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class='wrapper'>
         <?php
         include_once("./templates/new_header.html");
         ?>
         <div class='content-wrapper'>
+            <div class="above-header-bg">
+            </div>
+            <div class="below-header-bg">
+            </div>
             <div style="position:relative; width:100%;height:10px; background-color: rgb(117, 117, 117)"></div>
             <div style="position:absolute;right:0;height:424px;background:none;margin-top:50px;padding-left:90%;z-index:3;border-top:3px solid #ffffff;border-left:3px solid #ffffff"></div>
         	<div id="index-carousel" class="carousel slide" data-ride="carousel">

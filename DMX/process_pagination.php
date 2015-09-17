@@ -72,17 +72,32 @@ if(!empty($results)) {
 
                 }else{
 ?>
-                <a href="./project_detail.php?project_id=<?=$project_id ?>"><img src="./public_html/img/AET1/aet1_2.jpg" alt=""/></a>
+                <a href="./project_detail.php?project_id=<?=$project_id ?>"><img src="./public_html/img/Dredging/projectImg/dt_1.jpg" alt=""/></a>
 <?php
 
                 }
 
 ?>              
                 <div class="projectName-overlay"><a href="./project_detail.php?project_id=<?=$project_id ?>"><span><?=$project_name ?></span></a></div>
-                <div class="project-location-overlay">
-                    <h4><a href='#'>Location 1</a></h4>
-                    <h4><a href='#'>Location 2</a></h4>
-                </div>
+<?php
+                $projectSameName = $projectMgr->getProjectWithProjectName($project_name);
+                $numberWithSameName = count($projectSameName);
+                if($numberWithSameName > 1){
+?>
+                    <div class="project-location-overlay">
+<?php
+                        foreach ($projectSameName as $eachProject){
+                            $projectLocation = $eachProject['location'];
+                            $projecId = $eachProject['project_id'];
+?>
+                            <h4><a href='./project_detail.php?project_id=<?=$projectId ?>'><?= $projectLocation ?></a></h4>     
+<?php
+                        }
+?>  
+                    </div> 
+<?php                    
+                }
+?>                
             </div>
 <?php
         }
@@ -113,7 +128,7 @@ function paginate_function($item_per_page, $currentPage, $total_records, $totalP
         
         $right_links    = $currentPage + 5; 
         $previous       = $currentPage - 1; //previous link 
-        $next_link           = $currentPage + 1; //next link
+        $next_link      = $currentPage + 1; //next link
         $first_link     = true; //boolean var to decide our first link
         
         if($currentPage > 1){
@@ -148,7 +163,7 @@ function paginate_function($item_per_page, $currentPage, $total_records, $totalP
         }
         if($currentPage < $totalPages){ 
                 
-                $next_link = ($i > $totalPages)? $totalPages : $i;
+                $next_link = ($currentPage + 1 > $totalPages) ? $totalPages : ($currentPage+1);
                 $pagination .= '<li><a href="#" data-page="'.$next_link.'" title="Next">&gt;</a></li>'; //next link
                 $pagination .= '<li class="last"><a href="#" data-page="'.$totalPages.'" title="Last">&raquo;</a></li>'; //last link
         }

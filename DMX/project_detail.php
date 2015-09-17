@@ -42,19 +42,18 @@ and open the template in the editor.
         }
         .detail-thumbnail{
             cursor: pointer;
-            margin-bottom: 10px;
             z-index: 1029;
-            background-color: rgb(246, 246, 246);
+            width: 100px;
+            height:100px;
             padding:10px;
-            box-shadow: 1px 1px 1px #888888;
         }
         .blur{
             opacity: 0.4;
             filter: alpha(opacity=40);
         }
         .detail-thumbnail img{
-            width: 87px;
-            height: 78px;
+            width: 80px;
+            height: 80px;
         }
         .search_box .form-control:focus{
             border-color: #cccccc;
@@ -107,7 +106,7 @@ and open the template in the editor.
         .thumbnail-link{
             position:absolute;
            /* opacity: 0.4;
-            filter: alpha(opacity=40); /* For IE8 and earlier */*/
+            filter: alpha(opacity=40); /* For IE8 and earlier */
         }
         .detail-thumbnail:hover, .active-thumbnail-link{
             opacity: 1;
@@ -252,16 +251,33 @@ and open the template in the editor.
     <title>Projects</title>
     </head>
     <body>
+        <div class="modal fade confirmSubscribeModal" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Subscription</h4>
+              </div>
+              <div class="modal-body">
+                <p>Congradulations! You have successfully subscribed to our newsletter!</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="wrapper">
             <?php
             include_once("./templates/new_header.html");
             ?>
             <div class="container-fluid content">
+                <div class="above-header-bg">
+                </div>
+                <div class="below-header-bg">
+                </div>
                 <div class="row top-overlay">
                 </div>
 
-                <div class="row frame-thin">
-                </div>
+                <!-- <div class="row frame-thin">
+                </div> -->
 
                 <div class="row">
                     <!-- Carousel -->
@@ -281,9 +297,9 @@ and open the template in the editor.
                     <div class="col-md-3 project-info">
                         <ul class="inline-list">
                             <li><h4><?= $project['project_name'] ?></h4></li>
-                            <li>LOCATION: <?= $project['location'] ?></li>
-                            <li>SIZE: <?= $project['size'] ?></li>
-                            <li>COMPLETION DATE: <?= date_format($completionDate, 'M Y') ?></li>
+                            <li>LOCATION: <?= $project['size'] ?></li>
+                            <li>SIZE: <?= $project['location'] ?></li>
+                            <li>COMPLETION DATE: <?= date_format($completionDate, 'Y') ?></li>
                         </ul>
                         <div id="loaderID" style="display:none;position:absolute; top:50%; left:50%; z-index:1030; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
                         <div id="results">

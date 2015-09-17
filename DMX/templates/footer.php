@@ -25,6 +25,9 @@
                 <div class="col-xs-4 certificate-logo"><img src="./public_html/img/certificate-footer/transparent cert logos/bizSAFE-Partner.png"></div>
                 <div class="col-xs-4 certificate-logo"><img src="./public_html/img/certificate-footer/transparent cert logos/bizsafe1.png"></div>
             </div> -->
+            <div class="col-xs-12 col-lg-3 footer-social-btns">
+                <h5>Follow Us: <span><a href='https://www.facebook.com/DMXchange-356463218789' target="_blank"><img src='./public_html/img/facebook_icon.png'></a></span></h5>
+            </div>
             <div class="col-xs-12 col-lg-3 footer-copyright">
                 <div class="copyright-text">Copyright reserved by dmxchange 2015</div>
             </div>
