@@ -1,28 +1,4 @@
-/**** Header ****/
-#DMXNavbar{
 
-    border:none;
-    background-image: url('../img/header.jpg');
-    background-repeat: no-repeat;
-    top:4px;
-}
-
-.navbar-dmx .navbar-brand{
-    padding-top:0;
-    padding-left:15px;
-}
-.navbar-dmx .navbar-collapse{
-    padding-right: 0;
-}
-.navbar-dmx .navbar-nav{
-    margin-left: 300px;
-}
-.navbar-dmx .navbar-nav li a{
-    color: #000;
-}
-.navbar-dmx .navbar-nav li a:hover{
-    color: #fff;
-}
 .above-header-bg{
     position: fixed;
     background-color: #fff;
@@ -445,7 +421,6 @@ h5{
     margin-top:-398px;*/
     border-top: 2px rgb(220, 220, 220) solid; 
     border-left: 2px rgb(220, 220, 220) solid;
-    padding-left: calc(1366px - 226.656px - 2px);
     z-index:1000;
 }
 .service-sidebar{
@@ -474,7 +449,33 @@ h5{
 }
 /****    large screen   ****/
 @media screen and (min-width: 1367px){
-    
+    body{
+        padding-top: 106px
+    }
+    /**** Header ****/
+    #DMXNavbar{
+
+        border:none;
+        background-image: url('../img/header.jpg');
+        background-repeat: no-repeat;
+        top:4px;
+    }
+
+    .navbar-dmx .navbar-brand{
+        display: none;
+    }
+    .navbar-dmx .navbar-collapse{
+        padding-right: 0;
+    }
+    .navbar-dmx .navbar-nav{
+        margin-left: 300px;
+    }
+    .navbar-dmx .navbar-nav li a{
+        color: #000;
+    }
+    .navbar-dmx .navbar-nav li a:hover{
+        color: #fff;
+    }
     .content, .content-wrapper, footer{
         width: 1366px !important;
         margin:0 auto !important;
@@ -519,18 +520,49 @@ h5{
         margin-top: 0;
         margin-bottom: 5px;
     }
-
+    .service-hollow-frame{
+        padding-left: calc(1366px - 226.656px - 2px);
+    }
     .contact-hollow-frame{
         padding-left: 1137px;
     }
     .about-hollow-frame{
         padding-left:1250px;
     }
+    .service-details {
+        margin-right: 30px;
+    }
 } 
 
 /****    desktop   ****/
-@media screen and (max-width: 1366px){
+@media screen and (min-width:768px) and (max-width: 1366px){
+    body{
+        padding-top: 106px
+    }
+    /**** Header ****/
+    #DMXNavbar{
 
+        border:none;
+        background-image: url('../img/header.jpg');
+        background-repeat: no-repeat;
+        top:4px;
+    }
+
+    .navbar-dmx .navbar-brand{
+        display: none;
+    }
+    .navbar-dmx .navbar-collapse{
+        padding-right: 0;
+    }
+    .navbar-dmx .navbar-nav{
+        margin-left: 300px;
+    }
+    .navbar-dmx .navbar-nav li a{
+        color: #000;
+    }
+    .navbar-dmx .navbar-nav li a:hover{
+        color: #fff;
+    }
     .wrapper{
         /*min-height: 100%;
         margin-bottom: -142px;
@@ -589,7 +621,9 @@ h5{
         margin-top: 0;
         margin-bottom: 5px;
     }
-
+    .service-hollow-frame{
+        padding-left: calc(1366px - 226.656px - 2px - 15px);
+    }
     .no-margin-row{
         margin-left:0;
         margin-right:0;
@@ -599,10 +633,17 @@ h5{
         padding-right: 0;
         margin-right: -15px;
     }
+    /**** About Us****/
+    .service-details {
+        margin-right: 25px;
+    }
     
 }
 /****    mobile   ****/
 @media screen and (max-width: 767px){
+    body{
+        padding-top: 60px;
+    }
     #DMXNavbar{
         top:0;
     }
@@ -612,7 +653,7 @@ h5{
     .navbar-brand img{
         display:none;
     }
-    .frame-thin, .frame-thick, .top-overlay{
+    .frame-thin, .frame-thick, .top-overlay, .below-header-bg, .index-hollow, .top-carousel-overlay{
         display:none;
     }
     .project-overlay{
@@ -633,6 +674,16 @@ h5{
     .detail-thumbnail{
         text-align: center;
     }
+    /*** projects ***/
+    #results{
+        margin-top: 20px;
+    }
+    #thumbnails{
+        text-align: center;
+    }
+    .project img{
+        left: 0;
+    }
     /*** about us page ***/
     .about-carousel-caption{
         position:absolute;
@@ -646,6 +697,23 @@ h5{
         padding-top: 10px;
         padding-left: 10px;
         z-index:1001 !important;
+    }
+    .aboutUs-text{
+        height: auto;
+    }
+    /*** Footer ***/
+    footer{
+        height: auto;
+    }
+    .footer-copyright{
+        position:relative;
+        margin-top: 20px;
+    }
+    .footer-social-btns{
+        position:relative;
+        bottom: 0;
+        margin-top: 20px;
+        padding-left: 0px;
     }
 }  
 

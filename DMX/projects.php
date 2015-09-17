@@ -32,10 +32,6 @@ and open the template in the editor.
         <link rel="stylesheet" href="./public_html/css/main.css">
         <link rel="stylesheet" href="./public_html/css/dmx_style.css">
         <style>
-            
-            body{
-                padding-top: 106px;
-            }
             /**** change the divider width as the side scroll bar existence ****/
             .navbar-dmx .divider{
                 width: 75.7%;

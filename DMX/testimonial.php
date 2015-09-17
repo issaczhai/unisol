@@ -16,11 +16,6 @@ and open the template in the editor.
         <link rel="stylesheet" href="./public_html/css/style.css">
         <link rel="stylesheet" href="./public_html/css/dmx_style.css">
         <link rel="stylesheet" href="./public_html/css/testimonial_style.css">
-        <style>
-            body{
-                padding-top: 102px
-            }
-        </style>
 
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>

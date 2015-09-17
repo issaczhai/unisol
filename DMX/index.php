@@ -19,9 +19,7 @@ and open the template in the editor.
             /*html, body{
                 height: 100%;    
             }*/
-            body{
-                padding-top: 106px
-            }
+            
             .wrapper{
                 margin-bottom: 30px;
             }
@@ -59,7 +57,7 @@ and open the template in the editor.
             <div class="below-header-bg">
             </div>
             <div style="position:relative; width:100%;height:10px; background-color: rgb(117, 117, 117)"></div>
-            <div style="position:absolute;right:0;height:424px;background:none;margin-top:50px;padding-left:90%;z-index:3;border-top:3px solid #ffffff;border-left:3px solid #ffffff"></div>
+            <div class="index-hollow" style="position:absolute;right:0;height:424px;background:none;margin-top:50px;padding-left:90%;z-index:3;border-top:3px solid #ffffff;border-left:3px solid #ffffff"></div>
         	<div id="index-carousel" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
@@ -70,8 +68,8 @@ and open the template in the editor.
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
                     
-                    <div style="position:absolute;width:100%;height:50px;background-color:#000000;z-index:1;opacity:0.5"></div>
-                    <div style="position:absolute;width:96%;height:340px;background:none;z-index:2;border:1px solid #ffffff; border-left: 0"></div>
+                    <div class="top-carousel-overlay" style="position:absolute;width:100%;height:50px;background-color:#000000;z-index:1;opacity:0.5"></div>
+                    <div class="index-hollow" style="position:absolute;width:96%;height:340px;background:none;z-index:2;border:1px solid #ffffff; border-left: 0"></div>
                     <div class="item active">
                         <img src="./public_html/img/indexImg/1.jpg" alt="First slide">
                         <div class="carousel-caption"></div>

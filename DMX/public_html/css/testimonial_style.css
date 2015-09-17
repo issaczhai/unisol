@@ -113,6 +113,25 @@ p{
   color: #000;
 }
 
+@media screen and (max-width: 767px){
+  body{
+    padding-top: 60px;
+  }
+  .content-testimonial{
+    width:90%;
+    padding:1em 0; 
+  }
+  .content-testimonial h1{
+      font-size: 24px;
+      letter-spacing: 1px;
+  }
+  .content-testimonial h3{
+      font-size: 16px;
+  }
+  .side-nav{
+      display: none;
+  }
+}
 /*#one{background: url(https://unsplash.it/1800/900?image=4) no-repeat center center fixed;}
 #two{background: url(https://unsplash.it/1800/900?image=26) no-repeat center center fixed;}
 #three{background: url(https://unsplash.it/1800/900?image=96) no-repeat center center fixed;}

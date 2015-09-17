@@ -20,9 +20,6 @@ and open the template in the editor.
             html, body{
                 height: 100%;    
             }
-            body{
-                padding-top: 102px
-            }
             
             .title{
                 position: relative;

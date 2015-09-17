@@ -30,9 +30,6 @@ and open the template in the editor.
     <link rel="stylesheet" href="./public_html/css/main.css">
     <link rel="stylesheet" href="./public_html/css/dmx_style.css">
     <style>
-        body{
-            padding-top: 106px;
-        }
         .wrapper{
             margin-bottom: 30px;
         }
