@@ -2,11 +2,6 @@
 #DMXNavbar{
 
     border:none;
-    /* 
-    background: -webkit-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); For Safari 5.1 to 6.0 
-    background: -o-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223));  For Opera 11.1 to 12.0 
-    background: -moz-linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); For Firefox 3.6 to 15
-    background: linear-gradient(rgb(223, 223, 223), rgb(248, 248, 248),rgb(223, 223, 223)); Standard syntax */
     background-image: url('../img/header.jpg');
     background-repeat: no-repeat;
     top:4px;
@@ -43,16 +38,10 @@
     top:96px;
     left: 0;
     width:100%;
-    height: 10px;
+    height: 6px;
     z-index: 9999;
 }
-/*.navbar-dmx .divider{
-    position:relative;
-    width:76%;
-    margin-top: -35px;
-    z-index:1000;
-    border-top:1px solid rgba(81, 81, 81, 0.5);
-}*/
+
 /**** Footer ****/
 footer{
 
@@ -135,6 +124,7 @@ h5{
 
 .team-bonding-carousel{
     padding:0;
+    z-index: 1000;
 }
 
 .team-bonding-carousel img{
@@ -256,7 +246,7 @@ h5{
     height:50px;
     margin-top: -500px; 
     background-color: rgba(76, 76, 76,0.6);
-    z-index:0
+    z-index:1
 }
 
 .contact-hollow-frame{
@@ -277,11 +267,14 @@ h5{
 }
 
 /**** about us page ****/
+.about-section{
+    background-color: rgb(248, 248, 248);
+}
 .about-top-overlay{
     position:relative;
     height:50px;
     background-color: rgba(76, 76, 76,0.6);
-    z-index:-1;
+    z-index:1;
 }
 
 .aboutUs-text{
@@ -301,7 +294,7 @@ h5{
     text-align: left;
     padding-top: 20px;
     padding-left: 10px;
-    z-index:1000 !important;
+    z-index:1001 !important;
 }
 .about-hollow-frame{
     position:relative;
@@ -316,13 +309,14 @@ h5{
     text-align: center;
 }
 .service-details {
-width: 460px;
-height: 230px;  
-overflow: hidden;
-position: relative;
-display:inline-block;
-margin-left: 55px;
-margin-bottom: 15px;
+    width: 360px;
+    height: 180px;  
+    overflow: hidden;
+    position: relative;
+    display:inline-block;
+    margin-left: 15px;
+    margin-right: 30px;
+    margin-bottom: 45px;
 }
 
 .service-details img {
@@ -330,7 +324,7 @@ margin-bottom: 15px;
     top: 0;
     left: 0;
     height: inherit;
-    width: 230px;
+    width: 180px;
     height: 100%;
     float: left;
     transition: all 0.8s;
@@ -346,7 +340,7 @@ margin-bottom: 15px;
     padding: 0px;
     margin: 0px;
     font-size: 25px;
-  font-weight:300;
+    font-weight:300;
     font-family: "Open Sans";
 }
 
@@ -355,10 +349,10 @@ margin-bottom: 15px;
     padding-bottom: 13px;
     margin: 0px;
     font-size: 14px;
-  letter-spacing: 3px;
+    letter-spacing: 3px;
     width: 90%;
     font-family: "Open Sans";
-  text-transform:uppercase;
+    text-transform:uppercase;
     border-bottom: 2px solid #000;
 }
 
@@ -371,11 +365,11 @@ margin-bottom: 15px;
 
 
 .service-details .service-hover-text{
-    width: 50%;
+    width: 180px;
     height: 100%;
     position: absolute;
     top: 0%;
-    left: 50%;
+    left: 180px;
     padding: 3% 4%;
     background: #D90E0E;
     color: rgba(255,255,255,1);
@@ -394,19 +388,19 @@ margin-bottom: 15px;
 
 
 .service-details .service-text {
-    width: 50%;
+    width: 180px;
     height: inherit;
     background: #000;
     float: left;
     position: absolute;
-    left: 50%;
+    left: 180px;
 }
 
 .service-details .service-text p {
     padding:100px 0px 0px 20px;
     font-size: 24px;
     font-family: "Open Sans";
-  font-weight:700;
+    font-weight:700;
     color: #fff;
 }
 
@@ -428,7 +422,7 @@ margin-bottom: 15px;
 
 .service-white {
     background: #eee !important;
-    width: 50% !important;
+    width: 180px !important;
     height: inherit !important;
 }
 
@@ -442,7 +436,7 @@ margin-bottom: 15px;
     height:50px;
     /*margin-top:-408px;*/
     background-color: rgba(76, 76, 76,0.6);
-    z-index:-1;
+    z-index:0;
 }
 .service-hollow-frame{
     position:relative;
@@ -651,17 +645,8 @@ margin-bottom: 15px;
         text-align: left;
         padding-top: 10px;
         padding-left: 10px;
-        z-index:1000 !important;
+        z-index:1001 !important;
     }
 }  
 
-/*
-.navbar-dmx .navbar-collapse .divider{
-    position:absolute;
-    width:100%;
-    margin-top: 45px;
-    margin-left: 315px;
-    border:1px solid rgba(81, 81, 81, 0.5);
-}
-*/
 

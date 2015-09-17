@@ -176,8 +176,8 @@ and open the template in the editor.
             <div class='row about-hollow-frame pull-right no-margin-row'></div>
             <div class='row no-margin-row team'>
                 <h2 class='team-header'>Our Team</h2>
-                <div class='col-md-10' style='float:none;margin:0 auto'>
-                    <div class='col-md-6  service-details'>
+                <div class='col-md-11' style='float:none;margin:0 auto'>
+                    <div class='col-md-4  service-details'>
                         <img src="./public_html/img/qiaojian.jpg" alt="realm">
                         <div class="service-hover-text">
                           <h3>Jane Doe</h3>
@@ -189,7 +189,7 @@ and open the template in the editor.
                           <a href="#">@JaneDoe</a>
                         </div>
                     </div>
-                    <div class='col-md-6 service-details'>
+                    <div class='col-md-4 service-details'>
                         <img src="./public_html/img/qiaojian.jpg" alt="realm">
                         <div class="service-hover-text">
                           <h3>Jane Doe</h3>
@@ -201,7 +201,7 @@ and open the template in the editor.
                           <a href="#">@JaneDoe</a>
                         </div>
                     </div>
-                    <div class='col-md-6 service-details'>
+                    <div class='col-md-4 service-details'>
                         <img src="./public_html/img/qiaojian.jpg" alt="realm">
                         <div class="service-hover-text">
                           <h3>Jane Doe</h3>
@@ -213,7 +213,7 @@ and open the template in the editor.
                           <a href="#">@JaneDoe</a>
                         </div>
                     </div>
-                    <div class='col-md-6 service-details'>
+                    <div class='col-md-4 service-details'>
                         <img src="./public_html/img/qiaojian.jpg" alt="realm">
                         <div class="service-hover-text">
                           <h3>Jane Doe</h3>
@@ -225,7 +225,7 @@ and open the template in the editor.
                           <a href="#">@JaneDoe</a>
                         </div>
                     </div>
-                    <div class='col-md-6 service-details'>
+                    <div class='col-md-4 service-details'>
                         <img src="./public_html/img/qiaojian.jpg" alt="realm">
                         <div class="service-hover-text">
                           <h3>Jane Doe</h3>
@@ -237,7 +237,7 @@ and open the template in the editor.
                           <a href="#">@JaneDoe</a>
                         </div>
                     </div>
-                    <div class='col-md-6 service-details'>
+                    <div class='col-md-4 service-details'>
                         <img src="./public_html/img/qiaojian.jpg" alt="realm">
                         <div class="service-hover-text">
                           <h3>Jane Doe</h3>
@@ -249,7 +249,7 @@ and open the template in the editor.
                           <a href="#">@JaneDoe</a>
                         </div>
                     </div>
-                    <div class='col-md-6 service-details'>
+                    <div class='col-md-4 service-details'>
                         <img src="./public_html/img/qiaojian.jpg" alt="realm">
                         <div class="service-hover-text">
                           <h3>Jane Doe</h3>
