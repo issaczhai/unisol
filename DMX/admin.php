@@ -30,9 +30,10 @@ $photoListJson = $photoMgr->getAllPhotosInJson();
     <meta name="author" content="3rd Wave Media">    
     <link rel="shortcut icon" href="favicon.ico">  
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> 
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="public_html/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="public_html/js/jquery-1.11.0.js"></script>
+   
     <link rel="stylesheet" type="text/css" href="public_html/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="public_html/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="http://www.prepbootstrap.com/Content/css/developer/styles.css" />

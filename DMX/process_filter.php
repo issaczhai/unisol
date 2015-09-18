@@ -63,10 +63,25 @@ if(!empty($results)) {
 
 ?>  
                 <div class="projectName-overlay"><a href="./project_detail.php?project_id=<?=$project_id ?>"><span><?=$project_name ?></span></a></div>
-                <div class="project-location-overlay">
-                    <h4><a href='#'>Location 1</a></h4>
-                    <h4><a href='#'>Location 2</a></h4>
-                </div>
+<?php
+                $projectSameName = $projectMgr->getProjectWithProjectName($project_name);
+                $numberWithSameName = count($projectSameName);
+                if($numberWithSameName > 1){
+?>
+                    <div class="project-location-overlay">
+<?php
+                        foreach ($projectSameName as $eachProject){
+                            $projectLocation = $eachProject['size'];
+                            $projectId = $eachProject['project_id'];
+?>                          
+                            <h4><a href="./project_detail.php?project_id=<?= $projectId ?>"> <?= $projectLocation ?> </a></h4>     
+<?php
+                        }
+?>  
+                    </div> 
+<?php                    
+                }
+?>   
             </div>
 <?php
         }

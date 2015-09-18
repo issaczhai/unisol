@@ -87,10 +87,10 @@ if(!empty($results)) {
                     <div class="project-location-overlay">
 <?php
                         foreach ($projectSameName as $eachProject){
-                            $projectLocation = $eachProject['location'];
-                            $projecId = $eachProject['project_id'];
-?>
-                            <h4><a href='./project_detail.php?project_id=<?=$projectId ?>'><?= $projectLocation ?></a></h4>     
+                            $projectLocation = $eachProject['size'];
+                            $projectId = $eachProject['project_id'];
+?>                          
+                            <h4><a href="./project_detail.php?project_id=<?= $projectId ?>"> <?= $projectLocation ?> </a></h4>     
 <?php
                         }
 ?>  
