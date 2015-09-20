@@ -86,7 +86,7 @@ class PhotoManager {
         $photo_arr = [];
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("SELECT photo_url FROM photo WHERE project_id = ? AND photo_no LIKE 'hd%' ");
+        $stmt = $conn->prepare("SELECT photo_url FROM photo WHERE project_id = ? AND photo_no LIKE 'hd%' ORDER BY photo_no ASC ");
         $stmt->bind_param("s", $project_id);
         $stmt->execute();
         $stmt->bind_result($photo_url);

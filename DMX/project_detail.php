@@ -364,10 +364,11 @@ and open the template in the editor.
     <script src="./public_html/js/main.js"></script>
     <script src="./public_html/js/dmx.js"></script>
     <script>
+        var project_id = '<?= $project_id ?>';
         $(document).ready(function() {
             // kill the filter results session when the page is reloaded
             $("#loaderID").show();
-            var project_id = '<?= $project_id ?>';
+            
             var data = 'project_id=' + project_id; //get page number from link
             $.ajax({ //Process the form using $.ajax()
                 type      : 'POST', //Method type
@@ -389,8 +390,9 @@ and open the template in the editor.
                 $('#results').hide();
                 $("#loaderID").show(); //show loading element
                 var page = $(this).attr("data-page"),
-                    data = 'page=' + page, //get page number from link
+                    data = 'page=' + page + '&project_id=' + project_id, //get page number from link
                     hdImages = $.parseJSON('<?= json_encode($hdImages) ?>');
+                console.log(page);
                 $.ajax({ //Process the form using $.ajax()
                     type      : 'POST', //Method type
                     url       : './process_detail_pagination.php', //processing file URL

@@ -40,7 +40,12 @@ if(!empty($results)) {
 ?>
         <div id='thumbnails'>
 <?php
-        $count = 0;
+        if($pageNumber == 1){
+            $count = 0;    
+        }else{
+            $count = $pagePosition;
+        }
+        
         foreach ($results as $eachPhoto){
             
             $hd_photos = $photoMgr -> getHDPhotosByid($project_id);
