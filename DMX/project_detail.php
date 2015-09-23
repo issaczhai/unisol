@@ -296,7 +296,20 @@ and open the template in the editor.
                             <li><h4><?= $project['project_name'] ?></h4></li>
                             <li>LOCATION: <?= $project['size'] ?></li>
                             <li>SIZE: <?= $project['location'] ?></li>
-                            <li>COMPLETION DATE: <?= date_format($completionDate, 'Y') ?></li>
+                    <?php
+                            if(date_format($completionDate, 'Y') == '1900'){
+                    ?>
+                            <li>Year of Proposal: <?= $project['year'] ?></li>
+                    <?php
+
+                            }else{
+                    ?>
+                            <li>Year of Completion: <?= $project['year'] ?></li>
+                    <?php
+                            }
+
+                    ?>
+                            
                         </ul>
                         <div id="loaderID" style="display:none;position:absolute; top:50%; left:50%; z-index:1030; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
                         <div id="results">

@@ -78,7 +78,7 @@ class ProjectManager {
         $project_arr = array();
         $ConnectionMgr = new ConnectionManager();
         $conn = $ConnectionMgr->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM project GROUP BY project_name");
+        $stmt = $conn->prepare("SELECT * FROM project GROUP BY project_name ORDER BY year DESC");
         $stmt->execute();
         $stmt->bind_result($project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description);
         while ($stmt->fetch())
@@ -115,7 +115,7 @@ class ProjectManager {
         $project_arr = array();
         $ConnectionMgr = new ConnectionManager();
         $conn = $ConnectionMgr->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM project GROUP BY project_name ORDER BY project_name ASC LIMIT ".$pageNo.",".$itemPerPage);
+        $stmt = $conn->prepare("SELECT * FROM project GROUP BY project_name ORDER BY year DESC LIMIT ".$pageNo.",".$itemPerPage);
         $stmt->execute();
         $stmt->bind_result($project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description);
         while ($stmt->fetch())
@@ -147,7 +147,7 @@ class ProjectManager {
         $projectArr = [];
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM project WHERE ".$filterType."=? GROUP BY project_name");
+        $stmt = $conn->prepare("SELECT * FROM project WHERE ".$filterType."=? GROUP BY project_name ORDER BY year DESC");
         $stmt->bind_param("s",$filterValue);
         $stmt->execute();
         $stmt->bind_result($project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description);
@@ -173,7 +173,7 @@ class ProjectManager {
         $filter_para = $filterValue.'%';
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM project WHERE project_name LIKE ? GROUP BY project_name");
+        $stmt = $conn->prepare("SELECT * FROM project WHERE project_name LIKE ? GROUP BY project_name ORDER BY year DESC");
         $stmt->bind_param("s",$filter_para);
         $stmt->execute();
         $stmt->bind_result($project_id, $project_name, $type, $year, $country, $location, $size, $completion_date, $description);
@@ -199,7 +199,7 @@ class ProjectManager {
         $type_arr = array();
         $ConnectionMgr = new ConnectionManager();
         $conn = $ConnectionMgr->getConnection();
-        $stmt = $conn->prepare("SELECT DISTINCT type FROM project");
+        $stmt = $conn->prepare("SELECT DISTINCT type FROM project ORDER BY year DESC");
         $stmt->execute();
         $stmt->bind_result($type);
         while ($stmt->fetch())

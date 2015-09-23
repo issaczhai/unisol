@@ -53,6 +53,9 @@ and open the template in the editor.
             .alphabet{
                 color: #000;
             }
+            #sidebar{
+                margin-bottom: 30px;
+            }
             .project{
                 float:none;
                 display:inline-block;
@@ -330,7 +333,7 @@ and open the template in the editor.
                         <div class="btn-group sort-panel">
                             <button type="button" class="btn btn-default dropdown-toggle"
                                     data-toggle="dropdown">
-                                    <span class="sort-value">TYPE</span> <span class="caret pull-right"></span>
+                                    <span class="sort-value">Industry</span> <span class="caret pull-right"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a class='type' href="#studio">Studio</a></li>
