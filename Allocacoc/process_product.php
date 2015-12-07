@@ -5,9 +5,10 @@ ini_set('display_errors', 'On');
 include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/ProductManager.php");
 include_once("./Manager/PhotoManager.php");
-
+include_once("./Manager/OrderManager.php");
 $productMgr = new ProductManager();
 $photoMgr = new PhotoManager();
+$orderMgr = new OrderManager();
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,7 +19,6 @@ $operation = filter_input(INPUT_POST,'operation');
 if ($operation === ''){
     $operation = $_GET['operation'];
 }
-//echo $operation;
 
 if ($operation === "add_product"){
     $valid=true;
@@ -30,17 +30,7 @@ if ($operation === "add_product"){
         $symbol_code='';
     }
     $price = filter_input(INPUT_POST,'price');
-//    $color_count = 0;
-//    if(!empty($_POST['color'])){
-//        foreach($_POST['color'] as $c) {
-//            $color_count += 1;
-//            if($color_count===1){
-//                $color.=$c;
-//            }else{
-//		$color.=(",".$c);
-//            }   
-//        }
-//    }
+
     $description = "";
     if(!empty($_POST['addTextarea'])){
         $description = $_POST['addTextarea'];
@@ -284,9 +274,6 @@ header("Location: admin.php#viewProduct");
     $colors=implode(",",$colorArr);
     $productMgr->updateProduct($product_id, $product_name, $symbol_code, $price, $colors, $description, $stock);
 header("Location: admin.php#viewProduct");
-
-
-
 }elseif ($operation === "add_product_to_cart"){
     session_start();
     $customer_id = $_SESSION["userid"];
@@ -332,13 +319,15 @@ header("Location: admin.php#viewProduct");
     $return['status']='success';
     echo json_encode($return);
 }elseif ($operation === "deleteProduct"){
-    $productIdList_str = $_GET['productIdList'];
+    $productIdList_str = filter_input(INPUT_POST,'productIdList');
     $productIdList=explode(",",$productIdList_str);
     foreach($productIdList as $id){
-        $productMgr->deleteProduct($product_id);//delete from product table
-        $photoMgr->deleteAllPhotosByProduct($id);//delete from photo table
-        $productMgr->deleteAllColorOptionalCodeByProduct($id);//delete from optional_code table
-        
+        $count = $orderMgr->checkProductPendingOrderStatus($id);
+        if ($count===0){
+            $productMgr->deleteProduct($id);//delete from product table
+            $photoMgr->deleteAllPhotosByProduct($id);//delete from photo table
+            $productMgr->deleteAllColorOptionalCodeByProduct($id);//delete from optional_code table
+        } 
     }
 header("Location: admin.php#viewProduct");
 }

@@ -241,7 +241,7 @@ class CustomerManager {
         $stmt = $conn->prepare("SELECT * FROM customer WHERE invitation_link=?");
         $stmt->bind_param("s", $invitation_link);
         $stmt->execute();
-        $stmt->bind_result($customer_id,$password,$alternative_email,$first_name,$last_name,$contact_no,$credit,$invitation_link);
+        $stmt->bind_result($customer_id,$password,$alternative_email,$first_name,$last_name,$contact_no,$credit,$invitation_link,$verified);
         while ($stmt->fetch())
         {   $customer['customer_id'] = $customer_id;
             $customer['password'] = $password;
@@ -251,7 +251,7 @@ class CustomerManager {
             $customer['contact_no'] = $contact_no;
             $customer['credit'] = $credit;
             $customer['invitation_link'] = $invitation_link;
-
+            $customer['verified'] = $verified;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
         return $customer;

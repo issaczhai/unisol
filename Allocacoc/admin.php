@@ -996,9 +996,6 @@ $current_charge = $fdpMgr->getCharge();
                                                                        <?php
                                                                        }
                                                                        ?>
-                                                                       <tr>
-                                                                           
-                                                                       </tr>
                                                                    </table>
                                                                    <table width="100%">
                                                                        <tr>

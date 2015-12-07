@@ -297,10 +297,15 @@ function DeleteProduct(){
     if(productId_array.length !== 0){
         var productId_str = productId_array.toString();
         var operation = 'deleteProduct';
-        var redirect_path= './process_product.php?operation='+operation+'&productIdList='+productId_str;
-        console.log(redirect_path);
-        document.location.href =redirect_path;
+        //var redirect_path= './process_product.php?operation='+operation+'&productIdList='+productId_str;
+        //console.log(redirect_path);
+        //document.location.href =redirect_path;
+        var obj = { //Fetch form data
+            'operation'     : operation, //Store productId of item
+            'productIdList'         : productId_str
+        };
+        $.redirect('process_product.php', obj);
     }else{
-        alert("You have not selected any projects to delete");
+        alert("You have not selected any products to delete");
     }
 }

@@ -338,7 +338,7 @@ $address_list = $addressMgr->getAddress($customer_id);
             </div>
         </div>
         <br>
-        <div class="row" style="border: 3px solid #E6E6E6">
+        <div class="row" style="border: 3px solid #E6E6E6;padding-bottom: 10px">
             <div class="col-lg-10">
                 <table id="password_table" width="100%">
                     <tbody>

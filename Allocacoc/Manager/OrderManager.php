@@ -166,5 +166,20 @@ class OrderManager {
         return $top_3_product_arr;
     }
     
+    function checkProductPendingOrderStatus($product_id){
+        $result = 0;
+        $ConnectionMgr = new ConnectionManager();
+        $conn = $ConnectionMgr->getConnection();
+        $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM `order` where `product_id` = ? AND `status` = 'pending'");
+        $stmt->bind_param("s", $product_id);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        while ($stmt->fetch())
+        {   
+            $result = $count; 
+        }
+        $ConnectionMgr->closeConnection($stmt, $conn);
+        return $result;
+    }
     
 }

@@ -41,25 +41,8 @@ $(document).ready(function () {
         
         }
     }
-    
-    
-    /*if(message!=="" && message!==null){
-        if(status === "success"){
-            $('#user_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
-        }else if(status === "fail"){
-            $('#user_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
-        }else if(status === "pending"){
-            $('#about_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
-        }else{
-            $('#about_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
-            $('#user_element').append("<div id='popover_element' data-toggle='popover' data-placement='bottom' data-trigger='focus'></div>");
-        }
-        $('#popover_element').popover({content: message,html: true});
-        $('#popover_element').popover('show');
-        window.setTimeout(function(){
-            $('#popover_element').popover('hide');
-        }, 900000); //6000 are the ms until the timeout is called
-    }*/
+    console.log(status);
+    console.log(message);
     if(message!=="" && message!==null){
         if(status === "success"){
             console.log('success');
@@ -70,11 +53,16 @@ $(document).ready(function () {
         }else if(status === "pending"){
             console.log('pending');
             $('.referal-symbol img').attr('src', './public_html/img/exclamation_red.png');
+        }else if(status === "error"){
+            console.log('error');
+            $('.referal-symbol img').attr('src', './public_html/img/exclamation_red.png');
         }else{
             console.log('out of 3 conditions!');
         }
+        console.log("nihao");
         $('.referal-notification-text h5').text(message);
         $('.referal-notification').css('display', 'block');
+        $('.referal-notification').delay(6000).fadeOut();
         $(".cart-notification").delay(6000).fadeOut(); //6000 are the ms until the timeout is called
     }
 });
@@ -203,7 +191,7 @@ word-break: keep-all;
     Sorry, your browser does not support inline SVG.
     </svg> -->
     <div class='referal-symbol'>
-        <img src="./public_html/img/tick_green.png"/>
+        <img />
     </div>
     <div class='referal-notification-text'>
         <h5></h5>

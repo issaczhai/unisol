@@ -27,6 +27,7 @@ include_once('./Manager/CreditManager.php');
         if(!empty($_SESSION["userid"])){
             #Situation 3: browser contains login information
             $receiver_email = $_SESSION["userid"];
+            
             if($receiver_email == $sender_email){
                 #Situation 7: receiver and sender share same email. It means it's an illegal self-referral
                 $status = 'fail';
