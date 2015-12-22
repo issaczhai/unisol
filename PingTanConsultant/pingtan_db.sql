@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2015 at 08:37 AM
+-- Generation Time: Dec 22, 2015 at 04:49 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -134,10 +134,20 @@ CREATE TABLE IF NOT EXISTS `student` (
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `NRIC` varchar(20) NOT NULL,
-  `taken` text NOT NULL,
-  `ongoing` text NOT NULL,
-  `upcoming` text NOT NULL,
   PRIMARY KEY (`studentID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `studentstatus`
+--
+
+CREATE TABLE IF NOT EXISTS `studentstatus` (
+  `studentID` varchar(20) NOT NULL,
+  `courseID` varchar(20) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  PRIMARY KEY (`studentID`,`courseID`,`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
