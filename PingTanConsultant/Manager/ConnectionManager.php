@@ -15,7 +15,7 @@ class ConnectionManager {
     //put your code here
     static function getConnection(){
         $hostname = "localhost";
-        $database = "allocacoc_db";
+        $database = "pingtan";
         $userName = "root";
         $password = "";
         $conn = new mysqli($hostname, $userName, $password, $database);
