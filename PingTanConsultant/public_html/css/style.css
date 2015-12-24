@@ -1,0 +1,163 @@
+/****** Util ******/
+.text-default{
+	color: rgb(77, 77, 77);
+}
+
+.red-default{
+	color: rgb(255, 26, 26);
+}
+
+.col-center{
+	float: none;
+	margin: 0 auto;
+}
+.col-padding-none{
+	padding: 0;
+}
+.thumbnail-course{
+	position: relative;
+	margin-bottom: 2em;
+}
+.img-course-thumbnail{
+	position: relative;
+	width: 100%;
+}
+.block-ellipsis {
+  display: block;
+  display: -webkit-box;
+  max-width: 100%;
+  height: 43px;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 1;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.title-lang{
+	padding-top: 1em;
+	border-top: 1px solid rgb(0, 0, 0);
+}
+.course-thumbnail-btns{
+	position: relative;
+	padding: 0 2em 2em 2em;
+	border-bottom: 2px solid rgb(0, 0, 0);
+}
+.course-thumbnail-btns a{
+	text-decoration: none;
+	color: rgb(255, 26, 26);
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+/******  Overwrite Bootstrap Class ******/
+.row{
+	margin-left: 0;
+	margin-right: 0;
+}
+.container-fluid-padding-none, .container-padding-none{
+	padding: 0;
+}
+.navbar{
+	border-radius: 0;
+}
+.navbar-default a.navbar-brand{
+	font-size: 40px;
+	color: rgb(255, 26, 26);
+	font-weight: 600;
+}
+.navbar-default .navbar-nav>li>a{
+	color: rgb(77, 77, 77);
+}
+.navbar-inverse{
+	margin-bottom: 0;
+}
+/****** FOOTER ******/
+.navbar-inverse h4{
+	color: rgb(245, 245, 245);
+}
+.block-text-subscribtion{
+	display: block;
+    display: -webkit-box;
+    max-width: 100%;
+    height: 43px;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 1;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: rgb(245, 245, 245);
+    margin-bottom: 1em;
+}
+.input-group-footer input{
+	border: none; 
+	height: auto;
+	border-radius: 0;
+	border-color: rgb(245, 245, 245);
+}
+.input-group-footer button{
+	background-color: rgb(255, 203, 0);
+	border: none; 
+	border-radius: 0;
+	border-color: rgb(255, 203, 0);
+	color: rgb(245, 245, 245);
+}
+.input-group-footer button:hover{
+	background-color: rgb(230, 183, 0);
+}
+.list-footer-resource{
+	list-style-type: none;
+
+}
+.list-footer-resource li{
+	padding: 0.5em;
+}
+.list-footer-resource li:first-child{
+	padding: 0;
+}
+.list-footer-resource li a{
+	text-decoration: none;
+	cursor: pointer;
+	color: rgb(245, 245, 245);
+	font-size: 14px;
+}
+/****** INDEX PAGE ******/
+.wrapper{
+
+	background-color: rgb(242, 242, 242);
+}
+#carousel-index img{
+	width: 100%;
+}
+.certificate-award .col-md-4{
+	height: 10px;
+}
+
+.award h4, .course h4{
+	text-align: center;
+	border: none;
+	border-top: 3px solid rgb(77, 77, 77);
+	border-bottom: double;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.row-btn-viewAll{
+	text-align: center;
+	padding: 4em;
+}
+.row-btn-viewAll a.btn-viewAll{
+	text-decoration: none;
+    background-color: rgb(255, 203, 0);
+    color: rgb(255, 255, 255);
+    border: none;
+    font-size: 18px;
+	padding: 1em;
+}
+.row-btn-viewAll a.btn-viewAll:hover{
+	background-color: rgb(230, 183, 0);
+	border-color: rgb(230, 183, 0);
+}
+
