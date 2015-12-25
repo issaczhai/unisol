@@ -7,7 +7,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Admin | Course</title>
+    <title>Admin | Company</title>
 
         
     <!-- Custom styles for this template -->
@@ -37,7 +37,7 @@
       *********************************************************************************************************************************************************** -->
       
       <?php
-      include("admin_header.php");
+      include("header.php");
       ?>
       
       <!-- **********************************************************************************************************************************************************
@@ -60,20 +60,20 @@
                   </li>
 
                   <li class="sub-menu">
-                      <a class="active" href="admin_course.php">
+                      <a href="course.php">
                           <i class="fa fa-desktop"></i>
                           <span>Courses</span>
                       </a>
                   </li>
 
                   <li class="sub-menu">
-                      <a href="admin_user.php">
+                      <a href="user.php">
                           <i class="fa fa-user"></i>
                           <span>Users</span>
                       </a>
                   </li>
                   <li class="sub-menu">
-                      <a href="admin_company.php">
+                      <a class="active" href="company.php">
                           <i class="fa fa-users"></i>
                           <span>Company</span>
                       </a>
@@ -98,22 +98,21 @@
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
-    <section id="main-content">
-        <section class="wrapper site-min-height">
-            <h3><i class="fa fa-angle-right"></i> Blank Page</h3>
-            <div class="row mt">
-                <div class="col-lg-12">
-                <p>Place your content here.</p>
-                </div>
-            </div>
-
-        </section><!--/wrapper -->
-    </section><!-- /MAIN CONTENT -->
+      <section id="main-content">
+          <section class="wrapper site-min-height">
+          	<h3><i class="fa fa-angle-right"></i> Blank Page</h3>
+          	<div class="row mt">
+          		<div class="col-lg-12">
+          		<p>Place your content here.</p>
+          		</div>
+          	</div>
+			
+		</section><!--/wrapper -->
+      </section><!-- /MAIN CONTENT -->
 
       <!--main content end-->
-      
       <?php
-      include("admin_footer.php");
+      include("footer.php");
       ?>
   </section>
 

@@ -19,7 +19,7 @@ class CourseManager {
     function addCourse($courseID, $name, $instructor, $price, $description, $documents, $requiredCert, $receivedCert, $prerequisite){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO course (courseID, name, instructor, price, description, documents, requiredCert, receivedCert, prerequisite) VALUES (?,?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO course (courseID, name, instructor, price, description, documents, requiredCert, receivedCert, prerequisite) VALUES (?,?, ?, ?, ?, ?, ?,?,?)");
         $stmt->bind_param("sssdsssss", $courseID, $name, $instructor, $price, $description, $documents, $requiredCert, $receivedCert, $prerequisite);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);

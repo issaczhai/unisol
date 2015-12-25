@@ -170,6 +170,31 @@ class StudentManager {
         return $student;
     }
     
+    function getStudentList(){
+        $student_arr = array();
+        $ConnectionMgr = new ConnectionManager();
+        $conn = $ConnectionMgr->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM student");
+        $stmt->execute();
+        $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric);
+        while ($stmt->fetch())
+        {   $student = array();
+            $student['studentID'] = $studentID;
+            $student['username'] = $username;
+            $student['password'] = $password;
+            $student['email'] = $email;
+            $student['nationality'] = $nationality;
+            $student['contactNo'] = $contactNo;
+            $student['occupation'] = $occupation;
+            $student['dateOfBirth'] = $dateOfBirth;
+            $student['firstname'] = $firstname;
+            $student['lastname'] = $lastname;
+            $student['nric'] = $nric;
+            array_push($student_arr,$student);
+        }
+        $ConnectionMgr->closeConnection($stmt, $conn);
+        return $student_arr;
+    }
     
 //    function updateStudent($studentID,$student_password,$altenative_email,$first_name,$last_name,$contact_no,$credit){
 //        $ConnectionManager = new ConnectionManager();
