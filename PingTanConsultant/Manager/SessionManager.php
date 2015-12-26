@@ -22,11 +22,20 @@ class SessionManager {
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
-    function deleteSession($sessionID){
+    function deleteSession($courseID,$sessionID){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("DELETE FROM session WHERE sessionID = ?");
-        $stmt->bind_param("s", $sessionID);
+        $stmt = $conn->prepare("DELETE FROM session WHERE courseID = ? AND sessionID = ?");
+        $stmt->bind_param("ss", $courseID,$sessionID);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
+    function deleteSessionByCourse($courseID){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("DELETE FROM session WHERE courseID = ?");
+        $stmt->bind_param("s", $courseID);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }

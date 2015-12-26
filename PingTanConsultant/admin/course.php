@@ -144,7 +144,7 @@ $courseList = $courseMgr->getCourseList();
                                     <td> <?=$course['name']?></td>
                                     <td>
                                         <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                        <button class="btn btn-danger btn-xs" onclick="deletePhoto('<?=strval($course['courseID'])?>')"><i class="fa fa-trash-o "></i></button>
                                     </td>
                                     <td><?=$sessionIDString?></td>
                                     <td style="width: 10%">
@@ -157,8 +157,8 @@ $courseList = $courseMgr->getCourseList();
                                 
                                 <tr>
                                     <td> 4</td>
-                                    <td> DS34</td>
-                                    <td> namename</td>
+                                    <td> sample</td>
+                                    <td> sample</td>
                                     <td>
                                         <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
                                         <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
@@ -199,6 +199,23 @@ $courseList = $courseMgr->getCourseList();
     
     <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
-
+    <script>
+    function deletePhoto(cID){
+        var courseID = cID;
+        var postData = {'operation': 'delete','courseID':cID};
+        $.ajax({ //Process the form using $.ajax()
+            type      : 'POST', //Method type
+            url       : '../process_course.php', //Your form processing file URL
+            data      : postData, //Forms name
+            success   : function(data) {
+    //            var pos = data.indexOf("{");
+    //            var dataValid = data.substring(pos);
+    //            var jsonData = eval("("+dataValid+")");
+                location.reload();
+            }
+        });
+        event.preventDefault(); //Prevent the default submit
+    }
+    </script>
   </body>
 </html>

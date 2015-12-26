@@ -104,30 +104,30 @@
                 <div class="col-lg-12">
                   <div class="form-panel">
                       <h4 class="mb"><i class="fa fa-angle-right"></i> Add Course</h4>
-                      <form class="form-horizontal style-form" method="post" enctype='multipart/form-data' action='process_course.php'>
-                          <input type="hidden" name="operation" value="add">
+                      <form class="form-horizontal style-form" method="post" enctype='multipart/form-data' action='../process_course.php'>
+                          <input type="hidden" id="operation" name="operation" value="add">
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Course ID (Unique)</label>
                               <div class="col-sm-4">
-                                  <input type="text" name="courseID" class="form-control round-form" maxlength="20">
+                                  <input type="text" id="courseID" name="courseID" class="form-control round-form" maxlength="20" required onchange="checkCourseID()">
                               </div>
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Course Name</label>
                               <div class="col-sm-4">
-                                  <input type="text" name="name" class="form-control round-form" maxlength="100">
+                                  <input type="text" id="name" name="name" class="form-control round-form" maxlength="100" required>
                               </div>
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Instructor</label>
                               <div class="col-sm-4">
-                                  <input type="text" name="instructor" class="form-control round-form" maxlength="100">
+                                  <input type="text" id="instructor" name="instructor" class="form-control round-form" maxlength="100" required>
                               </div>
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Price ($)</label>
                               <div class="col-sm-4">
-                                  <input type="text" name="price" class="form-control round-form" maxlength="10">
+                                  <input type="text" id="price" name="price" class="form-control round-form" maxlength="10" required>
                               </div>
                           </div>
                           <div class="form-group">
@@ -139,29 +139,29 @@
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Documents</label>
                               <div class="col-sm-1">
-                                  <input type="file" name="documents">
+                                  <input type="file" id="documents[]" name="documents[]" multiple="multiple">
                               </div>
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Prerequisite Certificate</label>
                               <div class="col-sm-4">
-                                  <input type="text" name="requiredCert" class="form-control round-form" maxlength="10">
+                                  <input type="text" id="requiredCert" name="requiredCert" class="form-control round-form" maxlength="100">
                               </div>
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Prerequisite Course</label>
                               <div class="col-sm-4">
-                                  <input type="text" name="prerequisite" class="form-control round-form" maxlength="10">
+                                  <input type="text" id="prerequisite" name="prerequisite" class="form-control round-form" maxlength="100">
                               </div>
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Certificate Received Upon Finising Course</label>
                               <div class="col-sm-4">
-                                  <input type="text" name="receivedCert" class="form-control round-form" maxlength="10">
+                                  <input type="text" id="receivedCert" name="receivedCert" class="form-control round-form" maxlength="100">
                               </div>
                           </div>
                           <div class="form-group">
-                              <button type="submit" class="btn btn-primary col-sm-2 col-sm-offset-2">Done</button>
+                              <button type="submit" id="submit" name="submit" class="btn btn-primary col-sm-2 col-sm-offset-2">Done</button>
                           </div>
                       </form>
                   </div>
@@ -193,7 +193,33 @@
     
     <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
-
+    
+    <script>
+    function checkCourseID(){
+        var courseID = document.getElementById("courseID").value;
+        var postData = { //Fetch form data
+            'operation'     :'checkCourseID',
+            'courseID'     : courseID
+        };
+        $.ajax({
+            type: 'post',
+            url: '../process_course.php',
+            data: postData,
+            success: function(data){
+                var pos = data.indexOf("{");
+                var dataValid = data.substring(pos);
+                var jsonData = eval("("+dataValid+")");
+                if(jsonData.status === 'used'){
+                    document.getElementById('submit').disabled=true;
+                }else if(jsonData.status === 'available'){
+                    document.getElementById('submit').disabled=false;
+                }
+            }
+        });
+    }
+    
+    
+    </script>
     
   </body>
 </html>

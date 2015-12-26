@@ -21,6 +21,7 @@ class CourseManager {
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("INSERT INTO course (courseID, name, instructor, price, description, documents, requiredCert, receivedCert, prerequisite) VALUES (?,?, ?, ?, ?, ?, ?,?,?)");
         $stmt->bind_param("sssdsssss", $courseID, $name, $instructor, $price, $description, $documents, $requiredCert, $receivedCert, $prerequisite);
+        
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
@@ -89,6 +90,7 @@ class CourseManager {
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
+    
     
 //    function retrieveFromShoppingCart($customer_id){
 //        $ConnectionManager = new ConnectionManager();
