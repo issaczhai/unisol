@@ -81,7 +81,7 @@
 }
 /****** FOOTER ******/
 .navbar-inverse h4{
-	color: rgb(245, 245, 245);
+	color: rgb(255, 255, 255);
 }
 .block-text-subscribtion{
 	display: block;
@@ -94,21 +94,21 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    color: rgb(245, 245, 245);
+    color: rgb(255, 255, 255);
     margin-bottom: 1em;
 }
 .input-group-footer input{
 	border: none; 
 	height: auto;
 	border-radius: 0;
-	border-color: rgb(245, 245, 245);
+	border-color: rgb(255, 255, 255);
 }
 .input-group-footer button{
 	background-color: rgb(255, 203, 0);
 	border: none; 
 	border-radius: 0;
 	border-color: rgb(255, 203, 0);
-	color: rgb(245, 245, 245);
+	color: rgb(255, 255, 255);
 }
 .input-group-footer button:hover{
 	background-color: rgb(230, 183, 0);
@@ -126,7 +126,7 @@
 .list-footer-resource li a{
 	text-decoration: none;
 	cursor: pointer;
-	color: rgb(245, 245, 245);
+	color: rgb(255, 255, 255);
 	font-size: 14px;
 }
 /****** INDEX PAGE ******/
@@ -183,7 +183,7 @@
 .course-filter-bar > li{
 	display: inline-block;
 	height: 100%;
-	color: rgb(245, 245, 245);
+	color: rgb(255, 255, 255);
 }
 .cat-filter ul{
 	border-radius: 0;
@@ -193,7 +193,7 @@
 	border-radius: 0;
 	border:	none;
 	height: 100%;
-	color: rgb(245, 245, 245);
+	color: rgb(255, 255, 255);
 }
 .title-courses{
 	margin-top: 1em;
@@ -201,4 +201,101 @@
 	padding-left: 15px;
 }
 
+/****** CONTACT PAGE ******/
+.content-contact{
+	background-color: rgb(242, 242, 242);
+}
+.row-title-contact{
+	background-color: rgb(255, 26, 26);
+}
+.row-title-contact h3{
+	color: rgb(255, 255, 255);
+	margin-top: auto;
+    margin-bottom: auto;
+    line-height: 2em;
+    padding-left: 2em;
+}
+.contact-left-content, .contact-right-content{
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+.list-contact{
+	list-style-type: none;
+	width: 100%;
+	border-width: 3px 0 3px 0;
+	border-style: solid;
+	border-color: rgb(38, 38, 38);
+	padding: 0;
+}
+.list-contact li{
+	padding: 1em 0 1em 1em;
+}
+.list-contact li:first-child{
+	border-bottom: 2px solid rgb(179, 179, 179);
+}
+.list-contact td{
+	font-size: 16px;
+}
+.map-pingtan{
+	position: relative;
+	width: 100%;
+	height: 300px;
+}
+.form-contact-header{
+	text-align: center;
+	background: url(http://niiiick.com/files/blur-city-1.jpg);
+	margin-bottom: 2em;
+}
+.form-contact-header h3{
+	font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    display: inline-block;
+    font-weight: 100;
+    font-size: 2.8125em;
+    font-size: 1.25em;
+    color: #fff;
+}
+.contact-right-content form label{
+	display: block;
+}
+.contact-right-content form input, .contact-right-content form textarea{
+	width: 100%;
+}
+.contact-right-content form .text-input{
+	margin: 0 0 0.5em 0;
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    color: #555;
+    font-size: 1em;
+}
+.contact-right-content .form-row{
+	margin-bottom: 1em;
+}
 
+.form-contact-header h1{
+	font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    display: block;
+    font-size: 2.8125em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+.btn-reset-enquiry, .btn-submit-enquiry{
+	font-size: 1.0625em;
+    display: inline-block;
+    padding: 0.74em 1.5em;
+    color: #fff;
+    border-width: 0 0 0 0;
+    border-bottom: 5px solid;
+    text-transform: uppercase;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+.btn-reset-enquiry{
+	background-color: rgb(166, 166, 166);
+	border-bottom-color: rgb(140, 140, 140);
+}
+.btn-submit-enquiry{
+	background-color: rgb(230, 183, 0);
+	border-bottom-color: rgb(204, 162, 0);
+}
