@@ -61,9 +61,9 @@ class StudentManager {
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("SELECT * FROM student WHERE studentID=?");
-        $stmt->bind_param("ss", $studentID,$verify);
+        $stmt->bind_param("s", $studentID);
         $stmt->execute();
-        $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric);
+        $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric,$userStatus);
         while ($stmt->fetch())
         {   $student['studentID'] = $studentID;
             $student['username'] = $username;
@@ -76,6 +76,7 @@ class StudentManager {
             $student['firstname'] = $firstname;
             $student['lastname'] = $lastname;
             $student['nric'] = $nric;
+            $student['userStatus'] = $userStatus;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
         $ssManager = new StudentStatusManager();
@@ -91,7 +92,7 @@ class StudentManager {
         $stmt = $conn->prepare("SELECT * FROM student WHERE email=?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
-        $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric);
+        $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric,$userStatus);
         while ($stmt->fetch())
         {   $student['studentID'] = $studentID;
             $student['username'] = $username;
@@ -104,7 +105,7 @@ class StudentManager {
             $student['firstname'] = $firstname;
             $student['lastname'] = $lastname;
             $student['nric'] = $nric;
-
+            $student['userStatus'] = $userStatus;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
         $ssManager = new StudentStatusManager();
@@ -120,7 +121,7 @@ class StudentManager {
         $stmt = $conn->prepare("SELECT * FROM student WHERE username=?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
-        $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric);
+        $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric,$userStatus);
         while ($stmt->fetch())
         {   $student['studentID'] = $studentID;
             $student['username'] = $username;
@@ -133,7 +134,7 @@ class StudentManager {
             $student['firstname'] = $firstname;
             $student['lastname'] = $lastname;
             $student['nric'] = $nric;
-
+            $student['userStatus'] = $userStatus;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
         $ssManager = new StudentStatusManager();
@@ -149,7 +150,7 @@ class StudentManager {
         $stmt = $conn->prepare("SELECT * FROM student WHERE username=? AND password=?");
         $stmt->bind_param("ss", $username,$password);
         $stmt->execute();
-        $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric);
+        $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric,$userStatus);
         while ($stmt->fetch())
         {   $student['studentID'] = $studentID;
             $student['username'] = $username;
@@ -162,6 +163,7 @@ class StudentManager {
             $student['firstname'] = $firstname;
             $student['lastname'] = $lastname;
             $student['nric'] = $nric;
+            $student['userStatus'] = $userStatus;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
         $ssManager = new StudentStatusManager();
@@ -176,7 +178,7 @@ class StudentManager {
         $conn = $ConnectionMgr->getConnection();
         $stmt = $conn->prepare("SELECT * FROM student");
         $stmt->execute();
-        $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric);
+        $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric,$userStatus);
         while ($stmt->fetch())
         {   $student = array();
             $student['studentID'] = $studentID;
@@ -190,10 +192,20 @@ class StudentManager {
             $student['firstname'] = $firstname;
             $student['lastname'] = $lastname;
             $student['nric'] = $nric;
+            $student['userStatus'] = $userStatus;
             array_push($student_arr,$student);
         }
         $ConnectionMgr->closeConnection($stmt, $conn);
         return $student_arr;
+    }
+    
+    function resetPassword($studentID,$password){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE product SET password=? WHERE studentID=?");
+        $stmt->bind_param("ss", $password, $studentID);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
     }
     
 //    function updateStudent($studentID,$student_password,$altenative_email,$first_name,$last_name,$contact_no,$credit){

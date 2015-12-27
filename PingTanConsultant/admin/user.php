@@ -150,7 +150,7 @@ function getAge($birthday) {
                                     <td> <?=$student['nationality']?></td>
                                     <td> <?=getAge($student['dateOfBirth'])?></td>
                                     <td>
-                                        <button class="btn btn-primary btn-xs">Reset Password</button>
+                                        <button class="btn btn-primary btn-xs" onclick="resetStudentPassword('<?=strval($student['studentID'])?>')">Reset Password</button>
                                         <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                                     </td>
                                 </tr>
@@ -199,6 +199,28 @@ function getAge($birthday) {
     
     <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
-
+    <script>
+    function resetStudentPassword(studentID){
+        var postData = { //Fetch form data
+            'operation'     :'resetPassword',
+            'courseID'     : studentID
+        };
+        $.ajax({
+            type: 'post',
+            url: '../process_student.php',
+            data: postData,
+            success: function(data){
+                var pos = data.indexOf("{");
+                var dataValid = data.substring(pos);
+                var jsonData = eval("("+dataValid+")");
+                if(jsonData.status === 'used'){
+                    document.getElementById('submit').disabled=true;
+                }else if(jsonData.status === 'available'){
+                    document.getElementById('submit').disabled=false;
+                }
+            }
+        });
+    }    
+    </script>
   </body>
 </html>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2015 at 04:49 PM
+-- Generation Time: Dec 27, 2015 at 06:55 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,8 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `pingtan_db`
 --
-CREATE DATABASE IF NOT EXISTS `pingtan_db` DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
-use `pingtan_db`;
+
 -- --------------------------------------------------------
 
 --
@@ -101,6 +100,20 @@ CREATE TABLE IF NOT EXISTS `group` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `news`
+--
+
+CREATE TABLE IF NOT EXISTS `news` (
+  `newsID` varchar(10) NOT NULL,
+  `date` date NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY (`newsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `session`
 --
 
@@ -134,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `NRIC` varchar(20) NOT NULL,
+  `userStatus` varchar(10) NOT NULL,
   PRIMARY KEY (`studentID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
