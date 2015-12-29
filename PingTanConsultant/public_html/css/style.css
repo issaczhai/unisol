@@ -1,4 +1,7 @@
 /****** Util ******/
+body{
+	font-family: 'Lato', sans-serif;
+}
 .text-default{
 	color: rgb(77, 77, 77);
 }
@@ -369,4 +372,48 @@
 }
 .news-date{
 	color: rgb(204, 204, 204);
+}
+
+/****** COURSE DETAIL PAGE ******/
+.course-detail-content{
+	background-color: rgb(242, 242, 242);
+}
+.row-course-detail{
+	position: relative;
+}
+.course-detail-info{
+	padding-top: 4em;
+}
+.course-detail-info-row{
+	margin-bottom: 1.5em;
+}
+.course-detail-img img{
+	width: 100%;
+}
+.btn-enrollment{
+	font-size: 1.0625em;
+    display: inline-block;
+    padding: 0.74em 1.5em;
+    color: #fff;
+    border-width: 0 0 0 0;
+    text-transform: uppercase;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    background-color: rgb(230, 183, 0);
+    width: 100%;
+}
+.btn-enrollment:hover{
+	background-color: rgb(204, 162, 0)
+}
+
+.course-info h3, .course-prerequisite h3{
+	border-bottom: 3px solid rgb(153, 153, 153);
+	margin-bottom: 1.5em;
+	padding-bottom: 0.5em;
+}
+.course-info ul, .course-info p{
+	margin-bottom: 2em;
+}
+.prerequisite a{
+	text-decoration: none;
 }
