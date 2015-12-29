@@ -66,7 +66,7 @@ if ($operation === "add"){
     $path_arr=array();
     $x=0;
     foreach($_FILES['documents']['name'] as $filename){
-        $file_name = self::upload_savename_by_gf($courseID,$filename);
+        $file_name = upload_savename_by_gf($courseID,$filename);
         $file_path = $courseDB.$courseID."/documents/".$file_name;
         move_uploaded_file($_FILES["documents"]['tmp_name'][$x], $file_path);
         $path_arr[$x] = $file_path;
@@ -88,9 +88,35 @@ if ($operation === "add"){
         $arr['status'] = "available";
     }
     echo json_encode($arr);
-}elseif ($operation === "delete") {
+}elseif ($operation === "checkSession"){
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $sessionID = filter_input(INPUT_POST,'sessionID');
+    $seesion = $sessionMgr->getSession($courseID,$sessionID);
+    $arr=array();
+    if (!empty($seesion)) {
+        $arr['status'] = "used";
+    }else{
+        $arr['status'] = "available";
+    }
+    echo json_encode($arr);
+}elseif($operation === "delete") {
     $courseID = filter_input(INPUT_POST,'courseID');
     $courseMgr->deleteCourse($courseID);
     $sessionMgr->deleteSessionByCourse($courseID);
-    self::deldir($courseDB.$courseID);
+    deldir($courseDB.$courseID);
+}elseif ($operation==="addSession"){
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $sessionID = filter_input(INPUT_POST,'sessionID');
+    $timeType = filter_input(INPUT_POST,'timeType');
+    $time = filter_input(INPUT_POST,'time');
+    $venue = filter_input(INPUT_POST,'venue');
+    $vacancy = intval(filter_input(INPUT_POST,'vacancy'));
+    $languages = filter_input(INPUT_POST,'languages');
+    $classlist = "";
+    if($timeType==='fulltime'){
+        $sessionMgr->addSession($courseID, $sessionID, $time, "", $venue, $vacancy, $languages, $classlist);
+    }elseif($timeType==='parttime'){
+        $sessionMgr->addSession($courseID, $sessionID, "", $time, $venue, $vacancy, $languages, $classlist);
+    }
+    header("Location: admin/course.php");
 }

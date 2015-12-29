@@ -49,6 +49,8 @@ $courseList = $courseMgr->getCourseList();
       
       <?php
       include("header.php");
+      include("addsession_modal.php");
+      
       ?>
       
       <!-- **********************************************************************************************************************************************************
@@ -148,26 +150,62 @@ $courseList = $courseMgr->getCourseList();
                                     </td>
                                     <td><?=$sessionIDString?></td>
                                     <td style="width: 10%">
-                                        <button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Manage Session</button>
+                                        <button id="showBtn<?=strval($course['courseID'])?>" class="btn btn-primary btn-xs" onclick="showSession('<?=strval($course['courseID'])?>')"><i class="fa fa-edit"></i> Manage Session</button>
+                                        <button id="closeBtn<?=strval($course['courseID'])?>" class="btn btn-info btn-xs" onclick="closeSession('<?=strval($course['courseID'])?>')" style="display:none"><i class="fa fa-check"></i> Done</button>
+                                    </td>
+                                </tr>
+                                <tr id="sectionRow<?=strval($course['courseID'])?>" style="display:none">
+                                    <td colspan="5">
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <th>Session ID</th>
+                                                <th>Venue</th>
+                                                <th>Time</th>
+                                                <th>Language</th>
+                                                <th>Vacancy</th>
+                                                <th></th>
+                                            </tr>
+                                            <?php
+                                            foreach($sessionList as $session){
+                                            ?>
+                                            <tr>
+                                                 <td><?=$session['sessionID']?></td>
+                                                 <td><?=$session['venue']?></td>
+                                                 <?php
+                                                 if($session['fulltime'] === ""){
+                                                 ?>
+                                                    <td><?=$session['parttime']?></td>
+                                                 <?php
+                                                 }else{
+                                                 ?>
+                                                    <td><?=$session['fulltime']?></td>
+                                                    <?php
+                                                 }
+                                                    ?>
+                                                 
+                                                 <td><?=$session['languages']?></td>
+                                                 <td><?=$session['vacancy']?></td>
+                                                 <td>
+                                                     <button class="btn btn-theme02 btn-xs" data-toggle="modal" data-target="<?=$session['sessionID']?>SessionModal"><i class="fa fa-edit"></i> Edit</button>
+                                                 </td>
+                                            </tr>
+                                            <?php
+                                            }
+                                            ?>
+                                            <tr style="width:1px;height:10px;">
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <button type="button" class="btn btn-primary btn-sm" onclick="populateAddModal('<?=$course['courseID']?>')" data-toggle="modal" data-target="#addSessionModal"> Add Session </button>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
                                 <?php
                                 }
                                 ?>
                                 
-                                <tr>
-                                    <td> 4</td>
-                                    <td> sample</td>
-                                    <td> sample</td>
-                                    <td>
-                                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                    </td>
-                                    <td>G3,G6</td>
-                                    <td style="width: 10%">
-                                        <button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Manage Session</button>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div><!-- /content-panel -->
@@ -215,6 +253,52 @@ $courseList = $courseMgr->getCourseList();
             }
         });
         event.preventDefault(); //Prevent the default submit
+    }
+    
+    function showSession(cID){
+        var courseID = cID;
+        $("#sectionRow"+courseID).css('display','');
+        $("#showBtn"+courseID).css('display','none');
+        $("#closeBtn"+courseID).css('display','');
+    }
+    
+    function closeSession(cID){
+        var courseID = cID;
+        $("#sectionRow"+courseID).css('display','none');
+        $("#showBtn"+courseID).css('display','');
+        $("#closeBtn"+courseID).css('display','none');
+    }
+    
+    function populateAddModal(cID){
+        var courseID = cID;
+        document.getElementById('addSessionCourseID').value = courseID;
+    }
+    
+    function checkSession(){
+        var courseID=document.getElementById('addSessionCourseID').value;
+        var sessionID=document.getElementById('addSessionSessionID').value;
+        var postData = { //Fetch form data
+            'operation'     :'checkSession',
+            'courseID'     : courseID,
+            'sessionID'     : sessionID
+        };
+        $.ajax({
+            type: 'post',
+            url: '../process_course.php',
+            data: postData,
+            success: function(data){
+                var pos = data.indexOf("{");
+                var dataValid = data.substring(pos);
+                var jsonData = eval("("+dataValid+")");
+                if(jsonData.status === 'used'){
+                    document.getElementById('addSessionBtn').disabled=true;
+                    console.log("used");
+                }else if(jsonData.status === 'available'){
+                    document.getElementById('addSessionBtn').disabled=false;
+                    console.log("available");
+                }
+            }
+        });
     }
     </script>
   </body>
