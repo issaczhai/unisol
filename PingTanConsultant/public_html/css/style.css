@@ -2,13 +2,19 @@
 .text-default{
 	color: rgb(77, 77, 77);
 }
-
+.text-weight-mid{
+	font-weight: 600;
+}
 .red-default{
 	color: rgb(255, 26, 26);
 }
 
 .yellow-default{
 	color: rgb(230, 183, 0);
+}
+
+.text-indent{
+	text-indent: 1em;
 }
 
 .col-center{
@@ -298,4 +304,69 @@
 .btn-submit-enquiry{
 	background-color: rgb(230, 183, 0);
 	border-bottom-color: rgb(204, 162, 0);
+}
+
+/****** ABOUT US PAGE *******/
+
+.row-title-about{
+	background-color: rgb(255, 26, 26);
+}
+.row-title-about h3{
+	color: rgb(255, 255, 255);
+	margin-top: auto;
+    margin-bottom: auto;
+    line-height: 2em;
+    padding-left: 2em;
+}
+
+.about-left-content, .about-right-content{
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+.about-left-content h5{
+	font-weight: 600;
+}
+.about-left-content p{
+	text-align: left;
+}
+.about-banner{
+	margin-bottom: 1em;
+}
+.about-banner img{
+	width: 100%;
+}
+.about-right-content h3{
+	color: rgb(230, 183, 0);
+}
+.list-about{
+	list-style-type: none;
+	width: 100%;
+	border-width: 3px 0 3px 0;
+	border-style: solid;
+	border-color: rgb(38, 38, 38);
+	padding: 0;
+}
+.list-about li{
+	padding: 1em 0 1em 1em;
+}
+.list-about li{
+	border-bottom: 2px solid rgb(179, 179, 179);
+}
+.list-about li:last-child{
+	border-bottom: none;
+}
+.list-about h3.news-date{
+	font-size: 14px;
+	color: rgb(140, 140, 140);
+}
+.list-about h3.news-title{
+	font-size: 14px;
+	color: rgb(255, 26, 26);
+}
+.list-about p.news-content{
+	font-size: 14px;
+	color: rgb(77, 77, 77);
+}
+.news-date{
+	color: rgb(204, 204, 204);
 }
