@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2015 at 06:55 AM
+-- Generation Time: Dec 30, 2015 at 01:33 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -76,12 +76,21 @@ CREATE TABLE IF NOT EXISTS `course` (
   `instructor` varchar(100) NOT NULL,
   `price` double NOT NULL,
   `description` text NOT NULL,
+  `syllabus` text NOT NULL,
+  `objective` text NOT NULL,
   `documents` text NOT NULL,
   `requiredCert` text NOT NULL,
   `receivedCert` text NOT NULL,
   `prerequisite` varchar(100) NOT NULL,
   PRIMARY KEY (`courseID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `course`
+--
+
+INSERT INTO `course` (`courseID`, `name`, `instructor`, `price`, `description`, `syllabus`, `objective`, `documents`, `requiredCert`, `receivedCert`, `prerequisite`) VALUES
+('SG101', 'Java Foundation', 'Lee Yeow Leong', 200, 'java foundation course', '{"week 1":"Introduction","week 2":"what is java"}', 'for java beginner', '["public_html\\/course\\/SG101\\/documents\\/SG101_1451470174_(443655544) Haoxian CV 2015.2.4","public_html\\/course\\/SG101\\/documents\\/SG101_1451470174_Haoxian Resume","public_html\\/course\\/SG101\\/documents\\/SG101_1451470174_sample job application answer"]', 'CFA,cba', 'NBA', 'IS100');
 
 -- --------------------------------------------------------
 
@@ -122,6 +131,7 @@ CREATE TABLE IF NOT EXISTS `session` (
   `sessionID` varchar(20) NOT NULL,
   `fulltime` text NOT NULL,
   `parttime` text NOT NULL,
+  `startDate` date NOT NULL,
   `venue` varchar(100) NOT NULL,
   `vacancy` int(11) NOT NULL,
   `languages` varchar(200) NOT NULL,

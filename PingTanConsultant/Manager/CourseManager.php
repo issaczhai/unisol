@@ -16,11 +16,11 @@ class CourseManager {
     //put your code here
     
 
-    function addCourse($courseID, $name, $instructor, $price, $description, $documents, $requiredCert, $receivedCert, $prerequisite){
+    function addCourse($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO course (courseID, name, instructor, price, description, documents, requiredCert, receivedCert, prerequisite) VALUES (?,?, ?, ?, ?, ?, ?,?,?)");
-        $stmt->bind_param("sssdsssss", $courseID, $name, $instructor, $price, $description, $documents, $requiredCert, $receivedCert, $prerequisite);
+        $stmt = $conn->prepare("INSERT INTO course (courseID, name, instructor, price, description,syllabus,objective, documents, requiredCert, receivedCert, prerequisite) VALUES (?,?, ?,?,?, ?, ?, ?, ?,?,?)");
+        $stmt->bind_param("sssdsssssss", $courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
         
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
@@ -42,13 +42,15 @@ class CourseManager {
         $stmt = $conn->prepare("SELECT * FROM course WHERE courseID=?");
         $stmt->bind_param("s", $courseID);
         $stmt->execute();
-        $stmt->bind_result($courseID, $name, $instructor, $price, $description, $documents, $requiredCert, $receivedCert, $prerequisite);
+        $stmt->bind_result($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
         while ($stmt->fetch())
         {   $course['courseID'] = $courseID;
             $course['name'] = $name;
             $course['instructor'] = $instructor;
             $course['price'] = $price;
             $course['description'] = $description;
+            $course['syllabus'] = $syllabus;
+            $course['objective'] = $objective;
             $course['documents'] = $documents;
             $course['requiredCert'] = $requiredCert;
             $course['receivedCert'] = $receivedCert;
@@ -64,7 +66,7 @@ class CourseManager {
         $conn = $ConnectionMgr->getConnection();
         $stmt = $conn->prepare("SELECT * FROM course");
         $stmt->execute();
-        $stmt->bind_result($courseID, $name, $instructor, $price, $description, $documents, $requiredCert, $receivedCert, $prerequisite);
+        $stmt->bind_result($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
         while ($stmt->fetch())
         {   $course = array();
             $course['courseID'] = $courseID;
@@ -72,6 +74,8 @@ class CourseManager {
             $course['instructor'] = $instructor;
             $course['price'] = $price;
             $course['description'] = $description;
+            $course['syllabus'] = $syllabus;
+            $course['objective'] = $objective;
             $course['documents'] = $documents;
             $course['requiredCert'] = $requiredCert;
             $course['receivedCert'] = $receivedCert;
@@ -82,11 +86,11 @@ class CourseManager {
         return $course_arr;
     }
     
-    function updateCourse($courseID, $name, $instructor, $price, $description, $documents, $requiredCert, $receivedCert, $prerequisite){
+    function updateCourse($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("UPDATE course SET name=?, instructor=?, price=?, description=?, documents=?, requiredCert=?,receivedCert=?, prerequisite=? WHERE courseID=?");
-        $stmt->bind_param("ssdssssss",$name, $instructor, $price, $description, $documents, $requiredCert, $receivedCert, $prerequisite,$courseID);
+        $stmt = $conn->prepare("UPDATE course SET name=?, instructor=?, price=?, description=?, syllabus=?, objective=? ,documents=?, requiredCert=?,receivedCert=?, prerequisite=? WHERE courseID=?");
+        $stmt->bind_param("ssdssssssss",$name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite,$courseID);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }

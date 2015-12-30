@@ -14,7 +14,7 @@ $sessionMgr = new SessionManager();
  * and open the template in the editor.
  */
 function upload_savename_by_gf($courseID,$filename){
-    return $courseID.'_'.time().'_'.substr($filename,0,strrpos($filename,"."));
+    return $courseID.'_'.time().'_'.$filename;
 }
 
 function deldir($dir) {
@@ -52,28 +52,44 @@ if ($operation === "add"){
     $requiredCert = filter_input(INPUT_POST,'requiredCert');
     $prerequisite = filter_input(INPUT_POST,'prerequisite');
     $receivedCert = filter_input(INPUT_POST,'receivedCert');
+    /******************************************************************************************************/
     $description = "";
     if(!empty($_POST['description'])){
         $description = $_POST['description'];
     }
+    /******************************************************************************************************/
+    $objective = "";
+    if(!empty($_POST['objective'])){
+        $objective = $_POST['objective'];
+    }
+    /******************************************************************************************************/
+    $syllabusArray=[];
+    $syllabusRow = intval(filter_input(INPUT_POST,'syllabusRow'));
+    for ($x=1; $x<=$syllabusRow; $x++) {
+        $unit = filter_input(INPUT_POST,'unit'.strval($x));
+        $content = filter_input(INPUT_POST,'content'.strval($x));
+        
+        $syllabusArray[$unit]=$content;
+        
+    }
+    $syllabus = json_encode($syllabusArray);
+    /******************************************************************************************************/        
     if (!file_exists($courseDB. $courseID)){
         mkdir($courseDB.$courseID ,0777, true);
     }
     if (!file_exists($courseDB. $courseID."/documents")){
         mkdir($courseDB.$courseID."/documents" ,0777, true);
     }
-    
     $path_arr=array();
-    $x=0;
-    foreach($_FILES['documents']['name'] as $filename){
-        $file_name = upload_savename_by_gf($courseID,$filename);
+    for($j=0; $j < count($_FILES["documents"]['name']); $j++) { 
+        $file_name = upload_savename_by_gf($courseID,$_FILES["documents"]['name'][$j]);
         $file_path = $courseDB.$courseID."/documents/".$file_name;
-        move_uploaded_file($_FILES["documents"]['tmp_name'][$x], $file_path);
-        $path_arr[$x] = $file_path;
-        $x+=1;
+        move_uploaded_file($_FILES["documents"]['tmp_name'][$j], $file_path);
+        array_push($path_arr, $file_path);
     }
     $documents = json_encode($path_arr);
-    $courseMgr->addCourse($courseID, $name, $instructor, $price, $description, $documents, $requiredCert, $receivedCert, $prerequisite);
+    /******************************************************************************************************/
+    $courseMgr->addCourse($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
     header("Location: admin/course.php");
     
     
@@ -109,14 +125,22 @@ if ($operation === "add"){
     $sessionID = filter_input(INPUT_POST,'sessionID');
     $timeType = filter_input(INPUT_POST,'timeType');
     $time = filter_input(INPUT_POST,'time');
+    $startDate = new DateTime(filter_input(INPUT_POST,'startDate'));
+    $startDate = $startDate->format('Y-m-d H:i:s');
     $venue = filter_input(INPUT_POST,'venue');
     $vacancy = intval(filter_input(INPUT_POST,'vacancy'));
     $languages = filter_input(INPUT_POST,'languages');
     $classlist = "";
     if($timeType==='fulltime'){
-        $sessionMgr->addSession($courseID, $sessionID, $time, "", $venue, $vacancy, $languages, $classlist);
+        $sessionMgr->addSession($courseID, $sessionID, $time, "",$startDate, $venue, $vacancy, $languages, $classlist);
     }elseif($timeType==='parttime'){
-        $sessionMgr->addSession($courseID, $sessionID, "", $time, $venue, $vacancy, $languages, $classlist);
+        $sessionMgr->addSession($courseID, $sessionID, "", $time,$startDate, $venue, $vacancy, $languages, $classlist);
     }
     header("Location: admin/course.php");
+}elseif ($operation === 'deleteSession') {
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $sessionID = filter_input(INPUT_POST,'sessionID');
+    $sessionMgr->deleteSession($courseID, $sessionID);
+}elseif ($operation === 'editSession'){
+    
 }

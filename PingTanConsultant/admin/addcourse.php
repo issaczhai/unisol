@@ -27,6 +27,7 @@
     <link href="assets/css/style-responsive.css" rel="stylesheet">
 
     <script src="assets/js/chart-master/Chart.js"></script>
+    
   </head>
 
   <body>
@@ -133,7 +134,27 @@
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Description</label>
                               <div class="col-sm-4">
-                                  <textarea class="form-control" style="height: 250px;" id="description" name="description"></textarea>
+                                  <textarea class="form-control" style="height: 200px;" id="description" name="description"></textarea>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                                <label class="col-sm-2 col-sm-2 control-label" for="syllabus">Course Content</label>
+                                <div class="col-sm-4">
+                                    <table id="syllabusTable" class="table">
+                                        <tr>
+                                            <td width="30%"><input type="text" name="unit1" class="form-control" id="unit1"></td>
+                                            <td><input type="text" name="content1" class="form-control" id="content1"></td>
+                                        </tr>
+                                    </table>
+                                    <button type="button" onclick="addRow()">Add Content</button> 
+                                    <button type="button" onclick="removeRow()">Remove Content</button>
+                                </div>
+                                <input type="hidden" id="syllabusRow" name="syllabusRow" value="1">
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label" for="objective">Course Content</label>
+                              <div class="col-sm-4">
+                                  <textarea class="form-control" style="height: 200px;" id="objective" name="objective"></textarea>
                               </div>
                           </div>
                           <div class="form-group">
@@ -218,7 +239,21 @@
         });
     }
     
+    function addRow(){
+        var row = parseInt(document.getElementById('syllabusRow').value);
+        row = row + 1;
+        $("#syllabusTable").append("<tr><td><input type='text' name='unit"+row.toString()+"'id='unit"+row.toString()+"' class='form-control'></td><td><input type='text' name='content"+row.toString()+"'id='content"+row.toString()+"' class='form-control'></td></tr>");
+        document.getElementById('syllabusRow').value = row;
+    }
     
+    function removeRow(){
+        var row = parseInt(document.getElementById('syllabusRow').value);
+        if(row > 1){
+            row = row - 1;
+            document.getElementById('syllabusRow').value = row;
+            $("#syllabusTable").find("tr:last").remove();
+        }
+    }
     </script>
     
   </body>

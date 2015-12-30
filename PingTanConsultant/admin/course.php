@@ -146,7 +146,7 @@ $courseList = $courseMgr->getCourseList();
                                     <td> <?=$course['name']?></td>
                                     <td>
                                         <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                        <button class="btn btn-danger btn-xs" onclick="deletePhoto('<?=strval($course['courseID'])?>')"><i class="fa fa-trash-o "></i></button>
+                                        <button class="btn btn-danger btn-xs" onclick="deleteCourse('<?=strval($course['courseID'])?>')"><i class="fa fa-trash-o "></i></button>
                                     </td>
                                     <td><?=$sessionIDString?></td>
                                     <td style="width: 10%">
@@ -186,8 +186,128 @@ $courseList = $courseMgr->getCourseList();
                                                  <td><?=$session['languages']?></td>
                                                  <td><?=$session['vacancy']?></td>
                                                  <td>
-                                                     <button class="btn btn-theme02 btn-xs" data-toggle="modal" data-target="<?=$session['sessionID']?>SessionModal"><i class="fa fa-edit"></i> Edit</button>
+                                                     <button class="btn btn-theme02 btn-xs" data-toggle="modal" data-target="#<?=$session['sessionID']?>SessionModal"><i class="fa fa-edit"></i> Edit</button>
+                                                     <button class="btn btn-danger btn-xs" onclick="deleteSession('<?=$session['sessionID']?>','<?=strval($course['courseID'])?>')"><i class="fa fa-trash-o "></i></button>
                                                  </td>
+<!---------------------------------------------------------EDIT SESSION MODAL---------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                                            <div class="modal fade" id="<?=$session['sessionID']?>SessionModal">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content" id="login_modal_content">
+                                                                <div class="modal-body">
+                                                                    <div id="myTabContent" class="tab-content">
+                                                                        <div class="tab-pane fade active in" id="add_address">
+                                                                            <fieldset>
+                                                                                <form id="edit<?=$session['sessionID']?>SessionForm" action="../process_course.php" method="post">
+                                                                                    <!-- Sign In Form -->
+                                                                                    <!-- Error Massage-->
+                                                                                    <div class="control-group">
+                                                                                        <div class="controls">
+                                                                                            <p style="color:#FF0000"id="add_errorMsg"></p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <input name="operation" value="editSession" type="hidden">
+                                                                                    <input id="edit<?=$session['sessionID']?>SessionCourseID" name="courseID" value="'<?=strval($course['courseID'])?>'" type="hidden">
+                                                                                    <!-- Text input-->
+                                                                                    <div class="control-group">
+                                                                                        <label class="control-label" for="editSessionsessionID">Session ID</label>
+                                                                                        <div class="controls">
+                                                                                            <input id="edit<?=$session['sessionID']?>SessionSessionID" name="editSessionSessionID" type="text" value="<?=$session['sessionID']?>" class="form-control" class="input-medium" required="" onchange="checkSession()">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="control-group">
+                                                                                        <label class="control-label" for="timeType">Time Type</label>
+                                                                                    </div>
+                                                                                    <!-- Text input-->
+                                                                                    <div class="control-group">
+                                                                                        <div class="radio inline-block">
+                                                                                            <label>
+                                                                                                <?php
+                                                                                                if($session['fulltime']===''){
+                                                                                                ?>
+                                                                                                <input type="radio" name="timeType" id="edit<?=$session['sessionID']?>SessionTimeType1" value="fulltime">
+                                                                                                <?php
+                                                                                                }else{
+                                                                                                ?>
+                                                                                                <input type="radio" name="timeType" id="edit<?=$session['sessionID']?>SessionTimeType1" value="fulltime" checked>
+                                                                                                <?php
+                                                                                                }
+                                                                                                ?>
+                                                                                                Full Time
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="radio inline-block">
+                                                                                            <label>
+                                                                                                <?php
+                                                                                                if($session['parttime']===''){
+                                                                                                ?>
+                                                                                                <input type="radio" name="timeType" id="edit<?=$session['sessionID']?>SessionTimeType2" value="parttime">
+                                                                                                <?php
+                                                                                                }else{
+                                                                                                ?>
+                                                                                                <input type="radio" name="timeType" id="edit<?=$session['sessionID']?>SessionTimeType2" value="parttime" checked>
+                                                                                                <?php
+                                                                                                }
+                                                                                                ?>
+                                                                                                Part Time
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="control-group">
+                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionTime">Time</label>
+                                                                                        <div class="controls">
+                                                                                            <input required="" id="edit<?=$session['sessionID']?>SessionTime" name="time" class="form-control" value="<?=$session['fulltime'].$session['parttime']?>" type="text" class="input-medium">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- Text input-->
+                                                                                    <div class="control-group">
+                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionStartDate">Start Date</label>
+                                                                                        <div class="controls">
+                                                                                            <input required="" id="edit<?=$session['sessionID']?>SessionStartDate" name="startDate" class="form-control" value="<?=$session['startDate']?>" type="date" class="input-medium">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- Text input-->
+                                                                                    <div class="control-group">
+                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionVenue">Venue</label>
+                                                                                        <div class="controls">
+                                                                                            <input required="" id="edit<?=$session['sessionID']?>SessionVenue" name="venue" class="form-control" value="<?=$session['venue']?>" type="text" class="input-medium">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- Text input-->
+                                                                                    <div class="control-group">
+                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionVacancy">Vacancy</label>
+                                                                                        <div class="controls">
+                                                                                            <input required="" id="edit<?=$session['sessionID']?>SessionVacancy" name="vacancy" class="form-control" value="<?=$session['vacancy']?>" type="text" class="input-medium">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- Text input-->
+                                                                                    <div class="control-group">
+                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionLanguages">Language</label>
+                                                                                        <div class="controls">
+                                                                                            <input required="" id="edit<?=$session['sessionID']?>SessionLanguages" name="languages" class="form-control" value="<?=$session['languages']?>" type="text" class="input-medium">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- Button -->
+                                                                                    <div class="control-group">
+                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionBtn"></label>
+                                                                                        <div class="controls">
+                                                                                            <button type="submit" id="edit<?=$session['sessionID']?>SessionBtn" name="editSessionBtn" class="btn btn-success">Edit</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </fieldset>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <center>
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                    </center>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
                                             </tr>
                                             <?php
                                             }
@@ -238,8 +358,7 @@ $courseList = $courseMgr->getCourseList();
     <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
     <script>
-    function deletePhoto(cID){
-        var courseID = cID;
+    function deleteCourse(cID){
         var postData = {'operation': 'delete','courseID':cID};
         $.ajax({ //Process the form using $.ajax()
             type      : 'POST', //Method type
@@ -249,6 +368,19 @@ $courseList = $courseMgr->getCourseList();
     //            var pos = data.indexOf("{");
     //            var dataValid = data.substring(pos);
     //            var jsonData = eval("("+dataValid+")");
+                location.reload();
+            }
+        });
+        event.preventDefault(); //Prevent the default submit
+    }
+    
+    function deleteSession(sID,cID){
+        var postData = {'operation': 'deleteSession','courseID':cID,'sessionID':sID};
+        $.ajax({ //Process the form using $.ajax()
+            type      : 'POST', //Method type
+            url       : '../process_course.php', //Your form processing file URL
+            data      : postData, //Forms name
+            success   : function(data) {
                 location.reload();
             }
         });

@@ -16,8 +16,8 @@ class SessionManager {
     function addSession($courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO session (courseID,sessionID,fulltime,parttime,startDate, venue, vacancy, languages, classlist) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssiss",$courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist);
+        $stmt = $conn->prepare("INSERT INTO session (courseID,sessionID,fulltime,parttime,startDate, venue, vacancy, languages, classlist) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssiss",$courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
