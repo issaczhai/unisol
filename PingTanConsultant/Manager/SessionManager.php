@@ -22,6 +22,15 @@ class SessionManager {
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
+    function updateSession($courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE session SET fulltime = ?,parttime = ?,startDate=?, venue=?, vacancy=?, languages=?, classlist = ? WHERE courseID = ? AND sessionID = ?");
+        $stmt->bind_param("ssssissss",$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist,$courseID,$sessionID);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
     function deleteSession($courseID,$sessionID){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();

@@ -206,12 +206,13 @@ $courseList = $courseMgr->getCourseList();
                                                                                         </div>
                                                                                     </div>
                                                                                     <input name="operation" value="editSession" type="hidden">
-                                                                                    <input id="edit<?=$session['sessionID']?>SessionCourseID" name="courseID" value="'<?=strval($course['courseID'])?>'" type="hidden">
+                                                                                    <input id="edit<?=$session['sessionID']?>SessionCourseID" name="courseID" value="<?=strval($course['courseID'])?>" type="hidden">
                                                                                     <!-- Text input-->
                                                                                     <div class="control-group">
                                                                                         <label class="control-label" for="editSessionsessionID">Session ID</label>
                                                                                         <div class="controls">
-                                                                                            <input id="edit<?=$session['sessionID']?>SessionSessionID" name="editSessionSessionID" type="text" value="<?=$session['sessionID']?>" class="form-control" class="input-medium" required="" onchange="checkSession()">
+                                                                                            <p class="form-control-static"><?=$session['sessionID']?></p>
+                                                                                            <input id="edit<?=$session['sessionID']?>SessionSessionID" name="sessionID" type="hidden" value="<?=$session['sessionID']?>" class="form-control" class="input-medium" >
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="control-group">

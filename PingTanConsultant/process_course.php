@@ -142,5 +142,21 @@ if ($operation === "add"){
     $sessionID = filter_input(INPUT_POST,'sessionID');
     $sessionMgr->deleteSession($courseID, $sessionID);
 }elseif ($operation === 'editSession'){
-    
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $sessionID = filter_input(INPUT_POST,'sessionID');
+    var_dump($_POST);
+    $timeType = filter_input(INPUT_POST,'timeType');
+    $time = filter_input(INPUT_POST,'time');
+    $startDate = new DateTime(filter_input(INPUT_POST,'startDate'));
+    $startDate = $startDate->format('Y-m-d H:i:s');
+    $venue = filter_input(INPUT_POST,'venue');
+    $vacancy = intval(filter_input(INPUT_POST,'vacancy'));
+    $languages = filter_input(INPUT_POST,'languages');
+    $classlist = "";
+    if($timeType==='fulltime'){
+        $sessionMgr->updateSession($courseID, $sessionID, $time, "",$startDate, $venue, $vacancy, $languages, $classlist);
+    }elseif($timeType==='parttime'){
+        $sessionMgr->updateSession($courseID, $sessionID, "", $time,$startDate, $venue, $vacancy, $languages, $classlist);
+    }
+    header("Location: admin/course.php");
 }
