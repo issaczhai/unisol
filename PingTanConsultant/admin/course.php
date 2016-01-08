@@ -145,7 +145,7 @@ $courseList = $courseMgr->getCourseList();
                                     <td> <?=$course['courseID']?></td>
                                     <td> <?=$course['name']?></td>
                                     <td>
-                                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-primary btn-xs" onclick="location.href='./editcourse.php?cID=<?=strval($course['courseID'])?>'"><i class="fa fa-pencil"></i></button>
                                         <button class="btn btn-danger btn-xs" onclick="deleteCourse('<?=strval($course['courseID'])?>')"><i class="fa fa-trash-o "></i></button>
                                     </td>
                                     <td><?=$sessionIDString?></td>
@@ -433,6 +433,7 @@ $courseList = $courseMgr->getCourseList();
             }
         });
     }
+    
     </script>
   </body>
 </html>

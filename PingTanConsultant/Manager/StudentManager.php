@@ -79,9 +79,12 @@ class StudentManager {
             $student['userStatus'] = $userStatus;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
-        $ssManager = new StudentStatusManager();
-        $studentstatus = $ssManager->getStudentStatus($student['studentID']);
-        $student['status'] = $studentstatus;
+        if(!empty($student)){
+            $ssManager = new StudentStatusManager();
+            $studentstatus = $ssManager->getStudentStatus($student['studentID']);
+            $student['status'] = $studentstatus;
+        }
+        
         return $student;
     }
     
@@ -108,9 +111,11 @@ class StudentManager {
             $student['userStatus'] = $userStatus;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
-        $ssManager = new StudentStatusManager();
-        $studentstatus = $ssManager->getStudentStatus($student['studentID']);
-        $student['status'] = $studentstatus;
+        if(!empty($student)){
+            $ssManager = new StudentStatusManager();
+            $studentstatus = $ssManager->getStudentStatus($student['studentID']);
+            $student['status'] = $studentstatus;
+        }
         return $student;
     }
     
@@ -137,9 +142,11 @@ class StudentManager {
             $student['userStatus'] = $userStatus;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
-        $ssManager = new StudentStatusManager();
-        $studentstatus = $ssManager->getStudentStatus($student['studentID']);
-        $student['status'] = $studentstatus;
+        if(!empty($student)){
+            $ssManager = new StudentStatusManager();
+            $studentstatus = $ssManager->getStudentStatus($student['studentID']);
+            $student['status'] = $studentstatus;
+        }
         return $student;
     }
     
@@ -166,9 +173,11 @@ class StudentManager {
             $student['userStatus'] = $userStatus;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
-        $ssManager = new StudentStatusManager();
-        $studentstatus = $ssManager->getStudentStatus($student['studentID']);
-        $student['status'] = $studentstatus;
+        if(!empty($student)){
+            $ssManager = new StudentStatusManager();
+            $studentstatus = $ssManager->getStudentStatus($student['studentID']);
+            $student['status'] = $studentstatus;
+        }
         return $student;
     }
     
@@ -179,6 +188,7 @@ class StudentManager {
         $stmt = $conn->prepare("SELECT * FROM student");
         $stmt->execute();
         $stmt->bind_result($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric,$userStatus);
+        $ssManager = new StudentStatusManager();
         while ($stmt->fetch())
         {   $student = array();
             $student['studentID'] = $studentID;
@@ -193,6 +203,9 @@ class StudentManager {
             $student['lastname'] = $lastname;
             $student['nric'] = $nric;
             $student['userStatus'] = $userStatus;
+            $studentstatus = $ssManager->getStudentStatus($student['studentID']);
+            $student['status'] = $studentstatus;
+            
             array_push($student_arr,$student);
         }
         $ConnectionMgr->closeConnection($stmt, $conn);

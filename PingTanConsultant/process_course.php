@@ -159,4 +159,64 @@ if ($operation === "add"){
         $sessionMgr->updateSession($courseID, $sessionID, "", $time,$startDate, $venue, $vacancy, $languages, $classlist);
     }
     header("Location: admin/course.php");
+}elseif ($operation === 'edit'){
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $name = filter_input(INPUT_POST,'name');
+    $instructor = filter_input(INPUT_POST,'instructor');
+    $price = floatval(filter_input(INPUT_POST,'price'));
+    $requiredCert = filter_input(INPUT_POST,'requiredCert');
+    $prerequisite = filter_input(INPUT_POST,'prerequisite');
+    $receivedCert = filter_input(INPUT_POST,'receivedCert');
+    /******************************************************************************************************/
+    $description = "";
+    if(!empty($_POST['description'])){
+        $description = $_POST['description'];
+    }
+    /******************************************************************************************************/
+    $objective = "";
+    if(!empty($_POST['objective'])){
+        $objective = $_POST['objective'];
+    }
+    /******************************************************************************************************/
+    $syllabusArray=[];
+    $syllabusRow = intval(filter_input(INPUT_POST,'syllabusRow'));
+    for ($x=1; $x<=$syllabusRow; $x++) {
+        $unit = filter_input(INPUT_POST,'unit'.strval($x));
+        $content = filter_input(INPUT_POST,'content'.strval($x));
+        
+        $syllabusArray[$unit]=$content;
+        
+    }
+    $syllabus = json_encode($syllabusArray);
+    /******************************************************************************************************/ 
+    $path_arr = array();
+    $existingPath = $_POST['existingDocuments'];
+    foreach($existingPath as $path){
+        array_push($path_arr,$path);
+    }
+    //var_dump($path_arr);
+    if (!file_exists($courseDB. $courseID)){
+        mkdir($courseDB.$courseID ,0777, true);
+    }
+    if (!file_exists($courseDB. $courseID."/documents")){
+        mkdir($courseDB.$courseID."/documents" ,0777, true);
+    }
+    if(!empty($_FILES['documents']['name'][0])){
+        for($j=0; $j < count($_FILES["documents"]['name']); $j++) {
+            $file_name = upload_savename_by_gf($courseID,$_FILES["documents"]['name'][$j]);
+            $file_path = $courseDB.$courseID."/documents/".$file_name;
+            //move_uploaded_file($_FILES["documents"]['tmp_name'][$j], $file_path);
+            array_push($path_arr, $file_path);
+        }
+    }
+    $documents = json_encode($path_arr);
+    //var_dump($documents);
+    /******************************************************************************************************/
+    $courseMgr->updateCourse($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
+    header("Location: admin/course.php");
+    
+}elseif ($operation === 'deleteDocument'){
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $documentPath = filter_input(INPUT_POST,'documentPath');
+    unlink($documentPath);
 }
