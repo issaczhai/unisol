@@ -18,7 +18,8 @@
         <li><a href="./courses.php">Courses</a></li>
         <li><a href="./service.php">Service</a></li>
         <li><a href="./contactUs.php">Contact Us</a></li>
-        <li><a href="./login.php">Login</a></li>
+        <li class="header-username"><a href="./login.php">Login</a></li>
+        <li class="header-logout"><a href="./logout.php">Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
