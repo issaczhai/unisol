@@ -20,7 +20,7 @@
 	    	<div class="row"> 
 	    		<div class="col-md-4 login-content">
     				<h3>Login</h3>
-		    		<form class="col-md-12" action="#">
+		    		<section class="col-md-12" action="#">
 		    			<div class="col-md-12 form-login-row">
 		    				<input class="input-login" type="email" name="email" placeholder="Email" required>
 		    			</div>
@@ -41,7 +41,7 @@
 		    			<div class="col-md-12 form-login-row">
 	    					<span>Don't have an account? </span><a class="btn-sign-up" type="button" href="./sign_up.php">Sign Up Here</a>
 		    			</div>
-	    			</form>
+	    			</section>
 	    		</div>
 	    	</div>
 	    </div>

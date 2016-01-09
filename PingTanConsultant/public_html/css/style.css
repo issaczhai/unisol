@@ -127,6 +127,9 @@ body.body-bg-grey{
 	background-color: rgb(204, 204, 204);
 	color: black;
 }
+.nav li.header-logout{
+	display: none;
+}
 /****** FOOTER ******/
 .navbar-inverse h4{
 	color: rgb(255, 255, 255);
@@ -520,7 +523,7 @@ body.body-bg-grey{
 .login-content{
 	margin: auto;
 }
-.login-content form{
+.login-content section{
 	background-color: rgb(230, 230, 230);
 	padding-top: 2em;
 	border-width: 3px 0 3px 0;
@@ -555,7 +558,7 @@ body.body-bg-grey{
 .form-login-row{
 	margin-bottom: 1.5em;
 }
-.login-content form .input-login{
+.login-content section .input-login{
 	width: 100%;
 	margin: 0 0 0.5em 0;
     border: 1px solid #ccc;

@@ -20,7 +20,11 @@
 	    	<div class="row"> 
 	    		<div class="col-md-5 login-content">
     				<h3>Welcome to PingTan Consultant</h3>
-		    		<form class="col-md-12" action="#">
+		    		<!-- <form id="form-signUp" class="col-md-12" action="#"> -->
+		    		<section class="col-md-12 section-signUp">
+		    			<div id="errorMsgSignUp" class="col-md-12 form-login-row">
+		    				
+		    			</div>
 		    			<div class="col-md-12 form-login-row">
 		    				<div class="col-md-3 col-padding-none">
 		    					<span>Register As: </span>
@@ -49,8 +53,8 @@
 			    				<input class="input-login" type="password" name="password" placeholder="Password" required>
 			    			</div>
 			    			<div class="col-md-12 form-login-row">
-			    				<label for="re-password">Re-enter Password</label>
-			    				<input class="input-login" type="password" name="re-password" placeholder="Re-enter Password" required>
+			    				<label for="rePassword">Re-enter Password</label>
+			    				<input class="input-login" type="password" name="rePassword" placeholder="Re-enter Password" required>
 			    			</div>
 	    				</div>
 	    				<div class="col-md-12 col-padding-none signUp-content signUp-content-company hide">
@@ -61,6 +65,14 @@
 			    			<div class="col-md-6 form-login-row">
 			    				<label for="registrationId">Registration ID</label>
 			    				<input class="input-login" type="text" name="registrationId" placeholder="Company Registration ID" required>
+			    			</div>
+			    			<div class="col-md-6 form-login-row">
+			    				<label for="cPassword">Password</label>
+			    				<input class="input-login" type="password" name="cPassword" placeholder="Password" required>
+			    			</div>
+			    			<div class="col-md-6 form-login-row">
+			    				<label for="re-cPassword">Re-enter Password</label>
+			    				<input class="input-login" type="password" name="reCPassword" placeholder="Re-enter Password" required>
 			    			</div>
 			    			<div class="col-md-12 form-login-row">
 			    				<label for="street">Street</label>
@@ -96,15 +108,22 @@
 			    			</div>
 		    			</div>
 		    			<div class="col-md-12 form-login-row">
-	    					<input class="btn-login" type="submit" value="Register">
+	    					<input id="btn-signUp" class="btn-login" type="button" value="Register">
 		    			</div>
-	    			</form>
+		    		</section>
+	    			<!-- </form> -->
 	    		</div>
 	    	</div>
 	    </div>
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+<script src="./public_html/js/cookie.js"></script>
+<script src="./public_html/js/request.js"></script>
+<script src="./public_html/js/authValidation.js"></script>
+<script src="./public_html/js/auth.js"></script>
+
 <script type="text/javascript">
 	$('.radio-type').on('click', function(event) {
 		
@@ -118,6 +137,10 @@
 			$(".signUp-content-individual").addClass('hide');
 		}
 	});
+
+	/*$('#btn-signUp').on('click', function(event) {
+		signUp();
+	});*/
 </script>
 </body>
 

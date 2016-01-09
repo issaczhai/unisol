@@ -2,6 +2,7 @@
 <html>
 
 <head>	
+	<meta name="keywords" content="PingTan, safety school, construction">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./public_html/css/style.css">
@@ -197,6 +198,7 @@
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="./public_html/js/cookie.js"></script>
 </body>
 
 </html>

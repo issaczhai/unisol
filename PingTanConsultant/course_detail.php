@@ -10,6 +10,7 @@
 <body>
 	<!-- Header -->
 	<?php
+		include_once("./register_course_individual.php");
         include_once("./templates/header.php");
     ?>
 
@@ -106,7 +107,7 @@
 	    			</div>
 	    			<div class="row course-detail-info-row">
 	    				<div class="col-md-12">
-			    			<button class="btn-enrollment">Enroll me for this course</button>		
+			    			<button class="btn-enrollment" data-toggle="modal" data-target=".course_register_modal" >Enroll me for this course</button>		
 						</div>
 	    			</div>
 	    		</div>
