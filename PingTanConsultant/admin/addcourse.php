@@ -110,7 +110,14 @@
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Course ID (Unique)</label>
                               <div class="col-sm-4">
-                                  <input type="text" id="courseID" name="courseID" class="form-control round-form" maxlength="20" required onchange="checkCourseID()">
+                                  <input type="text" id="courseID" name="courseID" class="form-control round-form" maxlength="20" required onchange="checkCourseID('en')">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Display Language</label>
+                              <div class="col-sm-4">
+                                  <p class="form-control-static">English</p>
+                                  <input type="hidden" id="lang" name="lang" class="form-control round-form" value="en">
                               </div>
                           </div>
                           <div class="form-group">
@@ -216,11 +223,12 @@
     <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
     
     <script>
-    function checkCourseID(){
+    function checkCourseID(lang){
         var courseID = document.getElementById("courseID").value;
         var postData = { //Fetch form data
             'operation'     :'checkCourseID',
-            'courseID'     : courseID
+            'courseID'     : courseID,
+            'lang'          :lang
         };
         $.ajax({
             type: 'post',

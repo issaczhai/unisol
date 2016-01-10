@@ -19,6 +19,7 @@ class ConnectionManager {
         $userName = "root";
         $password = "";
         $conn = new mysqli($hostname, $userName, $password, $database);
+        $conn->set_charset("utf8");
         return $conn;
     }
     

@@ -16,30 +16,30 @@ class CourseManager {
     //put your code here
     
 
-    function addCourse($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite){
+    function addCourse($lang,$courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO course (courseID, name, instructor, price, description,syllabus,objective, documents, requiredCert, receivedCert, prerequisite) VALUES (?,?, ?,?,?, ?, ?, ?, ?,?,?)");
+        $stmt = $conn->prepare("INSERT INTO course_".$lang." (courseID, name, instructor, price, description,syllabus,objective, documents, requiredCert, receivedCert, prerequisite) VALUES (?,?, ?,?,?, ?, ?, ?, ?,?,?)");
         $stmt->bind_param("sssdsssssss", $courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
         
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
-    function deleteCourse($courseID){
+    function deleteCourse($lang,$courseID){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("DELETE FROM course WHERE courseID = ?");
+        $stmt = $conn->prepare("DELETE FROM course_".$lang." WHERE courseID = ?");
         $stmt->bind_param("s", $courseID);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
-    function getCourse($courseID){
+    function getCourse($lang,$courseID){
         $course = [];
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM course WHERE courseID=?");
+        $stmt = $conn->prepare("SELECT * FROM course_".$lang." WHERE courseID=?");
         $stmt->bind_param("s", $courseID);
         $stmt->execute();
         $stmt->bind_result($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
@@ -60,11 +60,11 @@ class CourseManager {
         return $course;
     }
     
-    function getCourseList(){
+    function getCourseList($lang){
         $course_arr = array();
         $ConnectionMgr = new ConnectionManager();
         $conn = $ConnectionMgr->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM course");
+        $stmt = $conn->prepare("SELECT * FROM course_".$lang);
         $stmt->execute();
         $stmt->bind_result($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
         while ($stmt->fetch())
@@ -86,10 +86,10 @@ class CourseManager {
         return $course_arr;
     }
     
-    function updateCourse($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite){
+    function updateCourse($lang,$courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("UPDATE course SET name=?, instructor=?, price=?, description=?, syllabus=?, objective=? ,documents=?, requiredCert=?,receivedCert=?, prerequisite=? WHERE courseID=?");
+        $stmt = $conn->prepare("UPDATE course_".$lang." SET name=?, instructor=?, price=?, description=?, syllabus=?, objective=? ,documents=?, requiredCert=?,receivedCert=?, prerequisite=? WHERE courseID=?");
         $stmt->bind_param("ssdssssssss",$name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite,$courseID);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);

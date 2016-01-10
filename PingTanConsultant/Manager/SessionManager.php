@@ -13,47 +13,47 @@
  */
 class SessionManager {
     //put your code here
-    function addSession($courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist){
+    function addSession($lang,$courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO session (courseID,sessionID,fulltime,parttime,startDate, venue, vacancy, languages, classlist) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO session_".$lang." (courseID,sessionID,fulltime,parttime,startDate, venue, vacancy, languages, classlist) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssiss",$courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
-    function updateSession($courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist){
+    function updateSession($lang,$courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("UPDATE session SET fulltime = ?,parttime = ?,startDate=?, venue=?, vacancy=?, languages=?, classlist = ? WHERE courseID = ? AND sessionID = ?");
+        $stmt = $conn->prepare("UPDATE session_".$lang." SET fulltime = ?,parttime = ?,startDate=?, venue=?, vacancy=?, languages=?, classlist = ? WHERE courseID = ? AND sessionID = ?");
         $stmt->bind_param("ssssissss",$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist,$courseID,$sessionID);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
-    function deleteSession($courseID,$sessionID){
+    function deleteSession($lang,$courseID,$sessionID){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("DELETE FROM session WHERE courseID = ? AND sessionID = ?");
+        $stmt = $conn->prepare("DELETE FROM session_".$lang." WHERE courseID = ? AND sessionID = ?");
         $stmt->bind_param("ss", $courseID,$sessionID);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
-    function deleteSessionByCourse($courseID){
+    function deleteSessionByCourse($lang,$courseID){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("DELETE FROM session WHERE courseID = ?");
+        $stmt = $conn->prepare("DELETE FROM session_".$lang." WHERE courseID = ?");
         $stmt->bind_param("s", $courseID);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
-    function getSession($courseID,$sessionID){
+    function getSession($lang,$courseID,$sessionID){
         $session = [];
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM session WHERE courseID = ? AND sessionID=?");
+        $stmt = $conn->prepare("SELECT * FROM session_".$lang." WHERE courseID = ? AND sessionID=?");
         $stmt->bind_param("ss", $courseID,$sessionID);
         $stmt->execute();
         $stmt->bind_result($courseID,$sessionID,$fulltime,$parttime, $startDate,$venue, $vacancy, $languages, $classlist);
@@ -72,11 +72,11 @@ class SessionManager {
         return $session;
     }
     
-    function getSessionListByCourse($courseID){
+    function getSessionListByCourse($lang,$courseID){
         $sessionList=[];
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM session WHERE courseID = ?");
+        $stmt = $conn->prepare("SELECT * FROM session_".$lang." WHERE courseID = ?");
         $stmt->bind_param("s", $courseID);
         $stmt->execute();
         $stmt->bind_result($courseID,$sessionID,$fulltime,$parttime, $startDate, $venue, $vacancy, $languages, $classlist);

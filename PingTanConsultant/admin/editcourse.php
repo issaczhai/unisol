@@ -5,14 +5,19 @@ $courseID='';
 if (isset($_GET['cID'])) {
     $courseID = $_GET['cID'];
 }
-
+$lang='';
+if (isset($_GET['lang'])) {
+    $lang = $_GET['lang'];
+}
 
 include_once("../Manager/ConnectionManager.php");
 include_once("../Manager/CourseManager.php");
 $courseMgr = new CourseManager();
-$course = $courseMgr->getCourse($courseID);
-$syllabusArr = json_decode($course['syllabus']);
-$documentsArr = json_decode($course['documents']);
+$course = $courseMgr->getCourse($lang,$courseID);
+if(!empty($course)){
+    $syllabusArr = json_decode($course['syllabus']);
+    $documentsArr = json_decode($course['documents']);
+}
 ?>
 <html lang="en">
   <head>
@@ -163,12 +168,109 @@ $documentsArr = json_decode($course['documents']);
                   <div class="form-panel">
                       <h4 class="mb"><i class="fa fa-angle-right"></i> Edit Course</h4>
                       <form class="form-horizontal style-form" method="post" enctype='multipart/form-data' action='../process_course.php'>
+                          
+                          <?php
+                          if(empty($course)){
+                          ?>
+                          <input type="hidden" id="operation" name="operation" value="add">
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Course ID</label>
+                              <div class="col-sm-4">
+                                  <p class="form-control-static"><?=$courseID?></p>
+                                  <input type="hidden" id="courseID" name="courseID" class="form-control round-form" value="<?=$courseID?>">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Display Language</label>
+                              <div class="col-sm-4">
+                                    <p class="form-control-static"><?=$lang?></p>
+                                    <input type="hidden" id="lang" name="lang" class="form-control round-form" value="<?=$lang?>">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Course Name</label>
+                              <div class="col-sm-4">
+                                  <input type="text" id="name" name="name" class="form-control round-form" value="" maxlength="100" required>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Instructor</label>
+                              <div class="col-sm-4">
+                                  <input type="text" id="instructor" name="instructor" class="form-control round-form" value="" maxlength="100" required>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Price ($)</label>
+                              <div class="col-sm-4">
+                                  <input type="text" id="price" name="price" class="form-control round-form" value="" maxlength="10" required>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Description</label>
+                              <div class="col-sm-4">
+                                  <textarea class="form-control" style="height: 200px;" id="description" name="description"></textarea>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                                <label class="col-sm-2 col-sm-2 control-label" for="syllabus">Course Content</label>
+                                <div class="col-sm-4">
+                                    <table id="syllabusTable" class="table">
+                                        <tr>
+                                            <td width="30%"><input type="text" name="unit1" class="form-control" value="" id="unit1"></td>
+                                            <td><input type="text" name="content1" class="form-control" value="" id="content1"></td>
+                                        </tr>
+                                    </table>
+                                    <button type="button" onclick="addRow()">Add Content</button> 
+                                    <button type="button" onclick="removeRow()">Remove Content</button>
+                                </div>
+                                <input type="hidden" id="syllabusRow" name="syllabusRow" value="1">
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label" for="objective">Course Content</label>
+                              <div class="col-sm-4">
+                                  <textarea class="form-control" style="height: 200px;" id="objective" name="objective"></textarea>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Documents</label>
+                              <div class="col-sm-1 col-sm-offset-2">
+                                  <input type="file" id="documents[]" name="documents[]" multiple="multiple">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Prerequisite Certificate</label>
+                              <div class="col-sm-4">
+                                  <input type="text" id="requiredCert" name="requiredCert" class="form-control round-form" value="" maxlength="100">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Prerequisite Course</label>
+                              <div class="col-sm-4">
+                                  <input type="text" id="prerequisite" name="prerequisite" class="form-control round-form" value="" maxlength="100">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Certificate Received Upon Finising Course</label>
+                              <div class="col-sm-4">
+                                  <input type="text" id="receivedCert" name="receivedCert" class="form-control round-form" value="" maxlength="100">
+                              </div>
+                          </div>
+                          <?php
+                          }else{
+                          ?>
                           <input type="hidden" id="operation" name="operation" value="edit">
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Course ID</label>
                               <div class="col-sm-4">
-                                  <p class="form-control-static"><?=$course['courseID']?></p>
-                                  <input type="hidden" id="courseID" name="courseID" class="form-control round-form" value="<?=$course['courseID']?>">
+                                  <p class="form-control-static"><?=$courseID?></p>
+                                  <input type="hidden" id="courseID" name="courseID" class="form-control round-form" value="<?=$courseID?>">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Display Language</label>
+                              <div class="col-sm-4">
+                                    <p class="form-control-static"><?=$lang?></p>
+                                    <input type="hidden" id="lang" name="lang" class="form-control round-form" value="<?=$lang?>">
                               </div>
                           </div>
                           <div class="form-group">
@@ -272,6 +374,9 @@ $documentsArr = json_decode($course['documents']);
                                   <input type="text" id="receivedCert" name="receivedCert" class="form-control round-form" value="<?=$course['receivedCert']?>" maxlength="100">
                               </div>
                           </div>
+                          <?php
+                          }
+                          ?>
                           <div class="form-group">
                               <button type="submit" id="submit" name="submit" class="btn btn-primary col-sm-2 col-sm-offset-2">Done</button>
                           </div>

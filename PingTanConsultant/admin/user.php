@@ -3,6 +3,7 @@
 session_start(); 
 
 include_once("../Manager/ConnectionManager.php");
+include_once("../Manager/StudentStatusManager.php");
 include_once("../Manager/StudentManager.php");
 $studentMgr = new StudentManager();
 

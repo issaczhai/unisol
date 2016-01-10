@@ -5,7 +5,7 @@ ini_set('display_errors', 'On');
 include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/CourseManager.php");
 include_once("./Manager/SessionManager.php");
-
+header("Content-type: text/html;charset=utf-8");
 $courseMgr = new CourseManager();
 $sessionMgr = new SessionManager();
 /* 
@@ -46,6 +46,7 @@ $operation="";
 $operation = filter_input(INPUT_POST,'operation');
 if ($operation === "add"){
     $courseID = filter_input(INPUT_POST,'courseID');
+    $lang = filter_input(INPUT_POST,'lang');
     $name = filter_input(INPUT_POST,'name');
     $instructor = filter_input(INPUT_POST,'instructor');
     $price = floatval(filter_input(INPUT_POST,'price'));
@@ -81,21 +82,24 @@ if ($operation === "add"){
         mkdir($courseDB.$courseID."/documents" ,0777, true);
     }
     $path_arr=array();
-    for($j=0; $j < count($_FILES["documents"]['name']); $j++) { 
-        $file_name = upload_savename_by_gf($courseID,$_FILES["documents"]['name'][$j]);
-        $file_path = $courseDB.$courseID."/documents/".$file_name;
-        move_uploaded_file($_FILES["documents"]['tmp_name'][$j], $file_path);
-        array_push($path_arr, $file_path);
+    if(!empty($_FILES['documents']['name'][0])){
+        for($j=0; $j < count($_FILES["documents"]['name']); $j++) { 
+            $file_name = upload_savename_by_gf($courseID,$_FILES["documents"]['name'][$j]);
+            $file_path = $courseDB.$courseID."/documents/".$file_name;
+            move_uploaded_file($_FILES["documents"]['tmp_name'][$j], $file_path);
+            array_push($path_arr, $file_path);
+        }
     }
     $documents = json_encode($path_arr);
     /******************************************************************************************************/
-    $courseMgr->addCourse($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
+    $courseMgr->addCourse($lang,$courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
     header("Location: admin/course.php");
     
     
 }elseif ($operation === "checkCourseID") {
     $courseID = filter_input(INPUT_POST,'courseID');
-    $course = $courseMgr->getCourse($courseID);
+    $lang = filter_input(INPUT_POST,'lang');
+    $course = $courseMgr->getCourse($lang,$courseID);
     $course = array_filter($course);
     $arr=array();
     if (!empty($course)) {
@@ -104,63 +108,17 @@ if ($operation === "add"){
         $arr['status'] = "available";
     }
     echo json_encode($arr);
-}elseif ($operation === "checkSession"){
-    $courseID = filter_input(INPUT_POST,'courseID');
-    $sessionID = filter_input(INPUT_POST,'sessionID');
-    $seesion = $sessionMgr->getSession($courseID,$sessionID);
-    $arr=array();
-    if (!empty($seesion)) {
-        $arr['status'] = "used";
-    }else{
-        $arr['status'] = "available";
-    }
-    echo json_encode($arr);
 }elseif($operation === "delete") {
     $courseID = filter_input(INPUT_POST,'courseID');
-    $courseMgr->deleteCourse($courseID);
-    $sessionMgr->deleteSessionByCourse($courseID);
+    $language=['en','cn'];
+    foreach($language as $lang){
+        $courseMgr->deleteCourse($lang,$courseID);
+        $sessionMgr->deleteSessionByCourse($lang,$courseID);
+    }
     deldir($courseDB.$courseID);
-}elseif ($operation==="addSession"){
+}elseif($operation === 'edit'){
     $courseID = filter_input(INPUT_POST,'courseID');
-    $sessionID = filter_input(INPUT_POST,'sessionID');
-    $timeType = filter_input(INPUT_POST,'timeType');
-    $time = filter_input(INPUT_POST,'time');
-    $startDate = new DateTime(filter_input(INPUT_POST,'startDate'));
-    $startDate = $startDate->format('Y-m-d H:i:s');
-    $venue = filter_input(INPUT_POST,'venue');
-    $vacancy = intval(filter_input(INPUT_POST,'vacancy'));
-    $languages = filter_input(INPUT_POST,'languages');
-    $classlist = "";
-    if($timeType==='fulltime'){
-        $sessionMgr->addSession($courseID, $sessionID, $time, "",$startDate, $venue, $vacancy, $languages, $classlist);
-    }elseif($timeType==='parttime'){
-        $sessionMgr->addSession($courseID, $sessionID, "", $time,$startDate, $venue, $vacancy, $languages, $classlist);
-    }
-    header("Location: admin/course.php");
-}elseif ($operation === 'deleteSession') {
-    $courseID = filter_input(INPUT_POST,'courseID');
-    $sessionID = filter_input(INPUT_POST,'sessionID');
-    $sessionMgr->deleteSession($courseID, $sessionID);
-}elseif ($operation === 'editSession'){
-    $courseID = filter_input(INPUT_POST,'courseID');
-    $sessionID = filter_input(INPUT_POST,'sessionID');
-    var_dump($_POST);
-    $timeType = filter_input(INPUT_POST,'timeType');
-    $time = filter_input(INPUT_POST,'time');
-    $startDate = new DateTime(filter_input(INPUT_POST,'startDate'));
-    $startDate = $startDate->format('Y-m-d H:i:s');
-    $venue = filter_input(INPUT_POST,'venue');
-    $vacancy = intval(filter_input(INPUT_POST,'vacancy'));
-    $languages = filter_input(INPUT_POST,'languages');
-    $classlist = "";
-    if($timeType==='fulltime'){
-        $sessionMgr->updateSession($courseID, $sessionID, $time, "",$startDate, $venue, $vacancy, $languages, $classlist);
-    }elseif($timeType==='parttime'){
-        $sessionMgr->updateSession($courseID, $sessionID, "", $time,$startDate, $venue, $vacancy, $languages, $classlist);
-    }
-    header("Location: admin/course.php");
-}elseif ($operation === 'edit'){
-    $courseID = filter_input(INPUT_POST,'courseID');
+    $lang = filter_input(INPUT_POST,'lang');
     $name = filter_input(INPUT_POST,'name');
     $instructor = filter_input(INPUT_POST,'instructor');
     $price = floatval(filter_input(INPUT_POST,'price'));
@@ -212,11 +170,73 @@ if ($operation === "add"){
     $documents = json_encode($path_arr);
     //var_dump($documents);
     /******************************************************************************************************/
-    $courseMgr->updateCourse($courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
+    $courseMgr->updateCourse($lang,$courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
     header("Location: admin/course.php");
     
 }elseif ($operation === 'deleteDocument'){
     $courseID = filter_input(INPUT_POST,'courseID');
     $documentPath = filter_input(INPUT_POST,'documentPath');
     unlink($documentPath);
+}elseif ($operation === "checkSession"){
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $sessionID = filter_input(INPUT_POST,'sessionID');
+    $lang = filter_input(INPUT_POST,'lang');
+    $seesion = $sessionMgr->getSession($lang,$courseID,$sessionID);
+    $arr=array();
+    if (!empty($seesion)) {
+        $arr['status'] = "used";
+    }else{
+        $arr['status'] = "available";
+    }
+    echo json_encode($arr);
+}elseif ($operation==="addSession"){
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $sessionID = filter_input(INPUT_POST,'sessionID');
+    $lang = filter_input(INPUT_POST,'lang');
+    $timeType = filter_input(INPUT_POST,'timeType');
+    $time = filter_input(INPUT_POST,'time');
+    $startDate = new DateTime(filter_input(INPUT_POST,'startDate'));
+    $startDate = $startDate->format('Y-m-d H:i:s');
+    $venue = filter_input(INPUT_POST,'venue');
+    $vacancy = intval(filter_input(INPUT_POST,'vacancy'));
+    $languages = filter_input(INPUT_POST,'languages');
+    $classlist = "";
+    if($timeType==='fulltime'){
+        $sessionMgr->addSession($lang,$courseID, $sessionID, $time, "",$startDate, $venue, $vacancy, $languages, $classlist);
+    }elseif($timeType==='parttime'){
+        $sessionMgr->addSession($lang,$courseID, $sessionID, "", $time,$startDate, $venue, $vacancy, $languages, $classlist);
+    }
+    header("Location: admin/course.php");
+}elseif ($operation === 'deleteSession') {
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $sessionID = filter_input(INPUT_POST,'sessionID');
+    $language=['en','cn'];
+    foreach($language as $lang){
+        $sessionMgr->deleteSession($lang,$courseID, $sessionID);
+    }
+    
+}elseif ($operation === 'editSession'){
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $sessionID = filter_input(INPUT_POST,'sessionID');
+    $lang = filter_input(INPUT_POST,'lang');
+    $timeType = filter_input(INPUT_POST,'timeType');
+    $time = filter_input(INPUT_POST,'time');
+    $startDate = new DateTime(filter_input(INPUT_POST,'startDate'));
+    $startDate = $startDate->format('Y-m-d H:i:s');
+    $venue = filter_input(INPUT_POST,'venue');
+    $vacancy = intval(filter_input(INPUT_POST,'vacancy'));
+    $languages = filter_input(INPUT_POST,'languages');
+    $classlist = "";
+    if($timeType==='fulltime'){
+        $sessionMgr->updateSession($lang,$courseID, $sessionID, $time, "",$startDate, $venue, $vacancy, $languages, $classlist);
+    }elseif($timeType==='parttime'){
+        $sessionMgr->updateSession($lang,$courseID, $sessionID, "", $time,$startDate, $venue, $vacancy, $languages, $classlist);
+    }
+    header("Location: admin/course.php");
+}elseif ($operation === "retrieveSession"){
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $sessionID = filter_input(INPUT_POST,'sessionID');
+    $lang = filter_input(INPUT_POST,'lang');
+    $session = $sessionMgr->getSession($lang, $courseID, $sessionID);
+    echo json_encode($session);
 }

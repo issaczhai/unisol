@@ -16,6 +16,14 @@
 	            </div>
                     <input name="operation" value="addSession" type="hidden">
                     <input id="addSessionCourseID" name="courseID" value="" type="hidden">
+                    
+                    <div class="control-group">
+	              <label class="control-label" for="lang">Display Language</label>
+	              <div class="controls">
+                          <p class="form-control-static" style="font-weight: bold">English</p>
+	                <input name="lang" value="en" type="hidden">
+                      </div>
+	            </div>
 	            <!-- Text input-->
 	            <div class="control-group">
 	              <label class="control-label" for="sessionID">Session ID</label>

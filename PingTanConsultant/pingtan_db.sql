@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2015 at 01:33 PM
+-- Generation Time: Jan 10, 2016 at 11:57 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 CREATE TABLE IF NOT EXISTS `certificate` (
   `studentID` varchar(20) NOT NULL,
-  `type` varchar(20) NOT NULL,
+  `type` varchar(200) NOT NULL,
   `path` varchar(200) NOT NULL,
   PRIMARY KEY (`studentID`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -67,10 +67,10 @@ CREATE TABLE IF NOT EXISTS `company` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course`
+-- Table structure for table `course_cn`
 --
 
-CREATE TABLE IF NOT EXISTS `course` (
+CREATE TABLE IF NOT EXISTS `course_cn` (
   `courseID` varchar(20) NOT NULL,
   `name` varchar(100) NOT NULL,
   `instructor` varchar(100) NOT NULL,
@@ -86,11 +86,39 @@ CREATE TABLE IF NOT EXISTS `course` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `course`
+-- Dumping data for table `course_cn`
 --
 
-INSERT INTO `course` (`courseID`, `name`, `instructor`, `price`, `description`, `syllabus`, `objective`, `documents`, `requiredCert`, `receivedCert`, `prerequisite`) VALUES
-('SG101', 'Java Foundation', 'Lee Yeow Leong', 200, 'java foundation course', '{"week 1":"Introduction","week 2":"what is java"}', 'for java beginner', '["public_html\\/course\\/SG101\\/documents\\/SG101_1451470174_(443655544) Haoxian CV 2015.2.4","public_html\\/course\\/SG101\\/documents\\/SG101_1451470174_Haoxian Resume","public_html\\/course\\/SG101\\/documents\\/SG101_1451470174_sample job application answer"]', 'CFA,cba', 'NBA', 'IS100');
+INSERT INTO `course_cn` (`courseID`, `name`, `instructor`, `price`, `description`, `syllabus`, `objective`, `documents`, `requiredCert`, `receivedCert`, `prerequisite`) VALUES
+('CAN101', '广东话', '翟浩贤', 222, '基本廣東話會話', '{"\\u5355\\u5143\\u4e00":"\\u4ecb\\u7ecd","\\u5355\\u5143\\u4e8c":"\\u65e5\\u5e38\\u7528\\u8bed","\\u5355\\u5143\\u4e09":"\\u7c97\\u53e3"}', '面向人群：广东话初学者', '["public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422744_canton_rtt.001.jpg","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422744_House_in_Cantonese_and_Mandarin.png"]', '无', 'CAN101', '无');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `course_en`
+--
+
+CREATE TABLE IF NOT EXISTS `course_en` (
+  `courseID` varchar(20) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `instructor` varchar(100) NOT NULL,
+  `price` double NOT NULL,
+  `description` text NOT NULL,
+  `syllabus` text NOT NULL,
+  `objective` text NOT NULL,
+  `documents` text NOT NULL,
+  `requiredCert` text NOT NULL,
+  `receivedCert` text NOT NULL,
+  `prerequisite` varchar(100) NOT NULL,
+  PRIMARY KEY (`courseID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `course_en`
+--
+
+INSERT INTO `course_en` (`courseID`, `name`, `instructor`, `price`, `description`, `syllabus`, `objective`, `documents`, `requiredCert`, `receivedCert`, `prerequisite`) VALUES
+('CAN101', 'Cantonese', 'Issac Zhai', 222, 'Elementary Course for Cantonese', '{"Unit 1":"Intro","Unit 2":"Daily Phrase","Unit 3":"Vulgar"}', 'For Cantonese Beginner', '["public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_canton_rtt.001.jpg","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_cantonese-basic.pdf","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_House_in_Cantonese_and_Mandarin.png"]', 'No', 'CAN101', 'No');
 
 -- --------------------------------------------------------
 
@@ -123,10 +151,10 @@ CREATE TABLE IF NOT EXISTS `news` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `session`
+-- Table structure for table `session_cn`
 --
 
-CREATE TABLE IF NOT EXISTS `session` (
+CREATE TABLE IF NOT EXISTS `session_cn` (
   `courseID` varchar(20) NOT NULL,
   `sessionID` varchar(20) NOT NULL,
   `fulltime` text NOT NULL,
@@ -138,6 +166,41 @@ CREATE TABLE IF NOT EXISTS `session` (
   `classlist` text NOT NULL,
   PRIMARY KEY (`courseID`,`sessionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `session_cn`
+--
+
+INSERT INTO `session_cn` (`courseID`, `sessionID`, `fulltime`, `parttime`, `startDate`, `venue`, `vacancy`, `languages`, `classlist`) VALUES
+('CAN101', 'G1', '周一到周四晚 7点至10点', '', '2016-01-25', '平潭办公室', 20, '英语，广东话', ''),
+('CAN101', 'G2', '', '週六下午三點至五點', '2016-01-30', '平潭办公室', 20, '英语，廣東話', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `session_en`
+--
+
+CREATE TABLE IF NOT EXISTS `session_en` (
+  `courseID` varchar(20) NOT NULL,
+  `sessionID` varchar(20) NOT NULL,
+  `fulltime` text NOT NULL,
+  `parttime` text NOT NULL,
+  `startDate` date NOT NULL,
+  `venue` varchar(100) NOT NULL,
+  `vacancy` int(11) NOT NULL,
+  `languages` varchar(200) NOT NULL,
+  `classlist` text NOT NULL,
+  PRIMARY KEY (`courseID`,`sessionID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `session_en`
+--
+
+INSERT INTO `session_en` (`courseID`, `sessionID`, `fulltime`, `parttime`, `startDate`, `venue`, `vacancy`, `languages`, `classlist`) VALUES
+('CAN101', 'G1', '', 'Mon - Thur 7pm - 9pm', '2016-01-25', 'PingTan Office', 30, 'English,Cantonese', ''),
+('CAN101', 'G2', '', 'Saturday 3pm-5pm', '2016-01-30', 'PingTan Office', 20, 'English,Cantonese', '');
 
 -- --------------------------------------------------------
 

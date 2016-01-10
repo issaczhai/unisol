@@ -7,8 +7,8 @@ include_once("../Manager/CourseManager.php");
 include_once("../Manager/SessionManager.php");
 $courseMgr = new CourseManager();
 $sessionMgr = new SessionManager();
-
-$courseList = $courseMgr->getCourseList();
+$lang = "en";
+$courseList = $courseMgr->getCourseList($lang);
 ?>
 <html lang="en">
   <head>
@@ -125,7 +125,8 @@ $courseList = $courseMgr->getCourseList();
                                     <th> Course ID</th>
                                     <th> Name</th>
                                     <th> Manage Course</th>
-                                    <th colspan="2"> Session</th>
+                                    <th> Delete Course</th>
+                                    <th> Session</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -133,7 +134,7 @@ $courseList = $courseMgr->getCourseList();
                                 $count = 0;
                                 foreach($courseList as $course){
                                     $count+=1;
-                                    $sessionList = $sessionMgr->getSessionListByCourse($course['courseID']);
+                                    $sessionList = $sessionMgr->getSessionListByCourse($lang,$course['courseID']);
                                     $sessionIDList=[];
                                     foreach($sessionList as $session){
                                         array_push($sessionIDList,$session['sessionID']);
@@ -144,8 +145,11 @@ $courseList = $courseMgr->getCourseList();
                                     <td> <?=$count?></td>
                                     <td> <?=$course['courseID']?></td>
                                     <td> <?=$course['name']?></td>
+                                    <td style="width: 30%">
+                                        <button class="btn btn-primary btn-xs" onclick="location.href='./editcourse.php?cID=<?=strval($course['courseID'])?>&lang=en'"><i class="fa fa-pencil"></i>English Version</button>
+                                        <button class="btn btn-primary btn-xs" onclick="location.href='./editcourse.php?cID=<?=strval($course['courseID'])?>&lang=cn'"><i class="fa fa-pencil"></i>Chinese Version</button>
+                                    </td>
                                     <td>
-                                        <button class="btn btn-primary btn-xs" onclick="location.href='./editcourse.php?cID=<?=strval($course['courseID'])?>'"><i class="fa fa-pencil"></i></button>
                                         <button class="btn btn-danger btn-xs" onclick="deleteCourse('<?=strval($course['courseID'])?>')"><i class="fa fa-trash-o "></i></button>
                                     </td>
                                     <td><?=$sessionIDString?></td>
@@ -154,12 +158,11 @@ $courseList = $courseMgr->getCourseList();
                                         <button id="closeBtn<?=strval($course['courseID'])?>" class="btn btn-info btn-xs" onclick="closeSession('<?=strval($course['courseID'])?>')" style="display:none"><i class="fa fa-check"></i> Done</button>
                                     </td>
                                 </tr>
-                                <tr id="sectionRow<?=strval($course['courseID'])?>" style="display:none">
+                                <tr id="sessionRow<?=strval($course['courseID'])?>" style="display:none">
                                     <td colspan="5">
                                         <table style="width: 100%">
                                             <tr>
                                                 <th>Session ID</th>
-                                                <th>Venue</th>
                                                 <th>Time</th>
                                                 <th>Language</th>
                                                 <th>Vacancy</th>
@@ -170,7 +173,6 @@ $courseList = $courseMgr->getCourseList();
                                             ?>
                                             <tr>
                                                  <td><?=$session['sessionID']?></td>
-                                                 <td><?=$session['venue']?></td>
                                                  <?php
                                                  if($session['fulltime'] === ""){
                                                  ?>
@@ -186,129 +188,111 @@ $courseList = $courseMgr->getCourseList();
                                                  <td><?=$session['languages']?></td>
                                                  <td><?=$session['vacancy']?></td>
                                                  <td>
-                                                     <button class="btn btn-theme02 btn-xs" data-toggle="modal" data-target="#<?=$session['sessionID']?>SessionModal"><i class="fa fa-edit"></i> Edit</button>
+                                                     <button class="btn btn-theme02 btn-xs" data-toggle="modal" data-target="#<?=$course['courseID'].$session['sessionID']?>SessionModal" onclick="populateEditSessionModal('en','<?=$session['sessionID']?>','<?=strval($course['courseID'])?>')"><i class="fa fa-edit"></i> English Version</button>
+                                                     <button class="btn btn-theme02 btn-xs" data-toggle="modal" data-target="#<?=$course['courseID'].$session['sessionID']?>SessionModal" onclick="populateEditSessionModal('cn','<?=$session['sessionID']?>','<?=strval($course['courseID'])?>')"><i class="fa fa-edit"></i> Chinese Version</button>
                                                      <button class="btn btn-danger btn-xs" onclick="deleteSession('<?=$session['sessionID']?>','<?=strval($course['courseID'])?>')"><i class="fa fa-trash-o "></i></button>
                                                  </td>
-<!---------------------------------------------------------EDIT SESSION MODAL---------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-                                            <div class="modal fade" id="<?=$session['sessionID']?>SessionModal">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content" id="login_modal_content">
-                                                                <div class="modal-body">
-                                                                    <div id="myTabContent" class="tab-content">
-                                                                        <div class="tab-pane fade active in" id="add_address">
-                                                                            <fieldset>
-                                                                                <form id="edit<?=$session['sessionID']?>SessionForm" action="../process_course.php" method="post">
-                                                                                    <!-- Sign In Form -->
-                                                                                    <!-- Error Massage-->
-                                                                                    <div class="control-group">
-                                                                                        <div class="controls">
-                                                                                            <p style="color:#FF0000"id="add_errorMsg"></p>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <input name="operation" value="editSession" type="hidden">
-                                                                                    <input id="edit<?=$session['sessionID']?>SessionCourseID" name="courseID" value="<?=strval($course['courseID'])?>" type="hidden">
-                                                                                    <!-- Text input-->
-                                                                                    <div class="control-group">
-                                                                                        <label class="control-label" for="editSessionsessionID">Session ID</label>
-                                                                                        <div class="controls">
-                                                                                            <p class="form-control-static"><?=$session['sessionID']?></p>
-                                                                                            <input id="edit<?=$session['sessionID']?>SessionSessionID" name="sessionID" type="hidden" value="<?=$session['sessionID']?>" class="form-control" class="input-medium" >
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="control-group">
-                                                                                        <label class="control-label" for="timeType">Time Type</label>
-                                                                                    </div>
-                                                                                    <!-- Text input-->
-                                                                                    <div class="control-group">
-                                                                                        <div class="radio inline-block">
-                                                                                            <label>
-                                                                                                <?php
-                                                                                                if($session['fulltime']===''){
-                                                                                                ?>
-                                                                                                <input type="radio" name="timeType" id="edit<?=$session['sessionID']?>SessionTimeType1" value="fulltime">
-                                                                                                <?php
-                                                                                                }else{
-                                                                                                ?>
-                                                                                                <input type="radio" name="timeType" id="edit<?=$session['sessionID']?>SessionTimeType1" value="fulltime" checked>
-                                                                                                <?php
-                                                                                                }
-                                                                                                ?>
-                                                                                                Full Time
-                                                                                            </label>
-                                                                                        </div>
-                                                                                        <div class="radio inline-block">
-                                                                                            <label>
-                                                                                                <?php
-                                                                                                if($session['parttime']===''){
-                                                                                                ?>
-                                                                                                <input type="radio" name="timeType" id="edit<?=$session['sessionID']?>SessionTimeType2" value="parttime">
-                                                                                                <?php
-                                                                                                }else{
-                                                                                                ?>
-                                                                                                <input type="radio" name="timeType" id="edit<?=$session['sessionID']?>SessionTimeType2" value="parttime" checked>
-                                                                                                <?php
-                                                                                                }
-                                                                                                ?>
-                                                                                                Part Time
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="control-group">
-                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionTime">Time</label>
-                                                                                        <div class="controls">
-                                                                                            <input required="" id="edit<?=$session['sessionID']?>SessionTime" name="time" class="form-control" value="<?=$session['fulltime'].$session['parttime']?>" type="text" class="input-medium">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!-- Text input-->
-                                                                                    <div class="control-group">
-                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionStartDate">Start Date</label>
-                                                                                        <div class="controls">
-                                                                                            <input required="" id="edit<?=$session['sessionID']?>SessionStartDate" name="startDate" class="form-control" value="<?=$session['startDate']?>" type="date" class="input-medium">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!-- Text input-->
-                                                                                    <div class="control-group">
-                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionVenue">Venue</label>
-                                                                                        <div class="controls">
-                                                                                            <input required="" id="edit<?=$session['sessionID']?>SessionVenue" name="venue" class="form-control" value="<?=$session['venue']?>" type="text" class="input-medium">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!-- Text input-->
-                                                                                    <div class="control-group">
-                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionVacancy">Vacancy</label>
-                                                                                        <div class="controls">
-                                                                                            <input required="" id="edit<?=$session['sessionID']?>SessionVacancy" name="vacancy" class="form-control" value="<?=$session['vacancy']?>" type="text" class="input-medium">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!-- Text input-->
-                                                                                    <div class="control-group">
-                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionLanguages">Language</label>
-                                                                                        <div class="controls">
-                                                                                            <input required="" id="edit<?=$session['sessionID']?>SessionLanguages" name="languages" class="form-control" value="<?=$session['languages']?>" type="text" class="input-medium">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!-- Button -->
-                                                                                    <div class="control-group">
-                                                                                        <label class="control-label" for="edit<?=$session['sessionID']?>SessionBtn"></label>
-                                                                                        <div class="controls">
-                                                                                            <button type="submit" id="edit<?=$session['sessionID']?>SessionBtn" name="editSessionBtn" class="btn btn-success">Edit</button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </form>
-                                                                            </fieldset>
-                                                                        </div>
+<!---------------------------------------------------------EDIT SESSION MODAL---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                                            <div class="modal fade" id="<?=$course['courseID'].$session['sessionID']?>SessionModal">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content" id="login_modal_content">
+                                                        <div class="modal-body">
+                                                            <div id="myTabContent" class="tab-content">
+                                                                <div class="tab-pane fade active in" id="add_address">
+                                                                    <fieldset>
+                                                                        <form id="edit<?=$course['courseID'].$session['sessionID']?>SessionForm" action="../process_course.php" method="post">
+                                                                            <!-- Sign In Form -->
+                                                                            <!-- Error Massage-->
+                                                                            <div class="control-group">
+                                                                                <div class="controls">
+                                                                                    <p style="color:#FF0000"id="add_errorMsg"></p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <input id="edit<?=$course['courseID'].$session['sessionID']?>SessionOperation" name="operation" value="editSession" type="hidden">
+                                                                            <input id="edit<?=$course['courseID'].$session['sessionID']?>SessionCourseID" name="courseID" value="" type="hidden">
+                                                                            <!-- Text input-->
+                                                                            <div class="control-group">
+                                                                                <label class="control-label" for="editSessionsessionID">Session ID</label>
+                                                                                <div class="controls">
+                                                                                    <p class="form-control-static"><?=$session['sessionID']?></p>
+                                                                                    <input id="edit<?=$course['courseID'].$session['sessionID']?>SessionSessionID" name="sessionID" type="hidden" value="" class="form-control" class="input-medium" >
+                                                                                    <input id="edit<?=$course['courseID'].$session['sessionID']?>SessionLang" name="lang" value="" type="hidden">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="control-group">
+                                                                                <label class="control-label" for="timeType">Time Type</label>
+                                                                            </div>
+                                                                            <!-- Text input-->
+                                                                            <div class="control-group">
+                                                                                <div class="radio inline-block">
+                                                                                    <label>
+                                                                                        <input type="radio" name="timeType" id="edit<?=$course['courseID'].$session['sessionID']?>SessionTimeType1" value="fulltime" checked>
+                                                                                        Full Time
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="radio inline-block">
+                                                                                    <label>
+                                                                                        <input type="radio" name="timeType" id="edit<?=$course['courseID'].$session['sessionID']?>SessionTimeType2" value="parttime">
+                                                                                        Part Time
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="control-group">
+                                                                                <label class="control-label" for="edit<?=$course['courseID'].$session['sessionID']?>SessionTime">Time</label>
+                                                                                <div class="controls">
+                                                                                    <input required="" id="edit<?=$course['courseID'].$session['sessionID']?>SessionTime" name="time" class="form-control" value="" type="text" class="input-medium">
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- Text input-->
+                                                                            <div class="control-group">
+                                                                                <label class="control-label" for="edit<?=$course['courseID'].$session['sessionID']?>SessionStartDate">Start Date</label>
+                                                                                <div class="controls">
+                                                                                    <input required="" id="edit<?=$course['courseID'].$session['sessionID']?>SessionStartDate" name="startDate" class="form-control" value="" type="date" class="input-medium">
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- Text input-->
+                                                                            <div class="control-group">
+                                                                                <label class="control-label" for="edit<?=$course['courseID'].$session['sessionID']?>SessionVenue">Venue</label>
+                                                                                <div class="controls">
+                                                                                    <input required="" id="edit<?=$course['courseID'].$session['sessionID']?>SessionVenue" name="venue" class="form-control" value="" type="text" class="input-medium">
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- Text input-->
+                                                                            <div class="control-group">
+                                                                                <label class="control-label" for="edit<?=$course['courseID'].$session['sessionID']?>SessionVacancy">Vacancy</label>
+                                                                                <div class="controls">
+                                                                                    <input required="" id="edit<?=$course['courseID'].$session['sessionID']?>SessionVacancy" name="vacancy" class="form-control" value="" type="text" class="input-medium">
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- Text input-->
+                                                                            <div class="control-group">
+                                                                                <label class="control-label" for="edit<?=$course['courseID'].$session['sessionID']?>SessionLanguages">Language</label>
+                                                                                <div class="controls">
+                                                                                    <input required="" id="edit<?=$course['courseID'].$session['sessionID']?>SessionLanguages" name="languages" class="form-control" value="" type="text" class="input-medium">
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- Button -->
+                                                                            <div class="control-group">
+                                                                                <label class="control-label" for="edit<?=$course['courseID'].$session['sessionID']?>SessionBtn"></label>
+                                                                                <div class="controls">
+                                                                                    <button type="submit" id="edit<?=$course['courseID'].$session['sessionID']?>SessionBtn" name="editSessionBtn" class="btn btn-success">OK</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </fieldset>
+                                                                </div>
 
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <center>
-                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                    </center>
-                                                                </div>
                                                             </div>
                                                         </div>
+                                                        <div class="modal-footer">
+                                                            <center>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </center>
+                                                        </div>
                                                     </div>
-                                            <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                                                </div>
+                                            </div>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
                                             </tr>
                                             <?php
                                             }
@@ -390,14 +374,14 @@ $courseList = $courseMgr->getCourseList();
     
     function showSession(cID){
         var courseID = cID;
-        $("#sectionRow"+courseID).css('display','');
+        $("#sessionRow"+courseID).css('display','');
         $("#showBtn"+courseID).css('display','none');
         $("#closeBtn"+courseID).css('display','');
     }
     
     function closeSession(cID){
         var courseID = cID;
-        $("#sectionRow"+courseID).css('display','none');
+        $("#sessionRow"+courseID).css('display','none');
         $("#showBtn"+courseID).css('display','');
         $("#closeBtn"+courseID).css('display','none');
     }
@@ -413,7 +397,8 @@ $courseList = $courseMgr->getCourseList();
         var postData = { //Fetch form data
             'operation'     :'checkSession',
             'courseID'     : courseID,
-            'sessionID'     : sessionID
+            'sessionID'     : sessionID,
+            'lang'          :'en'
         };
         $.ajax({
             type: 'post',
@@ -434,6 +419,53 @@ $courseList = $courseMgr->getCourseList();
         });
     }
     
+    function populateEditSessionModal(lang,sID,cID){
+        var postData = { //Fetch form data
+            'operation'     :'retrieveSession',
+            'courseID'     : cID,
+            'sessionID'     : sID,
+            'lang'          :lang
+        };
+        $.ajax({
+            type: 'post',
+            url: '../process_course.php',
+            data: postData,
+            success: function(data){
+                console.log(data.length);
+                if(data.length === 2){
+                    document.getElementById('edit'+cID+sID+'SessionCourseID').value = cID;
+                    document.getElementById('edit'+cID+sID+'SessionSessionID').value = sID;
+                    document.getElementById('edit'+cID+sID+'SessionLang').value = lang;
+                    document.getElementById('edit'+cID+sID+'SessionOperation').value = "addSession";
+                    document.getElementById('edit'+cID+sID+'SessionLanguages').value = "";
+                    document.getElementById('edit'+cID+sID+'SessionStartDate').value = "";
+                    document.getElementById('edit'+cID+sID+'SessionVacancy').value = "";
+                    document.getElementById('edit'+cID+sID+'SessionVenue').value = "";
+                    document.getElementById('edit'+cID+sID+'SessionTime').value = "";
+                }else{
+                    var pos = data.indexOf("{");
+                    var dataValid = data.substring(pos);
+                    var jsonData = eval("("+dataValid+")");
+                    //document.getElementById('addSessionBtn').disabled=true;
+                    document.getElementById('edit'+cID+sID+'SessionCourseID').value = cID;
+                    document.getElementById('edit'+cID+sID+'SessionSessionID').value = sID;
+                    document.getElementById('edit'+cID+sID+'SessionLang').value = lang;
+                    document.getElementById('edit'+cID+sID+'SessionOperation').value = "editSession";
+                    document.getElementById('edit'+cID+sID+'SessionLanguages').value = jsonData.languages;
+                    document.getElementById('edit'+cID+sID+'SessionStartDate').value = jsonData.startDate;
+                    document.getElementById('edit'+cID+sID+'SessionVacancy').value = jsonData.vacancy;
+                    document.getElementById('edit'+cID+sID+'SessionVenue').value = jsonData.venue;
+                    document.getElementById('edit'+cID+sID+'SessionTime').value = jsonData.parttime+jsonData.fulltime;
+                    if(jsonData.fulltime.length === 0){
+                        document.getElementById('edit'+cID+sID+'SessionTimeType1').checked = false;
+                        document.getElementById('edit'+cID+sID+'SessionTimeType2').checked  = true;
+                    }
+                }
+                
+                
+            }
+        });
+    }
     </script>
   </body>
 </html>
