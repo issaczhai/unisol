@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2016 at 11:57 AM
+-- Generation Time: Jan 11, 2016 at 03:24 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -75,6 +75,7 @@ CREATE TABLE IF NOT EXISTS `course_cn` (
   `name` varchar(100) NOT NULL,
   `instructor` varchar(100) NOT NULL,
   `price` double NOT NULL,
+  `displayPic` text NOT NULL,
   `description` text NOT NULL,
   `syllabus` text NOT NULL,
   `objective` text NOT NULL,
@@ -89,8 +90,8 @@ CREATE TABLE IF NOT EXISTS `course_cn` (
 -- Dumping data for table `course_cn`
 --
 
-INSERT INTO `course_cn` (`courseID`, `name`, `instructor`, `price`, `description`, `syllabus`, `objective`, `documents`, `requiredCert`, `receivedCert`, `prerequisite`) VALUES
-('CAN101', '广东话', '翟浩贤', 222, '基本廣東話會話', '{"\\u5355\\u5143\\u4e00":"\\u4ecb\\u7ecd","\\u5355\\u5143\\u4e8c":"\\u65e5\\u5e38\\u7528\\u8bed","\\u5355\\u5143\\u4e09":"\\u7c97\\u53e3"}', '面向人群：广东话初学者', '["public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422744_canton_rtt.001.jpg","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422744_House_in_Cantonese_and_Mandarin.png"]', '无', 'CAN101', '无');
+INSERT INTO `course_cn` (`courseID`, `name`, `instructor`, `price`, `displayPic`, `description`, `syllabus`, `objective`, `documents`, `requiredCert`, `receivedCert`, `prerequisite`) VALUES
+('CAN101', '广东话', '翟浩贤', 222, 'public_html/course/CAN101/displayPic/Cantonese-Student-Association2016011115132588884displayPic.jpg', '基本廣東話會話', '{"\\u5355\\u5143\\u4e00":"\\u4ecb\\u7ecd","\\u5355\\u5143\\u4e8c":"\\u65e5\\u5e38\\u7528\\u8bed","\\u5355\\u5143\\u4e09":"\\u7c97\\u53e3"}', '面向人群：广东话初学者', '["public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422744_canton_rtt.001.jpg","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_cantonese-basic.pdf","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422744_House_in_Cantonese_and_Mandarin.png"]', '无', 'CAN101', '无');
 
 -- --------------------------------------------------------
 
@@ -103,6 +104,7 @@ CREATE TABLE IF NOT EXISTS `course_en` (
   `name` varchar(100) NOT NULL,
   `instructor` varchar(100) NOT NULL,
   `price` double NOT NULL,
+  `displayPic` text NOT NULL,
   `description` text NOT NULL,
   `syllabus` text NOT NULL,
   `objective` text NOT NULL,
@@ -117,8 +119,8 @@ CREATE TABLE IF NOT EXISTS `course_en` (
 -- Dumping data for table `course_en`
 --
 
-INSERT INTO `course_en` (`courseID`, `name`, `instructor`, `price`, `description`, `syllabus`, `objective`, `documents`, `requiredCert`, `receivedCert`, `prerequisite`) VALUES
-('CAN101', 'Cantonese', 'Issac Zhai', 222, 'Elementary Course for Cantonese', '{"Unit 1":"Intro","Unit 2":"Daily Phrase","Unit 3":"Vulgar"}', 'For Cantonese Beginner', '["public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_canton_rtt.001.jpg","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_cantonese-basic.pdf","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_House_in_Cantonese_and_Mandarin.png"]', 'No', 'CAN101', 'No');
+INSERT INTO `course_en` (`courseID`, `name`, `instructor`, `price`, `displayPic`, `description`, `syllabus`, `objective`, `documents`, `requiredCert`, `receivedCert`, `prerequisite`) VALUES
+('CAN101', 'Cantonese', 'Issac Zhai', 222, 'public_html/course/CAN101/displayPic/Cantonese-Student-Association2016011115131380905displayPic.jpg', 'Elementary Course for Cantonese', '{"Unit 1":"Intro","Unit 2":"Daily Phrase","Unit 3":"Vulgar"}', 'For Cantonese Beginner', '["public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_canton_rtt.001.jpg","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_cantonese-basic.pdf","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_House_in_Cantonese_and_Mandarin.png"]', 'No', 'CAN101', 'No');
 
 -- --------------------------------------------------------
 

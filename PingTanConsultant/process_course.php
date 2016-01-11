@@ -53,6 +53,35 @@ if ($operation === "add"){
     $requiredCert = filter_input(INPUT_POST,'requiredCert');
     $prerequisite = filter_input(INPUT_POST,'prerequisite');
     $receivedCert = filter_input(INPUT_POST,'receivedCert');
+    /**************************************Display Picture****************************************************************/
+    if (!file_exists($courseDB. $courseID)){
+        mkdir($courseDB.$courseID ,0777, true);
+    }
+    if (!file_exists($courseDB. $courseID."/documents")){
+        mkdir($courseDB.$courseID."/documents" ,0777, true);
+    }
+    if (!file_exists($courseDB. $courseID."/displayPic")){
+        mkdir($courseDB.$courseID."/displayPic" ,0777, true);
+    }
+    $picname = $_FILES['displayPic']['name']; 
+    $picsize = $_FILES['displayPic']['size'];
+    $pic_path = "";
+    if ($picname != "") {
+//        if ($picsize > 5120000) {  
+//            echo 'image size cannot exceed 5m'; 
+//            exit; 
+//        } 
+          $type = strstr($picname, '.');  
+//        if ($type != ".gif" && $type != ".jpg" && $type != ".png") { 
+//            echo 'invalid image type'; 
+//            exit; 
+//        }
+        $rand = rand(10000, 99999); 
+        $pics = strstr($picname,'.',true) . date("YmdHis") . $rand .'displayPic'. $type;
+        $pic_path = $courseDB.$courseID."/displayPic/".$pics;
+        move_uploaded_file($_FILES['displayPic']['tmp_name'], $pic_path);
+                
+    }
     /******************************************************************************************************/
     $description = "";
     if(!empty($_POST['description'])){
@@ -75,12 +104,7 @@ if ($operation === "add"){
     }
     $syllabus = json_encode($syllabusArray);
     /******************************************************************************************************/        
-    if (!file_exists($courseDB. $courseID)){
-        mkdir($courseDB.$courseID ,0777, true);
-    }
-    if (!file_exists($courseDB. $courseID."/documents")){
-        mkdir($courseDB.$courseID."/documents" ,0777, true);
-    }
+    
     $path_arr=array();
     if(!empty($_FILES['documents']['name'][0])){
         for($j=0; $j < count($_FILES["documents"]['name']); $j++) { 
@@ -92,7 +116,7 @@ if ($operation === "add"){
     }
     $documents = json_encode($path_arr);
     /******************************************************************************************************/
-    $courseMgr->addCourse($lang,$courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
+    $courseMgr->addCourse($lang,$courseID, $name, $instructor, $price, $pic_path,$description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
     header("Location: admin/course.php");
     
     
@@ -125,6 +149,21 @@ if ($operation === "add"){
     $requiredCert = filter_input(INPUT_POST,'requiredCert');
     $prerequisite = filter_input(INPUT_POST,'prerequisite');
     $receivedCert = filter_input(INPUT_POST,'receivedCert');
+    /******************************************************************************************************/
+    $picname = $_FILES['displayPic']['name']; 
+    $picsize = $_FILES['displayPic']['size'];
+    $pic_path = filter_input(INPUT_POST,'currentDisplayPic');
+    if(strpos($pics,"../")!== false){
+        $pics = substr($pics,strpos($pics,"../")+3);
+    }
+    if ($picname != "") {
+        unlink($pics);
+        $rand = rand(10000, 99999);
+        $type = strstr($picname, '.');  
+        $pics = strstr($picname,'.',true) . date("YmdHis") . $rand .'displayPic'. $type;
+        $pic_path = $courseDB.$courseID."/displayPic/".$pics;
+        move_uploaded_file($_FILES['displayPic']['tmp_name'], $pic_path);  
+    }
     /******************************************************************************************************/
     $description = "";
     if(!empty($_POST['description'])){
@@ -170,7 +209,7 @@ if ($operation === "add"){
     $documents = json_encode($path_arr);
     //var_dump($documents);
     /******************************************************************************************************/
-    $courseMgr->updateCourse($lang,$courseID, $name, $instructor, $price, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
+    $courseMgr->updateCourse($lang,$courseID, $name, $instructor, $price, $pic_path, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
     header("Location: admin/course.php");
     
 }elseif ($operation === 'deleteDocument'){

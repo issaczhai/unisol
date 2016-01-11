@@ -139,6 +139,12 @@
                               </div>
                           </div>
                           <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Display Picture</label>
+                              <div class="col-sm-1">
+                                  <input type="file" id="displayPic" name="displayPic">
+                              </div>
+                          </div>
+                          <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Description</label>
                               <div class="col-sm-4">
                                   <textarea class="form-control" style="height: 200px;" id="description" name="description"></textarea>

@@ -206,6 +206,13 @@ if(!empty($course)){
                               </div>
                           </div>
                           <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Display Picture</label>
+                              <div class="col-sm-1">
+                                  <input type="file" id="displayPic" name="displayPic">
+                                  <input type="hidden" id="currentDisplayPic" name="currentDisplayPic">
+                              </div>
+                          </div>
+                          <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Description</label>
                               <div class="col-sm-4">
                                   <textarea class="form-control" style="height: 200px;" id="description" name="description"></textarea>
@@ -289,6 +296,14 @@ if(!empty($course)){
                               <label class="col-sm-2 col-sm-2 control-label">Price ($)</label>
                               <div class="col-sm-4">
                                   <input type="text" id="price" name="price" class="form-control round-form" value="<?=$course['price']?>" maxlength="10" required>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Display Picture</label>
+                              <div class="col-sm-1">
+                                  <input type="file" id="displayPic" name="displayPic" onchange="removeThumb()">
+                                  <img id="currentDisplayPicThumb" src="<?="../".$course['displayPic']?>" height="80" width="80">
+                                  <input type="hidden" id="currentDisplayPic" name="currentDisplayPic" value="<?=$course['displayPic']?>">
                               </div>
                           </div>
                           <div class="form-group">
@@ -444,20 +459,16 @@ if(!empty($course)){
             url: '../process_course.php',
             data: postData,
             success: function(data){
-//                var pos = data.indexOf("{");
-//                var dataValid = data.substring(pos);
-//                var jsonData = eval("("+dataValid+")");
-//                if(jsonData.status === 'used'){
-//                    document.getElementById('addSessionBtn').disabled=true;
-//                    console.log("used");
-//                }else if(jsonData.status === 'available'){
-//                    document.getElementById('addSessionBtn').disabled=false;
-//                    console.log("available");
-//                } 
-                //update documentsJson element
                 
             }
         });
+    }
+    
+    function removeThumb(){
+        //$('#currentDisplayPicThumb').remove();
+        document.getElementById('currentDisplayPicThumb').src="";
+        document.getElementById('currentDisplayPicThumb').height = "10px";
+        document.getElementById('currentDisplayPicThumb').width = "10px";
     }
     </script>
     
