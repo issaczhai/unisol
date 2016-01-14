@@ -66,6 +66,13 @@
                           <span>Courses</span>
                       </a>
                   </li>
+                  
+                  <li class="sub-menu">
+                      <a href="document.php">
+                          <i class="fa fa-desktop"></i>
+                          <span>Documents</span>
+                      </a>
+                  </li>
 
                   <li class="sub-menu">
                       <a href="user.php">
@@ -165,17 +172,17 @@
                                 <input type="hidden" id="syllabusRow" name="syllabusRow" value="1">
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label" for="objective">Course Content</label>
+                              <label class="col-sm-2 col-sm-2 control-label" for="objective">Why This Course</label>
                               <div class="col-sm-4">
                                   <textarea class="form-control" style="height: 200px;" id="objective" name="objective"></textarea>
                               </div>
                           </div>
-                          <div class="form-group">
+<!--                          <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Documents</label>
                               <div class="col-sm-1">
                                   <input type="file" id="documents[]" name="documents[]" multiple="multiple">
                               </div>
-                          </div>
+                          </div>-->
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Prerequisite Certificate</label>
                               <div class="col-sm-4">

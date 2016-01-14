@@ -105,16 +105,17 @@ if ($operation === "add"){
     $syllabus = json_encode($syllabusArray);
     /******************************************************************************************************/        
     
-    $path_arr=array();
-    if(!empty($_FILES['documents']['name'][0])){
-        for($j=0; $j < count($_FILES["documents"]['name']); $j++) { 
-            $file_name = upload_savename_by_gf($courseID,$_FILES["documents"]['name'][$j]);
-            $file_path = $courseDB.$courseID."/documents/".$file_name;
-            move_uploaded_file($_FILES["documents"]['tmp_name'][$j], $file_path);
-            array_push($path_arr, $file_path);
-        }
-    }
-    $documents = json_encode($path_arr);
+//    $path_arr=array();
+//    if(!empty($_FILES['documents']['name'][0])){
+//        for($j=0; $j < count($_FILES["documents"]['name']); $j++) { 
+//            $file_name = upload_savename_by_gf($courseID,$_FILES["documents"]['name'][$j]);
+//            $file_path = $courseDB.$courseID."/documents/".$file_name;
+//            move_uploaded_file($_FILES["documents"]['tmp_name'][$j], $file_path);
+//            array_push($path_arr, $file_path);
+//        }
+//    }
+//    $documents = json_encode($path_arr);
+    $documents = "";
     /******************************************************************************************************/
     $courseMgr->addCourse($lang,$courseID, $name, $instructor, $price, $pic_path,$description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
     header("Location: admin/course.php");
@@ -186,36 +187,77 @@ if ($operation === "add"){
     }
     $syllabus = json_encode($syllabusArray);
     /******************************************************************************************************/ 
-    $path_arr = array();
-    $existingPath = $_POST['existingDocuments'];
-    foreach($existingPath as $path){
-        array_push($path_arr,$path);
-    }
-    //var_dump($path_arr);
-    if (!file_exists($courseDB. $courseID)){
-        mkdir($courseDB.$courseID ,0777, true);
-    }
-    if (!file_exists($courseDB. $courseID."/documents")){
-        mkdir($courseDB.$courseID."/documents" ,0777, true);
-    }
-    if(!empty($_FILES['documents']['name'][0])){
-        for($j=0; $j < count($_FILES["documents"]['name']); $j++) {
-            $file_name = upload_savename_by_gf($courseID,$_FILES["documents"]['name'][$j]);
-            $file_path = $courseDB.$courseID."/documents/".$file_name;
-            //move_uploaded_file($_FILES["documents"]['tmp_name'][$j], $file_path);
-            array_push($path_arr, $file_path);
-        }
-    }
-    $documents = json_encode($path_arr);
+//    $path_arr = array();
+//    $existingPath = $_POST['existingDocuments'];
+//    foreach($existingPath as $path){
+//        array_push($path_arr,$path);
+//    }
+//    //var_dump($path_arr);
+//    if (!file_exists($courseDB. $courseID)){
+//        mkdir($courseDB.$courseID ,0777, true);
+//    }
+//    if (!file_exists($courseDB. $courseID."/documents")){
+//        mkdir($courseDB.$courseID."/documents" ,0777, true);
+//    }
+//    if(!empty($_FILES['documents']['name'][0])){
+//        for($j=0; $j < count($_FILES["documents"]['name']); $j++) {
+//            $file_name = upload_savename_by_gf($courseID,$_FILES["documents"]['name'][$j]);
+//            $file_path = $courseDB.$courseID."/documents/".$file_name;
+//            //move_uploaded_file($_FILES["documents"]['tmp_name'][$j], $file_path);
+//            array_push($path_arr, $file_path);
+//        }
+//    }
+//    $documents = json_encode($path_arr);
     //var_dump($documents);
     /******************************************************************************************************/
-    $courseMgr->updateCourse($lang,$courseID, $name, $instructor, $price, $pic_path, $description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite);
+    $courseMgr->updateCourse($lang,$courseID, $name, $instructor, $price, $pic_path, $description,$syllabus,$objective, $requiredCert, $receivedCert, $prerequisite);
     header("Location: admin/course.php");
     
 }elseif ($operation === 'deleteDocument'){
     $courseID = filter_input(INPUT_POST,'courseID');
     $documentPath = filter_input(INPUT_POST,'documentPath');
     unlink($documentPath);
+}elseif($operation === "deleteDocumentByCategory"){
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $pathArr = json_decode(filter_input(INPUT_POST,'pathArr'));
+    foreach ($pathArr as $path){
+        unlink($path);
+    }
+}elseif ($operation === "editDocument"){
+    $courseID = filter_input(INPUT_POST,'courseID');
+    if (!file_exists($courseDB. $courseID)){
+        mkdir($courseDB.$courseID ,0777, true);
+    }
+    if (!file_exists($courseDB. $courseID."/documents")){
+        mkdir($courseDB.$courseID."/documents" ,0777, true);
+    }
+    $lang = filter_input(INPUT_POST,'lang');
+    $catRowNo = intval(filter_input(INPUT_POST,'catRowNo'));
+    $documents = array();
+    for($row=1; $row <= $catRowNo; $row++){
+        $catName = filter_input(INPUT_POST,'cat'.strval($row));
+        
+        $path_arr = array();
+        if(isset($_POST['cat'.strval($row).'Documents'])){
+            $existingPath = $_POST['cat'.strval($row).'Documents'];
+            foreach($existingPath as $path){
+                array_push($path_arr,$path);
+            }
+        }
+        
+        if(!empty($_FILES['cat'.$row.'Upload']['name'][0])){
+            for($j=0; $j < count($_FILES['cat'.$row.'Upload']['name']); $j++) {
+                $file_name = upload_savename_by_gf($courseID,$_FILES['cat'.$row.'Upload']['name'][$j]);
+                $file_path = $courseDB.$courseID."/documents/".$file_name;
+                //move_uploaded_file($_FILES["documents"]['tmp_name'][$j], $file_path);
+                array_push($path_arr, $file_path);
+            }
+        }
+        
+        $documents[$catName] = $path_arr; 
+    }
+    $courseMgr->updateCourseDocuments($lang, $courseID, json_encode($documents));
+    header("Location: admin/document.php");
 }elseif ($operation === "checkSession"){
     $courseID = filter_input(INPUT_POST,'courseID');
     $sessionID = filter_input(INPUT_POST,'sessionID');

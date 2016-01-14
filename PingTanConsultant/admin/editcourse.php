@@ -128,6 +128,13 @@ if(!empty($course)){
                           <span>Courses</span>
                       </a>
                   </li>
+                  
+                  <li class="sub-menu">
+                      <a href="document.php">
+                          <i class="fa fa-desktop"></i>
+                          <span>Documents</span>
+                      </a>
+                  </li>
 
                   <li class="sub-menu">
                       <a href="user.php">
@@ -238,12 +245,12 @@ if(!empty($course)){
                                   <textarea class="form-control" style="height: 200px;" id="objective" name="objective"></textarea>
                               </div>
                           </div>
-                          <div class="form-group">
+<!--                          <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Documents</label>
                               <div class="col-sm-1 col-sm-offset-2">
                                   <input type="file" id="documents[]" name="documents[]" multiple="multiple">
                               </div>
-                          </div>
+                          </div>-->
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Prerequisite Certificate</label>
                               <div class="col-sm-4">
@@ -341,37 +348,6 @@ if(!empty($course)){
                               </div>
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 col-sm-2 control-label">Documents</label>
-                              <div class="col-sm-3 col-sm-offset-right-7">
-                                  <table id="documentsTable" class="table">
-                                      <?php
-                                      $row = 0;
-                                      foreach($documentsArr as $document){
-                                          $row++;
-                                          $documentName = substr($document,strrpos($document,"_")+1);
-                                          $documentType = substr($document,strrpos($document,".")+1);
-                                          if($documentType === 'png' or $documentType === 'jpg' or $documentType === 'jpeg'){
-                                              $documentType = 'img';
-                                          }
-                                      ?>
-                                      <tr id="documentsRow<?=strval($row)?>">
-                                          <td width="85%"><?=$documentName?></td>
-                                          <td>
-                                              <img src="../public_html/img/file_extension_<?=$documentType?>.png">
-                                              <input type="hidden" name="existingDocuments[]" value="<?=$document?>">
-                                          </td>
-                                          <td><button type="button" onclick="getFileInfo('<?=$document?>','<?=strval($row)?>')">x</button></td>
-                                      </tr>
-                                      <?php
-                                      }
-                                      ?>
-                                  </table>
-                              </div>
-                              <div class="col-sm-1 col-sm-offset-2">
-                                  <input type="file" id="documents[]" name="documents[]" multiple="multiple">
-                              </div>
-                          </div>
-                          <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Prerequisite Certificate</label>
                               <div class="col-sm-4">
                                   <input type="text" id="requiredCert" name="requiredCert" class="form-control round-form" value="<?=$course['requiredCert']?>" maxlength="100">
@@ -441,27 +417,6 @@ if(!empty($course)){
             document.getElementById('syllabusRow').value = row;
             $("#syllabusTable").find("tr:last").remove();
         }
-    }
-    
-    function getFileInfo(documentPath,row){
-        var courseID=document.getElementById('courseID').value;
-        //delete row
-        var row = document.getElementById('documentsRow'+row);
-        row.parentNode.removeChild(row);
-        var postData = { //Fetch form data
-            'operation'     :'deleteDocument',
-            'courseID'      :courseID,
-            'documentPath'     : documentPath
-        };
-        //pass data to backend to delete with ajax
-        $.ajax({
-            type: 'post',
-            url: '../process_course.php',
-            data: postData,
-            success: function(data){
-                
-            }
-        });
     }
     
     function removeThumb(){

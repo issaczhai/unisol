@@ -3,23 +3,12 @@
 session_start(); 
 
 include_once("../Manager/ConnectionManager.php");
-include_once("../Manager/StudentStatusManager.php");
-include_once("../Manager/StudentManager.php");
-$studentMgr = new StudentManager();
-
-$studentList = $studentMgr->getStudentList();
-
-function getAge($birthday) {  
-    $birthday=getDate(strtotime($birthday));    
-    $now=getDate();  
-    $month=0;  
-    if($now['month']>$birthday['month'])  
-    $month=1;  
-    if($now['month']==$birthday['month'])   
-    if($now['mday']>=$birthday['mday'])  
-    $month=1;  
-    return $now['year']-$birthday['year']+$month;  
-}  
+include_once("../Manager/CourseManager.php");
+//include_once("../Manager/SessionManager.php");
+$courseMgr = new CourseManager();
+//$sessionMgr = new SessionManager();
+$lang = "en";
+$courseList = $courseMgr->getCourseList($lang);
 ?>
 <html lang="en">
   <head>
@@ -29,7 +18,7 @@ function getAge($birthday) {
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Admin | User</title>
+    <title>Admin | Document</title>
 
         
     <!-- Custom styles for this template -->
@@ -60,6 +49,8 @@ function getAge($birthday) {
       
       <?php
       include("header.php");
+      include("addsession_modal.php");
+      
       ?>
       
       <!-- **********************************************************************************************************************************************************
@@ -89,14 +80,14 @@ function getAge($birthday) {
                   </li>
                   
                   <li class="sub-menu">
-                      <a href="document.php">
+                      <a class="active" href="document.php">
                           <i class="fa fa-desktop"></i>
                           <span>Documents</span>
                       </a>
                   </li>
 
                   <li class="sub-menu">
-                      <a class="active" href="user.php">
+                      <a href="user.php">
                           <i class="fa fa-user"></i>
                           <span>Users</span>
                       </a>
@@ -126,57 +117,42 @@ function getAge($birthday) {
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-      <section id="main-content">
+      <!--main content start-->
+    <section id="main-content">
         <section class="wrapper site-min-height">
             <div class="row mt">
                 <div class="col-md-12">
                     <div class="content-panel">
                         <table class="table table-striped table-advance table-hover">
-                            <h4 style="padding-right: 10px"><i class="fa fa-angle-right"></i> User List <button class="btn btn-success btn-sm pull-right"> Add Student</button></h4>
+                            <h4 style="padding-right: 10px"><i class="fa fa-angle-right"></i> Course List <button class="btn btn-success btn-sm pull-right" onclick='window.location="addcourse.php"'> Add Course</button></h4>
                             
                             <thead>
                                 <tr>
                                     <th> #</th>
-                                    <th> Student ID</th>
-                                    <th> Username</th>
-                                    <th> Nationality</th>
-                                    <th> Age</th>
-                                    <th> Action</th>
+                                    <th> Course ID</th>
+                                    <th> Name</th>
+                                    <th> Manage Course Documents</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $count = 0;
-                                foreach($studentList as $student){
-                                    $count+=1;
-                                    
+                                foreach($courseList as $course){
+                                    $count++;
                                 ?>
                                 <tr>
-                                    <td> <?=$count?></td>
-                                    <td> <?=$student['studentID']?></td>
-                                    <td> <?=$student['username']?></td>
-                                    <td> <?=$student['nationality']?></td>
-                                    <td> <?=getAge($student['dateOfBirth'])?></td>
+                                    <td><?=$count?></td>
+                                    <td><?=$course['courseID']?></td>
+                                    <td><?=$course['name']?></td>
                                     <td>
-                                        <button class="btn btn-primary btn-xs" onclick="resetStudentPassword('<?=strval($student['studentID'])?>')">Reset Password</button>
-                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="location.href='./editdocuments.php?cID=<?=strval($course['courseID'])?>&lang=en'" data-toggle="modal" data-target="#addSessionModal"> English Version </button>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="location.href='./editdocuments.php?cID=<?=strval($course['courseID'])?>&lang=cn'" data-toggle="modal" data-target="#addSessionModal"> Chinese Version </button>
                                     </td>
                                 </tr>
-                                <?php
+                                 <?php
                                 }
                                 ?>
                                 
-                                <tr>
-                                    <td> count</td>
-                                    <td> studentID</td>
-                                    <td> username</td>
-                                    <td> china</td>
-                                    <td> <?=getAge('1992-11-20')?></td>
-                                    <td>
-                                        <button class="btn btn-primary btn-xs">Reset Password</button>
-                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div><!-- /content-panel -->
@@ -187,6 +163,7 @@ function getAge($birthday) {
     </section><!-- /MAIN CONTENT -->
 
       <!--main content end-->
+      
       <?php
       include("footer.php");
       ?>
@@ -208,27 +185,129 @@ function getAge($birthday) {
     <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
     <script>
-    function resetStudentPassword(studentID){
+    function deleteCourse(cID){
+        var postData = {'operation': 'delete','courseID':cID};
+        $.ajax({ //Process the form using $.ajax()
+            type      : 'POST', //Method type
+            url       : '../process_course.php', //Your form processing file URL
+            data      : postData, //Forms name
+            success   : function(data) {
+    //            var pos = data.indexOf("{");
+    //            var dataValid = data.substring(pos);
+    //            var jsonData = eval("("+dataValid+")");
+                location.reload();
+            }
+        });
+        event.preventDefault(); //Prevent the default submit
+    }
+    
+    function deleteSession(sID,cID){
+        var postData = {'operation': 'deleteSession','courseID':cID,'sessionID':sID};
+        $.ajax({ //Process the form using $.ajax()
+            type      : 'POST', //Method type
+            url       : '../process_course.php', //Your form processing file URL
+            data      : postData, //Forms name
+            success   : function(data) {
+                location.reload();
+            }
+        });
+        event.preventDefault(); //Prevent the default submit
+    }
+    
+    function showSession(cID){
+        var courseID = cID;
+        $("#sessionRow"+courseID).css('display','');
+        $("#showBtn"+courseID).css('display','none');
+        $("#closeBtn"+courseID).css('display','');
+    }
+    
+    function closeSession(cID){
+        var courseID = cID;
+        $("#sessionRow"+courseID).css('display','none');
+        $("#showBtn"+courseID).css('display','');
+        $("#closeBtn"+courseID).css('display','none');
+    }
+    
+    function populateAddModal(cID){
+        var courseID = cID;
+        document.getElementById('addSessionCourseID').value = courseID;
+    }
+    
+    function checkSession(){
+        var courseID=document.getElementById('addSessionCourseID').value;
+        var sessionID=document.getElementById('addSessionSessionID').value;
         var postData = { //Fetch form data
-            'operation'     :'resetPassword',
-            'courseID'     : studentID
+            'operation'     :'checkSession',
+            'courseID'     : courseID,
+            'sessionID'     : sessionID,
+            'lang'          :'en'
         };
         $.ajax({
             type: 'post',
-            url: '../process_student.php',
+            url: '../process_course.php',
             data: postData,
             success: function(data){
                 var pos = data.indexOf("{");
                 var dataValid = data.substring(pos);
                 var jsonData = eval("("+dataValid+")");
                 if(jsonData.status === 'used'){
-                    document.getElementById('submit').disabled=true;
+                    document.getElementById('addSessionBtn').disabled=true;
+                    console.log("used");
                 }else if(jsonData.status === 'available'){
-                    document.getElementById('submit').disabled=false;
+                    document.getElementById('addSessionBtn').disabled=false;
+                    console.log("available");
                 }
             }
         });
-    }    
+    }
+    
+    function populateEditSessionModal(lang,sID,cID){
+        var postData = { //Fetch form data
+            'operation'     :'retrieveSession',
+            'courseID'     : cID,
+            'sessionID'     : sID,
+            'lang'          :lang
+        };
+        $.ajax({
+            type: 'post',
+            url: '../process_course.php',
+            data: postData,
+            success: function(data){
+                console.log(data.length);
+                if(data.length === 2){
+                    document.getElementById('edit'+cID+sID+'SessionCourseID').value = cID;
+                    document.getElementById('edit'+cID+sID+'SessionSessionID').value = sID;
+                    document.getElementById('edit'+cID+sID+'SessionLang').value = lang;
+                    document.getElementById('edit'+cID+sID+'SessionOperation').value = "addSession";
+                    document.getElementById('edit'+cID+sID+'SessionLanguages').value = "";
+                    document.getElementById('edit'+cID+sID+'SessionStartDate').value = "";
+                    document.getElementById('edit'+cID+sID+'SessionVacancy').value = "";
+                    document.getElementById('edit'+cID+sID+'SessionVenue').value = "";
+                    document.getElementById('edit'+cID+sID+'SessionTime').value = "";
+                }else{
+                    var pos = data.indexOf("{");
+                    var dataValid = data.substring(pos);
+                    var jsonData = eval("("+dataValid+")");
+                    //document.getElementById('addSessionBtn').disabled=true;
+                    document.getElementById('edit'+cID+sID+'SessionCourseID').value = cID;
+                    document.getElementById('edit'+cID+sID+'SessionSessionID').value = sID;
+                    document.getElementById('edit'+cID+sID+'SessionLang').value = lang;
+                    document.getElementById('edit'+cID+sID+'SessionOperation').value = "editSession";
+                    document.getElementById('edit'+cID+sID+'SessionLanguages').value = jsonData.languages;
+                    document.getElementById('edit'+cID+sID+'SessionStartDate').value = jsonData.startDate;
+                    document.getElementById('edit'+cID+sID+'SessionVacancy').value = jsonData.vacancy;
+                    document.getElementById('edit'+cID+sID+'SessionVenue').value = jsonData.venue;
+                    document.getElementById('edit'+cID+sID+'SessionTime').value = jsonData.parttime+jsonData.fulltime;
+                    if(jsonData.fulltime.length === 0){
+                        document.getElementById('edit'+cID+sID+'SessionTimeType1').checked = false;
+                        document.getElementById('edit'+cID+sID+'SessionTimeType2').checked  = true;
+                    }
+                }
+                
+                
+            }
+        });
+    }
     </script>
   </body>
 </html>

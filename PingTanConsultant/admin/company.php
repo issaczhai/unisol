@@ -65,6 +65,13 @@
                           <span>Courses</span>
                       </a>
                   </li>
+                  
+                  <li class="sub-menu">
+                      <a href="document.php">
+                          <i class="fa fa-desktop"></i>
+                          <span>Documents</span>
+                      </a>
+                  </li>
 
                   <li class="sub-menu">
                       <a href="user.php">

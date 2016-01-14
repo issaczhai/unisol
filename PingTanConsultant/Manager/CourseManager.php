@@ -61,6 +61,22 @@ class CourseManager {
         return $course;
     }
     
+    function getDocumentsByCourse($lang,$courseID){
+        $documents = "";
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT documents FROM course_".$lang." WHERE courseID=?");
+        $stmt->bind_param("s", $courseID);
+        $stmt->execute();
+        $stmt->bind_result($document);
+        while ($stmt->fetch())
+        {   
+            $documents = $document;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $documents;
+    }
+    
     function getCourseList($lang){
         $course_arr = array();
         $ConnectionMgr = new ConnectionManager();
@@ -88,15 +104,23 @@ class CourseManager {
         return $course_arr;
     }
     
-    function updateCourse($lang,$courseID, $name, $instructor, $price, $displayPic ,$description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite){
+    function updateCourse($lang,$courseID, $name, $instructor, $price, $displayPic ,$description,$syllabus,$objective, $requiredCert, $receivedCert, $prerequisite){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("UPDATE course_".$lang." SET name=?, instructor=?, price=?, displayPic=?, description=?, syllabus=?, objective=? ,documents=?, requiredCert=?,receivedCert=?, prerequisite=? WHERE courseID=?");
-        $stmt->bind_param("ssdsssssssss",$name, $instructor, $price, $displayPic ,$description,$syllabus,$objective, $documents, $requiredCert, $receivedCert, $prerequisite,$courseID);
+        $stmt = $conn->prepare("UPDATE course_".$lang." SET name=?, instructor=?, price=?, displayPic=?, description=?, syllabus=?, objective=? , requiredCert=?,receivedCert=?, prerequisite=? WHERE courseID=?");
+        $stmt->bind_param("ssdssssssss",$name, $instructor, $price, $displayPic ,$description,$syllabus,$objective, $requiredCert, $receivedCert, $prerequisite,$courseID);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
+    function updateCourseDocuments($lang,$courseID,$documents){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE course_".$lang." SET documents=? WHERE courseID=?");
+        $stmt->bind_param("ss",$documents, $courseID);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
     
 //    function retrieveFromShoppingCart($customer_id){
 //        $ConnectionManager = new ConnectionManager();

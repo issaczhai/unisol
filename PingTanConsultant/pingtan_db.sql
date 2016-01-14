@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2016 at 03:24 PM
+-- Generation Time: Jan 14, 2016 at 01:51 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -86,13 +86,6 @@ CREATE TABLE IF NOT EXISTS `course_cn` (
   PRIMARY KEY (`courseID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `course_cn`
---
-
-INSERT INTO `course_cn` (`courseID`, `name`, `instructor`, `price`, `displayPic`, `description`, `syllabus`, `objective`, `documents`, `requiredCert`, `receivedCert`, `prerequisite`) VALUES
-('CAN101', '广东话', '翟浩贤', 222, 'public_html/course/CAN101/displayPic/Cantonese-Student-Association2016011115132588884displayPic.jpg', '基本廣東話會話', '{"\\u5355\\u5143\\u4e00":"\\u4ecb\\u7ecd","\\u5355\\u5143\\u4e8c":"\\u65e5\\u5e38\\u7528\\u8bed","\\u5355\\u5143\\u4e09":"\\u7c97\\u53e3"}', '面向人群：广东话初学者', '["public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422744_canton_rtt.001.jpg","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_cantonese-basic.pdf","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422744_House_in_Cantonese_and_Mandarin.png"]', '无', 'CAN101', '无');
-
 -- --------------------------------------------------------
 
 --
@@ -120,7 +113,13 @@ CREATE TABLE IF NOT EXISTS `course_en` (
 --
 
 INSERT INTO `course_en` (`courseID`, `name`, `instructor`, `price`, `displayPic`, `description`, `syllabus`, `objective`, `documents`, `requiredCert`, `receivedCert`, `prerequisite`) VALUES
-('CAN101', 'Cantonese', 'Issac Zhai', 222, 'public_html/course/CAN101/displayPic/Cantonese-Student-Association2016011115131380905displayPic.jpg', 'Elementary Course for Cantonese', '{"Unit 1":"Intro","Unit 2":"Daily Phrase","Unit 3":"Vulgar"}', 'For Cantonese Beginner', '["public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_canton_rtt.001.jpg","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_cantonese-basic.pdf","public_html\\/course\\/CAN101\\/documents\\/CAN101_1452422587_House_in_Cantonese_and_Mandarin.png"]', 'No', 'CAN101', 'No');
+('LAN101', 'Basic English', 'Snow Chen', 120, 'public_html/course/LAN101/displayPic/English12016011413272552162displayPic.jpg', 'This course teaches basic English including vocabulary and conversational sentences.', '{"Unit 1":"Introduction","Unit 2":"English History","Unit 3":"Vocabulary","Unit 4":"Conversation","Unit 5":"Review"}', 'Prepared for English beginner', '', 'No', 'BasicEng', 'No'),
+('LAN201', 'Cantonese', 'Issac Zhai', 9999, 'public_html/course/LAN201/displayPic/unnamed2016011413305696055displayPic.png', 'This course teaches basic Cantonese including vocabulary and conversational sentences.', '{"Unit 1":"Introduction","Unit 2":"Vocabulary"}', 'Prepare for learners who are interested in Cantonese', '', 'No', 'BasicCan', 'No'),
+('LAN301', 'Sichuanese', 'Feng Xin', 200, 'public_html/course/LAN301/displayPic/Sichuanese_in_China2016011413341958375displayPic.png', 'This course teaches basic Sichuanese including vocabulary and conversational sentences.', '{"Unit 1":"Introduction","Unit 2":"Pick up Girls Sentence"}', 'For Single people', '', 'No', 'BasicSC', 'LAN401'),
+('LAN401', 'Conversational Mandarin', 'Issac Zhai', 999, 'public_html/course/LAN401/displayPic/chinese32016011413353089810displayPic.jpg', 'This course teaches basic Mandarin including vocabulary and conversational sentences.', '{"Unit 1":"Introduction","Unit 2":"Pinyin","Unit 3":"Writing"}', 'For Foreigner', '', 'No', 'BasicMan', 'No'),
+('SPORTS101', 'Soccer Foundation', 'Feng Xin', 200, 'public_html/course/SPORTS101/displayPic/soccertips2016011413412632903displayPic.jpg', 'This course teaches basic Soccer Skills including passing, holding, shooting, dribbling. However, this coach might be a bit lousy.', '{"Unit 1":"What is soccer","Unit 2":"Game"}', 'For kids', '', 'No', 'No', 'No'),
+('SPORTS201', 'Soccer Tactics and Formation', 'Issac Zhai', 300, 'public_html/course/SPORTS201/displayPic/crisis-prevention-tactics2016011413461472446displayPic.jpg', 'This course teaches basic soccer tactics and formation with a lot of well-explained real game example from Guangzhou Evergrande FC.', '{"Unit 1":"Introduction","Unit 2":"Basic Formation","Unit 3":"In-Game Tactic"}', 'For people who are interested to be coach', '', 'No', 'No', 'SPORTS101'),
+('SPORTS301', 'Soccer Team Management', 'Issac', 500, 'public_html/course/SPORTS301/displayPic/football-manager-2014-arrives-on-linux-on-october-31-383609-2-21193292016011413492378052displayPic.jpg', 'This course teaches basic Sports Team Management principles including how to handle trouble-maker players such as Diego Costa.', '{"Unit 1":"Introduction","Unit 2":"Art of Management"}', 'For Soccer Savvy', '', 'No', 'No', 'SPORTS101,SPORTS201');
 
 -- --------------------------------------------------------
 
@@ -169,14 +168,6 @@ CREATE TABLE IF NOT EXISTS `session_cn` (
   PRIMARY KEY (`courseID`,`sessionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `session_cn`
---
-
-INSERT INTO `session_cn` (`courseID`, `sessionID`, `fulltime`, `parttime`, `startDate`, `venue`, `vacancy`, `languages`, `classlist`) VALUES
-('CAN101', 'G1', '周一到周四晚 7点至10点', '', '2016-01-25', '平潭办公室', 20, '英语，广东话', ''),
-('CAN101', 'G2', '', '週六下午三點至五點', '2016-01-30', '平潭办公室', 20, '英语，廣東話', '');
-
 -- --------------------------------------------------------
 
 --
@@ -201,8 +192,19 @@ CREATE TABLE IF NOT EXISTS `session_en` (
 --
 
 INSERT INTO `session_en` (`courseID`, `sessionID`, `fulltime`, `parttime`, `startDate`, `venue`, `vacancy`, `languages`, `classlist`) VALUES
-('CAN101', 'G1', '', 'Mon - Thur 7pm - 9pm', '2016-01-25', 'PingTan Office', 30, 'English,Cantonese', ''),
-('CAN101', 'G2', '', 'Saturday 3pm-5pm', '2016-01-30', 'PingTan Office', 20, 'English,Cantonese', '');
+('LAN101', 'G1', 'Mon - Thur 7pm - 10pm', '', '2016-01-18', 'SMU SOE Seminar Room 2-9', 45, 'English', ''),
+('LAN101', 'G2', 'Fri - Sat 5 pm - 8 pm', '', '2016-01-22', 'SMU SOE Seminar Room 2-9', 30, 'English', ''),
+('LAN201', 'G1', '', 'Every Wednesday 8-10pm', '2016-01-27', 'SMU SOE Seminar Room 3-1', 45, 'Cantonese,English', ''),
+('LAN201', 'G2 (in Mandarin)', '', 'Every Thursday 8-10pm', '2016-01-28', 'SMU SOE Seminar Room 2-9', 45, 'Mandarin,Cantonese', ''),
+('LAN301', 'G1', 'Mon - Sat 3pm - 5pm', '', '2016-01-18', 'SMU SOE Seminar Room 2-1', 45, 'Mandarin', ''),
+('LAN301', 'G2', '', 'Every Thur 8-11pm', '2016-01-21', 'SMU SOE Seminar Room 2-1', 30, 'Mandarin', ''),
+('LAN301', 'G3', '', 'Sunday 1pm - 4pm', '2016-01-24', 'PingTan Office', 45, 'Mandarin', ''),
+('LAN401', 'G1', 'Mon - Tue 7pm - 10pm', '', '2016-01-18', 'SMU SOE Seminar Room 2-8', 45, 'Mandarin,English', ''),
+('LAN401', 'G2', 'Mon - Thur 2pm - 4pm', '', '2016-01-25', 'SMU SOE Seminar Room 3-2', 45, 'English,Mandarin', ''),
+('SPORTS101', 'G1', 'Saturday 7pm-9pm', '', '2016-01-23', 'Jelan Basa Stadium', 22, 'Mandarin,English', ''),
+('SPORTS101', 'G2', 'Sunday 7 pm - 9 pm', '', '2016-01-24', 'Jelan Basa Stadium', 22, 'Mandarin,English', ''),
+('SPORTS301', 'G1', 'Saturday 10 am - 1 pm', '', '2016-01-23', 'SMU SOE Seminar Room 2-4', 45, 'Mandarin,Cantonese,English', ''),
+('SPORTS301', 'G2', 'Friday 8 - 10pm', '', '2016-01-22', 'SMU SOE Seminar Room 2-4', 45, 'Mandarin,Cantonese,English', '');
 
 -- --------------------------------------------------------
 
