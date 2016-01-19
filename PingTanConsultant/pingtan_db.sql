@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2016 at 01:51 PM
+-- Generation Time: Jan 19, 2016 at 05:05 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -113,8 +113,8 @@ CREATE TABLE IF NOT EXISTS `course_en` (
 --
 
 INSERT INTO `course_en` (`courseID`, `name`, `instructor`, `price`, `displayPic`, `description`, `syllabus`, `objective`, `documents`, `requiredCert`, `receivedCert`, `prerequisite`) VALUES
-('LAN101', 'Basic English', 'Snow Chen', 120, 'public_html/course/LAN101/displayPic/English12016011413272552162displayPic.jpg', 'This course teaches basic English including vocabulary and conversational sentences.', '{"Unit 1":"Introduction","Unit 2":"English History","Unit 3":"Vocabulary","Unit 4":"Conversation","Unit 5":"Review"}', 'Prepared for English beginner', '', 'No', 'BasicEng', 'No'),
-('LAN201', 'Cantonese', 'Issac Zhai', 9999, 'public_html/course/LAN201/displayPic/unnamed2016011413305696055displayPic.png', 'This course teaches basic Cantonese including vocabulary and conversational sentences.', '{"Unit 1":"Introduction","Unit 2":"Vocabulary"}', 'Prepare for learners who are interested in Cantonese', '', 'No', 'BasicCan', 'No'),
+('LAN101', 'Basic English', 'Snow Chen', 120, 'public_html/course/LAN101/displayPic/English12016011413272552162displayPic.jpg', 'This course teaches basic English including vocabulary and conversational sentences.', '{"Unit 1":"Introduction","Unit 2":"English History","Unit 3":"Vocabulary","Unit 4":"Conversation","Unit 5":"Review"}', 'Prepared for English beginner', '[]', 'No', 'BasicEng', 'No'),
+('LAN201', 'Cantonese', 'Issac Zhai', 9999, 'public_html/course/LAN201/displayPic/unnamed2016011413305696055displayPic.png', 'This course teaches basic Cantonese including vocabulary and conversational sentences.', '{"Unit 1":"Introduction","Unit 2":"Vocabulary"}', 'Prepare for learners who are interested in Cantonese', '[]', 'No', 'BasicCan', 'No'),
 ('LAN301', 'Sichuanese', 'Feng Xin', 200, 'public_html/course/LAN301/displayPic/Sichuanese_in_China2016011413341958375displayPic.png', 'This course teaches basic Sichuanese including vocabulary and conversational sentences.', '{"Unit 1":"Introduction","Unit 2":"Pick up Girls Sentence"}', 'For Single people', '', 'No', 'BasicSC', 'LAN401'),
 ('LAN401', 'Conversational Mandarin', 'Issac Zhai', 999, 'public_html/course/LAN401/displayPic/chinese32016011413353089810displayPic.jpg', 'This course teaches basic Mandarin including vocabulary and conversational sentences.', '{"Unit 1":"Introduction","Unit 2":"Pinyin","Unit 3":"Writing"}', 'For Foreigner', '', 'No', 'BasicMan', 'No'),
 ('SPORTS101', 'Soccer Foundation', 'Feng Xin', 200, 'public_html/course/SPORTS101/displayPic/soccertips2016011413412632903displayPic.jpg', 'This course teaches basic Soccer Skills including passing, holding, shooting, dribbling. However, this coach might be a bit lousy.', '{"Unit 1":"What is soccer","Unit 2":"Game"}', 'For kids', '', 'No', 'No', 'No'),
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `studentID` varchar(20) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `email` varchar(20) NOT NULL,
+  `email` varchar(40) NOT NULL,
   `nationality` varchar(30) NOT NULL,
   `contactNo` varchar(20) NOT NULL,
   `occupation` varchar(20) NOT NULL,
@@ -237,6 +237,7 @@ CREATE TABLE IF NOT EXISTS `student` (
 CREATE TABLE IF NOT EXISTS `studentstatus` (
   `studentID` varchar(20) NOT NULL,
   `courseID` varchar(20) NOT NULL,
+  `sessionID` varchar(20) NOT NULL,
   `status` varchar(10) NOT NULL,
   PRIMARY KEY (`studentID`,`courseID`,`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
