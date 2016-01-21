@@ -278,14 +278,16 @@ if ($operation === "add"){
     $time = filter_input(INPUT_POST,'time');
     $startDate = new DateTime(filter_input(INPUT_POST,'startDate'));
     $startDate = $startDate->format('Y-m-d H:i:s');
+    $endDate = new DateTime(filter_input(INPUT_POST,'endDate'));
+    $endDate = $endDate->format('Y-m-d H:i:s');
     $venue = filter_input(INPUT_POST,'venue');
     $vacancy = intval(filter_input(INPUT_POST,'vacancy'));
     $languages = filter_input(INPUT_POST,'languages');
     $classlist = "";
     if($timeType==='fulltime'){
-        $sessionMgr->addSession($lang,$courseID, $sessionID, $time, "",$startDate, $venue, $vacancy, $languages, $classlist);
+        $sessionMgr->addSession($lang,$courseID, $sessionID, $time, "",$startDate, $endDate,$venue, $vacancy, $languages, $classlist);
     }elseif($timeType==='parttime'){
-        $sessionMgr->addSession($lang,$courseID, $sessionID, "", $time,$startDate, $venue, $vacancy, $languages, $classlist);
+        $sessionMgr->addSession($lang,$courseID, $sessionID, "", $time,$startDate, $endDate,$venue, $vacancy, $languages, $classlist);
     }
     header("Location: admin/course.php");
 }elseif ($operation === 'deleteSession') {
@@ -304,14 +306,16 @@ if ($operation === "add"){
     $time = filter_input(INPUT_POST,'time');
     $startDate = new DateTime(filter_input(INPUT_POST,'startDate'));
     $startDate = $startDate->format('Y-m-d H:i:s');
+    $endDate = new DateTime(filter_input(INPUT_POST,'endDate'));
+    $endDate = $endDate->format('Y-m-d H:i:s');
     $venue = filter_input(INPUT_POST,'venue');
     $vacancy = intval(filter_input(INPUT_POST,'vacancy'));
     $languages = filter_input(INPUT_POST,'languages');
     $classlist = "";
     if($timeType==='fulltime'){
-        $sessionMgr->updateSession($lang,$courseID, $sessionID, $time, "",$startDate, $venue, $vacancy, $languages, $classlist);
+        $sessionMgr->updateSession($lang,$courseID, $sessionID, $time, "",$startDate, $endDate,$venue, $vacancy, $languages, $classlist);
     }elseif($timeType==='parttime'){
-        $sessionMgr->updateSession($lang,$courseID, $sessionID, "", $time,$startDate, $venue, $vacancy, $languages, $classlist);
+        $sessionMgr->updateSession($lang,$courseID, $sessionID, "", $time,$startDate, $endDate,$venue, $vacancy, $languages, $classlist);
     }
     header("Location: admin/course.php");
 }elseif ($operation === "retrieveSession"){

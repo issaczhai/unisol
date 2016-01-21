@@ -401,31 +401,6 @@ if(!empty($course)){
     
     <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
-    
-    <script>
-    function addRow(){
-        var row = parseInt(document.getElementById('syllabusRow').value);
-        row = row + 1;
-        $("#syllabusTable").append("<tr><td><input type='text' name='unit"+row.toString()+"'id='unit"+row.toString()+"' class='form-control' required></td><td><input type='text' name='content"+row.toString()+"'id='content"+row.toString()+"' class='form-control' required></td></tr>");
-        document.getElementById('syllabusRow').value = row;
-    }
-    
-    function removeRow(){
-        var row = parseInt(document.getElementById('syllabusRow').value);
-        if(row > 1){
-            row = row - 1;
-            document.getElementById('syllabusRow').value = row;
-            $("#syllabusTable").find("tr:last").remove();
-        }
-    }
-    
-    function removeThumb(){
-        //$('#currentDisplayPicThumb').remove();
-        document.getElementById('currentDisplayPicThumb').src="";
-        document.getElementById('currentDisplayPicThumb').height = "10px";
-        document.getElementById('currentDisplayPicThumb').width = "10px";
-    }
-    </script>
-    
+    <script type="text/javascript" src="assets/js/course.js"></script>
   </body>
 </html>

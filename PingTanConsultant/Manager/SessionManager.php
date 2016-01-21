@@ -13,20 +13,20 @@
  */
 class SessionManager {
     //put your code here
-    function addSession($lang,$courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist){
+    function addSession($lang,$courseID,$sessionID,$fulltime,$parttime,$startDate, $endDate, $venue, $vacancy, $languages, $classlist){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO session_".$lang." (courseID,sessionID,fulltime,parttime,startDate, venue, vacancy, languages, classlist) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssiss",$courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist);
+        $stmt = $conn->prepare("INSERT INTO session_".$lang." (courseID,sessionID,fulltime,parttime,startDate, endDate, venue, vacancy, languages, classlist) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssssiss",$courseID,$sessionID,$fulltime,$parttime,$startDate, $endDate, $venue, $vacancy, $languages, $classlist);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
-    function updateSession($lang,$courseID,$sessionID,$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist){
+    function updateSession($lang,$courseID,$sessionID,$fulltime,$parttime,$startDate, $endDate, $venue, $vacancy, $languages, $classlist){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("UPDATE session_".$lang." SET fulltime = ?,parttime = ?,startDate=?, venue=?, vacancy=?, languages=?, classlist = ? WHERE courseID = ? AND sessionID = ?");
-        $stmt->bind_param("ssssissss",$fulltime,$parttime,$startDate, $venue, $vacancy, $languages, $classlist,$courseID,$sessionID);
+        $stmt = $conn->prepare("UPDATE session_".$lang." SET fulltime = ?,parttime = ?,startDate=?, endDate = ?,venue=?, vacancy=?, languages=?, classlist = ? WHERE courseID = ? AND sessionID = ?");
+        $stmt->bind_param("ssssissss",$fulltime,$parttime,$startDate, $endDate, $venue, $vacancy, $languages, $classlist,$courseID,$sessionID);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
@@ -56,13 +56,14 @@ class SessionManager {
         $stmt = $conn->prepare("SELECT * FROM session_".$lang." WHERE courseID = ? AND sessionID=?");
         $stmt->bind_param("ss", $courseID,$sessionID);
         $stmt->execute();
-        $stmt->bind_result($courseID,$sessionID,$fulltime,$parttime, $startDate,$venue, $vacancy, $languages, $classlist);
+        $stmt->bind_result($courseID,$sessionID,$fulltime,$parttime, $startDate,$endDate,$venue, $vacancy, $languages, $classlist);
         while ($stmt->fetch())
         {   $session['courseID'] = $courseID;
             $session['sessionID'] = $sessionID;
             $session['fulltime'] = $fulltime;
             $session['parttime'] = $parttime;
             $session['startDate'] = $startDate;
+            $session['endDate'] = $endDate;
             $session['venue'] = $venue;
             $session['vacancy'] = $vacancy;
             $session['languages'] = $languages;
@@ -79,7 +80,7 @@ class SessionManager {
         $stmt = $conn->prepare("SELECT * FROM session_".$lang." WHERE courseID = ?");
         $stmt->bind_param("s", $courseID);
         $stmt->execute();
-        $stmt->bind_result($courseID,$sessionID,$fulltime,$parttime, $startDate, $venue, $vacancy, $languages, $classlist);
+        $stmt->bind_result($courseID,$sessionID,$fulltime,$parttime, $startDate, $endDate, $venue, $vacancy, $languages, $classlist);
         while ($stmt->fetch())
         {   
             $session = [];
@@ -88,6 +89,7 @@ class SessionManager {
             $session['fulltime'] = $fulltime;
             $session['parttime'] = $parttime;
             $session['startDate'] = $startDate;
+            $session['endDate'] = $endDate;
             $session['venue'] = $venue;
             $session['vacancy'] = $vacancy;
             $session['languages'] = $languages;

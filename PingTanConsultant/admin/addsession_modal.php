@@ -62,6 +62,12 @@
 	                <input required="" id="startDate" name="startDate" class="form-control" placeholder="" type="date" class="input-medium">
 	              </div>
 	            </div>
+                    <div class="control-group">
+	              <label class="control-label" for="endDate">End Date</label>
+	              <div class="controls">
+	                <input required="" id="endDate" name="endDate" class="form-control" placeholder="" type="date" class="input-medium">
+	              </div>
+	            </div>
 	            <!-- Text input-->
 	            <div class="control-group">
 	              <label class="control-label" for="venue">Venue</label>
