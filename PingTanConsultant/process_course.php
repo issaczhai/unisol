@@ -5,6 +5,7 @@ ini_set('display_errors', 'On');
 include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/CourseManager.php");
 include_once("./Manager/SessionManager.php");
+include_once("./Manager/StudentManager.php");
 header("Content-type: text/html;charset=utf-8");
 $courseMgr = new CourseManager();
 $sessionMgr = new SessionManager();
@@ -323,5 +324,11 @@ if ($operation === "add"){
     $sessionID = filter_input(INPUT_POST,'sessionID');
     $lang = filter_input(INPUT_POST,'lang');
     $session = $sessionMgr->getSession($lang, $courseID, $sessionID);
+    echo json_encode($session);
+}elseif ($operation === "getClassList"){
+    $courseID = filter_input(INPUT_POST,'courseID');
+    $sessionID = filter_input(INPUT_POST,'sessionID');
+    $lang = 'en';
+    $session = $sessionMgr->getClassList($lang, $courseID, $sessionID);
     echo json_encode($session);
 }

@@ -122,6 +122,23 @@ class CourseManager {
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
+    function getCourseNameAndCert($lang,$courseID){
+        $result = array();
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT name, receivedCert FROM course_".$lang." WHERE courseID=?");
+        $stmt->bind_param("s", $courseID);
+        $stmt->execute();
+        $stmt->bind_result($name,$receivedCert);
+        while ($stmt->fetch())
+        {   
+            $result['name'] = $name;
+            $result['cert'] = $receivedCert;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $result;
+    }
+    
 //    function retrieveFromShoppingCart($customer_id){
 //        $ConnectionManager = new ConnectionManager();
 //        $conn = $ConnectionManager->getConnection();

@@ -117,6 +117,12 @@ function getAge($birthday) {
                           <li><a  href="lock_screen.php">Lock Screen</a></li>
                       </ul>
                   </li>
+                  <li class="sub-menu">
+                      <a href="certify.php">
+                          <i class="fa fa-desktop"></i>
+                          <span>Certifying</span>
+                      </a>
+                  </li>
               </ul>
               <!-- sidebar menu end-->
           </div>
@@ -132,7 +138,7 @@ function getAge($birthday) {
                 <div class="col-md-12">
                     <div class="content-panel">
                         <table class="table table-striped table-advance table-hover">
-                            <h4 style="padding-right: 10px"><i class="fa fa-angle-right"></i> User List <button class="btn btn-success btn-sm pull-right"> Add Student</button></h4>
+                            <h4 style="padding-right: 10px"><i class="fa fa-angle-right"></i> User List </h4>
                             
                             <thead>
                                 <tr>
@@ -166,17 +172,6 @@ function getAge($birthday) {
                                 }
                                 ?>
                                 
-                                <tr>
-                                    <td> count</td>
-                                    <td> studentID</td>
-                                    <td> username</td>
-                                    <td> china</td>
-                                    <td> <?=getAge('1992-11-20')?></td>
-                                    <td>
-                                        <button class="btn btn-primary btn-xs">Reset Password</button>
-                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div><!-- /content-panel -->

@@ -13,11 +13,11 @@
  */
 class StudentManager {
     //put your code here
-    function addStudent($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric){
+    function addStudent($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric,$userStatus){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("INSERT INTO student (studentID,username,password,email,nationality,contactNo,occupation,dateOfBirth,firstname,lastname,NRIC) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssssss", $studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric);
+        $stmt = $conn->prepare("INSERT INTO student (studentID,username,password,email,nationality,contactNo,occupation,dateOfBirth,firstname,lastname,NRIC,userStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
+        $stmt->bind_param("ssssssssssss", $studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric,$userStatus);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
@@ -54,6 +54,24 @@ class StudentManager {
         }
         $ConnectionManager->closeConnection($stmt, $conn);
         return $email;
+    }
+    
+    function getName($studentID){
+        $name = null;
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT firstname, lastname FROM student WHERE studentID=?");
+        $stmt->bind_param("s", $studentID);
+        $stmt->execute();
+        $stmt->bind_result($fn,$ln);
+        while ($stmt->fetch())
+        {   
+            if(!empty($fn) && !empty($ln)){
+                $name = $ln." ".$fn;
+            }
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $name;
     }
     
     function getStudentByID($studentID){
@@ -205,7 +223,6 @@ class StudentManager {
             $student['userStatus'] = $userStatus;
             $studentstatus = $ssManager->getStudentStatus($student['studentID']);
             $student['status'] = $studentstatus;
-            
             array_push($student_arr,$student);
         }
         $ConnectionMgr->closeConnection($stmt, $conn);
@@ -217,6 +234,15 @@ class StudentManager {
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("UPDATE product SET password=? WHERE studentID=?");
         $stmt->bind_param("ss", $password, $studentID);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
+    function saveCert($studentID,$courseID,$name,$sessionID,$path){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("INSERT INTO studentcertificate (studentID,courseID,name,sessionID,path) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss",$studentID,$courseID,$name,$sessionID,$path);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }

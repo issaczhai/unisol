@@ -158,6 +158,12 @@ if(!empty($course)){
                           <li><a  href="lock_screen.php">Lock Screen</a></li>
                       </ul>
                   </li>
+                  <li class="sub-menu">
+                      <a href="certify.php">
+                          <i class="fa fa-desktop"></i>
+                          <span>Certifying</span>
+                      </a>
+                  </li>
               </ul>
               <!-- sidebar menu end-->
           </div>

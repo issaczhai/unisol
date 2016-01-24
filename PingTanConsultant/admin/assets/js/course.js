@@ -153,3 +153,28 @@
         document.getElementById('currentDisplayPicThumb').width = "10px";
     }
 
+
+
+    function checkCourseID(lang){
+        var courseID = document.getElementById("courseID").value;
+        var postData = { //Fetch form data
+            'operation'     :'checkCourseID',
+            'courseID'     : courseID,
+            'lang'          :lang
+        };
+        $.ajax({
+            type: 'post',
+            url: '../process_course.php',
+            data: postData,
+            success: function(data){
+                var pos = data.indexOf("{");
+                var dataValid = data.substring(pos);
+                var jsonData = eval("("+dataValid+")");
+                if(jsonData.status === 'used'){
+                    document.getElementById('submit').disabled=true;
+                }else if(jsonData.status === 'available'){
+                    document.getElementById('submit').disabled=false;
+                }
+            }
+        });
+    }

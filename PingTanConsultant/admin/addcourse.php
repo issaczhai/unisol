@@ -96,6 +96,12 @@
                           <li><a  href="lock_screen.php">Lock Screen</a></li>
                       </ul>
                   </li>
+                  <li class="sub-menu">
+                      <a href="certify.php">
+                          <i class="fa fa-desktop"></i>
+                          <span>Certifying</span>
+                      </a>
+                  </li>
               </ul>
               <!-- sidebar menu end-->
           </div>
@@ -234,48 +240,7 @@
     
     <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
-    
-    <script>
-    function checkCourseID(lang){
-        var courseID = document.getElementById("courseID").value;
-        var postData = { //Fetch form data
-            'operation'     :'checkCourseID',
-            'courseID'     : courseID,
-            'lang'          :lang
-        };
-        $.ajax({
-            type: 'post',
-            url: '../process_course.php',
-            data: postData,
-            success: function(data){
-                var pos = data.indexOf("{");
-                var dataValid = data.substring(pos);
-                var jsonData = eval("("+dataValid+")");
-                if(jsonData.status === 'used'){
-                    document.getElementById('submit').disabled=true;
-                }else if(jsonData.status === 'available'){
-                    document.getElementById('submit').disabled=false;
-                }
-            }
-        });
-    }
-    
-    function addRow(){
-        var row = parseInt(document.getElementById('syllabusRow').value);
-        row = row + 1;
-        $("#syllabusTable").append("<tr><td><input type='text' name='unit"+row.toString()+"'id='unit"+row.toString()+"' class='form-control'></td><td><input type='text' name='content"+row.toString()+"'id='content"+row.toString()+"' class='form-control'></td></tr>");
-        document.getElementById('syllabusRow').value = row;
-    }
-    
-    function removeRow(){
-        var row = parseInt(document.getElementById('syllabusRow').value);
-        if(row > 1){
-            row = row - 1;
-            document.getElementById('syllabusRow').value = row;
-            $("#syllabusTable").find("tr:last").remove();
-        }
-    }
-    </script>
+    <script type="text/javascript" src="assets/js/course.js"></script>
     
   </body>
 </html>

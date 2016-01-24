@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <?php
-session_start();
-$courseID='';
-if (isset($_GET['cID'])) {
-    $courseID = $_GET['cID'];
-}
-$lang='';
-if (isset($_GET['lang'])) {
-    $lang = $_GET['lang'];
-}
+session_start(); 
+
 include_once("../Manager/ConnectionManager.php");
 include_once("../Manager/CourseManager.php");
+include_once("../Manager/SessionManager.php");
+include_once("../Manager/StudentManager.php");
 $courseMgr = new CourseManager();
-$documentsArr = [];
-$documentsStr = $courseMgr->getDocumentsByCourse($lang,$courseID);
-$documentsArr = json_decode($documentsStr);
+$sessionMgr = new SessionManager();
+$lang = "en";
+$sessionList=$sessionMgr->getCompletedSessions($lang);
 ?>
 <html lang="en">
   <head>
@@ -24,7 +19,7 @@ $documentsArr = json_decode($documentsStr);
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Admin | Edit Documents</title>
+    <title>Admin | User</title>
 
         
     <!-- Custom styles for this template -->
@@ -44,7 +39,6 @@ $documentsArr = json_decode($documentsStr);
     <link href="assets/css/style-responsive.css" rel="stylesheet">
 
     <script src="assets/js/chart-master/Chart.js"></script>
-    
   </head>
 
   <body>
@@ -78,7 +72,7 @@ $documentsArr = json_decode($documentsStr);
                   </li>
 
                   <li class="sub-menu">
-                      <a class="active" href="course.php">
+                      <a href="course.php">
                           <i class="fa fa-desktop"></i>
                           <span>Courses</span>
                       </a>
@@ -114,7 +108,7 @@ $documentsArr = json_decode($documentsStr);
                       </ul>
                   </li>
                   <li class="sub-menu">
-                      <a href="certify.php">
+                      <a class="active" href="certify.php">
                           <i class="fa fa-desktop"></i>
                           <span>Certifying</span>
                       </a>
@@ -128,87 +122,72 @@ $documentsArr = json_decode($documentsStr);
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-      <!--main content start-->
-    <section id="main-content">
+      <section id="main-content">
         <section class="wrapper site-min-height">
             <div class="row mt">
-                <div class="col-lg-12">
-                  <div class="form-panel">
-                      <h4 class="mb"><i class="fa fa-angle-right"></i> Add Course</h4>
-                      <form id="id" class="form-horizontal style-form" method="post" enctype='multipart/form-data' action='../process_course.php'>
-                          <input type="hidden" id="operation" name="operation" value="editDocument">
-                          <input type="hidden" id="lang" name="lang" value="<?=$lang?>">
-                          <input type="hidden" id="courseID" name="courseID" value="<?=$courseID?>">
-                          <div id="reference"></div>
-                                     <?php
-                                      $catRow = 0;
-                                      if($documentsArr === null){
-                                        ?>
-                          
-                                        <?php
-                                      }else{
-                                        foreach($documentsArr as $k => $v){
-                                            $catRow++;
-                                            //$documentName = substr($document,strrpos($document,"_")+1);
-                                            //$documentType = substr($document,strrpos($document,".")+1);
-
-                                        ?>
-                                        <div class="form-group" id="cat<?=$catRow?>Div">
-                                          <label class="col-sm-2 col-sm-2 control-label"><input type="text" id="cat<?=$catRow?>" name="cat<?=$catRow?>" value="<?=$k?>" required></label>
-                                          <div class="col-sm-4">
-                                              <table class="table">
-                                                  <?php
-                                                  $documentRow=0;
-                                                  foreach($v as $document => $path){
-                                                      $documentRow++;
-                                                      $documentType = substr($path,strrpos($path,".")+1);
-                                                      if($documentType === 'png' or $documentType === 'jpg' or $documentType === 'jpeg'){
-                                                          $documentType = 'img';
-                                                      }
-                                                  ?>
-                                                  <tr id="Cat<?=$catRow?>Row<?=strval($documentRow)?>">
-                                                      <td width="85%"><?=$document?></td>
-                                                      <td>
-                                                          <img src="../public_html/img/file_extension_<?=$documentType?>.png">
-                                                          <input type="hidden" name="cat<?=$catRow?>Documents[]" class="cat<?=$catRow?>Documents" value="<?=$path?>">
-                                                      </td>
-                                                      <td><button type="button" onclick="removeDocument('<?=$path?>','<?=$catRow?>','<?=$documentRow?>')">x</button></td>
-                                                  </tr>
-                                                  <?php
-                                                  }
-                                                  ?>
-                                                  <td><input type="file" name="cat<?=$catRow?>Upload[]" multiple="multiple"></td>
-                                              </table>
-                                            </div>
-                                        </div>
-                                        <?php
-                                        }
-                                      }
-                                     ?>
-                          <input type="hidden" id="catRowNo" name="catRowNo" value="<?=$catRow?>">
-                            <div class="form-group">
-                                <div class="col-sm-2 col-sm-offset-2">
-                                    <button type="button" class="btn btn-success" onclick="addCat()">Add Category</button>
-                                </div>    
-                                <div class="col-sm-2">
-                                    <button type="button" class="btn btn-default" onclick="removeCat()">Remove Category</button>
-                                </div>
-                            </div>
-                          <div class="form-group">
-                              <div class="col-sm-2 col-sm-offset-2">
-                                <button type="submit" id="submit" name="submit" class="btn btn-primary">Done</button>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-                </div><!-- col-lg-12-->      	
+                <div class="col-md-12">
+                    <div class="content-panel">
+                        <table class="table table-striped table-advance table-hover">
+                            <h4 style="padding-right: 10px"><i class="fa fa-angle-right"></i> Pending for Certifying </h4>
+                            <h6>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Here is a list of sessions that had completed and yet to certify students </h6>
+                            <thead>
+                                <tr>
+                                    <th> Course ID</th>
+                                    <th> Course Name </th>
+                                    <th> Session ID</th>
+                                    <th> Certificate</th>
+                                    <th> Show Classlist</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            foreach ($sessionList as $session) {
+                            ?>
+                                <tr>
+                                    <td><?=$session['courseID']?></td>
+                                    <td><?=$session['courseName']?></td>
+                                    <td><?=$session['sessionID']?></td>
+                                    <td><?=$session['certificate']?></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-xs" onclick="displayStudentList('<?=$session['courseID']?>','<?=$session['sessionID']?>')"> Show </button>
+                                    </td>
+                                </tr>
+                            <?php 
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div><!-- /content-panel -->
+                </div><!-- /col-md-12 -->
+                
             </div><!-- /row -->
 
         </section><!--/wrapper -->
+        
     </section><!-- /MAIN CONTENT -->
 
+    
+    <div class="modal fade" id="certifyModal">
+        <div class="modal-dialog">
+            <div class="modal-content" id="login_modal_content">
+                <div class="modal-body">
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade active in">
+                       <!-- <div class="tab-pane fade active in" id="add_address">-->
+                            <fieldset>
+                                <form class="form-horizontal style-form" id="certifyForm" action="../process_student.php" enctype="multipart/form-data" method="post">
+                                    
+                                </form>
+                            </fieldset>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
       <!--main content end-->
-      
       <?php
       include("footer.php");
       ?>
@@ -229,6 +208,6 @@ $documentsArr = json_decode($documentsStr);
     
     <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
-    <script type="text/javascript" src="assets/js/document.js"></script>
+    <script type="text/javascript" src="assets/js/certify.js"></script>
   </body>
 </html>
