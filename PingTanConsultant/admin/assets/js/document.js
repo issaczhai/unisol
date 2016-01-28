@@ -131,23 +131,44 @@
 
 function removeDocument(documentPath, catRow, documentRow){
         var courseID=document.getElementById('courseID').value;
-        //delete row
-        var row = document.getElementById('Cat'+catRow+'Row'+documentRow);
-        row.parentNode.removeChild(row);
-        var postData = { //Fetch form data
-            'operation'     :'deleteDocument',
-            'courseID'      :courseID,
-            'documentPath'     : documentPath
-        };
-        //pass data to backend to delete with ajax
-        $.ajax({
-            type: 'post',
-            url: '../process_course.php',
-            data: postData,
-            success: function(data){
-                
-            }
-        });
+        if(catRow === ''){
+            var row = document.getElementById('contentRow'+documentRow);
+            row.parentNode.removeChild(row);
+             var postData = { //Fetch form data
+                'operation'     :'deleteDocument',
+                'courseID'      :courseID,
+                'documentPath'     : documentPath
+            };
+            //pass data to backend to delete with ajax
+            $.ajax({
+                type: 'post',
+                url: '../process_course.php',
+                data: postData,
+                success: function(data){
+
+                }
+            });
+        }else{
+            //delete row
+            var row = document.getElementById('Cat'+catRow+'Row'+documentRow);
+            row.parentNode.removeChild(row);
+            var postData = { //Fetch form data
+                'operation'     :'deleteDocument',
+                'courseID'      :courseID,
+                'documentPath'     : documentPath
+            };
+            //pass data to backend to delete with ajax
+            $.ajax({
+                type: 'post',
+                url: '../process_course.php',
+                data: postData,
+                success: function(data){
+
+                }
+            });
+        }
+        
+        
     }
     
     function addCat(){
@@ -155,9 +176,11 @@ function removeDocument(documentPath, catRow, documentRow){
         if(catRowNo===0){
             catRowNo = catRowNo + 1;
             var catRowNoStr = catRowNo.toString();
+            
             $('#reference').after('<div class="form-group" id="cat'+catRowNoStr+'Div">'
                     +'<label class="col-sm-2 col-sm-2 control-label">'
-                    +'<input type="text" id="cat'+catRowNoStr+'" name="cat'+catRowNoStr+'" required></label>'
+                    +'<p class="form-control-static">Week '+catRowNoStr+'</p>'
+                    +'<input type="hidden" id="cat'+catRowNoStr+'" name="cat'+catRowNoStr+'" value="Week '+catRowNoStr+'"/></label>'
                     +'<div class="col-sm-4"><input type="file" name="cat'+catRowNoStr+'Upload[]" multiple="multiple"></div></div>');
                            
         }else{
@@ -166,7 +189,8 @@ function removeDocument(documentPath, catRow, documentRow){
             var catRowNoStr = catRowNo.toString();
             $('#cat'+currentCatRowNoStr+'Div').after('<div class="form-group" id="cat'+catRowNoStr+'Div">'
                     +'<label class="col-sm-2 col-sm-2 control-label">'
-                    +'<input type="text" id="cat'+catRowNoStr+'" name="cat'+catRowNoStr+'" required></label>'
+                    +'<p class="form-control-static">Week '+catRowNoStr+'</p>'
+                    +'<input type="hidden" id="cat'+catRowNoStr+'" name="cat'+catRowNoStr+'" value="Week '+catRowNoStr+'"/></label>'
                     +'<div class="col-sm-4"><input type="file" name="cat'+catRowNoStr+'Upload[]" multiple="multiple"></div></div>');
                            
         }

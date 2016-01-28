@@ -233,16 +233,33 @@ if ($operation === "add"){
         mkdir($courseDB.$courseID."/documents" ,0777, true);
     }
     $lang = filter_input(INPUT_POST,'lang');
-    $catRowNo = intval(filter_input(INPUT_POST,'catRowNo'));
     $documents = array();
+    $courseContent = array();
+    if(isset($_POST['contentDocuments'])){
+        $existingPath = $_POST['contentDocuments'];
+        foreach($existingPath as $path){
+            array_push($courseContent,$path);
+        }
+    }
+    if(!empty($_FILES['courseContentUpload']['name'][0])){
+        for($j=0; $j < count($_FILES['courseContentUpload']['name']); $j++) {
+            $file_name = upload_savename_by_gf($courseID,$_FILES['courseContentUpload']['name'][$j]);
+            $file_path = $courseDB.$courseID."/documents/".$file_name;
+            move_uploaded_file($_FILES['courseContentUpload']['tmp_name'][$j], $file_path);
+            array_push($courseContent, $file_path);
+        }
+    }
+    
+    $catRowNo = intval(filter_input(INPUT_POST,'catRowNo'));
+    $courseMaterials = array();
     for($row=1; $row <= $catRowNo; $row++){
         $catName = filter_input(INPUT_POST,'cat'.strval($row));
         
-        $path_arr = array();
+        $material_arr = array();
         if(isset($_POST['cat'.strval($row).'Documents'])){
             $existingPath = $_POST['cat'.strval($row).'Documents'];
             foreach($existingPath as $path){
-                array_push($path_arr,$path);
+                array_push($material_arr,$path);
             }
         }
         
@@ -250,13 +267,15 @@ if ($operation === "add"){
             for($j=0; $j < count($_FILES['cat'.$row.'Upload']['name']); $j++) {
                 $file_name = upload_savename_by_gf($courseID,$_FILES['cat'.$row.'Upload']['name'][$j]);
                 $file_path = $courseDB.$courseID."/documents/".$file_name;
-                //move_uploaded_file($_FILES["documents"]['tmp_name'][$j], $file_path);
-                array_push($path_arr, $file_path);
+                move_uploaded_file($_FILES['cat'.$row.'Upload']['tmp_name'][$j], $file_path);
+                array_push($material_arr, $file_path);
             }
         }
         
-        $documents[$catName] = $path_arr; 
+        $courseMaterials[$catName] = $material_arr; 
     }
+    $documents['Course Content'] = $courseContent;
+    $documents['Course Material'] = $courseMaterials;
     $courseMgr->updateCourseDocuments($lang, $courseID, json_encode($documents));
     header("Location: admin/document.php");
 }elseif ($operation === "checkSession"){

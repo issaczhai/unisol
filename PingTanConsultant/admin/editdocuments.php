@@ -14,7 +14,9 @@ include_once("../Manager/CourseManager.php");
 $courseMgr = new CourseManager();
 $documentsArr = [];
 $documentsStr = $courseMgr->getDocumentsByCourse($lang,$courseID);
-$documentsArr = json_decode($documentsStr);
+$documentsArr = json_decode($documentsStr,true);
+$courseContent = $documentsArr['Course Content'];
+$courseMaterial = $documentsArr['Course Material'];
 ?>
 <html lang="en">
   <head>
@@ -139,27 +141,58 @@ $documentsArr = json_decode($documentsStr);
                           <input type="hidden" id="operation" name="operation" value="editDocument">
                           <input type="hidden" id="lang" name="lang" value="<?=$lang?>">
                           <input type="hidden" id="courseID" name="courseID" value="<?=$courseID?>">
+                          <div class="form-group" id="courseContentDiv">
+                                <label class="col-sm-2 col-sm-2 control-label">
+                                    <p class="form-control-static">Course Content</p>
+                                </label>
+                                <div class="col-sm-4">
+                                    <table class="table">
+                                        <?php
+                                        $contentRow=0;
+                                        foreach($courseContent as $path){
+                                            $contentRow++;
+                                            $documentType = substr($path,strrpos($path,".")+1);
+                                            if($documentType === 'png' or $documentType === 'jpg' or $documentType === 'jpeg'){
+                                                $documentType = 'img';
+                                            }
+                                        ?>
+                                        <tr id="contentRow<?=$contentRow?>">
+                                            <td width="85%"><?=substr($path,strrpos($path,"/")+1)?></td>
+                                            <td>
+                                                <img src="../public_html/img/file_extension_<?=$documentType?>.png">
+                                                <input type="hidden" name="contentDocuments[]" value="<?=$path?>">
+                                            </td>
+                                            <td><button type="button" onclick="removeDocument('<?=$path?>','','<?=$contentRow?>')">x</button></td>
+                                        </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                        <td><input type="file" name="courseContentUpload[]" multiple="multiple"></td>
+                                    </table>
+                                </div>
+                          </div>
+                          
                           <div id="reference"></div>
                                      <?php
                                       $catRow = 0;
-                                      if($documentsArr === null){
+                                      if($courseMaterial === null){
                                         ?>
                           
                                         <?php
                                       }else{
-                                        foreach($documentsArr as $k => $v){
+                                        foreach($courseMaterial as $k => $v){
                                             $catRow++;
-                                            //$documentName = substr($document,strrpos($document,"_")+1);
-                                            //$documentType = substr($document,strrpos($document,".")+1);
-
                                         ?>
                                         <div class="form-group" id="cat<?=$catRow?>Div">
-                                          <label class="col-sm-2 col-sm-2 control-label"><input type="text" id="cat<?=$catRow?>" name="cat<?=$catRow?>" value="<?=$k?>" required></label>
+                                            <label class="col-sm-2 col-sm-2 control-label">
+                                                <p class="form-control-static"><?=$k?></p>
+                                                <input type="hidden" id="cat<?=$catRow?>" name="cat<?=$catRow?>" value="<?=$k?>"/>
+                                            </label>
                                           <div class="col-sm-4">
                                               <table class="table">
                                                   <?php
                                                   $documentRow=0;
-                                                  foreach($v as $document => $path){
+                                                  foreach($v as $path){
                                                       $documentRow++;
                                                       $documentType = substr($path,strrpos($path,".")+1);
                                                       if($documentType === 'png' or $documentType === 'jpg' or $documentType === 'jpeg'){
@@ -167,7 +200,7 @@ $documentsArr = json_decode($documentsStr);
                                                       }
                                                   ?>
                                                   <tr id="Cat<?=$catRow?>Row<?=strval($documentRow)?>">
-                                                      <td width="85%"><?=$document?></td>
+                                                      <td width="85%"><?=substr($path,strrpos($path,"/")+1)?></td>
                                                       <td>
                                                           <img src="../public_html/img/file_extension_<?=$documentType?>.png">
                                                           <input type="hidden" name="cat<?=$catRow?>Documents[]" class="cat<?=$catRow?>Documents" value="<?=$path?>">
