@@ -3,23 +3,9 @@
 session_start(); 
 
 include_once("../Manager/ConnectionManager.php");
-include_once("../Manager/StudentStatusManager.php");
-include_once("../Manager/StudentManager.php");
-$studentMgr = new StudentManager();
-
-$studentList = $studentMgr->getStudentList();
-
-function getAge($birthday) {  
-    $birthday=getDate(strtotime($birthday));    
-    $now=getDate();  
-    $month=0;  
-    if($now['month']>$birthday['month'])  
-    $month=1;  
-    if($now['month']==$birthday['month'])   
-    if($now['mday']>=$birthday['mday'])  
-    $month=1;  
-    return $now['year']-$birthday['year']+$month;  
-}  
+include_once("../Manager/NewsManager.php");
+$newsMgr = new NewsManager();
+$newsList = $newsMgr->getNewsList();
 ?>
 <html lang="en">
   <head>
@@ -29,7 +15,7 @@ function getAge($birthday) {
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Admin | User</title>
+    <title>Admin | News</title>
 
         
     <!-- Custom styles for this template -->
@@ -138,34 +124,33 @@ function getAge($birthday) {
                 <div class="col-md-12">
                     <div class="content-panel">
                         <table class="table table-striped table-advance table-hover">
-                            <h4 style="padding-right: 10px"><i class="fa fa-angle-right"></i> User List </h4>
+                            <h4 style="padding-right: 10px">
+                                <i class="fa fa-angle-right"></i> News List 
+                                <button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#addnewsModal"> Add Course</button>
+                            </h4>
                             
                             <thead>
                                 <tr>
                                     <th> #</th>
-                                    <th> Student ID</th>
-                                    <th> Username</th>
-                                    <th> Nationality</th>
-                                    <th> Age</th>
-                                    <th> Action</th>
+                                    <th> ID</th>
+                                    <th> Title</th>
+                                    <th> Date</th>
+                                    <th> </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $count = 0;
-                                foreach($studentList as $student){
+                                foreach($newsList as $news){
                                     $count+=1;
-                                    
                                 ?>
                                 <tr>
                                     <td> <?=$count?></td>
-                                    <td> <?=$student['studentID']?></td>
-                                    <td> <?=$student['username']?></td>
-                                    <td> <?=$student['nationality']?></td>
-                                    <td> <?=getAge($student['dateOfBirth'])?></td>
+                                    <td> <?=$news['newsID']?></td>
+                                    <td> <?=$news['title']?></td>
+                                    <td> <?=$news['date']?></td>
                                     <td>
-                                        <button class="btn btn-primary btn-xs" onclick="resetStudentPassword('<?=strval($student['studentID'])?>')">Reset Password</button>
-<!--                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>-->
+                                        <button class="btn btn-danger btn-xs btn-delete" data-newsid="<?=$news['newsID']?>"><i class="fa fa-trash-o"></i></button>
                                     </td>
                                 </tr>
                                 <?php
@@ -183,6 +168,7 @@ function getAge($birthday) {
 
       <!--main content end-->
       <?php
+      include("addnews_modal.php");
       include("footer.php");
       ?>
   </section>
@@ -202,6 +188,6 @@ function getAge($birthday) {
     
     <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
-    <script type="text/javascript" src="assets/js/user.js"></script>
+    <script type="text/javascript" src="assets/js/news.js"></script>
   </body>
 </html>

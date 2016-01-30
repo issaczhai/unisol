@@ -41,5 +41,5 @@ if ($operation === "certify"){
 }elseif($operation === "resetPassword"){
     $studentID =filter_input(INPUT_POST,'studentID');
     $password = "12345";
-    $studentMgr->resetPassword($studentID, $password);
+    $studentMgr->resetPassword($studentID, md5($password));
 }

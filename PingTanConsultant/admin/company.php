@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<?php
+session_start(); 
+
+include_once("../Manager/ConnectionManager.php");
+include_once("../Manager/CompanyManager.php");
+$companyMgr = new CompanyManager();
+
+$companyList = $companyMgr->getCompanyList();
+
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -113,18 +123,56 @@
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper site-min-height">
-          	<h3><i class="fa fa-angle-right"></i> Blank Page</h3>
-          	<div class="row mt">
-          		<div class="col-lg-12">
-          		<p>Place your content here.</p>
-          		</div>
-          	</div>
+            <h3><i class="fa fa-angle-right"></i> Blank Page</h3>
+            <div class="row mt">
+                <div class="col-lg-12">
+                    <div class="content-panel">
+                        <table class="table table-striped table-advance table-hover">
+                            <h4 style="padding-right: 10px"><i class="fa fa-angle-right"></i> Company List </h4>
+                            <thead>
+                                <tr>
+                                    <th> #</th>
+                                    <th> Company ID</th>
+                                    <th> username</th>
+                                    <th> Address</th>
+                                    <th> Contact Person</th>
+                                    <th> Password</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $count = 0;
+                                foreach($companyList as $company){
+                                    $count+=1;
+                                    
+                                ?>
+                                <tr>
+                                    <td> <?=$count?></td>
+                                    <td> <?=$company['companyID']?></td>
+                                    <td> <?=$company['username']?></td>
+                                    <td> <?=$company['address']?> &nbsp;&nbsp;&nbsp;<button class="btn btn-primary btn-xs btn-editAddress" data-toggle="modal" data-target="#editAddressModal" data-companyid="<?=$company['companyID']?>">Update address</button></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-xs btn-editContact" data-companyid="<?=$company['companyID']?>" data-toggle="modal" data-target="#editContactModal">Update contact person info</button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary btn-xs btn-reset" data-companyid="<?=$company['companyID']?>">Reset Password</button>
+                                    </td>
+                                </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 			
-		</section><!--/wrapper -->
+          </section><!--/wrapper -->
       </section><!-- /MAIN CONTENT -->
 
       <!--main content end-->
       <?php
+      include("company_modal.php");
       include("footer.php");
       ?>
   </section>
@@ -144,28 +192,7 @@
     
     <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
-
+    <script type="text/javascript" src="assets/js/company.js"></script>
     
-	
-	<script type="text/javascript">
-        $(document).ready(function () {
-        var unique_id = $.gritter.add({
-            // (string | mandatory) the heading of the notification
-            title: 'Welcome to Dashgum!',
-            // (string | mandatory) the text inside the notification
-            text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo. Free version for <a href="http://blacktie.co" target="_blank" style="color:#ffd777">BlackTie.co</a>.',
-            // (string | optional) the image to display on the left
-            image: 'assets/img/ui-sam.jpg',
-            // (bool | optional) if you want it to fade out on its own or just sit there
-            sticky: true,
-            // (int | optional) the time you want it to be alive for before fading out
-            time: '',
-            // (string | optional) the class name you want to apply to that specific message
-            class_name: 'my-sticky-class'
-        });
-
-        return false;
-        });
-	</script>
   </body>
 </html>
