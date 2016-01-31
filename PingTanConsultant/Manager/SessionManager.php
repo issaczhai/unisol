@@ -26,7 +26,7 @@ class SessionManager {
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("UPDATE session_".$lang." SET fulltime = ?,parttime = ?,startDate=?, endDate = ?,venue=?, vacancy=?, languages=?, classlist = ? WHERE courseID = ? AND sessionID = ?");
-        $stmt->bind_param("ssssissss",$fulltime,$parttime,$startDate, $endDate, $venue, $vacancy, $languages, $classlist,$courseID,$sessionID);
+        $stmt->bind_param("sssssissss",$fulltime,$parttime,$startDate, $endDate, $venue, $vacancy, $languages, $classlist,$courseID,$sessionID);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }

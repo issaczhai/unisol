@@ -85,10 +85,20 @@
 	            <!-- Text input-->
 	            <div class="control-group">
 	              <label class="control-label" for="languages">Language</label>
-	              <div class="controls">
-	                <input required="" id="languages" name="languages" class="form-control" placeholder="" type="text" class="input-medium">
-	              </div>
+	              <select class="form-control" id="languages" name="languages" required>
+                            <option value=""> Choose Language </option>
+                            <option value="Mandarin"> Mandarin </option>
+                            <option value="English"> English </option>
+                            <option value="Malay"> Malay </option>
+                            <option value="Hindi"> Hindi </option> 
+                            <option value="Indonesian"> Indonesian </option>
+                            <option value="Thai"> Thai </option>
+                            <option value="Vietnamese"> Vietnamese </option> 
+                            <option value="Burmese"> Burmese </option>
+                        </select>
 	            </div>
+                    
+                    
 	            <!-- Button -->
 	            <div class="control-group">
 	              <label class="control-label" for="addSessionBtn"></label>

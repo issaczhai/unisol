@@ -302,7 +302,7 @@ if ($operation === "add"){
     $endDate = $endDate->format('Y-m-d H:i:s');
     $venue = filter_input(INPUT_POST,'venue');
     $vacancy = intval(filter_input(INPUT_POST,'vacancy'));
-    $languages = filter_input(INPUT_POST,'languages');
+    $languages = $_POST['languages'];
     $classlist = "";
     if($timeType==='fulltime'){
         $sessionMgr->addSession($lang,$courseID, $sessionID, $time, "",$startDate, $endDate,$venue, $vacancy, $languages, $classlist);
@@ -330,7 +330,7 @@ if ($operation === "add"){
     $endDate = $endDate->format('Y-m-d H:i:s');
     $venue = filter_input(INPUT_POST,'venue');
     $vacancy = intval(filter_input(INPUT_POST,'vacancy'));
-    $languages = filter_input(INPUT_POST,'languages');
+    $languages = $_POST['languages'];
     $classlist = "";
     if($timeType==='fulltime'){
         $sessionMgr->updateSession($lang,$courseID, $sessionID, $time, "",$startDate, $endDate,$venue, $vacancy, $languages, $classlist);
