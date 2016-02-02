@@ -60,7 +60,7 @@ class CourseManager {
         $ConnectionManager->closeConnection($stmt, $conn);
         return $course;
     }
-    
+
     function getDocumentsByCourse($lang,$courseID){
         $documents = "";
         $ConnectionManager = new ConnectionManager();
@@ -138,7 +138,6 @@ class CourseManager {
         $ConnectionManager->closeConnection($stmt, $conn);
         return $result;
     }
-    
 //    function retrieveFromShoppingCart($customer_id){
 //        $ConnectionManager = new ConnectionManager();
 //        $conn = $ConnectionManager->getConnection();
@@ -209,21 +208,21 @@ class CourseManager {
 //        return $stock;
 //    }
 //    
-//    function getCourseName($courseID){
-//        $course_name = null;
-//        $ConnectionManager = new ConnectionManager();
-//        $conn = $ConnectionManager->getConnection();
-//        $stmt = $conn->prepare("SELECT name FROM course WHERE courseID=?");
-//        $stmt->bind_param("s", $courseID);
-//        $stmt->execute();
-//        $stmt->bind_result($name);
-//        while ($stmt->fetch())
-//        {
-//            $course_name = $name;
-//        }
-//        $ConnectionManager->closeConnection($stmt, $conn);
-//        return $course_name;
-//    }
+   function getCourseName($lang, $courseID){
+       $course_name = null;
+       $ConnectionManager = new ConnectionManager();
+       $conn = $ConnectionManager->getConnection();
+       $stmt = $conn->prepare("SELECT name FROM course_".$lang." WHERE courseID=?");
+       $stmt->bind_param("s", $courseID);
+       $stmt->execute();
+       $stmt->bind_result($name);
+       while ($stmt->fetch())
+       {
+           $course_name = $name;
+       }
+       $ConnectionManager->closeConnection($stmt, $conn);
+       return $course_name;
+   }
 //    
 //    
 //    function getDescription($courseID){

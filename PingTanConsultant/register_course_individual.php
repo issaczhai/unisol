@@ -6,26 +6,68 @@
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-md-12 col-padding-none">
+                <div class="col-md-12 col-padding-none form-individual-registration">
+                    <input class="hidden-courseID" type="hidden">
+                    <input class="hidden-sessionID" type="hidden">
+                    <div class="col-md-6 form-login-row">
+                      <label for="course-type">Course Type:</label>
+                      <div class="col-md-12 col-padding-none">
+                        <select class="select-course-type select-default" name="course-type">
+                          <option class="option-fullTime" value="full-time">Full-Time</option>
+                          <option class="option-partTime" value="part-time">Part-Time</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-login-row">
+                      <label for="languages">Language:</label>
+                      <div class="col-md-12 col-padding-none">
+                        <select class="select-languages select-default" name="languages">
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-login-row">
+                      <label for="dateTime">Date and Time:</label>
+                      <div class="col-md-12 col-padding-none dateTime parameter-dateTime">
+                        <span>Monday - Friday, 9AM - 6PM</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-login-row">
+                      <label for="duration">Total Hours:</label>
+                      <div class="col-md-8 col-padding-none duration">
+                        <span>40 Hours</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-login-row">
+                      <label for="start-date">Start Date:</label>
+                      <div class="col-md-12 col-padding-none">
+                        <select class="select-start-date select-default" name="start-date">
+                        </select>
+                      </div>
+                    </div>
                     <div class="col-md-6 form-login-row">
                       <label for="ic">NRIC / Passport No.</label>
-                      <input class="input-default" type="text" name="ic" placeholder="NRIC or Passport" required>
+                      <input class="input-default input-nric" type="text" name="ic" placeholder="NRIC or Passport">
                     </div>
                     <div class="col-md-6 form-login-row">
                       <label for="nationality">Nationality</label>
-                      <input class="input-default" type="text" name="nationality" placeholder="" required>
+                      <input class="input-default input-nationality" type="text" name="nationality" placeholder="">
                     </div>
                     <div class="col-md-6 form-login-row">
                       <label for="contact">Contact No.</label>
-                      <input class="input-default" type="text" name="contact" placeholder="" required>
+                      <input class="input-default input-contactNum" type="text" name="contact" placeholder="">
                     </div>
                     <div class="col-md-6 form-login-row">
                       <label for="dob">Date of Birth</label>
-                      <input class="input-default" type="text" name="dob" placeholder="dd/mm/yyyy" required>
+                      <input class="input-default input-dob" type="text" name="dob" placeholder="dd/mm/yyyy">
                     </div>
-                    <div class="col-md-12 form-login-row">
+                    <div class="col-md-6 form-login-row">
                       <label for="occupation">Occupation</label>
-                      <input class="input-default" type="text" name="occupation" placeholder="" required>
+                      <input class="input-default input-occupation" type="text" name="occupation" placeholder="">
+                    </div>
+                    <h5 class="hd-prerequisite-msg">Please upload certificates for all prerequisites of this course before registration</h5>
+                    <div class="col-md-6 form-login-row file-upload-template">
+                      <label class="label-prerequisite" for="upload-prerequisite">Prerequisite</label>
+                      <input class="input-default input-prerequisite" type="file" name="upload-prerequisite">
                     </div>
                 </div>
             </div>
@@ -33,7 +75,7 @@
         <div class="modal-footer">
         <center>
           <button class="btn btn-close" data-dismiss="modal">Cancel</button>
-          <button class="btn btn-primary btn-checkout">Checkout</button>
+          <button class="btn btn-primary btn-checkout btn-individual-register">Register</button>
         </center>
     </div>
     </div>

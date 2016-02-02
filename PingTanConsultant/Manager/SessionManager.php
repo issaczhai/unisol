@@ -99,7 +99,7 @@ class SessionManager {
         $ConnectionManager->closeConnection($stmt, $conn);
         return $sessionList;
     }
-    
+
     function getCompletedSessions($lang){
         $date = new DateTime();
         $date = $date->format('Y-m-d H:i:s');

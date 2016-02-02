@@ -6,34 +6,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./public_html/css/style.css">
-
-    <script src="http://maps.googleapis.com/maps/api/js"></script>
-    <?php
-        //$address = $dlocation; // Google HQ
-        $prepAddr = str_replace(' ','+','8 New Industrial Road LHK 3 Building Singapore 536200');
-        $geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
-        $output = json_decode($geocode);
-        $latitude = $output->results[0]->geometry->location->lat;
-        $longitude = $output->results[0]->geometry->location->lng;
-    ?>
-    <!-- Map Script -->
-	<script>
-	    function initialize() {
-	        var myLatlng = new google.maps.LatLng(<?= $latitude?>,<?= $longitude?>);
-	        var mapProp = {
-	          center:myLatlng,
-	          zoom:18,
-	          mapTypeId:google.maps.MapTypeId.ROADMAP
-	        };
-	        var map=new google.maps.Map(document.getElementById("map_canvas"),mapProp);
-	        var marker = new google.maps.Marker({
-	            position: myLatlng,
-	            map: map,
-	            title: 'Ping Tan Construction'
-	        });
-	    }
-	    google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
 </head>
 <body>
 	<!-- Header -->
@@ -103,6 +75,9 @@
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="./public_html/js/cookie.js"></script>
+<script src="./public_html/js/pingtan.js"></script>
+<script src="./public_html/js/auth.js"></script>
 </body>
 
 </html>

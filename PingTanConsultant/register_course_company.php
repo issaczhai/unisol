@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./public_html/css/style.css">
-
+    <script src="./public_html/js/protect.js"></script>
 </head>
 <body class="body-bg-grey">
 	<!-- Header -->
@@ -96,7 +96,7 @@
 	    					<input class="btn btn-secondary btn-cancel" type="button" value="Cancel">
 		    			</div>
 		    			<div class="col-md-6 form-login-row">
-	    					<input class="btn-login" type="button" value="Register">
+	    					<input class="btn-login btn-company-register" type="button" value="Register">
 		    			</div>
 	    			</div>
     		</div>
@@ -110,6 +110,7 @@ var countNewParticipant = 1;
 
 $('.dd-participant ul li').on('click', function(){
 	var nameTag = createNameTag($(this).text());
+	console.log('nameTag: ' + nameTag);
 	nameTag.removeClass('template-nameTag').addClass('nameTag');
 	var close = document.createElement('i');
 	$(close).addClass('fa').addClass('fa-times');
@@ -143,7 +144,7 @@ var deleteNameTag = function(nameTag){
 
 var createNewParticipant = function(){
 	var newParticipant = $('.template-participant').clone(true, true);
-
+	console.log(newParticipant);
 	return newParticipant;
 };
 </script>

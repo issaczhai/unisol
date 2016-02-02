@@ -20,7 +20,8 @@
 	    	<div class="row"> 
 	    		<div class="col-md-4 login-content">
     				<h3>Login</h3>
-		    		<section class="col-md-12" action="#">
+		    		<section class="col-md-12">
+		    			<div id="errorMsgAuth" class="col-md-12 form-login-row"></div>
 		    			<div class="col-md-12 form-login-row">
 		    				<input class="input-login" type="email" name="email" placeholder="Email" required>
 		    			</div>
@@ -36,7 +37,7 @@
 		    				</div>
 		    			</div>
 		    			<div class="col-md-12 form-login-row">
-	    					<input class="btn-login" type="submit" value="Login">
+	    					<input id="btn-signIn" class="btn-login" type="button" value="Login">
 		    			</div>
 		    			<div class="col-md-12 form-login-row">
 	    					<span>Don't have an account? </span><a class="btn-sign-up" type="button" href="./sign_up.php">Sign Up Here</a>
@@ -48,6 +49,12 @@
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+<script src="./public_html/js/pingtan.js"></script>
+<script src="./public_html/js/cookie.js"></script>
+<script src="./public_html/js/request.js"></script>
+<script src="./public_html/js/authValidation.js"></script>
+<script src="./public_html/js/auth.js"></script>
 </body>
 
 </html>

@@ -8,6 +8,11 @@ body.body-bg-grey{
 .btn{
 	border-radius: 0;
 }
+a.disabled{
+	pointer-events: none;
+	background-color: rgba(230, 183, 0, 0.5);
+
+}
 .text-default{
 	color: rgb(77, 77, 77);
 }
@@ -35,7 +40,7 @@ body.body-bg-grey{
 .col-padding-none{
 	padding: 0;
 }
-.input-default, select.start-date{
+.input-default, .select-default{
 	width: 100%;
 	margin: 0 0 0.5em 0;
     border: 1px solid #ccc;
@@ -51,6 +56,11 @@ body.body-bg-grey{
 .thumbnail-course{
 	position: relative;
 	margin-bottom: 2em;
+	display: inline-block;
+}
+.thumbnail-course-template, .thumbnail-taking-template, .thumbnail-upcoming-template, 
+.thumbnail-taken-template, .file-upload-template, .hd-prerequisite-msg{
+	display: none;
 }
 .img-course-thumbnail{
 	position: relative;
@@ -436,18 +446,26 @@ body.body-bg-grey{
 	font-size: 1.0625em;
     display: inline-block;
     padding: 0.74em 1.5em;
+    cursor: pointer;
     color: #fff;
     border-width: 0 0 0 0;
     text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
     font-family: 'Lato', sans-serif;
     font-weight: 300;
-    background-color: rgb(230, 183, 0);
+    background-color: rgba(230, 183, 0, 1);
     width: 100%;
 }
 .btn-enrollment:hover{
-	background-color: rgb(204, 162, 0)
+	text-decoration: none;
+	color: #fff;
+	background-color: rgb(204, 162, 0);
 }
-
+.list-course-content{
+	list-style-type: none;
+	padding-left: 0;
+}
 .course-info h3, .course-prerequisite h3{
 	border-bottom: 3px solid rgb(153, 153, 153);
 	margin-bottom: 1.5em;
@@ -493,7 +511,7 @@ body.body-bg-grey{
 	color: rgb(191, 191, 191);
 	cursor: pointer;
 }
-.list-document-titles{
+.list-document-titles, .list-session{
 	display: none;
 }
 .list-document-titles li i{
@@ -504,12 +522,15 @@ body.body-bg-grey{
 .list-opened{
 	display: block;
 }
-.list-document, .list-document-titles{
+.list-document, .list-document-titles, .list-outline, .list-session{
 	padding-left: 0;
 	list-style-type: none;
 }
 .list-document-titles li{
 	padding: 0.2em;
+}
+.hd-session{
+	cursor: pointer;
 }
 .result-profile{
 	padding-top: 1em;

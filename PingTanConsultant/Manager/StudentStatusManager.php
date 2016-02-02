@@ -16,23 +16,24 @@ class StudentStatusManager {
     function getStudentStatus($studentID){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $studentstatus = [];
-        $status = ['taken','ongoing','upcoming'];
-        foreach($status as $s){
-            $courseIDList = [];
-            $stmt = $conn->prepare("SELECT courseID FROM studentstatus WHERE studentID=? AND status = ?");
-            $stmt->bind_param("ss", $studentID,$s);
-            $stmt->execute();
-            $stmt->bind_result($courseID);
-            while ($stmt->fetch())
-            {   
-                array_push($courseIDList, $courseID);
-            }
-            $studentstatus[$s] = $courseIDList;
+        $courseIDList = [];
+        $stmt = $conn->prepare("SELECT courseID, sessionID, type, language, status FROM studentstatus WHERE $studentID = ?");
+        $stmt->bind_param("s", $studentID);
+        $stmt->execute();
+        $stmt->bind_result($courseID, $sessionID, $type, $language, $status);
+        while ($stmt->fetch())
+        {   
+            $pair = [];
+            $pair['courseID'] = $courseID;
+            $pair['sessionID'] = $sessionID;
+            $pair['type'] = $type;
+            $pair['language'] = $language;
+            $pair['status'] = $status;
+            array_push($courseIDList, $pair);
         }
         
         $ConnectionManager->closeConnection($stmt, $conn);
-        return $studentstatus;
+        return $courseIDList;
     }
     
     function checkStatusByStudentCourse($studentID,$courseID){

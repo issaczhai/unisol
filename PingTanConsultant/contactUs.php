@@ -131,6 +131,9 @@
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="./public_html/js/cookie.js"></script>
+<script src="./public_html/js/pingtan.js"></script>
+<script src="./public_html/js/auth.js"></script>
 </body>
 
 </html>

@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `studentCertificate` (
   `courseID` varchar(20) NOT NULL,
   `name` varchar(50) NOT NULL,
   `sessionID` varchar(20) NOT NULL,
-  `path` text NOT NULL, --上传给每个学生的证书
+  `path` text NOT NULL,
   PRIMARY KEY (`studentID`,`courseID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 ALTER TABLE `session_en` ADD `endDate` date AFTER `startDate`;

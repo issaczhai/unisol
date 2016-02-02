@@ -187,7 +187,7 @@
 	    		</div>
 	    	</div>
 	    	<div class="row row-btn-viewAll">
-	    		<a href="#" type="button" class="btn-viewAll">View All Courses</a>
+	    		<a href="./courses.php" type="button" class="btn-viewAll">View All Courses</a>
 	    	</div>
 	    </div>
     </div> <!-- end of wrapper -->
@@ -199,6 +199,8 @@
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="./public_html/js/cookie.js"></script>
+<script src="./public_html/js/pingtan.js"></script>
+<script src="./public_html/js/auth.js"></script>
 </body>
 
 </html>

@@ -9,9 +9,9 @@
 </head>
 <body>
 	<!-- Header -->
-	<?php
-		include_once("./register_course_individual.php");
+	<?php		
         include_once("./templates/header.php");
+        include_once("./register_course_individual.php");
     ?>
 
     <!-- Content -->
@@ -30,7 +30,8 @@
 	    					<span>Language:</span>
 	    				</div>
 	    				<div class="col-md-8">
-	    					<span>English</span>
+	    					<select class="select-languages" name="languages">
+	    					</select>
 	    				</div>
 	    			</div>
 	    			<div class="row course-detail-info-row">
@@ -52,13 +53,13 @@
 	    					<span>Course Type:</span>
 	    				</div>
 	    				<div class="col-md-8">
-	    					<select name="course-type">
-	    						<option value="full-time">Full-Time</option>
-	    						<option value="part-time">Part-Time</option>
+	    					<select class="select-course-type" name="course-type">
+	    						<option class="option-fullTime" value="full-time">Full-Time</option>
+	    						<option class="option-partTime" value="part-time">Part-Time</option>
 	    					</select>
 	    				</div>
 	    			</div>
-	    			<div class="row course-detail-info-row">
+	    			<div class="row course-detail-info-row row-fulltime">
 	    				<div class="col-md-1">
 	    					<i class="fa fa-clock-o fa-lg"></i>
 	    				</div>
@@ -69,7 +70,7 @@
 	    					<span>Monday - Friday, 9AM - 6PM</span>
 	    				</div>
 	    			</div>
-	    			<div class="row course-detail-info-row">
+	    			<div class="row course-detail-info-row row-parttime">
 	    				<div class="col-md-1">
 	    					<i class="fa fa-hourglass-half fa-lg"></i>
 	    				</div>
@@ -88,10 +89,20 @@
 	    					<span>Start Date:</span>
 	    				</div>
 	    				<div class="col-md-8">
-	    					<select name="start-date">
-	    						<option value="01012016">1 Jan 2016</option>
-	    						<option value="01082016">8 Jan 2016</option>
+	    					<select class="select-start-date" name="start-date">
+	    						
 	    					</select>
+	    				</div>
+	    			</div>
+	    			<div class="row course-detail-info-row">
+	    				<div class="col-md-1">
+	    					<i class="fa fa-users fa-lg"></i>
+	    				</div>
+	    				<div class="col-md-3">
+	    					<span>Vacancy: </span>
+	    				</div>
+	    				<div class="col-md-8 vacancy">
+	    					<span></span>
 	    				</div>
 	    			</div>
 	    			<div class="row course-detail-info-row">
@@ -102,12 +113,12 @@
 	    					<span>Price:</span>
 	    				</div>
 	    				<div class="col-md-8 price">
-	    					<span class="red-default"> SGD 100 (GST Inclusive)</span>
+	    					<span class="red-default detail-price"> SGD 100 (GST Inclusive)</span>
 	    				</div>
 	    			</div>
 	    			<div class="row course-detail-info-row">
 	    				<div class="col-md-12">
-			    			<button class="btn-enrollment" data-toggle="modal" data-target=".course_register_modal" >Enroll me for this course</button>		
+			    			<a class="btn-enrollment" type="button">Enroll me for this course</a>		
 						</div>
 	    			</div>
 	    		</div>
@@ -117,23 +128,15 @@
 	    		<div class="col-md-6 col-md-offset-1 course-info">
 	    			<h3>Course Information</h3>
 	    			<h4>Course Summary</h4>
-	    			<p>
+	    			<p class="detail-description">
 	    				Work at Height for Assessors course is to provide the participants with the requisite work at height knowledge to assess work at height activities so that work is carried out properly and safely. It is a requirement that participants must have completed and passed the WAH supervisor course.
 	    			</p>
 	    			<h4>Course Content</h4>
 	    			<ul class="list-course-content">
-	    				<li>Identify, explain and apply the relevant Workplace Safety and Health (WSH) Legislations / Approved Code of Practice / Singapore Standards applicable to Work-at-Heights (WAH)
-	    				</li>
-	    				<li>Identify and explain the roles & responsibilities of a WAH Assessor
-	    				</li>
-	    				<li>Identify hazards, evaluate the risk, and implement control measures for WAH activities
-	    				</li>
-	    				<li>Evaluate the adequacy and effectiveness of the Fall Prevention Plan</li>
-	    				<li>Evaluate whether the control measures implemented on site for PTW are adequate and effect
-	    				</li>
+	    				
 	    			</ul>
 	    			<h4>Why This Course ?</h4>
-	    			<p>Upon successful completion of the course and passing the examination, a certificate of successful completion endorsed by PingTan Consultant Pte Ltd will be issued to the participants.
+	    			<p class="detail-objective">Upon successful completion of the course and passing the examination, a certificate of successful completion endorsed by PingTan Consultant Pte Ltd will be issued to the participants.
 	    			</p>
 	    			<h4>Certification</h4>
 	    			<p>Upon successful completion of the course and passing the examination, a certificate of successful completion endorsed by PingTan Consultant Pte Ltd will be issued to the participants.
@@ -141,8 +144,6 @@
 	    		</div>
 	    		<div class="col-md-4 course-prerequisite">
 	    			<h3>Prerequisites</h3>
-	    			<h5 class="prerequisite"><a class="yellow-default" href="#">Work at Height for Assessors</a></h5>
-	    			<h5 class="prerequisite"><a class="yellow-default" href="#">Work at Height for Assessors</a></h5>
 	    		</div>
 	    	</div>
 	    </div>
@@ -155,6 +156,13 @@
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="./public_html/js/request.js"></script>
+<script src="./public_html/js/cookie.js"></script>
+<script src="./public_html/js/pingtan.js"></script>
+<script src="./public_html/js/auth.js"></script>
+<script src="./public_html/js/authValidation.js"></script>
+<script src="./public_html/js/service.js"></script>
+<script src="./public_html/js/course_registration.js"></script>
 </body>
 
 </html>

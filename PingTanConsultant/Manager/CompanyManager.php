@@ -57,8 +57,8 @@ class CompanyManager {
         $ConnectionManager->closeConnection($stmt, $conn);
         return $company;
     }
-    
-    function getCompanyContact($companyID){
+
+     function getCompanyContact($companyID){
         $contact = [];
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
@@ -92,6 +92,45 @@ class CompanyManager {
         $ConnectionManager->closeConnection($stmt, $conn);
         return $address;
     }
+
+    function getCompanyByEmail($contactPersonEmail){
+        $company = [];
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM company WHERE contactPersonEmail=?");
+        $stmt->bind_param("s", $contactPersonEmail);
+        $stmt->execute();
+        $stmt->bind_result($companyID, $username, $password, $address, $contactPersonName,$contactPersonEmail,$contactPersonTel, $contactPersonFax, $registrationID);
+        while ($stmt->fetch())
+        {   $company['companyID'] = $companyID;
+            $company['username'] = $username;
+            $company['password'] = $password;
+            $company['address'] = $address;
+            $company['contactPersonName'] = $contactPersonName;
+            $company['contactPersonEmail'] = $contactPersonEmail;
+            $company['contactPersonTel'] = $contactPersonTel;
+            $company['contactPersonFax'] = $contactPersonFax;
+            $company['registrationID'] = $registrationID;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $company;
+    }
+
+    function getPasswordByEmail($contactPersonEmail){
+        $company_password = null;
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT password FROM company WHERE contactPersonEmail=?");
+        $stmt->bind_param("s", $contactPersonEmail);
+        $stmt->execute();
+        $stmt->bind_result($password);
+        while ($stmt->fetch())
+        {   
+            $company_password = $password;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $company_password;
+    }
     
     function getCompanyList(){
         $company_arr = array();
@@ -117,7 +156,16 @@ class CompanyManager {
         return $company_arr;
     }
     
-    function updateCompanyContact($companyID,$contactPersonName,$contactPersonEmail,$contactPersonTel, $contactPersonFax){
+    function updateCompany($companyID, $username, $password, $address, $contactPersonName,$contactPersonEmail,$contactPersonTel, $contactPersonFax, $registrationID){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE company SET username=?, password=?, address=?, contactPersonName=?, contactPersonEmail=?, contactPersonTel=? ,contactPersonFax=?, registrationID=? WHERE companyID=?");
+        $stmt->bind_param("sssssssss", $username, $password, $address, $contactPersonName,$contactPersonEmail,$contactPersonTel, $contactPersonFax, $registrationID,$companyID);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+
+     function updateCompanyContact($companyID,$contactPersonName,$contactPersonEmail,$contactPersonTel, $contactPersonFax){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("UPDATE company SET contactPersonName=?, contactPersonEmail=?, contactPersonTel=? ,contactPersonFax=? WHERE companyID=?");
@@ -134,17 +182,8 @@ class CompanyManager {
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
-    
-    function updateCompany($companyID, $username, $password, $address, $contactPersonName,$contactPersonEmail,$contactPersonTel, $contactPersonFax, $registrationID){
-        $ConnectionManager = new ConnectionManager();
-        $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("UPDATE company SET username=?, password=?, address=?, contactPersonName=?, contactPersonEmail=?, contactPersonTel=? ,contactPersonFax=?, registrationID=? WHERE companyID=?");
-        $stmt->bind_param("sssssssss", $username, $password, $address, $contactPersonName,$contactPersonEmail,$contactPersonTel, $contactPersonFax, $registrationID,$companyID);
-        $stmt->execute();
-        $ConnectionManager->closeConnection($stmt, $conn);
-    }
-    
-    function resetPassword($companyID,$password){
+
+     function resetPassword($companyID,$password){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("UPDATE company SET password=? WHERE companyID=?");

@@ -7,7 +7,7 @@ include_once("./Manager/StudentManager.php");
 $studentMgr = new StudentManager();
 $response = array();
 $response['error'] = false;
-
+$studentAdd = null;
 //retrieve the post data
 
 $registerType = addslashes(filter_input(INPUT_POST, 'registerType'));
@@ -26,8 +26,9 @@ if($registerType == "individual"){
 		$response['errorMsg'] = "The email address you entered has been registered!";
 	}else{
 		$studentMgr -> addStudent($studentID,$username,$password,$email,"null","null","null","null",$fName,$lName,"null");
+		$studentAdd = $studentMgr -> getStudentByEmail($email);
 	}
-	$response['empty'] = $student;
+	$response['student'] = $studentAdd;
 
 }else if($registerType == "company"){
 	$companyName = addslashes(filter_input(INPUT_POST, 'companyName'));

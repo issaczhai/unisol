@@ -25,6 +25,10 @@ Cookie.prototype.getCookie = function(cname){
             }
             return null;
 };
+// set the cookie expire date to a date passed
+Cookie.prototype.deleteCookie = function(cname){
+    document.cookie = cname + "='';expires=Thu, 01 Jan 1970 00:00:00 UTC";
+};
 
 (function(){
     var c = new Cookie();
@@ -58,7 +62,7 @@ var getCookie = function(cname) {
 function setUsername(username){
     $('.header-username a').text('Hi, ' + username);
     $('.header-username a').attr({
-        href: '#'
+        href: './profile_student.php'
     });
     $('.nav li.header-logout').css('display', 'inline-block');
 }
