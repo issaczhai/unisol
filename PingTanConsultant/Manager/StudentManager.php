@@ -13,7 +13,7 @@
  */
 class StudentManager {
     //put your code here
-    function addStudent($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric,,$userStatus){
+    function addStudent($studentID,$username,$password,$email,$nationality,$contactNo,$occupation,$dateOfBirth,$firstname,$lastname,$nric,$userStatus){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("INSERT INTO student (studentID,username,password,email,nationality,contactNo,occupation,dateOfBirth,firstname,lastname,NRIC,userStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)");

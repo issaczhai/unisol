@@ -29,15 +29,12 @@ if($type === "all"){
 			$course['price'] = $eachCourse['price'];
 			$course['description'] = $eachCourse['description'];
 			$sessionList = $sessionMgr -> getSessionListByCourse($languages, $course['courseID']);
+			$fullTimeQuery = "SELECT COUNT( * ) FROM  `session_en` WHERE  `courseID` ='".$course['courseID']."'AND  `fulltime` <>  ''";
 			if(!empty($sessionList)){
-				//use anyone of session in the session list
-				//assume each session under the same course 
-				//has same parttime and fulltime schedule
-				//and languages
 				$session = $sessionList[0];
-				$course['partTime'] = $session['parttime'] ? $session['parttime'] : 'Not Available';
-				$course['fullTime'] = $session['fulltime'] ? $session['fulltime'] : 'Not Available';
-				$course['languages'] = $session['languages'];
+				$course['partTime'] = $sessionMgr -> checkParttime($languages, $course['courseID'], "");
+				$course['fullTime'] = $sessionMgr -> checkFulltime($languages, $fullTimeQuery);
+				$course['languages'] = $sessionMgr -> retrieveCourseLanguage($languages, $eachCourse['courseID']);
 			}else{
 			// return session false to indicate there's no session added under this particular course
 				$course['session'] = false;

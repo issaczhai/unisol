@@ -158,4 +158,58 @@ class SessionManager {
         }
         return $studentlist;
     }
+
+    function checkParttime($lang, $courseID, $parttime){
+        $count = 0;
+        $connectionMgr = new ConnectionManager();
+        $conn = $connectionMgr -> getConnection();
+        $stmt = $conn->prepare("SELECT count(*) FROM session_".$lang." WHERE courseID = ? AND parttime <> ?");
+        $stmt->bind_param("ss", $courseID, $parttime);
+        $stmt->execute();
+        $stmt->bind_result($result);
+        while ($stmt->fetch())
+        {   
+            $count = $result;
+        }
+
+        return $count > 0;
+    }
+
+    function checkFulltime($lang, $query){
+        $count = 0;
+        $connectionMgr = new ConnectionManager();
+        $conn = $connectionMgr -> getConnection();
+        //$stmt = $conn->prepare("SELECT count(*) FROM session_".$lang." WHERE courseID = ? AND fulltime <> ?");
+       
+        /*$courseID="LAN101";
+        $fulltime="";*/
+        //"SELECT COUNT( * ) FROM  `session_".$lang."` WHERE  `courseID` = ?  AND  `fulltime` <>  ?"
+        $stmt = $conn->prepare($query);
+        //$stmt->bind_param("ss", $courseID, $fulltime);
+        //print_r($stmt);
+        $stmt->execute();
+        $stmt->bind_result($result);
+        while ($stmt->fetch())
+        {   
+            $count = $result;
+        }
+
+        return $count;
+    }
+
+    function retrieveCourseLanguage($lang, $courseID){
+        $languageList = '';
+        $connectionMgr = new ConnectionManager();
+        $conn = $connectionMgr -> getConnection();
+        $stmt = $conn->prepare("SELECT DISTINCT languages FROM session_".$lang." WHERE courseID = ?");
+        $stmt->bind_param("s", $courseID);
+        $stmt->execute();
+        $stmt->bind_result($language);
+        while ($stmt->fetch())
+        {   
+            $languageList = $languageList === '' ? $languageList.$language : $languageList.', '.$language;
+        }
+
+        return $languageList;
+    }
 }

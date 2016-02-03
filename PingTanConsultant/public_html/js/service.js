@@ -6,15 +6,20 @@ var listAllCourses = function(result){
 					name = result[index].name,
 					instructor = result[index].instructor,
 					price = result[index].price,
-					description = result[index].description,
-					partTime = result[index].session ? result[index].partTime : 'Not Available',
-					fullTime = result[index].session ? result[index].fullTime : 'Not Available',
-					languages = result[index].languages;// the language is string seperated by ','
+					description = result[index].description;
 
-				var courseThumbnail = cloneComponent('thumbnail-course-template',true, true);
-				createCourseThumbnail(courseThumbnail, name, courseID, description, fullTime, partTime, languages, 'courses');
+				if(result[index].session){
+					partTime = result[index].partTime;
+					fullTime = result[index].fullTime;
+					languageList = result[index].languages;// the language is string seperated by ','
+					console.log(partTime + ';' + fullTime);
+					console.log(languageList);
+					var courseThumbnail = cloneComponent('thumbnail-course-template', true, true);
+					createCourseThumbnail(courseThumbnail, name, courseID, description, fullTime, partTime, languageList, 'courses');
 
-				$('.result-courses').append(courseThumbnail);
+					$('.result-courses').append(courseThumbnail);
+				}
+				
 			}
 			c = new Cookie();
 			if($_GET('logBack') && c.getCookie('userType')==='individual'){
@@ -45,7 +50,7 @@ var render_course_detail = function(result){
 		selectLanguage = $('.select-languages'),
 		selectCourseType = $('.select-course-type'),
 		btnEnrollment = $('.btn-enrollment');
-		
+
 	//set hidden courseID input 
 	$('.hidden-courseID').val(course.courseID);
 
@@ -105,6 +110,7 @@ var render_course_detail = function(result){
 				optionLanguage = document.createElement('option'),
 				languageExist = false,
 				language = element.languages,
+				_courseType = element.fulltime ? 'fullTime' : 'partTime',
 				fullTime = element.fulltime ? element.fulltime : "Not Available",
 				partTime = element.parttime ? element.parttime : "Not Available",
 				classList = element.classlist.split(','),

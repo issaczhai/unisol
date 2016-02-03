@@ -11,14 +11,17 @@ var createCourseThumbnail = function(jqueryObject, name, courseID, description, 
 	var c = new Cookie(),
 		destUrl = './courses.php?logBack=true',
 		urlDetail = './course_detail.php?courseID=' + courseID,
-		btnViewDetails = jqueryObject.find('.course-thumbnail-btns .btn-view-details');
+		btnViewDetails = jqueryObject.find('.course-thumbnail-btns .btn-view-details'),
+		fullTimeAvailability, partTimeAvailability;
 
 	jqueryObject.find('.title-course').text(name);
 	jqueryObject.find('.block-ellipsis').text(description);
 	if(page === 'courses'){
+		fullTimeAvailability = fulltime ? 'Available' : 'Not Available';
+		partTimeAvailability = parttime ? 'Available' : 'Not Available';
 		jqueryObject.find('.title-lang').text(languages);
-		jqueryObject.find('.title-fulltime').text('Full-time: ' + fulltime);
-		jqueryObject.find('.title-parttime').text('Part-time: ' + parttime);
+		jqueryObject.find('.title-fulltime').text('Full-time: ' + fullTimeAvailability);
+		jqueryObject.find('.title-parttime').text('Part-time: ' + partTimeAvailability);
 		btnRegister = jqueryObject.find('.course-thumbnail-btns .btn-register');
 		//triggerCourseRegisterType(c.getCookie('userType'), btnRegister, c, courseID, destUrl);
 	}else{
