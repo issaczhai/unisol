@@ -17,17 +17,16 @@ class StudentStatusManager {
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $courseIDList = [];
-        $stmt = $conn->prepare("SELECT courseID, sessionID, type, language, status FROM studentstatus WHERE $studentID = ?");
+        $stmt = $conn->prepare("SELECT courseID, sessionID, certificate, status FROM studentstatus WHERE studentID = ?");
         $stmt->bind_param("s", $studentID);
         $stmt->execute();
-        $stmt->bind_result($courseID, $sessionID, $type, $language, $status);
+        $stmt->bind_result($courseID, $sessionID, $certificate, $status);
         while ($stmt->fetch())
         {   
             $pair = [];
             $pair['courseID'] = $courseID;
             $pair['sessionID'] = $sessionID;
-            $pair['type'] = $type;
-            $pair['language'] = $language;
+            $pair['certificate'] = $certificate;
             $pair['status'] = $status;
             array_push($courseIDList, $pair);
         }
@@ -52,6 +51,56 @@ class StudentStatusManager {
         return $status;
     }
    
+    function getList($s){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $result = array();
+        $stmt = $conn->prepare("SELECT * FROM studentstatus WHERE status = ?");
+        $stmt->bind_param("s", $s);
+        $stmt->execute();
+        $stmt->bind_result($studentID, $courseID, $sessionID, $certificate, $status);
+        while ($stmt->fetch())
+        {   
+            $applicatino = array();
+            $applicatino['studentID'] = $studentID;
+            $applicatino['courseID'] = $courseID;
+            $applicatino['sessionID'] = $sessionID;
+            $applicatino['certificate'] = $certificate;
+            $applicatino['status'] = $status;
+            array_push($result, $applicatino);
+        }
+        
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $result;
+    }
+    
+    
+    function updateStudentStatus($studentID,$courseID,$sessionID,$changetostatus){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE studentstatus SET status=? WHERE studentID = ? AND courseID = ? AND sessionID = ?");
+        $stmt->bind_param("ssss",$changetostatus,$studentID,$courseID,$sessionID);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
+    function getSubmittedDocument($studentid,$courseid,$sessionid){
+        $status = 'pending';
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $certificateList = json_encode(array());
+        $stmt = $conn->prepare("SELECT certificate FROM studentstatus WHERE studentID = ? AND courseID = ? AND sessionID = ? AND status = ?");
+        $stmt->bind_param("ssss", $studentid,$courseid,$sessionid,$status);
+        $stmt->execute();
+        $stmt->bind_result($c);
+        while ($stmt->fetch())
+        {   
+            $certificateList = $c;
+        }
+        
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $certificateList;
+    }
     
 //    function truncate(){
 //        $ConnectionManager = new ConnectionManager();

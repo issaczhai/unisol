@@ -281,7 +281,22 @@ var render_student_profile = function(result){
 	renderProfileThumbnail(taken, '.row-taken', 'thumbnail-taken-template');
 
 };
-
+var listStudentApplication = function(result){
+    console.log(result);
+    for (var i = 0; i < result.length; i++) { 
+        var row = cloneComponent('student-application-row', true, true);
+        row.find('.row-count').text(i+1);
+        row.find('.row-studentid').text(result[i].studentID);
+        row.find('.row-courseid').text(result[i].courseID);
+        row.find('.row-sessionid').text(result[i].sessionID);
+        row.find('.row-startdate').text(result[i].session.startDate);
+        row.find('.btn-view-application').attr('data-studentid', result[i].studentID);
+        row.find('.btn-view-application').attr('data-courseid', result[i].courseID);
+        row.find('.btn-view-application').attr('data-sessionid', result[i].sessionID);
+        row.css('display','');
+        $('.student-application-list').append(row);
+    }
+};
 (function(){
 	var xhr,
 		baseUrl,
@@ -321,6 +336,13 @@ var render_student_profile = function(result){
 			data = buildXHRData(postData);
 			baseUrl = './service_student_profile.php';
 			callback = render_student_profile;
+			break;
+                
+                case "application": 
+			baseUrl = '../service_application.php';
+                        postData.operation = 'retrievePendingList';
+			data = buildXHRData(postData);
+			callback = listStudentApplication;
 			
 			break;
 

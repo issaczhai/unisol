@@ -241,4 +241,40 @@ class SessionManager {
 
         return $languageList;
     }
+    
+    function updateVacancy($lang, $courseID,$sessionID,$changeQuantity){
+        $change = abs($changeQuantity);
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        if($changeQuantity > 0){
+            $stmt = $conn->prepare("UPDATE session_".$lang." SET vacancy = vacancy + ".strval($change)." WHERE courseID = ? AND sessionID = ?");
+        }elseif($changeQuantity < 0){
+            $stmt = $conn->prepare("UPDATE session_".$lang." SET vacancy = vacancy - ".strval($change)." WHERE courseID = ? AND sessionID = ?");
+        }
+        $stmt->bind_param("ss",$courseID,$sessionID);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
+    function addToClassList($lang, $courseid, $sessionid,$studentid){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $studentIDlist = array();
+        $stmt = $conn->prepare("SELECT classlist FROM session_".$lang." WHERE courseID = ? AND sessionID=?");
+        $stmt->bind_param("ss", $courseid,$sessionid);
+        $stmt->execute();
+        $stmt->bind_result($classlist);
+        while ($stmt->fetch())
+        {   
+            if(!empty($classlist)){
+                $studentIDlist = explode(",", $classlist);
+            }
+        }
+        array_push($studentIDlist, $studentid);
+        $list = implode(",",$studentIDlist);
+        $stmt = $conn->prepare("UPDATE session_".$lang." SET classlist = ? WHERE courseID = ? AND sessionID = ?");
+        $stmt->bind_param("sss",$list,$courseid,$sessionid);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
 }
