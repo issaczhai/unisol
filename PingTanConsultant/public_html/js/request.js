@@ -1,4 +1,4 @@
-var Request = function (baseUrl, data, method, callback) {
+var Request = function (file, baseUrl, data, method, callback) {
     var request = this,
         xhr;
 
@@ -14,6 +14,7 @@ var Request = function (baseUrl, data, method, callback) {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
             var result = JSON.parse(xhr.responseText);
             callback(result);
         }else{
@@ -25,7 +26,8 @@ var Request = function (baseUrl, data, method, callback) {
 
         xhr.open(method , baseUrl, true);
         //to post like HTML form
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        if (!file) xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        
         xhr.send(data);
 
     }else{
@@ -49,9 +51,4 @@ Request.prototype.addTask = function(func){
     
     this.tasks.push({func : func});
 
-};
-
-var buildUrl = function(baseUrl, data){
-    
-    return baseUrl + '?' + data;
 };

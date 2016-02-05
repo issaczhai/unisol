@@ -1,11 +1,14 @@
 <?php
 
 include_once("./Manager/ConnectionManager.php");
+include_once("./Manager/StudentStatusManager.php");
+include_once("./Manager/StudentManager.php");
 include_once("./Manager/CourseManager.php");
 include_once("./Manager/SessionManager.php");
-
+$studentMgr = new StudentManager();
 $courseMgr = new CourseManager();
 $sessionMgr = new SessionManager();
+$studentId = isset($_COOKIE['studentID']) ? $_COOKIE['studentID'] : 'null';
 $response = array();
 $error = array();
 $sessions = array();
@@ -14,6 +17,9 @@ $error['error'] = false;
 $languages = 'en';
 
 $courseID = addslashes(filter_input(INPUT_POST, 'courseID'));
+/*echo "<pre>";
+	print_r('CourseID:'.$_POST["courseID"]);
+echo "</pre>";*/
 $course = $courseMgr -> getCourse($languages, $courseID);
 $prerequisites = explode(',', $course['prerequisite']);
 if($prerequisites[0] !== 'No'){
@@ -25,8 +31,8 @@ if($prerequisites[0] !== 'No'){
 	}
 }
 
-$sessions = $sessionMgr -> getSessionListByCourse($languages, $courseID);
-
+$sessions = $sessionMgr -> getFutureSessionListByCourse($languages, $courseID);
+$response['student'] = $studentMgr -> getStudentByID($studentId);
 $response['course'] = $course;
 $response['sessions'] = $sessions;
 $response['prerequisites'] = $prerequisiteList;

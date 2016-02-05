@@ -11,7 +11,6 @@
 	<!-- Header -->
 	<?php
         include_once("./templates/header.php");
-        include_once("./register_course_individual.php");
     ?>
 
     <!-- Content -->
@@ -101,7 +100,7 @@
 <script src="./public_html/js/pingtan.js"></script>
 <script src="./public_html/js/auth.js"></script>
 <script src="./public_html/js/service.js"></script>
-<script src="./public_html/js/filter.js"></script>
+<!-- <script src="./public_html/js/filter.js"></script> -->
 </body>
 
 </html>

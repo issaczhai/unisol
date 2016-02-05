@@ -159,8 +159,8 @@
 <script src="./public_html/js/request.js"></script>
 <script src="./public_html/js/cookie.js"></script>
 <script src="./public_html/js/pingtan.js"></script>
-<script src="./public_html/js/auth.js"></script>
 <script src="./public_html/js/authValidation.js"></script>
+<script src="./public_html/js/auth.js"></script>
 <script src="./public_html/js/service.js"></script>
 <script src="./public_html/js/course_registration.js"></script>
 </body>

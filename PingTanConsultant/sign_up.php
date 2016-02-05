@@ -22,9 +22,7 @@
     				<h3>Welcome to PingTan Consultant</h3>
 		    		<!-- <form id="form-signUp" class="col-md-12" action="#"> -->
 		    		<section class="col-md-12 section-signUp">
-		    			<div id="errorMsgSignUp" class="col-md-12 form-login-row">
-		    				
-		    			</div>
+		    			<div id="errorMsgAuth" class="col-md-12 form-login-row"></div>
 		    			<div class="col-md-12 form-login-row">
 		    				<div class="col-md-3 col-padding-none">
 		    					<span>Register As: </span>
@@ -119,6 +117,7 @@
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+<script src="./public_html/js/pingtan.js"></script>
 <script src="./public_html/js/cookie.js"></script>
 <script src="./public_html/js/request.js"></script>
 <script src="./public_html/js/authValidation.js"></script>

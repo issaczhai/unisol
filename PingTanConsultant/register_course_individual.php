@@ -7,6 +7,9 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-md-12 col-padding-none form-individual-registration">
+                    <div id="error-msg" class="col-md-12">
+                      
+                    </div>
                     <input class="hidden-courseID" type="hidden">
                     <input class="hidden-sessionID" type="hidden">
                     <div class="col-md-6 form-login-row">
@@ -33,7 +36,7 @@
                     </div>
                     <div class="col-md-6 form-login-row">
                       <label for="duration">Total Hours:</label>
-                      <div class="col-md-8 col-padding-none duration">
+                      <div class="col-md-12 col-padding-none duration">
                         <span>40 Hours</span>
                       </div>
                     </div>
@@ -65,12 +68,14 @@
                       <input class="input-default input-occupation" type="text" name="occupation" placeholder="">
                     </div>
                     <h5 class="hd-prerequisite-msg">Please upload certificates for all prerequisites of this course before registration</h5>
-                    <div class="col-md-6 form-login-row file-upload-template">
-                      <label class="label-prerequisite" for="upload-prerequisite">Prerequisite</label>
-                      <input class="input-default input-prerequisite" type="file" name="upload-prerequisite">
+                    <div class="col-md-12 form-login-row file-upload-template">
+                      <h5 class="label-prerequisite">Prerequisite</h5>
+                      <div class="col-md-8">
+                        <input class="input-default" type="file">
+                      </div>
                     </div>
                 </div>
-            </div>
+            </div>  
         </div>
         <div class="modal-footer">
         <center>

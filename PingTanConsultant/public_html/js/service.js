@@ -12,8 +12,6 @@ var listAllCourses = function(result){
 					partTime = result[index].partTime;
 					fullTime = result[index].fullTime;
 					languageList = result[index].languages;// the language is string seperated by ','
-					console.log(partTime + ';' + fullTime);
-					console.log(languageList);
 					var courseThumbnail = cloneComponent('thumbnail-course-template', true, true);
 					createCourseThumbnail(courseThumbnail, name, courseID, description, fullTime, partTime, languageList, 'courses');
 
@@ -37,6 +35,7 @@ var listAllCourses = function(result){
 var render_course_detail = function(result){
 	var course = result.course,
 		sessions = result.sessions,
+		student = result.student,
 		cookie = new Cookie(),
 		destUrl = './course_detail.php?courseID=' + course.courseID + '&logBack=true',
 		prerequsites = result.prerequisites,
@@ -94,7 +93,7 @@ var render_course_detail = function(result){
 			$(prerequisite).append($(preLink));
 			$('.course-prerequisite').append($(prerequisite));
 			//populate prerequisite file upload inputs
-			renderFileUpload(element.coutseName);
+			renderFileUpload(element.courseName);
 		});	
 	}else{
 		var prerequisiteMsg = document.createElement('h5');
@@ -111,15 +110,16 @@ var render_course_detail = function(result){
 				languageExist = false,
 				language = element.languages,
 				_courseType = element.fulltime ? 'fullTime' : 'partTime',
-				fullTime = element.fulltime ? element.fulltime : "Not Available",
-				partTime = element.parttime ? element.parttime : "Not Available",
+				_typeValue = element.fulltime ? element.fulltime : element.parttime,
+				fullTime = element.fulltime ? element.fulltime : 'Not Available',
+				partTime = element.parttime ? element.parttime : 'Not Available',
 				classList = element.classlist.split(','),
 				vacancy = element.classlist === '' ? element.vacancy : (element.vacancy - classList.length);
 				
 				//set hidden sessionID input
 				$('.hidden-sessionID').val(element.sessionID);
 				
-				if(vacancy <= 0){
+				if(vacancy <= 0 || _typeValue === 'Not Available'){
 					btnEnrollment.addClass('disabled');
 				}
 				optionStartDate.value = element.startDate;
@@ -127,6 +127,8 @@ var render_course_detail = function(result){
 				optionStartDate.dataset.vacancy = vacancy;
 				optionStartDate.dataset.language = language;
 				optionStartDate.dataset.sessionID = element.sessionID;
+				optionStartDate.dataset.typeValue = _typeValue;
+				optionStartDate.dataset.courseType = _courseType;
 				optionStartDate.dataset.partTime = partTime;
 				optionStartDate.dataset.fullTime = fullTime;
 				selectStartDate.append($(optionStartDate));
@@ -135,11 +137,17 @@ var render_course_detail = function(result){
 				if(index === 0){
 					$(optionStartDate).css('display', 'block');
 					$('.vacancy span').text(vacancy === 0 ? 'Full house, please choose other session' : vacancy);
-					$('.dateTime span').text(fullTime);
+					$('.dateTime span').text(_typeValue);
 					$('option.option-fullTime').val('fullTime');
 					$('option.option-fullTime').data('time', fullTime);
 					$('option.option-partTime').val('partTime');
 					$('option.option-partTime').data('time', partTime);
+					if(_courseType === 'fullTime'){
+						$('.select-course-type').val('fullTime');
+					}else{
+						$('.select-course-type').val('partTime');
+					}
+
 				}
 				//populate the distinct languages of selected course
 				$('.select-languages option').each(function(){
@@ -161,20 +169,37 @@ var render_course_detail = function(result){
 				
 		});
 	}
+	/*** TO-DO: handle the course without any future session ***/
+
+	//Populate the student personal information in registration form
+	if(student){
+		populateStudentPersonalData(student);
+	}
 
 	// check the vacancy accroding to the start date selected by user
 	// set the start date of course registration form tally with user selection
 	bindEvent(selectStartDate, 'change', function(){
 		btnEnrollment.removeClass('disabled');
-		var vacancy = $(".select-start-date option:selected").data('vacancy');
+		var vacancy = $(".select-start-date option:selected").data('vacancy'),
+			_typeValue = $(".select-start-date option:selected").data('typeValue');
 		
 		$('.select-start-date').val($(this).val());
 		$('option.option-fullTime').data('time', $(".select-start-date option:selected").data('fullTime'));
 		$('option.option-partTime').data('time', $(".select-start-date option:selected").data('partTime'));
-		$('.select-course-type').val('fullTime');
-		$('.dateTime span').text($(".select-start-date option:selected").data('fullTime'));
+		if($(".select-start-date option:selected").data('courseType') === 'fullTime'){
+
+			$('.select-course-type').val('fullTime');
+			$('option.option-fullTime').data('startDate', $(this).val());
+			$('option.option-fullTime').data('language', $(this).val());
+
+		}else{
+
+			$('.select-course-type').val('partTime');
+			$('option.option-partTime').data('startDate', $(this).val());
+			$('option.option-fullTime').data('language', $(this).val());
+		}
 		$('.vacancy span').text(vacancy === 0 ? 'Full house, please choose other session' : vacancy);
-		if(vacancy <= 0){
+		if(vacancy <= 0 || _typeValue === 'Not Available'){
 			btnEnrollment.addClass('disabled');
 		}
 	});
@@ -183,6 +208,7 @@ var render_course_detail = function(result){
 	bindEvent(selectLanguage, 'change', function(){
 		var selectLanguage = $(this).val(),
 			firstStart = 0;
+		btnEnrollment.removeClass('disabled');
 		$('.select-languages').val(selectLanguage);
 		$('.select-start-date option').each(function(){
 			if($(this).data('language') === selectLanguage){
@@ -192,8 +218,18 @@ var render_course_detail = function(result){
 					$('.vacancy span').text($(this).data('vacancy'));
 					$('option.option-fullTime').data('time', $(this).data('fullTime'));
 					$('option.option-partTime').data('time', $(this).data('partTime'));
-					$('.dateTime span').text($(this).data('fullTime'));
-					$('.select-course-type').val('fullTime');
+					if($(this).data('courseType') === 'fullTime'){
+						$('.select-course-type').val('fullTime');
+						$('.dateTime span').text($(this).data('fullTime'));
+					}else{
+						$('.select-course-type').val('partTime');
+						$('.dateTime span').text($(this).data('partTime'));
+					}
+					
+					if($(this).data('typeValue') === 'Not Available'){
+						btnEnrollment.addClass('disabled');
+					}
+					
 					firstStart ++;
 				}
 				$(this).css('display', 'block');
@@ -205,11 +241,16 @@ var render_course_detail = function(result){
 
 	//set the language of course registration form tally with the user selection
 	bindEvent($('.select-course-type'), 'change', function(){
+		btnEnrollment.removeClass('disabled');
 		$('.select-course-type').val($(this).val());
 		//$(this).val($('.select-course-type option:selected').data('type'));
 		var _type = $(this).val() === 'fullTime' ? 'fullTime' : 'partTime',
 			option = 'option.option-' + _type;
 		$('.dateTime span').text($(this).children(option).data('time'));
+		console.log($('.dataTime span').text());
+		if($(this).children(option).data('time') === 'Not Available'){
+			btnEnrollment.addClass('disabled');
+		}
 	});
 
 };
@@ -250,8 +291,9 @@ var render_student_profile = function(result){
 		c,
 		callback;
 
-	var service = window.location.pathname.split(/\.|\//)[2];
+	var service = window.location.pathname.split(/\.|\//)[window.location.pathname.split(/\.|\//).length - 2];
 	c = new Cookie();
+	formData = new FormData();
 	// Page Rendering Services
 	switch(service){
 		case "courses": 
@@ -279,13 +321,13 @@ var render_student_profile = function(result){
 			data = buildXHRData(postData);
 			baseUrl = './service_student_profile.php';
 			callback = render_student_profile;
+			
 			break;
 
 		default : callback = null;
 	}
 
-	xhr = new Request(baseUrl, data, 'POST', callback);
-
+	xhr = new Request(false, baseUrl, data, 'POST', callback);
 	
 
 })();

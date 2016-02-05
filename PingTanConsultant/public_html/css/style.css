@@ -68,7 +68,7 @@ a.disabled{
 }
 .block-ellipsis {
   display: block;
-  display: -webkit-box;
+  /*display: -webkit-box;*/
   max-width: 100%;
   color: rgb(230, 183, 0);
   height: 43px;
@@ -146,7 +146,7 @@ a.disabled{
 }
 .block-text-subscribtion{
 	display: block;
-    display: -webkit-box;
+    /*display: -webkit-box;*/
     max-width: 100%;
     height: 43px;
     margin: 0 auto;

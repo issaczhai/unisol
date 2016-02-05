@@ -22,6 +22,7 @@
 				data,
 				xhr,
 				response,
+				type = 'auth',
 				destUrl = actionUrl;
 
 		    if($("input[name*='individual']").prop('checked') === true){
@@ -34,8 +35,8 @@
 		    	postData.rePasswordEncrypt = encryptAES($("input[name*='rePassword']").val().trim());
 		    	/*$("input[name*='rePassword']").val();*/
 
-		    	validation.addTest(checkEmail(postData.email), "Please enter the valid email address");
-		    	validation.addTest(comparePassword($("input[name*='password']").val().trim(), $("input[name*='rePassword']").val().trim()), "Please re-enter the same password");
+		    	validation.addTest(type, checkEmail(postData.email), "Please enter the valid email address");
+		    	validation.addTest(type, comparePassword($("input[name*='password']").val().trim(), $("input[name*='rePassword']").val().trim()), "Please re-enter the same password");
 
 		    	validationStatus = validation.triggerValidation();
 
@@ -59,7 +60,7 @@
 		    data = buildXHRData(postData);
 
 		    if(validationStatus){
-			    xhr = new Request(urlBase, data, 'POST', function (result) {
+			    xhr = new Request(false, urlBase, data, 'POST', function (result) {
 			    	console.log(result.student);
 			    	if(result.error){
 			    		clearErrorMsg();
@@ -98,17 +99,18 @@
 				xhr,
 				response,
 				destUrl = actionUrl,
+				type = 'auth',
 				email = $("input[name*='email']").val().trim(),
 				password = $("input[name*='password']").val().trim();
 
-			validation.addTest(checkEmptyInput(email), 'Please enter the email address!');
-			validation.addTest(checkEmptyInput(password), 'Please enter the password!');
+			validation.addTest(type, checkEmptyInput(email), 'Please enter the email address!');
+			validation.addTest(type, checkEmptyInput(password), 'Please enter the password!');
 			validationStatus = validation.triggerValidation();
 			postData.email = email;
 			postData.password = password;
 			data = buildXHRData(postData);
 			if(validationStatus){
-				xhr = new Request(urlBase, data, 'POST', function(result){
+				xhr = new Request(false, urlBase, data, 'POST', function(result){
 					
 					if(result.error){
 						console.log(result.pwd);

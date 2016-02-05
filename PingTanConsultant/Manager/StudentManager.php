@@ -123,9 +123,11 @@ class StudentManager {
             $student['userStatus'] = $userStatus;
         }
         $ConnectionManager->closeConnection($stmt, $conn);
-        $ssManager = new StudentStatusManager();
-        $studentstatus = $ssManager->getStudentStatus($student['studentID']);
-        $student['status'] = $studentstatus;
+        if($student != []){
+            $ssManager = new StudentStatusManager();
+            $studentstatus = $ssManager->getStudentStatus($student['studentID']);
+            $student['status'] = $studentstatus;
+        }
         return $student;
     }
     

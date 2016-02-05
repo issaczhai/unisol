@@ -14,7 +14,18 @@ Validation.prototype.triggerValidation = function(){
 
 	for(index = 0; index < tasks.length; index++){
 		if(!tasks[index].test){
-			showError(tasks[index].errorMsg);
+			console.log(tasks[index].type);
+			switch (tasks[index].type) {
+				case 'auth':
+					showError(tasks[index].errorMsg);
+					break;
+				case 'individual_registration':
+					showRegistrationError(tasks[index].errorMsg);
+					break;
+				default:
+					// statements_def
+					break;
+			}
 			status = false;
 		}
 	} 
@@ -22,14 +33,14 @@ Validation.prototype.triggerValidation = function(){
 	return status;
 };
 
-Validation.prototype.addTest = function(task, msg){
-	this.tasks.push({test : task, errorMsg : msg});
+Validation.prototype.addTest = function(type, task, msg){
+	this.tasks.push({type : type, test : task, errorMsg : msg});
 };
 
 // Test Cases
 
 var comparePassword = function(pwd1, pwd2){
-	console.log(pwd1 + ',' + pwd2 + ',' + pwd1 === pwd2);
+	
 	return pwd1 === pwd2;
 };
 
@@ -40,4 +51,29 @@ var checkEmail = function(email){
 
 var checkEmptyInput = function(input){
 	return input.length !== 0;
+};
+
+// Individual Course Registration Test Cases
+var checkCourseAvailability = function(time){
+	return time !== 'Not Available';
+};
+
+var checkDOB = function(dob){
+	return dob.length !== 0;
+};
+
+var checkNationality = function(nationality){
+	return nationality.length !== 0;
+};
+
+var checkOccupation = function(occupation){
+	return occupation.length !== 0;
+};
+
+var checkContactNo = function(contactNo){
+	return contactNo.length !== 0;
+};
+
+var checkNRIC = function(nric){
+	return nric.length !== 0;
 };

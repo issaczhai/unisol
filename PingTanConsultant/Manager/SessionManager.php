@@ -100,9 +100,38 @@ class SessionManager {
         return $sessionList;
     }
 
+    function getFutureSessionListByCourse($lang,$courseID){
+        $sessionList=[];
+        $dateTime = new DateTime();
+        $date = $dateTime->format('Y-m-d H:i:s');
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM session_".$lang." WHERE courseID = ? AND startDate > ?");
+        $stmt->bind_param("ss", $courseID, $date);
+        $stmt->execute();
+        $stmt->bind_result($courseID,$sessionID,$fulltime,$parttime, $startDate, $endDate, $venue, $vacancy, $languages, $classlist);
+        while ($stmt->fetch())
+        {   
+            $session = [];
+            $session['courseID'] = $courseID;
+            $session['sessionID'] = $sessionID;
+            $session['fulltime'] = $fulltime;
+            $session['parttime'] = $parttime;
+            $session['startDate'] = $startDate;
+            $session['endDate'] = $endDate;
+            $session['venue'] = $venue;
+            $session['vacancy'] = $vacancy;
+            $session['languages'] = $languages;
+            $session['classlist'] = $classlist;
+            array_push($sessionList, $session);
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $sessionList;
+    }
+
     function getCompletedSessions($lang){
-        $date = new DateTime();
-        $date = $date->format('Y-m-d H:i:s');
+        $dateTime = new DateTime();
+        $date = $dateTime->format('Y-m-d H:i:s');
         $sessionList=[];
         $courseMgr = new CourseManager();
         $ConnectionManager = new ConnectionManager();

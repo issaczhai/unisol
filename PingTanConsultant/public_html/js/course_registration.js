@@ -13,8 +13,8 @@
 		renderRegistrationForm: function(){
 			this.userType = cookie.getCookie('userType');
 			console.log(this.userType);
+			$('#error-msg').find('h5').remove();
 			if(this.userType === 'student'){
-
 				$('#register_individual_modal').modal('show');
 
 			}else if(this.userType === 'company'){
@@ -27,10 +27,6 @@
 
 	var Registration = {
 
-		fileJsonArr : [],
-
-		fileCounter : 0,
-
 		init : function(){
 			this.btnIndividualRegister = $('.btn-individual-register');
 			this.btnCompanyRegister = $('.btn-company-register');
@@ -40,58 +36,57 @@
 		bindEvent : function(){
 			this.btnIndividualRegister.on('click', this.register);
 			this.btnCompanyRegister.on('click', this.register);
-			$('.input-prerequisite').on('change', function(){
-				var file = this.files[0],
-					fileJson = {},
-					fileName = file.name;
-
-				fileJson.fileName = file;
-				Registration.fileJsonArr[Registration.fileCounter] = fileJson.fileName.name;
-
-				Registration.fileCounter ++;
-			});
 		},
 
 		register : function(){
 			var type = $(this).hasClass('btn-individual-register') ? 'individual' : 'company',
 				baseUrl = type === 'individual' ? './process_course_registration_individual.php' : 
 										"./process_course_registration_company.php",
-				postData = {}, data, xhr,
+				postData = {}, data, xhr, index,
+				formData = new FormData(),
 				validation = new Validation(),
+				fileList = [],
 				validationStatus = true;
+
+				//Registration.formData = new FormData();
+				// Register as individual student
 				if(type === 'individual'){
 				// construct POST request parameters
-					postData.courseID = $('.hidden-courseID').val();
-					postData.sessionID = $('.hidden-sessionID').val();
-				    postData.courseType = $('.select-course-type option:selected').val();
-				    postData.time = $('.parameter-dateTime span').text();
-				    postData.language = $('.select-languages option:selected').val();
-				    postData.startDate = $('.select-start-date option:selected').val();
-					postData.nric = $('.input-nric').val();
-					postData.nationality = $('.input-nationality').val();
-					postData.contactNum = $('.input-contactNum').val();
-					postData.dob = $('.input-dob').val();
-					postData.occupation = $('.input-occupation').val();
-					/*$('.input-prerequisite').each(function(index){
-						console.log($(this).get(0).files.length);
-						var file = this.files[0],
-							fileJson = {},
-							fileName = file.name;
+					$('input.input-prerequisite').each(function(){
+						var file = $(this).get(0).files[0];
+						
+						formData.append($(this).data('file'), file, file.name);
+					});
+					
+					formData.append('courseID', $('.hidden-courseID').val());
+					formData.append('sessionID', $('.hidden-sessionID').val());
+					formData.append('courseType', $('.select-course-type option:selected').val());
+					formData.append('time', $('.parameter-dateTime span').text());
+					formData.append('language', $('.select-languages option:selected').val());
+					formData.append('startDate', $('.select-start-date option:selected').val());
+					formData.append('nric', $('.input-nric').val());
+					formData.append('nationality', $('.input-nationality').val());
+					formData.append('contactNum', $('.input-contactNum').val());
+					formData.append('dob', $('.input-dob').val());
+					formData.append('occupation', $('.input-occupation').val());
+					//Front End Validation
+					validation.addTest('individual_registration', checkDOB($('.input-dob').val()), '* Please fill in date of birth');
+					validation.addTest('individual_registration', checkNationality($('.input-nationality').val()), '* Please fill in nationality');
+					validation.addTest('individual_registration', checkOccupation($('.input-occupation').val()), '* Please fill in occupation');
+					validation.addTest('individual_registration', checkNRIC($('.input-nric').val()), '* Please fill in date of NRIC or passport number');
+					validation.addTest('individual_registration', checkContactNo($('.input-contactNum').val()), '* Please fill in contact number');
 
-						fileJson.fileName = file;
-						fileJsonArr[index] = fileJson;
-					});*/
-					postData.fileList = Registration.fileJsonArr;
-					validation.addTest();
 					validationStatus = validation.triggerValidation();
-					data = buildXHRData(postData);
-					console.log(data);
-					/*if(validationStatus){
-						xhr = new Request(urlBase, data, 'POST', function(result){
+					//data = buildXHRData(postData);
+					//console.log(formData);
+					if(validationStatus){
+						//upload the file to server
+						
+
+						xhr = new Request(true, baseUrl, formData, 'POST', function(result){
 
 						});	
 					}
-					*/
 
 				}else if(type === 'company'){
 
@@ -116,4 +111,11 @@ var addFile = function(counter, array){
 	array[fileCounter] = fileJson;
 
 	counter ++;
+};
+
+var showRegistrationError = function(msg){
+	var errorMsg = document.createElement('h5');
+	$(errorMsg).addClass('red-default');
+	$(errorMsg).text(msg);
+	$('#error-msg').append($(errorMsg));
 };

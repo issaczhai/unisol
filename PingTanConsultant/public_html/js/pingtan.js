@@ -108,7 +108,16 @@ var renderProfileThumbnail = function(array, row, template){
 
 var renderFileUpload = function(prerequisite){
 	var upload = cloneComponent('file-upload-template', true, true);
-	upload.find('label-prerequisite').text(prerequisite);
-	upload.find('input').attr('id', 'file' + prerequisite);
+	upload.find('h5.label-prerequisite').text(prerequisite);
+	upload.find('input.input-default').data('file', 'file' + prerequisite);
+	upload.find('input.input-default').addClass('input-prerequisite');
 	$('.form-individual-registration').append(upload);
+};
+
+var populateStudentPersonalData = function(student){
+	if (student.NRIC && student.NRIC !== 'null') $('input.input-nric').val(student.NRIC);
+	if (student.nationality && student.nationality !== 'null') $('input.input-nationality').val(student.nationality);
+	if (student.contactNo && student.contactNo !== 'null') $('input.input-contactNum').val(student.contactNo);
+	if (student.occupation && student.occupation !== 'null') $('input.input-occupation').val(student.occupation);
+	if (student.dateOfBirth && student.dateOfBirth !== '0000-00-00') $('input.input-dob').val(student.dateOfBirth);
 };
