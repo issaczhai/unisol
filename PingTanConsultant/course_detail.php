@@ -13,7 +13,6 @@
         include_once("./templates/header.php");
         include_once("./register_course_individual.php");
     ?>
-
     <!-- Content -->
 	    <div class="container-fluid course-detail-content">
 	    	<div class="row row-course-detail">
@@ -122,7 +121,13 @@
 						</div>
 	    			</div>
 	    		</div>
+	    		<!-- Warning Msg When No Future Session is available -->
+	    		<div class="col-md-5 warning-no-session">
+	    			<h5>Sorry, there's no upcoming sessions for this course yet.</h5>
+	    		</div>
 	    	</div>
+
+
 
 	    	<div class="row">
 	    		<div class="col-md-6 col-md-offset-1 course-info">

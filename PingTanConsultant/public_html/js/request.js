@@ -14,10 +14,10 @@ var Request = function (file, baseUrl, data, method, callback) {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.responseText);
             var result = JSON.parse(xhr.responseText);
             callback(result);
         }else{
+            console.log("status: " + xhr.statusText);
             // print respective error msg
         }
     };

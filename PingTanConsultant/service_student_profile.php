@@ -33,8 +33,9 @@ for($i = 0; $i < sizeof($sessionList); $i++){
 	$sessionRecord['courseID'] = $course['courseID'];
 	$sessionRecord['price'] = $course['price'];
 	$sessionRecord['description'] = $course['description'];
-	$sessionRecord['type'] = $eachPair['type'] === 'fulltime' ? $session['fulltime'] : $session['parttime'];
-	$sessionRecord['language'] = $eachPair['language'];
+	$sessionRecord['type'] = empty($session['fulltime']) ? $session['parttime'] : $session['fulltime'];
+	$sessionRecord['language'] = $session['languages'];
+	$sessionRecord['startDate'] = $session['startDate'];
 
 	switch($eachPair['status']){
 		case 'upcoming':

@@ -12,7 +12,6 @@
 
 		renderRegistrationForm: function(){
 			this.userType = cookie.getCookie('userType');
-			console.log(this.userType);
 			$('#error-msg').find('h5').remove();
 			if(this.userType === 'student'){
 				$('#register_individual_modal').modal('show');
@@ -46,15 +45,20 @@
 				formData = new FormData(),
 				validation = new Validation(),
 				fileList = [],
-				validationStatus = true;
+				validationStatus = true,
+				numOfUplodingFile = 0;
 
-				//Registration.formData = new FormData();
+				// clear all error Msg
+				$('#error-msg').find('h5').remove();
+
 				// Register as individual student
 				if(type === 'individual'){
 				// construct POST request parameters
 					$('input.input-prerequisite').each(function(){
 						var file = $(this).get(0).files[0];
-						
+						if (file === undefined) return false;
+
+						numOfUplodingFile ++;	
 						formData.append($(this).data('file'), file, file.name);
 					});
 					
@@ -69,22 +73,24 @@
 					formData.append('contactNum', $('.input-contactNum').val());
 					formData.append('dob', $('.input-dob').val());
 					formData.append('occupation', $('.input-occupation').val());
+
 					//Front End Validation
 					validation.addTest('individual_registration', checkDOB($('.input-dob').val()), '* Please fill in date of birth');
 					validation.addTest('individual_registration', checkNationality($('.input-nationality').val()), '* Please fill in nationality');
 					validation.addTest('individual_registration', checkOccupation($('.input-occupation').val()), '* Please fill in occupation');
 					validation.addTest('individual_registration', checkNRIC($('.input-nric').val()), '* Please fill in date of NRIC or passport number');
 					validation.addTest('individual_registration', checkContactNo($('.input-contactNum').val()), '* Please fill in contact number');
-
+					validation.addTest('individual_registration', checkNumOfPrerequisitesUpload($('.input-prerequisite').size(), numOfUplodingFile), '* Please upload all prerequisite certifications required by this course');
+					
 					validationStatus = validation.triggerValidation();
-					//data = buildXHRData(postData);
-					//console.log(formData);
+
 					if(validationStatus){
 						//upload the file to server
-						
-
 						xhr = new Request(true, baseUrl, formData, 'POST', function(result){
-
+							console.log(result);
+							if(result.error.length === 0) $('#register_individual_modal').modal('hide');
+							// TO-DO: direct the user to payment page
+							
 						});	
 					}
 

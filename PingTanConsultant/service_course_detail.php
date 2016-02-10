@@ -17,9 +17,7 @@ $error['error'] = false;
 $languages = 'en';
 
 $courseID = addslashes(filter_input(INPUT_POST, 'courseID'));
-/*echo "<pre>";
-	print_r('CourseID:'.$_POST["courseID"]);
-echo "</pre>";*/
+
 $course = $courseMgr -> getCourse($languages, $courseID);
 $prerequisites = explode(',', $course['prerequisite']);
 if($prerequisites[0] !== 'No'){

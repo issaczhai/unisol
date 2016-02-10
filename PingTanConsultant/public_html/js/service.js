@@ -168,6 +168,9 @@ var render_course_detail = function(result){
 				}
 				
 		});
+	}else{
+		$('.warning-no-session').css('display', 'block');
+		btnEnrollment.addClass('disabled');
 	}
 	/*** TO-DO: handle the course without any future session ***/
 
@@ -281,6 +284,7 @@ var render_student_profile = function(result){
 	renderProfileThumbnail(taken, '.row-taken', 'thumbnail-taken-template');
 
 };
+
 var listStudentApplication = function(result){
     console.log(result);
     for (var i = 0; i < result.length; i++) { 
@@ -297,6 +301,7 @@ var listStudentApplication = function(result){
         $('.student-application-list').append(row);
     }
 };
+
 (function(){
 	var xhr,
 		baseUrl,
@@ -336,14 +341,15 @@ var listStudentApplication = function(result){
 			data = buildXHRData(postData);
 			baseUrl = './service_student_profile.php';
 			callback = render_student_profile;
+			
 			break;
-                
-                case "application": 
+
+		case "application": 
 			baseUrl = '../service_application.php';
                         postData.operation = 'retrievePendingList';
 			data = buildXHRData(postData);
 			callback = listStudentApplication;
-			
+
 			break;
 
 		default : callback = null;

@@ -241,7 +241,7 @@ class SessionManager {
 
         return $languageList;
     }
-    
+
     function updateVacancy($lang, $courseID,$sessionID,$changeQuantity){
         $change = abs($changeQuantity);
         $ConnectionManager = new ConnectionManager();

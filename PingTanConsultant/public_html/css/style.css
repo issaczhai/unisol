@@ -477,6 +477,9 @@ a.disabled{
 .prerequisite a{
 	text-decoration: none;
 }
+.warning-no-session{
+	display: none;
+}
 
 /****** STUDENT PROFILE PAGE ******/
 .content-profile{

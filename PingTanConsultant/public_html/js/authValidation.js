@@ -77,3 +77,7 @@ var checkContactNo = function(contactNo){
 var checkNRIC = function(nric){
 	return nric.length !== 0;
 };
+
+var checkNumOfPrerequisitesUpload = function(require, actual){
+	return require === actual;
+};

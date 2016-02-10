@@ -12,6 +12,16 @@
  * @author User
  */
 class StudentStatusManager {
+
+    function addStudentStatus($studentID, $courseID, $sessionID, $certificatePath, $status){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("INSERT INTO studentstatus (studentID, courseID, sessionID, certificate, status) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $studentID,$courseID,$sessionID,$certificatePath,$status);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+
     //put your code herefunction getCharge(){
     function getStudentStatus($studentID){
         $ConnectionManager = new ConnectionManager();
@@ -74,7 +84,6 @@ class StudentStatusManager {
         return $result;
     }
     
-    
     function updateStudentStatus($studentID,$courseID,$sessionID,$changetostatus){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
@@ -101,7 +110,6 @@ class StudentStatusManager {
         $ConnectionManager->closeConnection($stmt, $conn);
         return $certificateList;
     }
-    
 //    function truncate(){
 //        $ConnectionManager = new ConnectionManager();
 //        $conn = $ConnectionManager->getConnection();
