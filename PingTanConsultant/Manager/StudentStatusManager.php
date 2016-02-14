@@ -110,6 +110,16 @@ class StudentStatusManager {
         $ConnectionManager->closeConnection($stmt, $conn);
         return $certificateList;
     }
+    
+    function removeRecord($studentid,$courseid,$sessionid){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("DELETE FROM studentstatus WHERE studentID = ? AND courseID = ? AND sessionID = ?");
+        $stmt->bind_param("sss", $studentid,$courseid,$sessionid);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
 //    function truncate(){
 //        $ConnectionManager = new ConnectionManager();
 //        $conn = $ConnectionManager->getConnection();

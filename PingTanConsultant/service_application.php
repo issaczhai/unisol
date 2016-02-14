@@ -5,6 +5,7 @@ include_once("./Manager/StudentStatusManager.php");
 include_once("./Manager/SessionManager.php");
 include_once("./Manager/StudentManager.php");
 include_once("./Manager/CourseManager.php");
+require_once "./email.php";
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -42,10 +43,26 @@ if($operation === 'retrievePendingList'){
         header("Location: ./admin/application.php");
     } else if (isset($_POST['reject'])) {
         //reject student's application
+        $studentid = filter_input(INPUT_POST, 'studentid');
+        $courseid = filter_input(INPUT_POST, 'courseid');
+        $sessionid = filter_input(INPUT_POST, 'sessionid');
         
-        
+        /*//Delete aplication record from studentstatus table
+        $statusMgr->removeRecord($studentid, $courseid, $sessionid);
         //SEND NOTIFICATION EMAIL
+        // Send email to inform student for rejection
+	$subject = 'Reject Class Registration <'.$courseid.' '.$sessionid.'>';
+	$sender = 'jackyfeng1218@gmail.com';
+	$receiver = $studentMgr->getEmail($studentid);
+	$replyTo = 'jackyfeng1218@gmail.com';
+	$linkAction = 'localhost/PingTanConsultant/admin/index.php';
+	$email = new Email($subject, $sender, $receiver, $replyTo, $linkAction);
+	// TO-DO: need Async to send email
+	$email -> initEmailBody($subject);
+	// set flag true means sending email using SMTP
+        $sendstatus = $email -> send(true);*/
         
+        header("Location: ./admin/application.php");
     }
 }elseif ($operation === 'retrieveIndividualApplication'){
     $studentid = filter_input(INPUT_POST, 'studentid');
