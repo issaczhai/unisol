@@ -129,6 +129,7 @@ $statusMgr = new StudentStatusManager();
                             
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th> #</th>
                                     <th> Student ID</th>
                                     <th> Course ID</th>
@@ -139,6 +140,7 @@ $statusMgr = new StudentStatusManager();
                             </thead>
                             <tbody class="student-application-list">
                                 <tr class="student-application-row" style="display:none">
+                                    <td><input type="checkbox" class="input-checkbox" value=""></td>
                                     <td class="row-count"> 1</td>
                                     <td class="row-studentid"> S147</td>
                                     <td class="row-courseid"> LAN101</td>
@@ -148,9 +150,9 @@ $statusMgr = new StudentStatusManager();
                                         <button class="btn btn-default btn-xs btn-view-application" data-toggle="modal" data-target="#viewapplicationModal">View Application</button>
                                     </td>
                                 </tr>
-                                
                             </tbody>
                         </table>
+                        <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#batchEnrollModal">Batch Enroll</button>      
                     </div><!-- /content-panel -->
                 </div><!-- /col-md-12 -->
             </div><!-- /row -->

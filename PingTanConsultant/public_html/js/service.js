@@ -289,6 +289,8 @@ var listStudentApplication = function(result){
     console.log(result);
     for (var i = 0; i < result.length; i++) { 
         var row = cloneComponent('student-application-row', true, true);
+        
+        row.find('.input-checkbox').val(result[i].studentID+','+result[i].courseID+','+result[i].sessionID);
         row.find('.row-count').text(i+1);
         row.find('.row-studentid').text(result[i].studentID);
         row.find('.row-courseid').text(result[i].courseID);

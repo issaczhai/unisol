@@ -11,7 +11,6 @@
         postData.sessionid = $(this).data("sessionid");
 	data = buildXHRData(postData);
         xhr = new Request(false,baseUrl, data, 'POST', function(result){
-            console.log(result);
             $('#studentid').val(result.student.studentID);
             $('.application-studentid').text(result.student.studentID);
             
@@ -63,6 +62,24 @@
         });
     });
     
+    $('.btn-batch-enroll').on('click',function(){
+        var application_array = [];
+        $('.input-checkbox:checked').each(function () {
+            var res = $(this).val().split(",");
+            application_array.push(res);
+        });
+        var xhr,
+            baseUrl,
+            data,
+            postData = {};
+        baseUrl = '../service_application.php';
+        postData.operation = 'batchEnroll';
+        postData.applications = JSON.stringify(application_array);
+	data = buildXHRData(postData);
+        xhr = new Request(false,baseUrl, data, 'POST', function(result){
+            window.location.reload();
+        });
+    });
     
 })();
 

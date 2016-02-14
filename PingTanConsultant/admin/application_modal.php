@@ -94,3 +94,24 @@
   </div>
 </div>
 </div>
+
+
+<div class="modal fade" id="batchEnrollModal" tabindex="-1" role="dialog" aria-labelledby="Add News" aria-hidden="true" style="display: none;">
+<div class="modal-dialog">
+  <div class="modal-content">
+      
+    <div class="modal-body">
+        <fieldset>
+            <!-- Text input-->
+            <div class="row">
+                <p class="col-sm-12" style="font-weight: bold">Enroll the selected students into respective class?</p>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary btn-batch-enroll">Confirm</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>

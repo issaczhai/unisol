@@ -59,6 +59,17 @@ if($operation === 'retrievePendingList'){
     $response['session'] = $session;
     $response['student'] = $student;
     $response['certificate'] = $certs;
+}elseif($operation === 'batchEnroll'){
+    $applicationsStr = filter_input(INPUT_POST, 'applications');
+    $applications = json_decode($applicationsStr);
+    foreach($applications as $application){
+        $studentid = $application[0];
+        $courseid = $application[1];
+        $sessionid = $application[2];
+        $statusMgr->updateStudentStatus($studentid, $courseid, $sessionid, "upcoming");
+        $sessionMgr->updateVacancy($lang, $courseid, $sessionid, -1);
+        $sessionMgr->addToClassList($lang, $courseid, $sessionid, $studentid);
+    }
 }
 
 echo json_encode($response);
