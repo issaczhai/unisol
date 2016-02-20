@@ -17,9 +17,17 @@
 				$('#register_individual_modal').modal('show');
 
 			}else if(this.userType === 'company'){
+				var _courseID = $_GET('courseID'),
+					_startDate = $('.select-start-date option:selected').val(),
+					_courseType = $('.select-course-type option:selected').val(),
+					_language = $('.select-languages option:selected').val(),
+					_dateTime = $('.parameter-dateTime span').text(),
+					_selectSessionID = $('.hidden-sessionID').val();
+					_duration = $('.duration span').text();
 
-				window.location('./register_course_company.php');
-				
+				window.location = './register_course_company.php?courseID=' + _courseID + '&startDate=' +
+					_startDate + '&courseType=' + _courseType + '&language=' + _language + '&dateTime=' +
+					_dateTime + '&duration=' + _duration + '&sessionID=' + _selectSessionID;
 			}
 		}
 	};
@@ -28,7 +36,7 @@
 
 		init : function(){
 			this.btnIndividualRegister = $('.btn-individual-register');
-			this.btnCompanyRegister = $('.btn-company-register');
+			this.btnCompanyRegister = $('#btn-company-register');
 			this.bindEvent();
 		},
 
@@ -46,7 +54,9 @@
 				validation = new Validation(),
 				fileList = [],
 				validationStatus = true,
-				numOfUplodingFile = 0;
+				numOfUplodingFile = 0,
+				participantArr = [],
+				jsonParticipantList;
 
 				// clear all error Msg
 				$('#error-msg').find('h5').remove();
@@ -63,7 +73,7 @@
 					});
 					
 					formData.append('courseID', $('.hidden-courseID').val());
-					formData.append('sessionID', $('.hidden-sessionID').val());
+					formData.append('sessionID', $('.select-start-date option:selected').data('sessionID'));
 					formData.append('courseType', $('.select-course-type option:selected').val());
 					formData.append('time', $('.parameter-dateTime span').text());
 					formData.append('language', $('.select-languages option:selected').val());
@@ -87,7 +97,7 @@
 					if(validationStatus){
 						//upload the file to server
 						xhr = new Request(true, baseUrl, formData, 'POST', function(result){
-							console.log(result);
+							
 							if(result.error.length === 0) $('#register_individual_modal').modal('hide');
 							// TO-DO: direct the user to payment page
 							
@@ -95,7 +105,52 @@
 					}
 
 				}else if(type === 'company'){
+					formData.append('courseID', $('.hidden-courseID').val());
+					formData.append('sessionID', $('.select-start-date option:selected').data('sessionID'));
+					formData.append('courseType', $('.select-course-type option:selected').val());
+					formData.append('dateTime', $('.parameter-dateTime span').text());
+					formData.append('language', $('.select-languages option:selected').val());
+					formData.append('startDate', $('.select-start-date option:selected').val());
 
+					$('.participant').each(function(index, element) {
+						var participant = {},
+							_nric = $(this).find("input[name='ic']").val(),
+							_firstName = $(this).find("input[name='firstName']").val(),
+							_lastName = $(this).find("input[name='lastName']").val(),
+							_nationality = $(this).find("input[name='nationality']").val(),
+							_contact = $(this).find("input[name='contact']").val(),
+							_email = $(this).find("input[name='email']").val(),
+							_dob = $(this).find("input[name='dob']").val(),
+							_occupation = $(this).find("input[name='occupation']").val();
+
+						participant.nric = _nric;
+						participant.firstName = _firstName;
+						participant.lastName = _lastName;
+						participant.nationality = _nationality;
+						participant.contact = _contact;
+						participant.email = _email;
+						participant.dob = _dob;
+						participant.occupation = _occupation;
+						participantArr.push(participant);
+						jsonParticipantList = JSON.stringify(participantArr);
+
+						$(this).find('input.input-prerequisite').each(function(){
+							var file = $(this).get(0).files[0],
+								prerequisiteName = $(this).data('file'),
+								username = _lastName + _firstName;
+							if (file === undefined) return false;
+
+							formData.append(prerequisiteName + '_' + username, file, file.name);
+						});
+
+					});
+
+					formData.append('jsonParticipantList', jsonParticipantList);
+
+					xhr = new Request(true, baseUrl, formData, 'POST', function(result){
+							
+						
+					});	
 				}
 
 		}

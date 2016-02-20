@@ -106,12 +106,12 @@ var renderProfileThumbnail = function(array, row, template){
 	}
 };
 
-var renderFileUpload = function(prerequisite){
+var renderFileUpload = function(prerequisite, parent){
 	var upload = cloneComponent('file-upload-template', true, true);
 	upload.find('h5.label-prerequisite').text(prerequisite);
 	upload.find('input.input-default').data('file', 'file' + prerequisite);
 	upload.find('input.input-default').addClass('input-prerequisite');
-	$('.form-individual-registration').append(upload);
+	parent.append(upload);
 };
 
 var populateStudentPersonalData = function(student){

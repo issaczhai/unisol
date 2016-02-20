@@ -58,6 +58,29 @@ class CompanyManager {
         return $company;
     }
 
+    function getCompanyByRegID($registrationID){
+        $company = [];
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM company WHERE registrationID=?");
+        $stmt->bind_param("s", $registrationID);
+        $stmt->execute();
+        $stmt->bind_result($companyID, $username, $password, $address, $contactPersonName,$contactPersonEmail,$contactPersonTel, $contactPersonFax, $registrationID);
+        while ($stmt->fetch())
+        {   $company['companyID'] = $companyID;
+            $company['username'] = $username;
+            $company['password'] = $password;
+            $company['address'] = $address;
+            $company['contactPersonName'] = $contactPersonName;
+            $company['contactPersonEmail'] = $contactPersonEmail;
+            $company['contactPersonTel'] = $contactPersonTel;
+            $company['contactPersonFax'] = $contactPersonFax;
+            $company['registrationID'] = $registrationID;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $company;
+    }
+
      function getCompanyContact($companyID){
         $contact = [];
         $ConnectionManager = new ConnectionManager();
@@ -132,6 +155,22 @@ class CompanyManager {
         return $company_password;
     }
     
+    function getPasswordByCompanyID($companyID){
+        $company_password = null;
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT password FROM company WHERE companyID=?");
+        $stmt->bind_param("s", $companyID);
+        $stmt->execute();
+        $stmt->bind_result($password);
+        while ($stmt->fetch())
+        {   
+            $company_password = $password;
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $company_password;
+    }
+
     function getCompanyList(){
         $company_arr = array();
         $ConnectionMgr = new ConnectionManager();

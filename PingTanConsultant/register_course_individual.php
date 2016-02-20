@@ -11,7 +11,6 @@
                       
                     </div>
                     <input class="hidden-courseID" type="hidden">
-                    <input class="hidden-sessionID" type="hidden">
                     <div class="col-md-6 form-login-row">
                       <label for="course-type">Course Type:</label>
                       <div class="col-md-12 col-padding-none">

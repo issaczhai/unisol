@@ -59,7 +59,8 @@ a.disabled{
 	display: inline-block;
 }
 .thumbnail-course-template, .thumbnail-taking-template, .thumbnail-upcoming-template, 
-.thumbnail-taken-template, .file-upload-template, .hd-prerequisite-msg{
+.thumbnail-taken-template, .file-upload-template, .btn-remove-participant-template,
+.hd-prerequisite-msg{
 	display: none;
 }
 .img-course-thumbnail{
@@ -106,6 +107,11 @@ a.disabled{
 }
 .fa-times{
 	cursor: pointer;
+}
+.seperate{
+	margin-top: 1em;
+	padding-top: 1em;
+	border-top: 1px solid rgb(204, 204, 204);
 }
 
 /******  Overwrite Bootstrap Class ******/
@@ -442,7 +448,7 @@ a.disabled{
 .course-detail-img img{
 	width: 100%;
 }
-.btn-enrollment{
+#btn-company-register, .btn-enrollment{
 	font-size: 1.0625em;
     display: inline-block;
     padding: 0.74em 1.5em;
@@ -457,7 +463,7 @@ a.disabled{
     background-color: rgba(230, 183, 0, 1);
     width: 100%;
 }
-.btn-enrollment:hover{
+#btn-company-register:hover, .btn-enrollment:hover{
 	text-decoration: none;
 	color: #fff;
 	background-color: rgb(204, 162, 0);

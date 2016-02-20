@@ -54,6 +54,11 @@
 		    	postData.cEmail = $("input[name*='cEmail']").val().trim();
 		    	postData.cLTel = $("input[name*='cLTel']").val().trim();
 		    	postData.cLFax = $("input[name*='cLFax']").val().trim();
+
+		    	validation.addTest(type, checkEmail(postData.cEmail), "Please enter the valid email address");
+		    	validation.addTest(type, comparePassword($("input[name*='cPassword']").val().trim(), $("input[name*='reCPassword']").val().trim()), "Please re-enter the same password");
+
+		    	validationStatus = validation.triggerValidation();
 		    }
 		    
 
@@ -70,9 +75,18 @@
 
 			    	// registered successfully
 			    	var cookie = new Cookie();
-			    	cookie.setCookie('email', postData.email, "null", "null");
-			    	cookie.setCookie('username', postData.fName, "null", "null");
-			    	cookie.setCookie('studentID', result.student.studentID, "null", "null");
+			    	if(result.student){
+			    		cookie.setCookie('email', postData.email, "null", "null");
+			    		cookie.setCookie('username', postData.fName, "null", "null");
+			    		cookie.setCookie('studentID', result.student.studentID, "null", "null");
+			    		cookie.setCookie('userType', "student", "null", "null");
+			    	}else if(result.company){
+			    		cookie.setCookie('registrationID', postData.registrationId, "null", "null");
+			    		cookie.setCookie('username', postData.companyName, "null", "null");
+			    		cookie.setCookie('companyID', result.company.companyID, "null", "null");
+			    		cookie.setCookie('userType', "company", "null", "null");
+			    	}
+			    	
 			    	gotoPage(destUrl);	
 			    });
 			}
@@ -113,7 +127,6 @@
 				xhr = new Request(false, urlBase, data, 'POST', function(result){
 					
 					if(result.error){
-						console.log(result.pwd);
 						clearErrorMsg();
 						showError(result.errorMsg);
 						return;
@@ -121,11 +134,18 @@
 
 					// registered successfully
 			    	var cookie = new Cookie();
-			    	cookie.setCookie('email', email, "null", "null");
-			    	cookie.setCookie('username', result.username, "null", "null");
-			    	cookie.setCookie('userType', result.userType, "null", "null");
-			    	cookie.setCookie('studentID', result.studentID, "null", "null");
-
+			    	if(result.userType === 'student'){
+			    		cookie.setCookie('email', email, "null", "null");
+				    	cookie.setCookie('username', result.username, "null", "null");
+				    	cookie.setCookie('userType', result.userType, "null", "null");
+				    	cookie.setCookie('studentID', result.studentID, "null", "null");
+			    	}else if(result.userType === 'company'){
+			    		cookie.setCookie('registrationID', result.registrationID, "null", "null");
+			    		cookie.setCookie('username', result.username, "null", "null");
+			    		cookie.setCookie('companyID', result.companyID, "null", "null");
+			    		cookie.setCookie('userType', "company", "null", "null");
+			    	}
+			    	
 			    	gotoPage(destUrl);
 				});
 			}
@@ -149,6 +169,8 @@
 			c.deleteCookie('targetCourse');
 			c.deleteCookie('userType');
 			c.deleteCookie('studentID');
+			c.deleteCookie('companyID');
+			c.deleteCookie('registrationID');
 			gotoPage('./index.php');
 		}
 	};
