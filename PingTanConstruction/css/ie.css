@@ -1,0 +1,20 @@
+.btn span, .img1, .img3, .img5, .date, .a3>span {behavior:url(js/PIE.htc); position:relative;}
+
+.sf-menu ul{behavior:url(js/PIE.htc); position:absolute;}
+
+a.gal:hover img {
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=20);
+}
+
+.block_img2 {
+	margin: 2px 4px 23px 0;
+}
+
+
+#form .invalid .error-message, #form .empty .empty-message {
+	display: block;
+}
+
+#form .error-message, #form .empty-message {
+	display: none;
+}

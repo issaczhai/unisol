@@ -1,0 +1,98 @@
+.sf-menu{
+	float: right;
+}
+.sf-menu a{
+	text-transform: uppercase;
+	color: #fff;
+	text-decoration: none;
+}
+.sf-menu>li{
+	position: relative;
+	float: left;
+	margin: 0 1px;
+}
+.sf-menu>li>a{
+	margin-top: 72px;
+	text-shadow: 1px 1px 1px #bdbcbc;
+	position: relative;
+	font: 12px/18px 'Times new roman', sans-serif;
+	display: inline-block;
+	padding: 0 11px 25px;
+}
+.sf-menu>li>a:hover, .sf-menu>li.current>a{
+	color: #4b8094;
+	margin-top: 0px;
+	background: #fff;
+	padding-top: 72px;
+	-webkit-box-shadow: 0px 0px 3px 1px rgba(151, 149, 149, 0.5);  
+	box-shadow: 0px 0px 3px 1px rgba(151, 149, 149, 0.5);
+}
+.sf-menu ul li a{
+	font: 10px/34px 'Arial', sans-serif;
+}
+.sf-menu ul li{
+	text-align: left;
+}
+.sf-menu ul{
+	z-index: 1000;
+	position: absolute;
+	padding: 0 16px 23px 24px;
+	background-color: #91b5c3; 
+	top: 115px;
+	left: 0px;
+}
+.sf-menu ul li a:hover{
+	color: #000;
+}
+.sf-menu ul ul li a:hover{
+	color: #91b5c3;
+}
+.sf-menu ul ul{
+	left: 118px;
+	padding: 5px 20px 10px 25px;
+	top: 29px;
+	background: #444;
+}
+.sf-menu a.sf-with-ul:before {
+	content: '';
+	background: url('../images/arrow1.png') 0 0 no-repeat;
+	width: 5px;
+	right: 27px;
+	top: 24px;
+	display: block;
+	position: absolute;
+	height: 4px;
+}
+.sf-menu ul li a.sf-with-ul:before{
+	content: '';
+	position: absolute;
+	top: 48px;
+	display: block;
+	right: 8px;
+	background: url('../images/arrow2.png') 0 0 no-repeat;
+	width: 4px;
+	height: 5px;
+}
+
+
+/*==================================RESPONSIVE LAYOUTS===============================================*/
+@media only screen and (max-width: 995px) {
+	
+}
+
+@media only screen and (max-width: 767px) {
+	.sf-menu{
+		display:none !important; 
+		float: none;
+	}
+	#mm0{
+		font: 12px/15px Arial, Helvetica, sans-serif;
+		color: #202020;
+		width: 100%;
+		margin: 0 auto 20px;
+		float: none;
+    	outline: none;
+		border: 1px solid #474646;
+	}
+	
+}
