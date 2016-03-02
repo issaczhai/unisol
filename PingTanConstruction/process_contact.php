@@ -20,6 +20,7 @@ if ($operation === "update"){
     $email = filter_input(INPUT_POST,'email');
     $id="1";
     $contactMgr->updateContact($id, $address, $freephone, $telephone, $fax, $email);
+    header("location: admin/contact.php");
 } elseif ($operation === "getContact"){
     $contactId = "1";
     $contact = $contactMgr->getContact($contactId);

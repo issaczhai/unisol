@@ -56,7 +56,7 @@
                 <div class="col-lg-12">
                       <section class="panel">
                           <header class="panel-heading">
-                             Form Elements
+                             Contact Info
                           </header>
                           <div class="panel-body">
                               <form class="form-horizontal " method="post" action="../process_contact.php">
