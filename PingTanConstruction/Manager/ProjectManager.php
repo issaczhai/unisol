@@ -13,20 +13,29 @@
  */
 class ProjectManager {
     //put your code here
-    function addProject($projectId, $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client,$photo){
+    function addProject($projectId, $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client,$photo,$status){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("INSERT INTO project (projectId, projectName, startDate, endDate, value, scopeOfWork, contract, client,photo,status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
-        $stmt->bind_param("sssssssss", $projectId, $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client,$photo);
+        $stmt->bind_param("ssssssssss", $projectId, $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client,$photo,$status);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
     
-    function updateProject($projectId, $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client,$photo){
+    function updateProjectInfo($projectId, $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client){
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
-        $stmt = $conn->prepare("UPDATE project SET projectName=?, startDate=?, endDate=?, value=?, scopeOfWork=?, contract=?, client=?,photo=?,status=? WHERE projectId = ?");
-        $stmt->bind_param("sssssssss", $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client,$photo,$projectId);
+        $stmt = $conn->prepare("UPDATE project SET projectName=?, startDate=?, endDate=?, value=?, scopeOfWork=?, contract=?, client=?,status=? WHERE projectId = ?");
+        $stmt->bind_param("ssssssss", $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client,$projectId);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
+    
+    function updateProjectPhoto($projectId, $photo){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE project SET photo=? WHERE projectId = ?");
+        $stmt->bind_param("ss", $photo,$projectId);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
@@ -139,5 +148,14 @@ class ProjectManager {
         }
         $ConnectionManager->closeConnection($stmt, $conn);
         return $projectList;
+    }
+
+    function deleteProject($projectId){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("DELETE FROM project WHERE projectId = ?");
+        $stmt->bind_param("s", $projectId);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
     }
 }
