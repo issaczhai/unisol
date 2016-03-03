@@ -161,7 +161,7 @@
                                                   <div class="form-group">
                                                       <label class="col-lg-2 control-label">Photo</label>
                                                       <div class="col-lg-6">
-                                                          <input type="file" class="form-control" id="photo" name="photo" multiple required>
+                                                          <input type="file" class="form-control" id="photo" name="photo[]" multiple required>
                                                       </div>
                                                   </div>
                                                   <div class="form-group">

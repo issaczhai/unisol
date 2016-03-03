@@ -18,10 +18,13 @@ function uploadMultipleFiles($inputName,$location,$checkPhoto,$checkSize,$indexA
             $filesize = $_FILES[$inputName]['size'][$j];
             $type = strstr($filename, '.');
             $count = $j+1; 
-            if($checkPhoto && $type != ".gif" && $type != ".jpg" && $type != ".png" && $type != ".jpeg"){//check whether the file is image file  
-                array_push($errors,"invalid image type for file ".$count);
-                $bol = false;
+            if($checkPhoto){
+                if($type != ".gif" && $type != ".jpg" && $type != ".png" && $type != ".jpeg"){//check whether the file is image file  
+                    array_push($errors,"invalid image type for file ".$count);
+                    $bol = false;
+                }
             }
+            
             if($checkSize && $filesize > 3072000){
                 array_push($errors,"file size cannot exceed 3m for file ".$count);
                 $bol = false;

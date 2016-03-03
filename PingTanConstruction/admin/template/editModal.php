@@ -2,7 +2,7 @@
 <div class="modal fade" id="editInfoModal" tabindex="-1" role="dialog" aria-labelledby="Add News" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="">
+            <form action="../process_project.php" method="post">
                 <input type="hidden" name="operation" value="editProjectInfo">
                 <input type="hidden" id="editInfo-projectId" name="projectId">
                 <div class="modal-header">
@@ -21,13 +21,13 @@
                         <div class="control-group">
                             <label class="control-label" for="startDate">Start Date</label>
                             <div class="controls">
-                                <input id="editInfo-startDate" name="startDate" type="text" class="form-control" class="input-medium" required>
+                                <input id="editInfo-startDate" name="startDate" type="date" class="form-control" class="input-medium" required>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="endDate">End Date(Estimated)</label>
                             <div class="controls">
-                                <input id="editInfo-endDate" name="endDate" type="text" class="form-control" class="input-medium" required>
+                                <input id="editInfo-endDate" name="endDate" type="date" class="form-control" class="input-medium" required>
                             </div>
                         </div>
                         <div class="control-group">
@@ -58,7 +58,7 @@
                             <label class="control-label" for="status">Status</label>
                             <div class="controls">
                                 <select id="editInfo-status" name="status" class="form-control" class="input-medium" required>
-                                    <option value="upcoming">Upcoming</option>
+                                    <option value="Upcoming">Upcoming</option>
                                     <option value="Ongoing">Ongoing</option>
                                     <option value="Completed">Completed</option>
                                 </select>
@@ -97,19 +97,11 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="projectName"></label>
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <img src="./img/Germany.png" style="width: inherit;height:inherit">
-                                </div>
-                                <div class="col-lg-3">
-                                    <img src="./img/Germany.png" style="width: inherit;height:inherit">
-                                </div>
-                                <div class="col-lg-3">
-                                    <img src="./img/Germany.png" style="width: inherit;height:inherit">
-                                </div>
-                                <div class="col-lg-3">
-                                    <img src="./img/Germany.png" style="width: inherit;height:inherit">
+                            <label class="control-label" for=""></label>
+                            <div class="row image-row">
+                                <div class="col-lg-3 image-thumb" style="display:none">
+                                    <img class="project-photo_thumb" style="width: 100%;height:inherit;margin:5px">
+                                    <button type="button" class="delete-photo-btn">x</button>
                                 </div>
                             </div>
                         </div>

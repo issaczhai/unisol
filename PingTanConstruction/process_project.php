@@ -31,14 +31,25 @@ if ($operation === "addProject"){
     if (!file_exists($location)){
         mkdir($location,0777, true);
     }
+    $inputName = "photo";
     $location.="/";
-    $return = uploadMultipleFiles('photo', $location, true, true, $indexArray);//($inputName,$location,$checkPhoto,$checkSize,$indexArray)
+    $checkPhoto = true;
+    $checkSize = true;
+    $return = uploadMultipleFiles($inputName, $location, $checkPhoto, $checkSize, $indexArray);//($inputName,$location,$checkPhoto,$checkSize,$indexArray)
     $pathList = json_encode($return['pathList']);
-    var_dump($return);
-    //$projectMgr->addProject($projectId, $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client, $pathList, $status);
+    $projectMgr->addProject($projectId, $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client, $pathList, $status);
     
-    //header("Location: admin/projects.php");
+    header("Location: admin/projects.php");
     
+}elseif ($operation === "populateProjectInfo"){
+    $projectId = filter_input(INPUT_POST,'projectId');
+    $project = $projectMgr->getProject($projectId);
+    
+    echo json_encode($project);
+}elseif ($operation === "populateProjectPhoto"){
+    $projectId = filter_input(INPUT_POST,'projectId');
+    $project = $projectMgr->getProject($projectId);
+    echo json_encode($project);
 }elseif ($operation === "editProjectInfo"){
     $projectId = filter_input(INPUT_POST,'projectId');
     $projectName = filter_input(INPUT_POST,'projectName');
@@ -49,9 +60,9 @@ if ($operation === "addProject"){
     $contract = filter_input(INPUT_POST,'contract');
     $client = filter_input(INPUT_POST,'client');
     $status = filter_input(INPUT_POST,'status');
-    $projectMgr->updateProjectInfo($projectId, $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client);
+    $projectMgr->updateProjectInfo($projectId, $projectName, $startDate, $endDate, $value, $scopeOfWork, $contract, $client,$status);
     
-    //header("Location: admin/projects.php");
+    header("Location: admin/projects.php");
     
 }elseif ($operation === "editProjectPhoto"){
     $projectId = filter_input(INPUT_POST,'projectId');
@@ -68,6 +79,8 @@ if ($operation === "addProject"){
     foreach($photoList as $key => $value){
         unlink($value);
     }
+    $response=[];
+    echo json_encode($response);
 }elseif ($operation === "getProjectList"){
     $list = $projectMgr->getAllProjects();
     echo json_encode($list);
