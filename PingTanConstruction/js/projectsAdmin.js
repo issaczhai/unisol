@@ -51,8 +51,8 @@
         postData.projectId = $(this).data("projectid");
         data = buildXHRData(postData);
         xhr = new Request(false,baseUrl, data, 'POST', function(result){
-            document.getElementById("editInfo-projectId").value = result.projectId;
-            document.getElementById("editInfo-projectName").value = result.projectName;
+            document.getElementById("editPhoto-projectId").value = result.projectId;
+            document.getElementById("editPhoto-projectName").value = result.projectName;
             var photoList = JSON.parse(result.photo);
             var keys = [];
             for (var key in photoList) {
@@ -60,9 +60,12 @@
                   keys.push(key);
                 }
             }
-            console.log(window.location);
+            //delete previous record
+            $('.image-row').find('.appended').remove();
+            $('#editPhotoForm').find('.delId').remove();
             for(var i = 0 ; i<keys.length; i++ ){
                 var thumb = cloneComponent('image-thumb', true, true);
+                thumb.addClass('appended');
                 thumb.find('.project-photo_thumb').attr('src','../'+photoList[keys[i]]);
                 thumb.find('.delete-photo-btn').attr('data-photoid', keys[i]);
                 thumb.css('display','');
@@ -74,7 +77,11 @@
     });
     
     $('.delete-photo-btn').on('click',function(){
-        
+        var photoid = $(this).data("photoid");
+        //hide the parent div
+        $(this).parent().css("display", "none");
+        //add photoid into delId input
+        $('#editPhotoForm').append('<input type="hidden" name="delId[]" class="delId" value="'+photoid+'"/>');
     });
    
     

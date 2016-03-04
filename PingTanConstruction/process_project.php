@@ -66,7 +66,34 @@ if ($operation === "addProject"){
     
 }elseif ($operation === "editProjectPhoto"){
     $projectId = filter_input(INPUT_POST,'projectId');
+    $project = $projectMgr->getProject($projectId);
+    $photoList = json_decode($project['photo'],true);
+    $toBeDelId = [];
+    if(isset($_POST['delId'])){
+        $toBeDelId = $_POST['delId'];
+    }
+    //remove deleted photos
+    foreach($toBeDelId as $id){
+        unlink($photoList[$id]);
+        unset($photoList[$id]);
+    }
     
+    //add newly uploaded photo
+    $inputName = "photo";
+    $location = "images/project/".$projectId."/";
+    $checkPhoto = true;
+    $checkSize = true;
+    $indexArray = [];
+    $return = uploadMultipleFiles($inputName, $location, $checkPhoto, $checkSize, $indexArray);//($inputName,$location,$checkPhoto,$checkSize,$indexArray)
+    $returnList = $return['pathList'];//return path array of uploaded photo
+    //merge two photo array
+    $merge = $photoList;
+    if(!empty($returnList)){
+        $merge = array_merge($photoList, $returnList);
+    }
+    $photo = json_encode($merge);
+    $projectMgr->updateProjectPhoto($projectId, $photo);
+    header("Location: admin/projects.php");
     
     
 }elseif ($operation === "delete"){

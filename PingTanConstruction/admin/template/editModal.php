@@ -80,7 +80,7 @@
 <div class="modal fade" id="editPhotoModal" tabindex="-1" role="dialog" aria-labelledby="Add News" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="">
+            <form id="editPhotoForm" method="post" action="../process_project.php" enctype="multipart/form-data">
                 <input type="hidden" name="operation" value="editProjectPhoto">
                 <input type="hidden" id="editPhoto-projectId" name="projectId">
                 <div class="modal-header">
@@ -108,7 +108,7 @@
                         <div class="control-group">
                             <label class="control-label" for="photo">Photo</label>
                             <div class="controls">
-                                <input id="editPhoto-photo" name="photo" type="file" multiple class="form-control" class="input-medium">
+                                <input id="editPhoto-photo" name="photo[]" type="file" multiple class="form-control" class="input-medium">
                             </div>
                         </div>
                     </fieldset>
