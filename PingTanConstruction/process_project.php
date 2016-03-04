@@ -106,6 +106,7 @@ if ($operation === "addProject"){
     foreach($photoList as $key => $value){
         unlink($value);
     }
+    rmdir("images/project/".$projectId);
     $response=[];
     echo json_encode($response);
 }elseif ($operation === "getProjectList"){

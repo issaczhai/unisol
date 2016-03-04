@@ -168,7 +168,7 @@
                                                       <label class="col-lg-2 control-label">Status</label>
                                                       <div class="col-lg-6">
                                                             <select class="form-control m-bot15" id="status" name="status" required>
-                                                                <option value="upcoming">Upcoming</option>
+                                                                <option value="Upcoming">Upcoming</option>
                                                                 <option value="Ongoing">Ongoing</option>
                                                                 <option value="Completed">Completed</option>
                                                             </select>
