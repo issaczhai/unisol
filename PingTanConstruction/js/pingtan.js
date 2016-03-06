@@ -45,3 +45,13 @@ var buildXHRData = function(dataObject){
 var bindEvent = function(object, event, callback){
 	object.on(event, callback);
 };
+
+var getFileName = function(pathname){
+	return pathname.split(/\.|\//)[pathname.split(/\.|\//).length - 2];
+};
+
+var convertJsonToValueArray = function(json){
+	return $.map(json, function(value, key) { 
+						return value;
+			});
+};

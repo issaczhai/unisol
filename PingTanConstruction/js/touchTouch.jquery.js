@@ -15,7 +15,13 @@
 		slider = $('<div id="gallerySlider">'),
 		prevArrow = $('<a id="prevArrow"></a>'),
 		nextArrow = $('<a id="nextArrow"></a>'),
-		overlayVisible = false;
+		currentContract,
+		currentValue,
+		currentScope,
+		currentClient,
+		currentPeriod,
+		overlayVisible = false,
+		photoList;
 		
 		
 	/* Creating the plugin */
@@ -26,24 +32,13 @@
 			index = 0,
 			allitems = this,
 			items = allitems;
+		// set allitems to all picture of this project
 		
 		// Appending the markup to the page
 		overlay.hide().appendTo('body');
 		slider.appendTo(overlay);
-		
-		// Creating a placeholder for each image
-		items.each(function(){
-
-			placeholders = placeholders.add($('<div class="placeholder">'));
-		});
 	
-		// Hide the gallery if the background is touched / clicked
-		slider.append(placeholders).on('click',function(e){
-
-			if(!$(e.target).is('img')){
-				hideOverlay();
-			}
-		});
+		
 		
 		// Listen for touch events on the body and check if they
 		// originated in #gallerySlider img - the images in the slider.
@@ -88,55 +83,45 @@
 			e.preventDefault();
 
 			var $this = $(this),
-				galleryName,
-				selectorType,
-				$closestGallery = $this.parent().closest('[data-gallery]');
+				imgIndex = 0,
+				photoListJson = $.parseJSON($this.parents('.grid_4').data('imgList'));
 
-			// Find gallery name and change items object to only have 
-			// that gallery
+				
+			// convert the json object into array with all values
+			photoList = $.map(photoListJson, function(value, key) { 
+								return value;
+							});
+			currentContract = $this.parents('.grid_4').data('contract');
+			currentScope = $this.parents('.grid_4').data('scope');
+			currentPeriod = $this.parents('.grid_4').data('period');
+			currentValue = $this.parents('.grid_4').data('value');
+			currentClient = $this.parents('.grid_4').data('client');
+			// Creating a placeholder for each image
+			for(var i = 0; i < photoList.length; i++){
 
-			//If gallery name given to each item
-			if ($this.attr('data-gallery')) {
-
-				galleryName = $this.attr('data-gallery');
-				selectorType = 'item';
-
-			//If gallery name given to some ancestor
-			} else if ($closestGallery.length) {
-
-				galleryName = $closestGallery.attr('data-gallery');
-				selectorType = 'ancestor';
-
+				placeholders = placeholders.add($('<div class="placeholder">'));
 			}
 
-			//These statements kept seperate in case elements have data-gallery on both
-			//items and ancestor. Ancestor will always win because of above statments.
-			if (galleryName && selectorType == 'item') {
+			// Hide the gallery if the background is touched / clicked
+			slider.append(placeholders).on('click',function(e){
 
-				items = $('[data-gallery='+galleryName+']');
+				if(!$(e.target).is('img')){
+					hideOverlay();
+				}
+			});
 
-			} else if (galleryName && selectorType == 'ancestor') {
-
-				//Filter to check if item has an ancestory with data-gallery attribute
-				items = items.filter(function(){
-
-           			return $(this).parent().closest('[data-gallery]').length;    
-           			
-           		});
-
-			}
-
+			index = imgIndex;
 			// Find the position of this image
 			// in the collection
-			index = items.index(this);
-			showOverlay(index);
-			showImage(index);
+			showOverlay(imgIndex);
+
+			showImage(imgIndex);
 			
 			// Preload the next image
-			preload(index+1);
+			preload(imgIndex+1);
 			
 			// Preload the previous
-			preload(index-1);
+			preload(imgIndex-1);
 			
 		});
 		
@@ -206,8 +191,12 @@
 			overlayVisible = false;
 
 			//Clear preloaded items
-			$('.placeholder').empty();
-
+			$('#gallerySlider').remove(".placeholder");
+			//placeholders = $([]);
+			/*$('.placeholder').each(function(){
+				console.log($(this));
+				$(this).remove();
+			});*/
 			//Reset possibly filtered items
 			items = allitems;
 		}
@@ -235,8 +224,21 @@
 			}
 			
 			// Call the load function with the href attribute of the item
-			loadImage(items.eq(index).attr('href'), function(){
+			loadImage(photoList[index], function(){
 				placeholders.eq(index).html(this);
+				var overlay = $('.project-detail-template').clone(true, true);
+				overlay.removeClass('project-detail-template');
+				overlay.addClass('project-detail');
+				overlay.find('.detail-contract').text(currentContract);
+				overlay.find('.detail-value').text(currentValue);
+				overlay.find('.detail-period').text(currentPeriod);
+				overlay.find('.detail-scope').text(currentScope);
+				overlay.find('.detail-client').text(currentClient);
+				overlayHeight = $('.project-detail').height();
+				overlayWidth = $(this).width();
+				overlay.css('width', overlayWidth);
+				overlay.css('margin-top', -overlayHeight);
+				placeholders.eq(index).append(overlay);
 			});
 		}
 		
@@ -255,7 +257,8 @@
 		function showNext(){
 			
 			// If this is not the last image
-			if(index+1 < items.length){
+			console.log('placeholder length: ' + photoList.length);
+			if(index+1 < photoList.length){
 				index++;
 				offsetSlider(index);
 				preload(index+1);

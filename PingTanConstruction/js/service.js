@@ -1,4 +1,3 @@
-
 var listProjects = function(result){
 
     for (var i = 0; i < result.length; i++) { 
@@ -26,40 +25,83 @@ var populateContact = function(result){
     document.getElementById("fax").value = result.fax;
     document.getElementById("email").value = result.email;
 };
+var renderProjects = function (result) {
+	 // render each project as thumbnail
+	 	// set id for each li as project id 
+	 	// set data-img = json string imgs for $('.gallery a.lightbox')
+	if(result.error){
+		// no projects are in DB
+		
+		return;
+	}
 
+	for(var i = 0; i < result.length; i++){
+		/*console.log(result[i].photo);*/
+		var project = result[i],
+			photoListJson = $.parseJSON(project.photo),
+			photoList;
+
+		// convert the json object into array with all values
+		photoList = convertJsonToValueArray(photoListJson);
+		// set the first child of gallery as template and clone it
+		var projectThumb = $('ul.gallery li:first-child').clone(true, true);
+		projectThumb.find('span.p6').text(project.projectName);
+		projectThumb.find('div.block3 .description').text(project.contract);
+		projectThumb.find('a.lightbox').attr('href', photoList[0]);
+		projectThumb.find('a.lightbox img').attr('src', photoList[0]);
+		projectThumb.data('id', project.projectId);
+		projectThumb.data('imgList', project.photo);
+		projectThumb.data('period', project.startDate + ' to ' + project.endDate);
+		projectThumb.data('value', project.value);
+		projectThumb.data('contract', project.contract);
+		projectThumb.data('client', project.client);
+		projectThumb.data('scope', project.scopeOfWork);
+		$('.gallery').append(projectThumb);
+	}
+	// hide the first child of gallery as template
+	$('ul.gallery li:first-child').css('display', 'none');
+
+	// init the overlay carousel overlay
+	$('.gallery a.lightbox').touchTouch();
+
+};
 
 (function(){
 	var xhr,
 		baseUrl,
 		postData = {},
 		index,
-		targetCourse,
-		c,
-		courseID,
-		callback;
+		callback,
+		pathname = window.location.pathname;
 
-	var service = window.location.pathname.split(/\.|\//)[window.location.pathname.split(/\.|\//).length - 2];
-	c = new Cookie();
+	var service = getFileName(pathname);
 	// Page Rendering Services
 	switch(service){
 		case "projects": 
 			baseUrl = '../process_project.php';
-                        postData.operation = 'getProjectList';
+            postData.operation = 'getProjectList';
 			data = buildXHRData(postData);
 			callback = listProjects;
 			break;
-                case "contact": 
+        case "contact": 
 			baseUrl = '../process_contact.php';
-                        postData.operation = 'getContact';
+            postData.operation = 'getContact';
 			data = buildXHRData(postData);
 			callback = populateContact;
 			break;
+		case "project": 
+			baseUrl = './Service/service_projects.php';
+			postData.type = 'all';
+			data = buildXHRData(postData);
+			callback = renderProjects;
+			
+			break;
+
 		default : callback = null;
 	}
 
 	xhr = new Request(false, baseUrl, data, 'POST', callback);
 	
-
 })();
 
  

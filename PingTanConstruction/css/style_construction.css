@@ -1,0 +1,24 @@
+.project-detail-template{
+	display: none;
+}
+.project-detail{
+	position: relative;
+	display: block;
+	z-index: 9999;
+	margin: 0 auto;
+	background-color: rgba(51, 51, 51, 0.7);
+}
+.project-detail .list-detail{
+	list-style-type: none;
+}
+.project-detail .list-detail li{
+	padding: 1em;
+	text-align: left;
+}
+.project-detail .list-detail li span{
+	font-weight: 300;
+	font-size: 1em;
+}
+.project-detail .list-detail li .title-detail{
+	color: rgb(230, 184, 0);
+}
