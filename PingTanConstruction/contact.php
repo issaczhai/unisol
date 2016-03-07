@@ -41,7 +41,8 @@
 
 <!--==============================header=================================-->
 <?php
-    include_once("./template/header.html");
+    $current = 'contacts';
+    include_once("./template/header.php");
 ?>
 
 <!--===================content====================-->

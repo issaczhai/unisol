@@ -42,7 +42,8 @@
 
 <!--==============================header=================================-->
 <?php
-    include_once("./template/header.html");
+    $current = 'about us';
+    include_once("./template/header.php");
 ?>
 
 <!--===================content====================-->

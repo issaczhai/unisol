@@ -54,7 +54,8 @@
 
 <!--==============================header=================================-->
 <?php
-    include_once("./template/header.html");
+    $current = 'home';
+    include_once("./template/header.php");
 ?>
 
 <!--===================content====================-->

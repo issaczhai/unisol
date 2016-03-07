@@ -38,38 +38,10 @@
 <body>
 
 <!--==============================header=================================-->
-<header id="header">
-    <section class="top">
-        <div class="container_12">
-            <div class="grid_12 txt1">
-                <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1>
-                <section class="menu">
-                    <nav class="horizontal-nav full-width horizontalNav-notprocessed">
-                        <ul class="sf-menu">
-                            <li><a href="index.html">home</a></li>
-                            <li><a href="index-1.html">about</a>
-                                <ul>
-                                    <li><a href="#">history</a></li>
-                                    <li><a href="#">news</a>
-                                        <ul>
-                                            <li><a href="#">latest</a></li>
-                                            <li><a href="#">archive</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">testimonials</a></li>
-                               </ul>
-                            </li>
-                            <li class="current"><a href="index-2.html">services</a></li> 
-                            <li><a href="index-3.html">projects</a></li>
-                            <li><a href="index-4.html">blog</a></li>
-                            <li><a href="index-5.html">contacts</a></li>
-                        </ul>
-                    </nav>
-                </section>
-            </div>
-        </div>
-    </section>
-</header>
+<?php
+    $current = 'services';
+    include_once("./template/header.php");
+?>
 
 <!--===================content====================-->
 

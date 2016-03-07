@@ -39,7 +39,8 @@
 
 <!--==============================header=================================-->
 <?php
-    include_once("./template/header.html");
+    $current = 'career';
+    include_once("./template/header.php");
 ?>
 
 <!--===================content====================-->
