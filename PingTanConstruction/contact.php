@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/custom_style.css">
     <script src="js/jquery.js"></script>
     <script src="js/jquery-migrate-1.1.1.js"></script>
     <script src="js/jquery.easing.1.3.js"></script>
@@ -39,38 +40,9 @@
 <body>
 
 <!--==============================header=================================-->
-<header id="header">
-    <section class="top">
-        <div class="container_12">
-            <div class="grid_12 txt1">
-                <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1>
-                <section class="menu">
-                    <nav class="horizontal-nav full-width horizontalNav-notprocessed">
-                        <ul class="sf-menu">
-                            <li><a href="index.html">home</a></li>
-                            <li><a href="index-1.html">about</a>
-                                <ul>
-                                    <li><a href="#">history</a></li>
-                                    <li><a href="#">news</a>
-                                        <ul>
-                                            <li><a href="#">latest</a></li>
-                                            <li><a href="#">archive</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">testimonials</a></li>
-                               </ul>
-                            </li>
-                            <li><a href="index-2.html">services</a></li> 
-                            <li><a href="index-3.html">projects</a></li>
-                            <li><a href="index-4.html">blog</a></li>
-                            <li class="current"><a href="index-5.html">contacts</a></li>
-                        </ul>
-                    </nav>
-                </section>
-            </div>
-        </div>
-    </section>
-</header>
+<?php
+    include_once("./template/header.html");
+?>
 
 <!--===================content====================-->
 
@@ -81,14 +53,13 @@
                 <h4 class="mrg8">Postal Address</h4>
                 <div class="map">
                     <figure class="img2 box-shadow">
-                        <iframe src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Brooklyn,+New+York,+NY,+United+States&amp;aq=0&amp;sll=37.0625,-95.677068&amp;sspn=61.282355,146.513672&amp;ie=UTF8&amp;hq=&amp;hnear=Brooklyn,+Kings,+New+York&amp;ll=40.649974,-73.950005&amp;spn=0.01628,0.025663&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
+                        <iframe src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Brooklyn,+Singapore,+Singapore&amp;aq=0&amp;sll=37.0625,-95.677068&amp;sspn=61.282355,146.513672&amp;ie=UTF8&amp;hq=&amp;hnear=Brooklyn,+Kings,+New+York&amp;ll=40.649974,-73.950005&amp;spn=0.01628,0.025663&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
                     </figure>
                     <address>
                         <dl> 
-                            <dt>9870 St Vincent Place, Glasgow, DC 45 Fr 45.</dt>
-                            <dd><span>Freephone:</span>+1 800 559 6580</dd>
-                            <dd><span>Telephone:</span>+1 800 603 6035</dd>
-                            <dd><span>FAX:</span>+1 800 889 9898</dd>
+                            <dt>8 New Industrial Road, Singapore 536200 LHK 3 Building #06-04</dt>
+                            <dd><span>Telephone:</span>+65 6747 6711</dd>
+                            <dd><span>FAX:</span>+65 6747 6711</dd>
                         </dl>
                    </address>
                 </div>
@@ -133,41 +104,9 @@
 </div>
 
 <!--===================footer=====================-->
+<?php
+    include_once("./template/footer.html");
+?>
 
-<footer>
-	<div class="container_12">
-        <div class="grid_3 flt"> 
-            <h4 class="p3">Archive</h4>
-            <ul class="list">
-                <li><a href="#">March 2014</a></li>
-                <li><a href="#">February 2014</a></li>
-                <li><a href="#">January 2014</a></li>
-                <li><a href="#">December 2013</a></li>
-                <li><a href="#">November 2013</a></li>
-            </ul>
-        </div>
-        <div class="grid_4 flt">
-            <h4 class="p3">overview</h4>
-            <ul class="list">
-                <li><a href="#">Lorem ipsum dolor sit amet conse</a></li>
-                <li><a href="#">Adipiscing elit sed dia nonummy nibh</a></li>
-                <li><a href="#">Esmod tincidut laoreet dolore magna</a></li>
-                <li><a href="#">Aiquam erat volutpatwisi enim ad minim</a></li>
-                <li><a href="#">Wniamquis nostrud exercita</a></li>
-                <li><a href="#">Ullamcorper suscipit lobortis</a></li>
-            </ul>
-        </div>
-        <div class="grid_5"> 
-            <h1><a href="index.html"><img src="images/logo_footer.png" alt=""></a></h1>
-            <p class="privacy mrg3">&copy;<span id="copyright-year"></span> | <a href="index-6.html">Privacy Policy</a></p>
-            <div class="socials">
-                <a href="#"><img src="images/icon1.png" alt=""></a>
-                <a href="#"><img src="images/icon2.png" alt=""></a>
-                <a href="#"><img src="images/icon3.png" alt=""></a>
-                <a href="#"><img src="images/icon4.png" alt=""></a>
-            </div>
-        </div>
-	</div>
-</footer>
 </body>
 </html>

@@ -15,10 +15,29 @@ section.top{
 .sf-menu ul {
     z-index: 1000;
     position: absolute;
-    padding: -4px 16px 23px 24px;
+    padding: 0 0.2em 1em 0.2em;
     background-color: #f9c415;
     top: 115px;
     left: 0px;
+}
+
+.logo a{
+    font-size: 4em;
+    font-family: 'Lobster', cursive;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+}
+.footer-logo a{
+    font-size: 2em;
+    font-weight: 600;
+    color: rgb(68, 68, 68);
+}
+
+footer .grid_5, footer .grid_4{
+    padding-top: 1em;
+}
+footer .p3, footer h1{
+    margin-bottom: 1em;
 }
 
 .p9 {

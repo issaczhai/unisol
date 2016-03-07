@@ -85,7 +85,6 @@
 			var $this = $(this),
 				imgIndex = 0,
 				photoListJson = $.parseJSON($this.parents('.grid_4').data('imgList'));
-
 				
 			// convert the json object into array with all values
 			photoList = $.map(photoListJson, function(value, key) { 

@@ -7,6 +7,7 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/custom_style.css">
     <script src="js/jquery.js"></script>
     <script src="js/jquery-migrate-1.1.1.js"></script>
     <script src="js/jquery.easing.1.3.js"></script>
@@ -131,41 +132,9 @@
 </div>
 
 <!--===================footer=====================-->
+<?php
+    include_once("./template/footer.html");
+?>
 
-<footer>
-	<div class="container_12">
-        <div class="grid_3 flt"> 
-            <h4 class="p3">Archive</h4>
-            <ul class="list">
-                <li><a href="#">March 2014</a></li>
-                <li><a href="#">February 2014</a></li>
-                <li><a href="#">January 2014</a></li>
-                <li><a href="#">December 2013</a></li>
-                <li><a href="#">November 2013</a></li>
-            </ul>
-        </div>
-        <div class="grid_4 flt">
-            <h4 class="p3">overview</h4>
-            <ul class="list">
-                <li><a href="#">Lorem ipsum dolor sit amet conse</a></li>
-                <li><a href="#">Adipiscing elit sed dia nonummy nibh</a></li>
-                <li><a href="#">Esmod tincidut laoreet dolore magna</a></li>
-                <li><a href="#">Aiquam erat volutpatwisi enim ad minim</a></li>
-                <li><a href="#">Wniamquis nostrud exercita</a></li>
-                <li><a href="#">Ullamcorper suscipit lobortis</a></li>
-            </ul>
-        </div>
-        <div class="grid_5"> 
-            <h1><a href="index.html"><img src="images/logo_footer.png" alt=""></a></h1>
-            <p class="privacy mrg3">&copy;<span id="copyright-year"></span> | <a href="index-6.html">Privacy Policy</a></p>
-            <div class="socials">
-                <a href="#"><img src="images/icon1.png" alt=""></a>
-                <a href="#"><img src="images/icon2.png" alt=""></a>
-                <a href="#"><img src="images/icon3.png" alt=""></a>
-                <a href="#"><img src="images/icon4.png" alt=""></a>
-            </div>
-        </div>
-	</div>
-</footer>
 </body>
 </html>
