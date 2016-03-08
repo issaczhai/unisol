@@ -1,3 +1,4 @@
+
 .project-detail-template{
 	display: none;
 }
@@ -12,7 +13,9 @@
 	list-style-type: none;
 }
 .project-detail .list-detail li{
-	padding: 1em;
+	white-space: normal;
+	line-height: 1em;
+	padding: 0.5em;
 	text-align: left;
 }
 .project-detail .list-detail li span{

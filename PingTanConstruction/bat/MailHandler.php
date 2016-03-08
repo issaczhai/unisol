@@ -1,6 +1,6 @@
 <?php
 	$owner_email = $_POST["owner_email"];
-	$headers = 'From:' . $_POST["email"] . "\r\n" . 'Reply-To: ' . $email . "\r\n" . 'Content-Type: text/plain; charset=UTF-8' . "\r\n";
+	$headers = 'From:' . $_POST["email"] . "\r\n" . 'Reply-To: ' . $owner_email . "\r\n" . 'Content-Type: text/plain; charset=UTF-8' . "\r\n";
 	$subject = 'A message from your site visitor ' . $_POST["name"];
 	$messageBody = "";
 	
