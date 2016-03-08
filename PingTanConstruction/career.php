@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Blog</title>
+    <title>Career</title>
     <meta charset="utf-8">
     <meta name = "format-detection" content = "telephone=no" />
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
@@ -48,74 +48,102 @@
 <div id="content" class="txt1">
     <section class="bg2 pad4">
         <div class="container_12">
-            <div class="grid_8">
-                <h4 class="mrg5">blog</h4>
+            <div class="grid_12">
+                <h3 class="mrg5 title-career">Careers at Ping Tan</h3>
+            </div>
+            <div class="grid_6 career-category">
+                <h5 class="mrg5">Business Administration</h5>
                 <article>
-                    <figure class="img3">
-                        <img class="img5" src="images/page5_img1.jpg" alt="">
-                    </figure>
                     <div class="extra_wrapper">
-                        <p class="p5 mrg7">Lorem ipsum dolor situm ast  consectetuer adipiscing</p>
-                        <div class="p7">
-                            <time class="page4" datetime="2013-01-01">10.22.2013</time> &nbsp;|&nbsp; posted by: <a class="a5" href="#">admin</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a class="a5" href="#">comments: 7</a>
-                        </div>
+                        <p class="p5 mrg7">Business Administrator</p>
                         <p class="p4 mrg3">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad miniLorem ipsum.</p>
-                        <p class="p4 mrg3">Vestibulum tincidunt pulvinar sapien, non lacinia leo elementum quis.Duis dolor metus, euismod in quam sedaugue.</p>
-                        <a class="a3" href="#"><span></span>read more</a>
+                        <a class="a3" href="./job_detail.php"><span></span>read more</a>
                     </div><div class="clear"></div>
                 </article>
                 <article>
-                    <figure class="img3">
-                        <img class="img5" src="images/page5_img2.jpg" alt="">
-                    </figure>
                     <div class="extra_wrapper">
-                        <p class="p5 mrg7">Lorem ipsum dolor situm ast  consectetuer adipiscing</p>
-                        <div class="p7">
-                            <time class="page4" datetime="2013-01-01">10.22.2013</time> &nbsp;|&nbsp; posted by: <a class="a5" href="#">admin</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a class="a5" href="#">comments: 7</a>
-                        </div>
+                        <p class="p5 mrg7">Business Manager</p>
                         <p class="p4 mrg3">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad miniLorem ipsum.</p>
-                        <p class="p4 mrg3">Vestibulum tincidunt pulvinar sapien, non lacinia leo elementum quis.Duis dolor metus, euismod in quam sedaugue.</p>
-                        <a class="a3" href="#"><span></span>read more</a>
+                        
+                        <a class="a3" href="./job_detail.php"><span></span>read more</a>
                     </div><div class="clear"></div>
                 </article>
                 <article>
-                    <figure class="img3">
-                        <img class="img5" src="images/page5_img3.jpg" alt="">
-                    </figure>
                     <div class="extra_wrapper">
                         <p class="p5 mrg7">Lorem ipsum dolor situm ast  consectetuer adipiscing</p>
-                        <div class="p7">
-                            <time class="page4" datetime="2013-01-01">10.22.2013</time> &nbsp;|&nbsp; posted by: <a class="a5" href="#">admin</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a class="a5" href="#">comments: 7</a>
-                        </div>
                         <p class="p4 mrg3">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad miniLorem ipsum.</p>
-                        <p class="p4 mrg3">Vestibulum tincidunt pulvinar sapien, non lacinia leo elementum quis.Duis dolor metus, euismod in quam sedaugue.</p>
-                        <a class="a3" href="#"><span></span>read more</a>
+                        
+                        <a class="a3" href="./job_detail.php"><span></span>read more</a>
                     </div><div class="clear"></div>
                 </article>
             </div>
-            <div class="grid_4">
-                <h4>Categories</h4>
-                <ul class="list1 brd">
-                    <li><a href="#">Lorem ipsum dolor sit amet conse</a></li>
-                    <li><a href="#">Adipiscing elit sed dia nonummy nibh</a></li>
-                    <li><a href="#">Esmod tincidut laoreet dolore magna</a></li>
-                    <li><a href="#">Aiquam erat volutpatwisi enim ad minim</a></li>
-                    <li><a href="#">Wniamquis nostrud exercita</a></li>
-                    <li><a href="#">Ullamcorper suscipit lobortis</a></li>
-                    <li><a href="#">Et aliq Lorem ipsum dolor sit amet</a></li>
-                    <li><a href="#">Ensectetuer adipiscing elit sed</a></li>
-                    <li><a href="#">Sonummy nibh euismod tincidut</a></li>
-                </ul>
-                <h4>archives</h4>
-                <ul class="list1">
-                    <li><a href="#">November - 2013</a></li>
-                    <li><a href="#">October - 2013</a></li>
-                    <li><a href="#">September - 2013</a></li>
-                    <li><a href="#">August - 2013</a></li>
-                    <li><a href="#">July - 2013</a></li>
-                    <li><a href="#">June - 2013</a></li>
-                </ul>
+            <div class="grid_6 career-category">
+                <h5 class="mrg5">Marketing</h5>
+                <article>
+                    <div class="extra_wrapper">
+                        <p class="p5 mrg7">Lorem ipsum dolor situm ast  consectetuer adipiscing</p>
+                        <p class="p4 mrg3">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad miniLorem ipsum.</p>
+                        
+                        <a class="a3" href="./job_detail.php"><span></span>read more</a>
+                    </div><div class="clear"></div>
+                </article>
+                <article>
+                    <div class="extra_wrapper">
+                        <p class="p5 mrg7">Lorem ipsum dolor situm ast  consectetuer adipiscing</p>
+                        <p class="p4 mrg3">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad miniLorem ipsum.</p>
+                        
+                        <a class="a3" href="./job_detail.php"><span></span>read more</a>
+                    </div><div class="clear"></div>
+                </article>
+                <article>
+                    <div class="extra_wrapper">
+                        <p class="p5 mrg7">Lorem ipsum dolor situm ast  consectetuer adipiscing</p>
+                        <p class="p4 mrg3">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad miniLorem ipsum.</p>
+                        
+                        <a class="a3" href="./job_detail.php"><span></span>read more</a>
+                    </div><div class="clear"></div>
+                </article>
             </div>
+            <div class="grid_6 career-category">
+                <h5 class="mrg5">Sales</h5>
+                <article>
+                    <div class="extra_wrapper">
+                        <p class="p5 mrg7">Lorem ipsum dolor situm ast  consectetuer adipiscing</p>
+                        <p class="p4 mrg3">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad miniLorem ipsum.</p>
+                        
+                        <a class="a3" href="./job_detail.php"><span></span>read more</a>
+                    </div><div class="clear"></div>
+                </article>
+                <article>
+                    <div class="extra_wrapper">
+                        <p class="p5 mrg7">Lorem ipsum dolor situm ast  consectetuer adipiscing</p>
+                        <p class="p4 mrg3">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad miniLorem ipsum.</p>
+                        
+                        <a class="a3" href="./job_detail.php"><span></span>read more</a>
+                    </div><div class="clear"></div>
+                </article>
+                <article>
+                    <div class="extra_wrapper">
+                        <p class="p5 mrg7">Lorem ipsum dolor situm ast  consectetuer adipiscing</p>
+                        <p class="p4 mrg3">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad miniLorem ipsum.</p>
+                        
+                        <a class="a3" href="./job_detail.php"><span></span>read more</a>
+                    </div><div class="clear"></div>
+                </article>
+            </div>
+        </div>
+    </section>
+    <section class="bg2 pad2">
+        <div class="container_12">
+            <div class="grid_12">
+                <h4 class="mrg9">Spontaneous Application</h4>
+            </div>
+            <div class="grid_12omega">
+                    <p class="p4">You do not see an open position that matches your specific skill-set? 
+                    Ping Tan is always looking for the most passionate and talented professionals to strengthen our ambitious team. 
+                    If you are interested to work at Ping Tan, get in touch with us! Submit a general application via info@pingtan.com.</p>
+            </div>
+           
         </div>
     </section>
 </div>

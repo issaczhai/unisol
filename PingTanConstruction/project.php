@@ -52,7 +52,7 @@
         </div>
     </section>
 
-<div class="project-detail-template">
+<div class="project-detail project-detail-template">
     <ul class="list-detail">
         <li><span class="title-detail">Contracts: </span><span class="detail-font detail-contract">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy</span>
         </li>

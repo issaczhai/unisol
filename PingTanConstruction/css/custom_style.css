@@ -213,3 +213,28 @@ h3{
  h5{
     font-size: 20px;
 }
+/********** CAREER ***********/
+.title-career{
+    text-align: center;
+}
+
+.career-category{
+    margin-bottom: 1em;
+}
+
+.list-qualification, .list-offer{
+    list-style-type: disc;
+    padding: 1em;
+}
+
+.career-category h5{
+    margin-bottom: 1em;
+}
+
+.career-category .p4{
+    margin-bottom: 0.1em;
+}
+
+.career-category article{
+    margin-bottom: 1em;
+}

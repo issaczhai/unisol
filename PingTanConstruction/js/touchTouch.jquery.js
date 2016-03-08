@@ -218,7 +218,7 @@
 		function showImage(index){
 	
 			// If the index is outside the bonds of the array
-			if(index < 0 || index >= items.length){
+			if(index < 0 || index >= photoList.length){
 				return false;
 			}
 			
@@ -227,17 +227,20 @@
 				placeholders.eq(index).html(this);
 				var overlay = $('.project-detail-template').clone(true, true);
 				overlay.removeClass('project-detail-template');
-				overlay.addClass('project-detail');
+				//overlay.addClass('project-detail');
 				overlay.find('.detail-contract').text(currentContract);
 				overlay.find('.detail-value').text(currentValue);
 				overlay.find('.detail-period').text(currentPeriod);
 				overlay.find('.detail-scope').text(currentScope);
 				overlay.find('.detail-client').text(currentClient);
-				overlayHeight = $('.project-detail').height();
+				placeholders.eq(index).append(overlay);
 				overlayWidth = $(this).width();
 				overlay.css('width', overlayWidth);
+				overlayHeight = overlay.height();
+				console.log(overlay);
+				console.log(index + ':' + overlayHeight);
 				overlay.css('margin-top', -overlayHeight);
-				placeholders.eq(index).append(overlay);
+				//placeholders.eq(index).append(overlay);
 			});
 		}
 		
