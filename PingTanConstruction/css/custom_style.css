@@ -238,3 +238,11 @@ h3{
 .career-category article{
     margin-bottom: 1em;
 }
+
+ul{
+    font-size: 15px;
+    color: #747474;
+    color: #a6a8ac;
+    font: 14px/20px 'times new roman';
+    font-style: italic;
+}

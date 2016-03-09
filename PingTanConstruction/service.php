@@ -45,7 +45,7 @@
 
 <!--===================content====================-->
 
-<div id="content" class="txt2">
+<!--<div id="content" class="txt2">
     <section class="bg1 pad1">
         <div class="container_12">
             <div class="grid_4">
@@ -80,23 +80,25 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
 
     <section class="bg2 pad2">
         <div class="container_12">
             <div class="grid_12">
                 <h4 class="mrg5">Specialized Services</h4>
             </div>
-            <div class="grid_4">
-                <figure class="img1 mrg6">
-                    <img class="img4 img5" src="images/page3_img3.jpg" alt="">
-                </figure>
-            </div>
-            <div class="grid_8">
-                <p class="p4"><span class="p5">Lorem ipsum dolor situm ast  consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore aliquam volutpat wis.</span><br>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad miniLorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt pulvinar sapien, non lacinia leo elementum quis.</p>
-                <p class="p4">Nullam quam tellus, convallis et turpis in, tincidunt luctus dolor. Phasellus tincidunt augue at bibendum adipiscing. Aenean venenatis vulputate nulla, sed faucibus sem porttitor vel.</p>
-                <p class="p4">Sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad miniLorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt pulvinar sapien, non lacinia leo elementum quis.</p>
-                <a class="a3" href="#"><span></span>read more</a>
+            <div class="grid_12">
+                <p class="p4"><span class="p5">Ping Tan Construction Pte Ltd has a history of completing projects within an agreed time frame. Our experienced management and administration staff have the ability to plan and complete projects within the cost/time constraints on any project.</span>
+                <br>Whether a project comprises construction, from scratch, renovation, repairing, restoration or minor demolition, the company will to adhere to deadlines – which in turn affect time cost scheduling. With that, clearly defined structural measures have been mapped out to ensure smooth processes that ultimately achieve our final target.</p>
+                <p class="p4">Ping Tan involved in providing basic and complex construction work such as:</p>
+                <ul class="list">
+                 <li> Reinforced Work </li>
+                 <li> Wet Architectural work</li>
+                 <li> Dry Architectural work</li>
+                 <li> External work </li>
+                 <li> Design & Build </li>
+                </ul>
+                <!--<a class="a3" href="#"><span></span>read more</a>-->
             </div>
         </div>
     </section>
