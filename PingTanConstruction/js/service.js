@@ -44,14 +44,17 @@ var renderProjects = function (result) {
 		// convert the json object into array with all values
 		photoList = convertJsonToValueArray(photoListJson);
 		// set the first child of gallery as template and clone it
-		var projectThumb = $('ul.gallery li:first-child').clone(true, true);
+		//var projectThumb = $('ul.gallery li:first-child').clone(true, true);
+		var projectThumb = $('.thumbnail-template').clone(true, true);
+		projectThumb.removeClass('thumbnail-template');
+		projectThumb.addClass('thumbnail');
 		projectThumb.find('span.p6').text(project.projectName);
 		projectThumb.find('div.block3 .description').text(project.contract);
 		projectThumb.find('a.lightbox').attr('href', photoList[0]);
 		projectThumb.find('a.lightbox img').attr('src', photoList[0]);
 		projectThumb.data('id', project.projectId);
 		projectThumb.data('imgList', project.photo);
-		projectThumb.data('period', project.startDate + ' to ' + project.endDate);
+		projectThumb.data('period', project.endDate);
 		projectThumb.data('value', project.value);
 		projectThumb.data('contract', project.contract);
 		projectThumb.data('client', project.client);
@@ -59,7 +62,8 @@ var renderProjects = function (result) {
 		$('.gallery').append(projectThumb);
 	}
 	// hide the first child of gallery as template
-	$('ul.gallery li:first-child').css('display', 'none');
+	//$('ul.gallery li:first-child').css('display', 'none');
+	$('.thumbnail-template').css('display', 'none');
 
 	// init the overlay carousel overlay
 	$('.gallery a.lightbox').touchTouch();

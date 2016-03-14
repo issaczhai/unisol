@@ -229,7 +229,6 @@
 				overlay.removeClass('project-detail-template');
 				//overlay.addClass('project-detail');
 				overlay.find('.detail-contract').text(currentContract);
-				overlay.find('.detail-value').text(currentValue);
 				overlay.find('.detail-period').text(currentPeriod);
 				overlay.find('.detail-scope').text(currentScope);
 				overlay.find('.detail-client').text(currentClient);
@@ -237,9 +236,10 @@
 				overlayWidth = $(this).width();
 				overlay.css('width', overlayWidth);
 				overlayHeight = overlay.height();
-				console.log(overlay);
-				console.log(index + ':' + overlayHeight);
-				overlay.css('margin-top', -overlayHeight);
+				//overlay.css('margin-top', -overlayHeight);
+				overlay.css('display','none');
+				//bind the on hover event to this overlay
+				showProjectDetail(overlay, overlayHeight);
 				//placeholders.eq(index).append(overlay);
 			});
 		}
@@ -291,6 +291,21 @@
 					slider.removeClass('leftSpring');
 				},500);
 			}
+		}
+
+		function showProjectDetail(overlay, overlayHeight){
+			$('.placeholder img').hover(function(event) {
+				
+				/* handling mouse over */
+				overlay.css('display','block');
+				overlay.css('margin-top', -overlayHeight);
+			}, function(event){
+				/* handling mouse out */
+				overlay.css('display','none');
+				overlay.css('margin-top', 0);
+			}
+			);
+			
 		}
 	};
 	

@@ -39,8 +39,15 @@
             <div class="grid_12">
                 <h4 class="mrg8">our projects</h4>
             </div>
+            <div class="grid_12">
+                <select id="select-filter">
+                    <option>all projects</option>
+                    <option>ongoing projects</option>
+                    <option>completed projects</option>
+                </select>
+            </div>
             <ul class="gallery list3">
-                <li class="grid_4 maxheight">
+                <li class="grid_4 maxheight thumbnail-template">
                     <div class="box_inner">
                         <a class="lightbox img2" href="images/page4_big1.jpg"><img src="images/page4_img1.jpg" alt=""><span></span></a>
                         <div class="block3"><span class="p6">Project name:</span><br><span class="description">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy</span>
@@ -58,9 +65,7 @@
         </li>
         <li><span class="title-detail">Scope of Work: </span><span class="detail-font detail-scope">Web Architecture</span>
         </li>
-        <li><span class="title-detail">Value: $</span><span class="detail-font detail-value">1000000</span>
-        </li>
-        <li><span class="title-detail">Period: </span><span class="detail-font detail-period">1-1-2016 to 12-12-2016</span>
+        <li><span class="title-detail">Estimated Completion Date: </span><span class="detail-font detail-period">1-1-2016 to 12-12-2016</span>
         </li>
         <li><span class="title-detail">Client: </span><span class="detail-font detail-client">Unisol Infotech Pte Ltd</span>
         </li>
@@ -81,11 +86,12 @@
 <script src="js/superfish.js"></script>
 <script src="js/jquery.ui.totop.js"></script>
 <script src="js/jquery.mobilemenu.js"></script>
+<script src="js/pingtan.js"></script>
 <script src="js/touchTouch.jquery.js"></script>
 <script src="js/jquery.equalheights.js"></script>
-<script src="js/pingtan.js"></script>
-<script src="js/request.js"></script>
+<script src="js/request.js"></script>   
 <script src="js/service.js"></script>
+<script src="js/filter.js"></script>
 <script>
     $(document).ready(function(){
         

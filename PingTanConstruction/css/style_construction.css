@@ -1,11 +1,27 @@
-
-
+#select-filter{
+	background-color: rgb(255, 204, 0);
+	border: 0;
+	color: rgb(255,255,255);
+	font-size: 1em;
+	padding: 0.5em;
+}
+#select-filter:hover{
+	cursor: pointer;
+	background-color: rgb(230, 184, 0);
+}
+#select-filter option{
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+}
 .project-detail{
 	position: relative;
 	display: block;
 	z-index: 9999;
 	margin: 0 auto;
 	background-color: rgba(51, 51, 51, 0.7);
+}
+.thumbnail-template{
+	visibility: hidden;
 }
 .project-detail-template{
 	display: none;
