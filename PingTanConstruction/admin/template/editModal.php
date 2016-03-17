@@ -19,15 +19,9 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="startDate">Start Date</label>
-                            <div class="controls">
-                                <input id="editInfo-startDate" name="startDate" type="date" class="form-control" class="input-medium" required>
-                            </div>
-                        </div>
-                        <div class="control-group">
                             <label class="control-label" for="endDate">End Date(Estimated)</label>
                             <div class="controls">
-                                <input id="editInfo-endDate" name="endDate" type="date" class="form-control" class="input-medium" required>
+                                <input id="editInfo-endDate" name="endDate" type="text" class="form-control" class="input-medium" maxlength="20" required>
                             </div>
                         </div>
                         <div class="control-group">
@@ -118,6 +112,26 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!--Delete Project Modal-->
+<div class="modal fade" id="deleteProjectModal" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <div class="modal-header">
+                    Delete Project
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this project?</p>
+                    <p id="deleteModalId"></p>
+                    <p id="deleteModalName"></p>
+                </div>     
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger delete-confirm-btn">Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
         </div>
     </div>
 </div>

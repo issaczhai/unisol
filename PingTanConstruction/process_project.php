@@ -19,7 +19,7 @@ if($operation==""){
 if ($operation === "addProject"){
     $projectId = (string)rand(0,1000000);
     $projectName = filter_input(INPUT_POST,'projectName');
-    $startDate = filter_input(INPUT_POST,'startDate');
+    $startDate = "0000-00";
     $endDate = filter_input(INPUT_POST,'endDate');
     $value = filter_input(INPUT_POST,'value');
     $scopeOfWork = filter_input(INPUT_POST,'scopeOfWork');
@@ -53,7 +53,7 @@ if ($operation === "addProject"){
 }elseif ($operation === "editProjectInfo"){
     $projectId = filter_input(INPUT_POST,'projectId');
     $projectName = filter_input(INPUT_POST,'projectName');
-    $startDate = filter_input(INPUT_POST,'startDate');
+    $startDate = "0000-00";
     $endDate = filter_input(INPUT_POST,'endDate');
     $value = filter_input(INPUT_POST,'value');
     $scopeOfWork = filter_input(INPUT_POST,'scopeOfWork');

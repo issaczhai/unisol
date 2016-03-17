@@ -1,5 +1,12 @@
 (function(){
     $('.delete-project-btn').on('click',function(){
+        $('#deleteModalId').html("Project ID: " + $(this).data("projectid"));
+        $('#deleteModalName').html("Project Name: " + $(this).data("projectname"));
+        var projectid = $(this).data("projectid");
+        $('.delete-confirm-btn').attr('data-projectid', projectid);
+    });
+    
+    $('.delete-confirm-btn').on('click',function(){
         var xhr,
             baseUrl,
             data,
@@ -25,7 +32,6 @@
         xhr = new Request(false,baseUrl, data, 'POST', function(result){
             document.getElementById("editInfo-projectId").value = result.projectId;
             document.getElementById("editInfo-projectName").value = result.projectName;
-            document.getElementById("editInfo-startDate").value = result.startDate;
             document.getElementById("editInfo-endDate").value = result.endDate;
             document.getElementById("editInfo-value").value = result.value;
             document.getElementById("editInfo-scopeOfWork").value = result.scopeOfWork;

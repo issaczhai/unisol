@@ -79,7 +79,6 @@
                                               <tr>
                                                   <th> # </th>
                                                   <th> Project Name </th>
-                                                  <th> Start Date</th>
                                                   <th> End Date</th>
                                                   <th> Value </th>
                                                   <th> Scope of Work</th>
@@ -91,7 +90,6 @@
                                               <tr class="project-row" style="display:none">
                                                   <td class="row-count"> 1 </td>
                                                   <td class="row-projectName"> Project I Love You</td>
-                                                  <td class="row-startDate">2010-02-08</td>
                                                   <td class="row-endDate">2011-02-08</td>
                                                   <td class="row-value">$12,560,000</td>
                                                   <td class="row-scopeOfWork"> Ar</td>
@@ -101,7 +99,7 @@
                                                       <div class="btn-group">
                                                           <button class="btn btn-primary edit-project-info-btn" data-toggle="modal" data-target="#editInfoModal"><i class="icon_pencil_alt"></i></button>
                                                           <button class="btn btn-info edit-project-photo-btn" data-toggle="modal" data-target="#editPhotoModal"><i class="icon_image"></i></button>
-                                                          <button class="btn btn-danger delete-project-btn"><i class="icon_close_alt2"></i></button>
+                                                          <button class="btn btn-danger delete-project-btn" data-toggle="modal" data-target="#deleteProjectModal"><i class="icon_close_alt2"></i></button>
                                                       </div>
                                                   </td>
                                               </tr>                              
@@ -123,19 +121,13 @@
                                                       </div>
                                                   </div>
                                                   <div class="form-group">
-                                                      <label class="col-lg-2 control-label">Start Date</label>
+                                                      <label class="col-lg-2 control-label">Completion Date(Estimated)</label>
                                                       <div class="col-lg-6">
-                                                          <input type="date" class="form-control" id="startDate" name="startDate" required>
+                                                          <input type="text" class="form-control" id="endDate" name="endDate" placeholder="eg. yyyy-mm" maxlength="20" required>
                                                       </div>
                                                   </div>
                                                   <div class="form-group">
-                                                      <label class="col-lg-2 control-label">End Date(Estimated)</label>
-                                                      <div class="col-lg-6">
-                                                          <input type="date" class="form-control" id="endDate" name="endDate" required>
-                                                      </div>
-                                                  </div>
-                                                  <div class="form-group">
-                                                      <label class="col-lg-2 control-label">Value</label>
+                                                      <label class="col-lg-2 control-label">Value (Not displayed)</label>
                                                       <div class="col-lg-6">
                                                           <input type="text" class="form-control" maxlength="16" id="value" name="value" required>
                                                       </div>
