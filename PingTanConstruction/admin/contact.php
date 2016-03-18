@@ -35,6 +35,7 @@
   <!-- container section start -->
   <section id="container" class="">
      <?php
+     include("template/protect.php");
      include("template/header.php");
      include("template/sidebar.php");
      ?>

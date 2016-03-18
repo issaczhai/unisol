@@ -8,7 +8,7 @@
     <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
     <link rel="shortcut icon" href="img/favicon.png">
 
-    <title>Login Page 2 | Creative - Bootstrap 3 Responsive Admin Template</title>
+    <title>PingTan Admin Login</title>
 
     <!-- Bootstrap CSS -->    
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -28,28 +28,34 @@
     <script src="js/respond.min.js"></script>
     <![endif]-->
 </head>
+<?php
+$err = '';
+if(isset($_GET['errorMsg'])){
+    $err=$_GET['errorMsg'];
+}
 
-  <body class="login-img3-body">
+?>
+
+  <body>
 
     <div class="container">
 
-      <form class="login-form" action="index.html">        
+      <form class="login-form" method="post" action="../process_admin.php">        
         <div class="login-wrap">
             <p class="login-img"><i class="icon_lock_alt"></i></p>
             <div class="input-group">
               <span class="input-group-addon"><i class="icon_profile"></i></span>
-              <input type="text" class="form-control" placeholder="Username" autofocus>
+              <input type="text" name="username" class="form-control" placeholder="Username" autofocus>
             </div>
             <div class="input-group">
                 <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-                <input type="password" class="form-control" placeholder="Password">
+                <input type="password" class="form-control" name="password" placeholder="Password">
             </div>
-            <label class="checkbox">
-                <input type="checkbox" value="remember-me"> Remember me
-                <span class="pull-right"> <a href="#"> Forgot Password?</a></span>
-            </label>
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
-            <button class="btn btn-info btn-lg btn-block" type="submit">Signup</button>
+            <div class="input-group">
+                <p style="color:#ff0000"><?=$err?></p>
+            </div>
+            <button class="btn btn-primary btn-lg btn-block submit-btn" name="button" value="login" type="submit">Login</button>
+<!--            <button class="btn btn-info btn-lg btn-block" type="submit">Signup</button>-->
         </div>
       </form>
 
