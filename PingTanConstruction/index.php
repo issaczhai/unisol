@@ -69,27 +69,27 @@
         </div>
         <div data-src="images/slide2.jpg">
             <div class="caption fadeIn">
-                <p class="p9"><span>committed</span><br>to quality</p>
+                <p class="p9"><span>risk</span><br>prevention</p>
             </div>
         </div>
         <div data-src="images/slide3.jpg">
             <div class="caption fadeIn">
-                <p class="p9"><span>committed</span><br>to quality</p>
+                <p class="p9"><span>commitment</span></p>
             </div>
         </div>
     </div>
     <section class="bg1">
         <div class="container_12">
             <div class="grid_12">
-                <div class="line"><h2>we build</h2><br><h2 class="mrg1">the new world</h2></div>
+                <div class="line"><h2>quality deliverable</h2><br><h2 class="mrg1">is our utmost priority</h2></div>
                 <div class="grid_4 alpha">
                     <div class="maxheight block2">
                         <div class="box_inner">
                             <figure class="img1">
                                 <img class="img5" src="images/page1_img1.jpg" alt="">
                             </figure>
-                            <a class="a1" href="#"></a>
-                            <h3>Design &amp; Build<br>package</h3>
+                            <!-- <a class="a1" href="#"></a> -->
+                            <h3>Wet Architectural<br>Work</h3>
                             <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod tincidut. laoreet dolore magna aliquam erat veminim.</p>
                         </div>
                     </div>
@@ -100,8 +100,8 @@
                             <figure class="img1">
                                 <img class="img5" src="images/page1_img2.jpg" alt="">
                             </figure>
-                            <a class="a1" href="#"></a>
-                            <h3>Building<br>renovation</h3>
+                            <!-- <a class="a1" href="#"></a> -->
+                            <h3>Wet Architectural<br>Work</h3>
                             <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat.</p>
                         </div>
                     </div>
@@ -112,8 +112,8 @@
                             <figure class="img1">
                                 <img class="img5" src="images/page1_img3.jpg" alt="">
                             </figure>
-                            <a class="a1" href="#"></a>
-                            <h3>Project<br>management</h3>
+                            <!-- <a class="a1" href="#"></a> -->
+                            <h3>Design &amp;<br> Build </h3>
                             <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad minim.</p>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
                     <figure>
                         <img class="img2" src="images/page1_img4.jpg" alt="">
                         <div class="image_hover">
-                            <a class="a2" href="#"><img src="images/icon7.png" alt=""></a>
+                            <!-- <a class="a2" href="#"><img src="images/icon7.png" alt=""></a> -->
                             <span class="p1">Project name:</span><br>lorem ipsum dolore estum mode
                         </div>
                     </figure>     
@@ -142,7 +142,7 @@
                     <figure>
                         <img class="img2" src="images/page1_img5.jpg" alt="">
                         <div class="image_hover">
-                            <a class="a2" href="#"><img src="images/icon7.png" alt=""></a>
+                            <!-- <a class="a2" href="#"><img src="images/icon7.png" alt=""></a> -->
                             <span class="p1">Project name:</span><br>lorem ipsum dolore estum mode
                         </div>
                     </figure>     
@@ -153,13 +153,11 @@
                     <figure>
                         <img class="img2" src="images/page1_img6.jpg" alt="">
                         <div class="image_hover">
-                            <a class="a2" href="#"><img src="images/icon7.png" alt=""></a>
+                            <!-- <a class="a2" href="#"><img src="images/icon7.png" alt=""></a> -->
                             <span class="p1">Project name:</span><br>lorem ipsum dolore estum mode
                         </div>
                     </figure>     
                 </div>
-            </div>
-            <div class="row">
             </div>
         </div>
     </section>

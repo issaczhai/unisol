@@ -10,23 +10,21 @@
 
 
 section.top{
-	background: #e0ac00;
+	/*background: #e0ac00;*/
 }
 .sf-menu ul {
     z-index: 1000;
     position: absolute;
     padding: 0 0.2em 1em 0.2em;
-    background-color: #f9c415;
+    /* class="mrg1"*/
     top: 115px;
     left: 0px;
 }
 
-.logo a{
-    font-size: 4em;
-    font-family: 'Lobster', cursive;
-    font-weight: 600;
-    color: rgb(255, 255, 255);
+#header h1{
+    padding-top: 1em;
 }
+
 .footer-logo a{
     font-size: 2em;
     font-weight: 600;
@@ -217,6 +215,9 @@ h3{
 .title-career{
     text-align: center;
 }
+.info-career{
+    line-height: 1.5em;
+}
 
 .career-category{
     margin-bottom: 1em;
@@ -238,11 +239,14 @@ h3{
 .career-category article{
     margin-bottom: 1em;
 }
-
-ul{
+/********** SERVICE ***********/
+ul.list-service{
     font-size: 15px;
     color: #747474;
     color: #a6a8ac;
     font: 14px/20px 'times new roman';
     font-style: italic;
+}
+ul.list-service{
+    line-height: 3em;
 }

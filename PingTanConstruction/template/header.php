@@ -2,7 +2,7 @@
     <section class="top">
         <div class="container_12">
             <div class="grid_12 txt1">
-                <h1 class="logo"><a href="index.php">Ping Tan</a></h1>
+                <h1><a href="index.php"><img src="./images/pingtanLogo.png"></a></h1>
                 <section class="menu">
                     <nav class="horizontal-nav full-width horizontalNav-notprocessed">
                         <ul class="sf-menu">

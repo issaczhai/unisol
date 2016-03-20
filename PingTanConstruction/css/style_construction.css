@@ -1,5 +1,5 @@
 #select-filter{
-	background-color: rgb(255, 204, 0);
+	background-color: rgb(153, 179, 255);
 	border: 0;
 	color: rgb(255,255,255);
 	font-size: 1em;
@@ -7,7 +7,7 @@
 }
 #select-filter:hover{
 	cursor: pointer;
-	background-color: rgb(230, 184, 0);
+	background-color: rgb(128, 159, 255);
 }
 #select-filter option{
 	background-color: rgb(255, 255, 255);

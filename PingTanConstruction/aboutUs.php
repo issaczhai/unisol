@@ -166,8 +166,24 @@
         </div>        
 
     </section>
+    <section class="bg1 pad1">
+        <div class="container_12">
+            <div class="grid_12">
+                <h4 class="mrg9">CAPABILITIES</h4>
+            </div>
+            <div class="grid_12omega">
+                    <p class="p4">Ping Tan Construction Pte Ltd has a history of completing projects within an agreed time frame. Our experienced management and administration staff have the ability to plan and complete projects within the cost/time constraints on any project.</p>
+                    </br>
+                    <p class="p4">Whether a project comprises construction, from scratch, renovation, repairing, restoration or minor demolition, the company will to adhere to deadlines – which in turn affect time cost scheduling. With that, clearly defined structural measures have been mapped out to ensure smooth processes that ultimately achieve our final target.t</p>
+                    </br>
+                    <p class="p4">Ping Tan involved in providing basic and complex construction work such as:•  Reinforced Work •   Wet Architectural work •   Dry Architectural work •   External work •   Design & Build
+                    </p>
+            </div>
+           
+        </div>
+    </section>
 
-<section class="bg1 pad1">
+    <section class="bg2 pad2">
         <div class="container_12">
             <div class="grid_12">
                 <h4 class="mrg9">OTHERS</h4>
@@ -177,6 +193,47 @@
             </div>
            
         </div>
+    </section>
+    <section class="bg2 pad2">
+        <div class="container_12">
+            <div class="grid_12">
+                <h4 class="mrg8">Accreditation</h4>
+                <div class="grid_4 alpha">
+                    <figure class="mrg10">
+                        <img class="img2 img4" src="./images/award/bca.png" alt="">
+                    </figure>
+                    <!-- <p class="p4 mrg2"><span class="p5">Accreditation 1</span>
+                    </p > -->
+                </div>
+                <div class="grid_4 omega">
+                    <figure class="mrg10">
+                        <img class="img2 img4" src="./images/award/bizsafe.png" alt="">
+                    </figure>
+                    <!-- <p class="p4 mrg2"><span class="p5">Accreditation 2</span>
+                    </p > -->
+                </div>
+                <div class="grid_4 omega">
+                    <figure class="mrg10">
+                        <img class="img2 img4" src="./images/award/ohsas.png" alt="">
+                    </figure>
+                    <!-- <p class="p4 mrg2"><span class="p5">Accreditation 3</span>
+                    </p > -->
+                </div>
+                <div class="grid_4 omega">
+                    <figure class="mrg10">
+                        <img class="img2 img4" src="./images/award/prestige.png" alt="">
+                    </figure>
+                    <!-- <p class="p4 mrg2"><span class="p5">Accreditation 3</span>
+                    </p > -->
+                </div>
+                <div class="grid_4 omega">
+                    <figure class="mrg10">
+                        <img class="img2 img4" src="./images/award/sac.png" alt="">
+                    </figure>
+                    <!-- <p class="p4 mrg2"><span class="p5">Accreditation 3</span>
+                    </p > -->
+                </div>
+            </div>
     </section>
 </div> 
 

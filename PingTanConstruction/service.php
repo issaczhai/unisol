@@ -91,7 +91,7 @@
                 <p class="p4"><span class="p5">Ping Tan Construction Pte Ltd has a history of completing projects within an agreed time frame. Our experienced management and administration staff have the ability to plan and complete projects within the cost/time constraints on any project.</span>
                 <br>Whether a project comprises construction, from scratch, renovation, repairing, restoration or minor demolition, the company will to adhere to deadlines – which in turn affect time cost scheduling. With that, clearly defined structural measures have been mapped out to ensure smooth processes that ultimately achieve our final target.</p>
                 <p class="p4">Ping Tan involved in providing basic and complex construction work such as:</p>
-                <ul class="list">
+                <ul class="list list-service">
                  <li> Reinforced Work </li>
                  <li> Wet Architectural work</li>
                  <li> Dry Architectural work</li>

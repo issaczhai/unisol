@@ -50,8 +50,9 @@
         <div class="container_12">
             <div class="grid_12">
                 <h3 class="mrg5 title-career">Careers at Ping Tan</h3>
+                <h5 class="info-career">Thank you for your interest about working at Ping Tan, we don't have any opening position yet! Visit our website frequently to know lastest updates! </h5>
             </div>
-            <div class="grid_6 career-category">
+            <!-- <div class="grid_6 career-category">
                 <h5 class="mrg5">Business Administration</h5>
                 <article>
                     <div class="extra_wrapper">
@@ -130,8 +131,8 @@
                         <a class="a3" href="./job_detail.php"><span></span>read more</a>
                     </div><div class="clear"></div>
                 </article>
-            </div>
-        </div>
+            </div>-->
+        </div> 
     </section>
     <section class="bg2 pad2">
         <div class="container_12">
