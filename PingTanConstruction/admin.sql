@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2016 at 08:19 AM
+-- Generation Time: Mar 20, 2016 at 12:36 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 --
 
 INSERT INTO `admin` (`username`, `password`, `profilePic`, `email`) VALUES
-('pingtanAdmin', '123', 'img/avatar1_small.jpg', 'abc@abc.com');
+('pingtanAdmin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'img/Administrator-icon.png', '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -30,4 +30,13 @@ class AdminManager {
         $ConnectionMgr->closeConnection($stmt, $conn);
         return $admin;
     }
+    
+    function updatePassword($username,$pwd){
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("UPDATE admin SET password=? WHERE username=?");
+        $stmt->bind_param("ss", $pwd, $username);
+        $stmt->execute();
+        $ConnectionManager->closeConnection($stmt, $conn);
+    }
 }
