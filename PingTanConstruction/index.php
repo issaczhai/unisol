@@ -90,7 +90,7 @@
                             </figure>
                             <!-- <a class="a1" href="#"></a> -->
                             <h3>Wet Architectural<br>Work</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod tincidut. laoreet dolore magna aliquam erat veminim.</p>
+                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                             </figure>
                             <!-- <a class="a1" href="#"></a> -->
                             <h3>Wet Architectural<br>Work</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat.</p>
+                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                             </figure>
                             <!-- <a class="a1" href="#"></a> -->
                             <h3>Design &amp;<br> Build </h3>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed dia nonummy nibh euismod. tincidut laoreet dolore magna aliquam erat volutpat wisi enim ad minim.</p>
+                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -124,15 +124,15 @@
     <section class="bg2 txt2">
         <div class="container_12">
             <div class="grid_12">
-                <h4 class="txt">recent projects</h4>
+                <h4 class="txt">featured projects</h4>
             </div>
             <div class="grid_4">
                 <div class="block1">
                     <figure>
-                        <img class="img2" src="images/page1_img4.jpg" alt="">
+                        <img class="img2" src="images/ntuc.png" alt="">
                         <div class="image_hover">
                             <!-- <a class="a2" href="#"><img src="images/icon7.png" alt=""></a> -->
-                            <span class="p1">Project name:</span><br>lorem ipsum dolore estum mode
+                            <span class="p1">Project name:</span><br>NTUC Fairprice
                         </div>
                     </figure>     
                 </div>
@@ -140,10 +140,10 @@
             <div class="grid_4">
                 <div class="block1">
                     <figure>
-                        <img class="img2" src="images/page1_img5.jpg" alt="">
+                        <img class="img2" src="images/westbuild.jpg" alt="">
                         <div class="image_hover">
                             <!-- <a class="a2" href="#"><img src="images/icon7.png" alt=""></a> -->
-                            <span class="p1">Project name:</span><br>lorem ipsum dolore estum mode
+                            <span class="p1">Project name:</span><br>Westbuild
                         </div>
                     </figure>     
                 </div>
@@ -151,10 +151,10 @@
             <div class="grid_4">
                 <div class="block1">
                     <figure>
-                        <img class="img2" src="images/page1_img6.jpg" alt="">
+                        <img class="img2" src="images/seagate.jpg" alt="">
                         <div class="image_hover">
                             <!-- <a class="a2" href="#"><img src="images/icon7.png" alt=""></a> -->
-                            <span class="p1">Project name:</span><br>lorem ipsum dolore estum mode
+                            <span class="p1">Project name:</span><br>Seagate
                         </div>
                     </figure>     
                 </div>
