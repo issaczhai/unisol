@@ -14,10 +14,10 @@
 class ConnectionManager {
     //put your code here
     static function getConnection(){
-        $hostname = "localhost";
+        $hostname = "101.100.203.83";
         $database = "pingtan_construction_db";
-        $userName = "root";
-        $password = "";
+        $userName = "pingtan_admin";
+        $password = "pingTan2dmin";
         $conn = new mysqli($hostname, $userName, $password, $database);
         return $conn;
     }
