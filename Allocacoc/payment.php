@@ -1,9 +1,10 @@
+<?php
+if (session_status()!=PHP_SESSION_ACTIVE) {
+session_start();
+}
+include_once("./protect/customer_protect.php");
+?>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
@@ -23,7 +24,6 @@ and open the template in the editor.
     <body>
     <div class="container">      
     <?php
-    include_once("./protect.php");
     include_once("./Manager/ConnectionManager.php");
     include_once("./Manager/ProductManager.php");
     include_once("./Manager/CreditManager.php");
@@ -62,14 +62,18 @@ and open the template in the editor.
     include_once("./templates/header2.php");
     $creditMgr = new CreditManager();
     $creditList = $creditMgr->getUnusedCreditListByReceiverId($userid);
+    function generateRandomString($length) {
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
     ?>
-      
-    <form id="paymentForm" action="https://securepayments.paypal.com/webapps/HostedSoleSolutionApp/webflow/sparta/hostedSoleSolutionProcess" method="post" class="form-horizontal">
-        <input type="hidden" name="cmd" value="_hosted-payment">
-        <input type="hidden" name="business" value="6USHCFXJ739JN">
-        <input type="hidden" name="paymentaction" value="sale">
-        <input type="hidden" name="return" value="https://gosg.net/success.php">
-        <input type="hidden" name="currency_code" value="SGD">
+        <form id="paymentForm" name="cart" method="post" class="form-horizontal">
+        <!-- Address -->
         <div class="col-lg-12">
             <div class="page-header">
                  <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-map-marker"></i> Shipping Address </font>
@@ -128,6 +132,7 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
+        
         <!-- promotion or reward code -->
         <div class="col-lg-12">
             <div class="page-header">
@@ -175,36 +180,58 @@ and open the template in the editor.
             </div>
         </div>
         
+        <!-- card -->
         <div class="col-lg-12">
             <div class="page-header">
-                 <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-credit-card"></i> Choose your payment method </font>
+                 <font style="color:#008ba4;font-weight: bold; font-size:17px"><i class="fa fa-credit-card"></i> Payment Details </font>
             </div>
         </div>
         <div class="col-lg-12 col-md-6">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="form-group">
-                        <div class="col-lg-3">
-                            <label for="paypal">
-                                <input type="radio" name="bank" value="paypalsg" id="paypal" class="J_paypal">
-                                <img src="./public_html/img/visa-master.png" height="50px">
-                            </label>
-                        </div>
-                        <div class="col-lg-2">
-                            <label for="alipay">
-                                <input type="radio" name="bank" value="alipay" id="alipay" class="J_paypal">
-                                <img src="./public_html/img/alipay.png" alt="">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-3 col-lg-offset-9">
-                            <button class="btn btn-primary" style="width:150px" type="submit" name="METHOD">Pay</button>
-                        </div>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label" for="card_number">Card Number*</label>
+                                <div class="col-lg-4">
+                                    <input type="text" name="card_number" id="card_number" class="form-control" maxlength="20"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label" for="card_name">Name on Card*</label>
+                                <div class="col-lg-4">
+                                    <input type="text" name="card_name" id="card_name" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Expiry*</label>
+                                <div class="col-lg-1">
+                                    <input type="text" name="expiry_month" id="expiry_month" maxlength="2" placeholder="MM" class="form-control"/>
+                                </div>
+                                <div class="col-lg-1">
+                                    <input type="text" name="expiry_year" id="expiry_year" maxlength="2" placeholder="YY" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label" for="cvv">CVV*</label>
+                                <div class="col-lg-1">
+                                    <input type="text" name="cvv" id="cvv" maxlength="3" class="form-control"/>
+                                </div>
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
             </div>
         </div>
+        
+        
+        <div class="form-group" >
+            <div class="col-lg-8 col-lg-offset-5" style="margin-left: 400px">
+                <button type="submit" class="btn btn-primary btn-lg" id="paymentButton" disabled="disabled">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Proceed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                <button type="button" class="btn btn-warning btn-lg" id="resetBtn">Reset form</button>
+            </div>
+        </div>
+        
         
         <!-- receipt -->
         <div class="col-lg-12">
@@ -250,23 +277,24 @@ and open the template in the editor.
                                     $count+=1;
                                     $totalPrice += intval($item["quantity"]) * doubleval($item["price"]);
                                 ?>
-                                <input id="product_id<?php echo strval($count)?>" name="product_id<?php echo strval($count)?>" type="hidden" value="<?=$item["product_id"] ?>"/>
-                                <input id="product_color<?php echo strval($count)?>" name="product_color<?php echo strval($count)?>" type="hidden" value="<?=$item["color"] ?>"/>
-                                <input id="add_to_cart_time<?php echo strval($count)?>" name="add_to_cart_time<?php echo strval($count)?>" type="hidden" value="<?=$item["add_to_cart_time"] ?>"/>
+                                <input id="product_id<?php echo strval($count)?>" name="product_id[]" type="hidden" value="<?=$item["product_id"] ?>"/>
+                                <input id="product_color<?php echo strval($count)?>" name="product_color[]" type="hidden" value="<?=$item["color"] ?>"/>
+                                <input id="add_to_cart_time<?php echo strval($count)?>" name="add_to_cart_time[]" type="hidden" value="<?=$item["add_to_cart_time"] ?>"/>
                                 <tr>
                                     <td align="center" width="15%">
                                         <div style="padding-left: 30px">
                                             <img src="<?=$item["thumbnail"]?>" width="80px" height="80px">
                                         </div>
                                     </td>
-                                    <td align="left" width="15%" style="vertical-align:middle;"><?=$item["product_name"] ?><input id="product<?php echo strval($count)?>" name="product<?php echo strval($count)?>" type="hidden" value="<?=$item["product_name"] ?>"/></td>    
-                                    <td align="center" style="vertical-align:middle;"><?=$item["quantity"] ?><input id="quantity<?php echo strval($count)?>" name="quantity<?php echo strval($count)?>" type="hidden" value="<?=$item["quantity"] ?>"/></td>    
-                                    <td align="center" style="vertical-align:middle;">$<?=number_format($item["price"],2,'.','') ?><input id="price<?php echo strval($count)?>" name="price<?php echo strval($count)?>" type="hidden" value="<?=$item["price"] ?>"/></td>
+                                    <td align="left" width="15%" style="vertical-align:middle;"><?=$item["product_name"] ?><input id="product<?php echo strval($count)?>" name="product_name[]" type="hidden" value="<?=$item["product_name"] ?>"/></td>    
+                                    <td align="center" style="vertical-align:middle;"><?=$item["quantity"] ?><input id="quantity<?php echo strval($count)?>" name="quantity[]" type="hidden" value="<?=$item["quantity"] ?>"/></td>    
+                                    <td align="center" style="vertical-align:middle;">$<?=number_format($item["price"],2,'.','') ?><input id="price<?php echo strval($count)?>" name="price[]" type="hidden" value="<?=$item["price"] ?>"/></td>
                                     <td align="center" width="15%" style="vertical-align:middle;color:#008ba4;"><b>$<?=number_format($item["subtotal"],2,'.','') ?></b></td> 
                                 </tr>
                                 <?php
                                     }
                                 }
+                                $_SESSION["session_price"] = $totalPrice;
                                 ?>
                             </tbody>
                         </table>
@@ -275,19 +303,16 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        <input type="hidden" name="subtotal" value="<?=$totalPrice?>">
-<!--        <div class="form-group" >
-            <div class="col-lg-8 col-lg-offset-5" style="margin-left: 400px">
-                <button type="submit" class="btn btn-primary btn-lg" id="paymentBtn">Go To Payment</button>
-                <button type="button" class="btn btn-warning btn-lg" id="resetBtn1">Reset form</button>
-            </div>
-        </div>  -->
-    </form>
+        
+        </form>
+    
     </div>    
   
     
     <!--Registration Validation-->
     <script type="text/javascript" src="public_html/js/bootstrapValidator.js"></script>
+    <script type="text/javascript" src="public_html/js/jquery.creditCardValidator.js"></script>
+    <script type="text/javascript" src="public_html/js/card.js"></script>
     <script type="text/javascript" src="public_html/js/payment.js"></script>
     </body>
 </html>

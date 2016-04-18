@@ -1,5 +1,5 @@
 <?php
-include './protect.php'; 
+include './protect/customer_protect.php'; 
 include_once("./Manager/CustomerManager.php");
 include_once("./Manager/AddressManager.php");
 include_once("./Manager/ConnectionManager.php");
@@ -210,7 +210,7 @@ $address_list = $addressMgr->getAddress($customer_id);
                 <font color="#FFFFFF" size="5">Just share this link:</font>
                 
                 <div class="col-lg-4 input-group">
-                    <input type="text" id="invitation_link" class="form-control" value=<?php echo 'gosg.net/'.$customer['invitation_link'] ?>>
+                    <input type="text" id="invitation_link" class="form-control" value=<?php echo 'trustedbrandsonline.com/'.$customer['invitation_link'] ?>>
                     <span class="input-group-btn">
                         <input class="btn btn-default" id="copy" type="button" data-clipboard-target="invitation_link" value="Copy">
                     </span>
@@ -235,7 +235,7 @@ $address_list = $addressMgr->getAddress($customer_id);
                             <h4 class="modal-title">Modal Window</h4>
                         </div>
                         <form role="form" action="coupon_email.php" method="POST">
-                            <input type="hidden" name="invitation_link" class="form-control" value=<?php echo 'gosg.net/'.$customer['invitation_link'] ?>>
+                            <input type="hidden" name="invitation_link" class="form-control" value=<?php echo 'trustedbrandsonline.com/'.$customer['invitation_link'] ?>>
                             <div class="modal-body">
                                     <div class="form-group">
                                         <label for="recipient-name" class="control-label">Email:</label>
@@ -421,7 +421,7 @@ $address_list = $addressMgr->getAddress($customer_id);
     function shareOnFacebook(){
         FB.ui({
             method: 'share',
-            href: 'http://gosg.net/account.php'
+            href: 'http://trustedbrandsonline.com/account.php'
             
         }, function(response) {
             if(response && response.post_id){}

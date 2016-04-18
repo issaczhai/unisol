@@ -15,9 +15,9 @@ class ConnectionManager {
     //put your code here
     static function getConnection(){
         $hostname = "localhost";
-        $database = "allocacoc_db";
-        $userName = "unisol";
-        $password = "Qwerty123";
+        $database = "trussswt_allocacoc";
+        $userName = "trussswt_admin";
+        $password = "1qazxsw23edc";
         $conn = new mysqli($hostname, $userName, $password, $database);
         return $conn;
     }

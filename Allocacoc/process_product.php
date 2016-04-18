@@ -22,6 +22,7 @@ if ($operation === ''){
 
 if ($operation === "add_product"){
     $valid=true;
+    $errorList = [];
     $product_name = filter_input(INPUT_POST,'product_name');
     $random_no = (string)rand(0,10000);
     $product_id = "AL".$random_no;
@@ -45,21 +46,25 @@ if ($operation === "add_product"){
     $picname = $_FILES['thumbnail_photo_input']['name']; 
     $picsize = $_FILES['thumbnail_photo_input']['size'];
     if ($picname != "") {
+        $thumbnail_valid = true;
         if ($picsize > 5120000) {  
-            echo 'image size cannot exceed 5m'; 
-            exit; 
+            array_push($errorList ,'image size of thumbnail exceed 5m'); 
+            $valid=false; 
+            $thumbnail_valid = false;
         } 
         $type = strstr($picname, '.');  
-        if ($type != ".gif" && $type != ".jpg" && $type != ".png") { 
-            echo 'invalid image type'; 
-            exit; 
+        if ($type != ".gif" && $type != ".jpg" && $type != ".png"&& $type != ".jpeg") { 
+            array_push($errorList ,'invalid image type for thumbnail'); 
+            $valid=false;  
+            $thumbnail_valid = false;
         }
-        $rand = rand(10000, 99999); 
-        $pics = strstr($picname,'.',true) . date("YmdHis") . $rand .'thumbnail'. $type;
-        $pic_path = "public_html/img/productImg/". $pics;
-        move_uploaded_file($_FILES['thumbnail_photo_input']['tmp_name'], $pic_path);
-        $imgURL_thumbnail = $pic_path;
-                
+        if($thumbnail_valid&&$valid){
+            $rand = rand(10000, 99999); 
+            $pics = strstr($picname,'.',true) . date("YmdHis") . $rand .'thumbnail'. $type;
+            $pic_path = "public_html/img/productImg/". $pics;
+            move_uploaded_file($_FILES['thumbnail_photo_input']['tmp_name'], $pic_path);
+            $imgURL_thumbnail = $pic_path;
+        }     
     }
     
     $photo_name_arr = ['1_photo_input','2_photo_input','3_photo_input','4_photo_input'];
@@ -67,66 +72,76 @@ if ($operation === "add_product"){
     $colorOptionalCode_arr = [];
     $imgColor="";
     foreach ($photo_name_arr as $photo_name){
+        $photo_valid= true;
         $picname = $_FILES[$photo_name]['name'];
         $picsize = $_FILES[$photo_name]['size'];
         if ($picname != "") {
             if ($picsize > 5120000) {  
-                echo 'image size cannot exceed 5m'; 
-                exit; 
+                array_push($errorList ,'image size of '.$picname.' exceed 5m'); 
+                $valid=false;  
+                $photo_valid = false; 
             } 
             $type = strstr($picname, '.');  
-            if ($type != ".gif" && $type != ".jpg" && $type != ".png") { 
-                echo 'invalid image type'; 
-                exit; 
+            if ($type != ".gif" && $type != ".jpg" && $type != ".png"&& $type != ".jpeg") { 
+                array_push($errorList ,'invalid image type for '.$picname); 
+                $valid=false;  
+                $photo_valid = false;
             }
-            $rand = rand(10000, 99999); 
-            $pics = strstr($picname,'.',true) . date("YmdHis") . $rand .'detail'. $type;
-            switch ($photo_name) {
-                case "1_photo_input":
-                    $pic_path = "public_html/img/detailImg/". $pics;
-                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
-                    $imgColor = $_POST['color1'];
-                    $imgURL_arr[$imgColor]=$pic_path;
-                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code1'];
-                    break;
-                case "2_photo_input":
-                    $pic_path = "public_html/img/detailImg/". $pics;
-                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
-                    $imgColor = $_POST['color2'];
-                    $imgURL_arr[$imgColor]=$pic_path;
-                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code2'];
-                    break;
-                case "3_photo_input":
-                    $pic_path = "public_html/img/detailImg/". $pics;
-                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
-                    $imgColor = $_POST['color3'];
-                    $imgURL_arr[$imgColor]=$pic_path;
-                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code3'];
-                    break;
-                case "4_photo_input":
-                    $pic_path = "public_html/img/detailImg/". $pics;
-                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
-                    $imgColor = $_POST['color4'];
-                    $imgURL_arr[$imgColor]=$pic_path;
-                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code4'];
-                    break; 
+            if($photo_valid&&$valid){
+	            $rand = rand(10000, 99999); 
+	            $pics = strstr($picname,'.',true) . date("YmdHis") . $rand .'detail'. $type;
+	            switch ($photo_name) {
+	                case "1_photo_input":
+	                    $pic_path = "public_html/img/detailImg/". $pics;
+	                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
+	                    $imgColor = $_POST['color1'];
+	                    $imgURL_arr[$imgColor]=$pic_path;
+	                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code1'];
+	                    break;
+	                case "2_photo_input":
+	                    $pic_path = "public_html/img/detailImg/". $pics;
+	                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
+	                    $imgColor = $_POST['color2'];
+	                    $imgURL_arr[$imgColor]=$pic_path;
+	                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code2'];
+	                    break;
+	                case "3_photo_input":
+	                    $pic_path = "public_html/img/detailImg/". $pics;
+	                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
+	                    $imgColor = $_POST['color3'];
+	                    $imgURL_arr[$imgColor]=$pic_path;
+	                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code3'];
+	                    break;
+	                case "4_photo_input":
+	                    $pic_path = "public_html/img/detailImg/". $pics;
+	                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
+	                    $imgColor = $_POST['color4'];
+	                    $imgURL_arr[$imgColor]=$pic_path;
+	                    $colorOptionalCode_arr[$imgColor]=$_POST['color_symbol_code4'];
+	                    break; 
+	            }
             }
         }
     }
-    
-    $colorArr = array_keys($imgURL_arr);
-    $colors=implode(",",$colorArr);
-    $productMgr->addProduct($product_id, $product_name, $symbol_code, $price, $colors, $description, $stock);
-    $photoMgr->AddPhoto($product_id, 'thumbnail', $imgURL_thumbnail);
-    foreach($colorArr as $color){
-        $photoMgr->AddPhoto($product_id, $color, $imgURL_arr[$color]);
-        $productMgr->addProductColorOptionalCode($product_id, $color, $colorOptionalCode_arr[$color]);
+    if($valid){
+            $colorArr = array_keys($imgURL_arr);
+	    $colors=implode(",",$colorArr);
+	    $productMgr->addProduct($product_id, $product_name, $symbol_code, $price, $colors, $description, $stock);
+	    $photoMgr->AddPhoto($product_id, 'thumbnail', $imgURL_thumbnail);
+	    foreach($colorArr as $color){
+	        $photoMgr->AddPhoto($product_id, $color, $imgURL_arr[$color]);
+	        $productMgr->addProductColorOptionalCode($product_id, $color, $colorOptionalCode_arr[$color]);
+	    }
+	header("Location: admin.php#viewProduct");
+    }else{
+        header("Location: admin.php#viewProduct");
     }
-header("Location: admin.php#viewProduct");
+    
 
 
 }elseif ($operation === "edit_product") {
     $valid=true;
+    $errorList = [];
     $product_id = filter_input(INPUT_POST,'edit_product_id');
     $existingPhotoList = $photoMgr->getPhotos($product_id);
     $product_name = filter_input(INPUT_POST,'edit_product_name');
@@ -152,25 +167,30 @@ header("Location: admin.php#viewProduct");
     $picname = $_FILES['edit_thumbnail_photo_input']['name']; 
     $picsize = $_FILES['edit_thumbnail_photo_input']['size'];
     if ($picname != "") {
+        $thumbnail_valid = true;
         if ($picsize > 5120000) {  
-            echo 'image size cannot exceed 5m'; 
-            exit; 
+                array_push($errorList ,'image size of thumbnail exceed 5m'); 
+                $valid=false;  
+                $thumbnail_valid = false;  
         } 
         $type = strstr($picname, '.');  
-        if ($type != ".gif" && $type != ".jpg" && $type != ".png") { 
-            echo 'invalid image type'; 
-            exit; 
+        if ($type != ".gif" && $type != ".jpg" && $type != ".png"&& $type != ".jpeg") { 
+                array_push($errorList ,'invalid image type for thumbnail'); 
+                $valid=false;  
+                $thumbnail_valid = false;
         }
-        $rand = rand(10000, 99999); 
-        $pics = strstr($picname,'.',true) . date("YmdHis") . $rand .'thumbnail'. $type;
-        $pic_path = "public_html/img/productImg/". $pics;
-        move_uploaded_file($_FILES['edit_thumbnail_photo_input']['tmp_name'], $pic_path);
-        $thumbnail_exist=$photoMgr->checkThumbnail($product_id);
-        if($thumbnail_exist == false){
-            $photoMgr->AddPhoto($product_id, "thumbnail", $pic_path);
-        }else{
-            $photoMgr->updatePhoto($product_id, "thumbnail", "thumbnail", $pic_path);
-            unlink($existingPhotoList['thumbnail']);
+        if($thumbnail_valid &&$valid){
+	        $rand = rand(10000, 99999); 
+	        $pics = strstr($picname,'.',true) . date("YmdHis") . $rand .'thumbnail'. $type;
+	        $pic_path = "public_html/img/productImg/". $pics;
+	        move_uploaded_file($_FILES['edit_thumbnail_photo_input']['tmp_name'], $pic_path);
+	        $thumbnail_exist=$photoMgr->checkThumbnail($product_id);
+	        if($thumbnail_exist == false){
+	            $photoMgr->AddPhoto($product_id, "thumbnail", $pic_path);
+	        }else{
+	            $photoMgr->updatePhoto($product_id, "thumbnail", "thumbnail", $pic_path);
+	            unlink($existingPhotoList['thumbnail']);
+	        }
         }
     }
     
@@ -180,100 +200,110 @@ header("Location: admin.php#viewProduct");
     $imgColor="";
     $imgOriginalColor="";
     foreach ($photo_name_arr as $photo_name){
+        $photo_valid=true;
         $picname = $_FILES[$photo_name]['name']; 
         $picsize = $_FILES[$photo_name]['size'];
         if ($picname != "") {
             if ($picsize > 5120000) {  
-                echo 'image size cannot exceed 5m'; 
-                exit; 
+                array_push($errorList ,'image size of '.$picname.' exceed 5m'); 
+                $valid=false;  
+                $photo_valid = false; 
             } 
             $type = strstr($picname, '.');  
-            if ($type != ".gif" && $type != ".jpg" && $type != ".png") { 
-                echo 'invalid image type'; 
-                exit; 
+            if ($type != ".gif" && $type != ".jpg" && $type != ".png"&& $type != ".jpeg") { 
+                array_push($errorList ,'invalid mage type for '.$picname); 
+                $valid=false;  
+                $photo_valid = false; 
             }
-            $rand = rand(10000, 99999); 
-            $pics = strstr($picname,'.',true) . date("YmdHis") . $rand . 'detail' . $type;
-            switch ($photo_name) {
-                case "edit_1_photo_input":
-                    $pic_path = "public_html/img/detailImg/". $pics;
-                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
-                    $imgColor = $_POST['edit_1_photo_color'];
-                    $imgOriginalColor = $_POST['edit_1_photo_original_color'];
-                    $key = array_search($imgOriginalColor, $colorArr);
-                    if($key === false){
-                        $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
-                        array_push($colorArr, $imgColor);
-                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code1']);
-                    }else{
-                        unset($colorArr[$key]);
-                        array_push($colorArr, $imgColor);
-                        $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path); 
-                        unlink($existingPhotoList[$imgOriginalColor]);
-                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code1']);
-                    }
-                    
-                    break;
-                case "edit_2_photo_input":
-                    $pic_path = "public_html/img/detailImg/". $pics;
-                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
-                    $imgColor = $_POST['edit_2_photo_color'];
-                    $imgOriginalColor = $_POST['edit_2_photo_original_color'];
-                    $key = array_search($imgOriginalColor, $colorArr);
-                    if($key === false){
-                        $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
-                        array_push($colorArr, $imgColor);
-                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code2']);
-                    }else{
-                        unset($colorArr[$key]);
-                        array_push($colorArr, $imgColor);
-                        $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path);
-                        unlink($existingPhotoList[$imgOriginalColor]);
-                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code2']);
-                    }
-                    break;
-                case "edit_3_photo_input":
-                    $pic_path = "public_html/img/detailImg/". $pics;
-                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
-                    $imgColor = $_POST['edit_3_photo_color'];
-                    $imgOriginalColor = $_POST['edit_3_photo_original_color'];
-                    $key = array_search($imgOriginalColor, $colorArr);
-                    if($key === false){
-                        $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
-                        array_push($colorArr, $imgColor);
-                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code3']);
-                    }else{
-                        unset($colorArr[$key]);
-                        array_push($colorArr, $imgColor);
-                        $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path);
-                        unlink($existingPhotoList[$imgOriginalColor]);
-                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code3']);
-                    }
-                    break;
-                case "edit_4_photo_input":
-                    $pic_path = "public_html/img/detailImg/". $pics;
-                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
-                    $imgColor = $_POST['edit_4_photo_color'];
-                    $imgOriginalColor = $_POST['edit_4_photo_original_color'];
-                    $key = array_search($imgOriginalColor, $colorArr);
-                    if($key === false){
-                        $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
-                        array_push($colorArr, $imgColor);
-                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code4']);
-                    }else{
-                        unset($colorArr[$key]);
-                        array_push($colorArr, $imgColor);
-                        $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path); 
-                        unlink($existingPhotoList[$imgOriginalColor]);
-                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code4']);
-                    }
-                    break;
+            if($photo_valid&&$valid){
+	            $rand = rand(10000, 99999); 
+	            $pics = strstr($picname,'.',true) . date("YmdHis") . $rand . 'detail' . $type;
+	            switch ($photo_name) {
+	                case "edit_1_photo_input":
+	                    $pic_path = "public_html/img/detailImg/". $pics;
+	                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
+	                    $imgColor = $_POST['edit_1_photo_color'];
+	                    $imgOriginalColor = $_POST['edit_1_photo_original_color'];
+	                    $key = array_search($imgOriginalColor, $colorArr);
+	                    if($key === false){
+	                        $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
+	                        array_push($colorArr, $imgColor);
+	                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code1']);
+	                    }else{
+	                        unset($colorArr[$key]);
+	                        array_push($colorArr, $imgColor);
+	                        $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path); 
+	                        unlink($existingPhotoList[$imgOriginalColor]);
+	                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code1']);
+	                    }
+	                    
+	                    break;
+	                case "edit_2_photo_input":
+	                    $pic_path = "public_html/img/detailImg/". $pics;
+	                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
+	                    $imgColor = $_POST['edit_2_photo_color'];
+	                    $imgOriginalColor = $_POST['edit_2_photo_original_color'];
+	                    $key = array_search($imgOriginalColor, $colorArr);
+	                    if($key === false){
+	                        $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
+	                        array_push($colorArr, $imgColor);
+	                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code2']);
+	                    }else{
+	                        unset($colorArr[$key]);
+	                        array_push($colorArr, $imgColor);
+	                        $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path);
+	                        unlink($existingPhotoList[$imgOriginalColor]);
+	                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code2']);
+	                    }
+	                    break;
+	                case "edit_3_photo_input":
+	                    $pic_path = "public_html/img/detailImg/". $pics;
+	                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
+	                    $imgColor = $_POST['edit_3_photo_color'];
+	                    $imgOriginalColor = $_POST['edit_3_photo_original_color'];
+	                    $key = array_search($imgOriginalColor, $colorArr);
+	                    if($key === false){
+	                        $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
+	                        array_push($colorArr, $imgColor);
+	                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code3']);
+	                    }else{
+	                        unset($colorArr[$key]);
+	                        array_push($colorArr, $imgColor);
+	                        $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path);
+	                        unlink($existingPhotoList[$imgOriginalColor]);
+	                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code3']);
+	                    }
+	                    break;
+	                case "edit_4_photo_input":
+	                    $pic_path = "public_html/img/detailImg/". $pics;
+	                    move_uploaded_file($_FILES[$photo_name]['tmp_name'], $pic_path);
+	                    $imgColor = $_POST['edit_4_photo_color'];
+	                    $imgOriginalColor = $_POST['edit_4_photo_original_color'];
+	                    $key = array_search($imgOriginalColor, $colorArr);
+	                    if($key === false){
+	                        $photoMgr->AddPhoto($product_id, $imgColor, $pic_path);
+	                        array_push($colorArr, $imgColor);
+	                        $productMgr->addProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code4']);
+	                    }else{
+	                        unset($colorArr[$key]);
+	                        array_push($colorArr, $imgColor);
+	                        $photoMgr->updatePhoto($product_id, $imgOriginalColor, $imgColor, $pic_path); 
+	                        unlink($existingPhotoList[$imgOriginalColor]);
+	                        $productMgr->updateProductColorOptionalCode($product_id, $imgColor, $_POST['edit_color_symbol_code4']);
+	                    }
+	                    break;
+	            }
             }
         }
     }
-    $colors=implode(",",$colorArr);
-    $productMgr->updateProduct($product_id, $product_name, $symbol_code, $price, $colors, $description, $stock);
-header("Location: admin.php#viewProduct");
+    if($valid){
+        $colors=implode(",",$colorArr);
+        $productMgr->updateProduct($product_id, $product_name, $symbol_code, $price, $colors, $description, $stock);
+        header("Location: admin.php#viewProduct");
+    }else{
+        header("Location: admin.php#viewProduct");
+    }
+    
 }elseif ($operation === "add_product_to_cart"){
     session_start();
     $customer_id = $_SESSION["userid"];

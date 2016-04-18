@@ -27,9 +27,6 @@ Paymeny.php
 .form-control{
     border-radius: 0px
 }
-#paymentBtn{
-    background-color: #008ba4
-}
 .btn-primary{
     background-image: none
 }
@@ -44,6 +41,47 @@ Paymeny.php
     text-decoration: none;
 }
 #orderTableBody{
-                font-family: "Century Gothic";
-                font-size: 15px;
-            }
+    font-family: "Century Gothic";
+    font-size: 15px;
+}
+.payment{border:1px solid #ededed;border-radius:5px;width:100%}
+.payment td{text-align:center;}
+
+#paymentForm #card_number {
+  background-image: url(../img/images.png), url(../img/images.png);;
+  background-position: 2px -121px, 260px -61px;
+  background-size: 120px 361px, 120px 361px;
+  background-repeat: no-repeat;
+  padding-left: 54px;
+  width: 225px;
+}
+#paymentForm #card_number.visa {
+  background-position: 2px -163px, 260px -61px;
+}
+#paymentForm #card_number.visa_electron {
+  background-position: 2px -205px, 260px -61px;
+}
+#paymentForm #card_number.mastercard {
+  background-position: 2px -247px, 260px -61px;
+}
+#paymentForm #card_number.maestro {
+  background-position: 2px -289px, 260px -61px;
+}
+#paymentForm #card_number.discover {
+  background-position: 2px -331px, 260px -61px;
+}
+#paymentForm #card_number.valid.visa {
+  background-position: 2px -163px, 260px -87px;
+}
+#paymentForm #card_number.valid.visa_electron {
+  background-position: 2px -205px, 260px -87px;
+}
+#paymentForm #card_number.valid.mastercard {
+  background-position: 2px -247px, 260px -87px;
+}
+#paymentForm #card_number.valid.maestro {
+  background-position: 2px -289px, 260px -87px;
+}
+#paymentForm #card_number.valid.discover {
+  background-position: 2px -331px, 260px -87px;
+}

@@ -19,7 +19,7 @@
         <div id="redirection" class='col-md-3 col-md-offset-3 col-xs-6 col-xs-offset-0' style="margin-top:10px;margin-bottom:10px">
             <span>Go to main site &nbsp;</span>
             <select style="background-color: #ffffff;width:60%;border: none;outline: none;padding: 0;" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                <option selected value="http://allocacoc.sg">Singapore</option>
+                <option selected value="http://trustedbrandsonline.com">Singapore</option>
                 <option value="http://www.allocacoc.com">Europe</option>
             </select>
             
@@ -35,11 +35,17 @@
                 <div class='col-md-3'>
                     <span><a href="./termAndConditions.php" style="color: #333">terms & conditions</a></span>
                 </div>
+                <div class='col-md-2'>
+                    <span><a href="./refund.php" style="color: #333">refund</a></span>
+                </div>
+                <div class='col-md-2'>
+                    <span><a href="./delivery.php" style="color: #333">delivery</a></span>
+                </div>
             </div>
             
             <div class="row" style="padding-top:20px;font-size: 12px;">
                 <div class='col-md-10'>
-                    <span>This webshop only delivers within Singapore, for other countries please go to <a href="www.allocacoc.com">www.allocacoc.com</a></span>
+                    <span>This webshop only delivers within Singapore, for other countries please go to <a href="http://www.allocacoc.com" target="_blank">www.allocacoc.com</a></span>
                 </div>
             </div>
         </div>

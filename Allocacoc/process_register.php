@@ -46,10 +46,10 @@ if($form_data['success']=="true"){
     //add into database
     $customerMgr->addCustomer($email, $pwd, $email, 0.0, $invitation_link,$verify);
     //send email to email
-    $activation_code = md5($random_no);
+    $activation_code = sha1($random_no);
     $message = "To activate your account, please click on the link:\n\n";
-    $message = $message."gosg.net/verify.php?email=".urldecode($email)."&key=$activation_code";
-    mail($email, 'Registration Confirmation', $message, 'From: leonyu0930@gmail.com');
+    $message = $message."trustedbrandsonline.com/verify.php?email=".urldecode($email)."&key=$activation_code";
+    mail($email, 'Registration Confirmation', $message, 'From: allocacoc@trustedbrandsonline.com');
     
     session_start();
     $form_data['status'] = "unverified";

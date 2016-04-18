@@ -1,3 +1,8 @@
+<?php
+if (session_status()!=PHP_SESSION_ACTIVE) {
+        session_start();
+}
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -5,9 +10,6 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php 
-if (session_status()!=PHP_SESSION_ACTIVE) {
-        session_start();
-}
 include_once("./Manager/ConnectionManager.php");
 include_once("./Manager/ProductManager.php");
 include_once("./Manager/PhotoManager.php");
@@ -42,7 +44,7 @@ if(isset($_SESSION["sort_type"]) && !empty($_SESSION["sort_type"])){
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="./public_html/css/main.css">
         <link rel="stylesheet" href="./public_html/css/webShop.css">
         <!--<link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">-->
@@ -261,46 +263,7 @@ $results = $productMgr->getAllProduct();
 <!--<div style='position:fixed;width:100%;margin-top:-20px;height:20px;background:#FFF;z-index:2'></div>-->
 
 <div class="container">
-        <!--
-        <div id='video_gallary' style='width:800px;height:400px;padding-left:15px;padding-right:15px;'>
-            <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered"
-                controls preload="auto" width="100%" height="100%"
-                src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Allocacoc+PowerCube+Remote+double+click+-+YouTube+%5B360p%5D.mp4"
-                poster="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Remote+Double+Click.png"
-                data-setup='{"example_option":true}'>
-                
-            </video>
-            
-            
-        </div>
-        <ul style="display:inline;float:right;padding-right:45px;margin-top:-400px">
-            <li>
-                <div class="productImgSmall" id="firstThumb" style="width:150px;height:80px;padding-top:1px;cursor:pointer;">
-                    <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Remote+Double+Click.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Allocacoc+PowerCube+Remote+double+click+-+YouTube+%5B360p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Remote+Double+Click.png')" style="position:relative"/>				
-                </div>
-            </li>
-            <li>
-                <div class="productImgSmall between" style="width:155px;height:80px;padding-top:1px;cursor:pointer;">
-                    <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Powercube+Review.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/PowerCube+review+-+YouTube+%5B360p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Powercube+Review.png')" style="position:relative"/>				
-                </div>
-            </li>
-            <li>
-                <div class="productImgSmall middle" style="width:160px;height:80px;padding-top:1px;cursor:pointer;">
-                    <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/UK.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Powercube+UK+with+Music.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/UK.png')" style="position:relative"/>				
-                </div>
-            </li>
-            <li>
-                <div class="productImgSmall between" style="width:155px;height:80px;padding-top:1px;cursor:pointer;">
-                    <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Standard+Romantic.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/%E2%96%B6+The+PowerCube+-+A+romantic+standard.+-+YouTube+%5B720p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Standard+Romantic.png')" style="position:relative"/>				
-                </div>
-            </li>
-            <li>
-                <div id="lastThumb" class="productImgSmall" style="width:150px;height:80px;padding-top:1px;cursor:pointer;">
-                    <img src="https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Coming+Home.png" onload="OnProductSmallImageLoad(event)" onclick="changeVideo('https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/%E2%96%B6+The+PowerCube+Remote+-+Coming+Home+-+YouTube+%5B720p%5D.mp4','https://s3-ap-southeast-1.amazonaws.com/allocacocvideo/Coming+Home.png')" style="position:relative"/>				
-                </div>
-            </li>
-        </ul>
-        -->
+        
     <div class="row">
     <div class='col-sm-10 banner'>
         <div class='col-sm-12 bannerPhoto'>
@@ -400,10 +363,13 @@ $results = $productMgr->getAllProduct();
     </div>
     <div class="col-sm-10 top-bar">
         <ul class="refine_bar">
-            <li class='filter' style='margin-left:0px'><a class='filter_link active_filter' id='allproducts' href="javascript:filter('allproducts')" style='background:rgb(0, 89, 112);color:#FFF;border-radius:3px'>All</a></li>
-            <li class='filter' style='margin-left:30px'><a class='filter_link' id='PowerCube' href="javascript:filter('PowerCube')">PowerCube</a></li>
-            <li class='filter' style='margin-left:122px'><a class='filter_link' id='ReWirable' href="javascript:filter('ReWirable')">ReWirable</a></li>
-            <li class='filter' style='margin-left:205px'><a class='filter_link' id='Remote' href="javascript:filter('Remote')">Remote</a></li>
+             <li class='filter' style='margin-left:0px'><a class='filter_link active_filter' id='allproducts' href="javascript:filter('allproducts')" style='background:rgb(0, 89, 112);color:#FFF;border-radius:3px'>All</a></li>
+            <li class='filter' style='margin-left:30px'><a class='filter_link' id='Anker' href="javascript:filter('Anker')">Anker</a></li>
+            <li class='filter' style='margin-left:80px'><a class='filter_link' id='SPEEDY' href="javascript:filter('SPEEDY')">SPEEDY</a></li>
+            <li class='filter' style='margin-left:145px'><a class='filter_link' id='REFRE' href="javascript:filter('REFRE')">REFRE</a></li>
+            <li class='filter' style='margin-left:200px'><a class='filter_link' id='SAFEVue' href="javascript:filter('SAFEVue')">SAFEVue</a></li>
+            <li class='filter' style='margin-left:270px'><a class='filter_link' id='Plantronics' href="javascript:filter('Plantronics')">Plantronics</a></li>
+            <li class='filter' style='margin-left:355px'><a class='filter_link' id='VSTARCAM' href="javascript:filter('VSTARCAM')">VSTARCAM</a></li>
             <li class='pull-right' style='height:100%'>
                 <div class="btn-group" style='height:100%'>
                     <button type="button" class="btn btn-default dropdown-toggle" style='border-radius:0;border-right:none;border-top:none;border-bottom:none;border-left:1px solid #E6E6E6;height:100%'

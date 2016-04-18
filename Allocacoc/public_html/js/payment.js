@@ -76,109 +76,6 @@ $(document).ready(function() {
                     },
                     emailAddress : {
                         message : 'The input is not a valid email address'
-                    },
-                }
-            },
-            cardHolder:{
-                selector: '#cardHolder',
-                validators: {
-                    notEmpty: {
-                        message: 'The card holder is required'
-                    },
-                    stringCase: {
-                        message: 'The card holder must contain upper case characters only',
-                        case: 'upper'
-                    }
-                }
-            },
-
-            cardNumber: {
-                validators: {
-                    notEmpty: {
-                        message: 'The card number is required and can\'t be empty'
-                    },
-                    creditCard: {
-                        message: 'The credit card number is not valid'
-                    }
-                }
-            },
-
-            expMonth: {
-                selector: '[data-stripe="exp-month"]',
-                validators: {
-                    notEmpty: {
-                        message: 'The expiration month is required'
-                    },
-                    digits: {
-                        message: 'The expiration month can contain digits only'
-                    },
-                    callback: {
-                        message: 'Expired',
-                        callback: function(value, validator) {
-                            value = parseInt(value, 10);
-                            var year         = validator.getFieldElements('expYear').val(),
-                                currentMonth = new Date().getMonth() + 1,
-                                currentYear  = new Date().getFullYear();
-                            if (value < 0 || value > 12) {
-                                return false;
-                            }
-                            if (year === '') {
-                                return true;
-                            }
-                            year = parseInt(year, 10);
-                            if (year > currentYear || (year === currentYear && value > currentMonth)) {
-                                validator.updateStatus('expYear', 'VALID');
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            },
-
-            expYear: {
-                selector: '[data-stripe="exp-year"]',
-                validators: {
-                    notEmpty: {
-                        message: 'The expiration year is required'
-                    },
-                    digits: {
-                        message: 'The expiration year can contain digits only'
-                    },
-                    callback: {
-                        message: 'Expired',
-                        callback: function(value, validator) {
-                            value = parseInt(value, 10);
-                            var month        = validator.getFieldElements('expMonth').val(),
-                                currentMonth = new Date().getMonth() + 1,
-                                currentYear  = new Date().getFullYear();
-                            if (value < currentYear || value > currentYear + 10) {
-                                return false;
-                            }
-                            if (month === '') {
-                                return false;
-                            }
-                            month = parseInt(month, 10);
-                            if (value > currentYear || (value === currentYear && month > currentMonth)) {
-                                validator.updateStatus('expMonth', 'VALID');
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            },
-
-            cvCode: {
-                validators: {
-                    notEmpty: {
-                        message: 'The CV number is required'
-                    },
-                    cvv: {
-                        message: 'The value is not a valid CV',
-                        creditCardField: 'cardNumber'
                     }
                 }
             }
@@ -187,16 +84,9 @@ $(document).ready(function() {
 
 });
 
-$('#resetBtn1').click(function() {
+$('#resetBtn').click(function() {
     $('#payment').data('bootstrapValidator').resetForm(true);
 });
-
-function showTab(tabName){
-    var tab = document.getElementById(tabName+"Tab");
-    tab.style.color = "#008ba4";
-    var icon = document.getElementById(tabName+"Icon");
-    icon.removeAttribute("style");
-}
     
 function disable(myId,id){
     var myField = document.getElementById(myId);
@@ -255,7 +145,7 @@ function processReward(code){
     };
     $.ajax({
         type: 'post',
-        url: 'process_reward.php?operation=reward',
+        url: './process_reward.php?operation=reward',
         data: postData,
         success: function(data){
             var pos = data.indexOf("{");
@@ -269,7 +159,7 @@ function processReward(code){
             var newTd2 = newTr.insertCell();   
             var newTd3 = newTr.insertCell();  
             var newTd4 = newTr.insertCell();  
-            newTd0.innerHTML="<div style='padding-left: 30px'><img width='80px' height='80px' src='"+gift.photo+"'></div>";//为单元格加入内容
+            newTd0.innerHTML="<div style='padding-left: 30px'><img width='80px' height='80px' src='"+gift.photo+"'><input type='hidden' name='gift' value='"+code+"'></div>";//为单元格加入内容
             newTd1.innerHTML=gift.product;
             newTd2.innerHTML="1";
             newTd3.innerHTML="$0 (worth $"+gift.worth+")";

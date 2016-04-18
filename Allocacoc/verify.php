@@ -8,18 +8,18 @@ include_once("./Manager/CreditManager.php");
 $customerMgr = new CustomerManager();
 $creditMgr = new CreditManager();
 $productMgr = new ProductManager();
+$url = parse_url(htmlspecialchars_decode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']),PHP_URL_QUERY);
 $email='';
 $key='';
-if(isset($_GET['email'])){
-    $email = $_GET['email'];
-}
-if(isset($_GET['key'])){
-    $key = $_GET['key'];
-}
+
+parse_str($url);
 $invitation_link = $customerMgr->getInvitationLink($email);
 $retrieved_key = substr($invitation_link,strpos($invitation_link,"=")+1);
-if(md5($retrieved_key)===$key){
+
+if(sha1($retrieved_key)===$key){
+if (session_status()!=PHP_SESSION_ACTIVE) {
 session_start();
+}
     $customerMgr->activateAccount($email);
     $_SESSION["userid"] = $email;
     $form_data['status'] = 'success';

@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <?php
+if (session_status()!=PHP_SESSION_ACTIVE) {
 session_start();
+}
 $_SESSION["admin_id"] = "michael";
 include 'protect/admin_protect.php'; 
 
@@ -33,7 +29,7 @@ $fdpMgr = new FdpManager();
 $current_cutoff = $fdpMgr->getCutoff();
 $current_charge = $fdpMgr->getCharge();
 ?>
-
+<!DOCTYPE html>
 <html>   
     <head>
         <script type="text/javascript" src="public_html/js/jquery-1.11.0.js"></script>
@@ -335,7 +331,7 @@ $current_charge = $fdpMgr->getCharge();
                                                                                 <div id="2_photo_close" style="display:none;"><i class="fa fa-times"> invalid image</i></div>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="text" id="color1" name="color2" class="color" disabled="disabled"/>
+                                                                                <input type="text" id="color2" name="color2" class="color" disabled="disabled"/>
                                                                             </td>
                                                                             <td>
                                                                                 <input type="text" id="color_symbol_code2" name="color_symbol_code2" disabled="disabled"/>

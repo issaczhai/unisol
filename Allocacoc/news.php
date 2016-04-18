@@ -1,9 +1,9 @@
+<?php
+if (session_status()!=PHP_SESSION_ACTIVE) {
+        session_start();
+}
+?>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
@@ -32,12 +32,15 @@ and open the template in the editor.
         
     </head>
     <body>
+    <!-- News Display -->
+    <div class="container">
+    
+    <div class="col-md-10 col-md-offset-1" style="margin-top:10%">
     <?php
     // Load the header
-    include_once("./templates/header.php");
+    include_once("./templates/header2.php");
     ?>
-    <!-- News Display -->
-    <div class="row col-md-11 pull-right" style="margin-top:10%">
+    <div class="row">
         <div class="col-md-3 portfolio-item">
             <div class="flip-container">
                 <div class="flipper">
@@ -102,9 +105,12 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
+        </div>
+    </div>
     </div>
     <!-- /.row -->
     <?php
+    $currentPage = "news";
     include_once("./templates/footer.php");
     ?>
     
@@ -126,4 +132,3 @@ and open the template in the editor.
     </script>
     </body>
 </html>
-

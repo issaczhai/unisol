@@ -80,7 +80,7 @@
             <br>
             <br>
             <div id="message-content">
-                You have already ordered our product. we will send your order information to your email <b><a href="mailto:example@example.com">example@example.com</a></b> ,and shipped as soon as possible. If you have any question you can contact us thank for you support
+                You have already ordered our product. we will send your order information to your email <b><a href="mailto:example@example.com">example@example.com</a></b> ,and shipped as soon as possible. If you encounter any questions you can contact us. Thanks for you support
             </div>
             <br>
          </div>
@@ -89,20 +89,17 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div>
-                            <i id="footer-content-logo" class="fa fa-user"></i>&nbsp; Name: XXXX
+                            <i id="footer-content-logo" class="fa fa-envelope"></i>&nbsp; E-mail: contact@trsutedbrandsonline.com
                         </div>
                         <br>
                         <div>
-                            <i id="footer-content-logo" class="fa fa-mobile"></i>&nbsp; Phone: +65 81234567
+                            <i id="footer-content-logo" class="fa fa-mobile"></i>&nbsp; Phone: +65 6527 0425
+
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div>
-                            <i id="footer-content-logo" class="fa fa-envelope"></i>&nbsp; E-mail: example@example.com
-                        </div>
-                        <br>
-                        <div>
-                            <i id="footer-content-logo" class="fa fa-map-marker"></i>&nbsp; Address: .....................
+                            <i id="footer-content-logo" class="fa fa-map-marker"></i>&nbsp; Address: 3016 Bedok North Ave4 #06-20 Singapore
                         </div>
                     </div>
                 </div>
@@ -112,9 +109,9 @@
             <div id="footer-btn"> 
                 <a class="btn btn-default" href="./shop.php">Continue to Shop
                 </a>
-                <button type="button" class="btn btn-primary">
+<!--                <button type="button" class="btn btn-primary">
                    Print Your Receipt
-                </button>
+                </button>-->
             </div>
          </div>
       </div><!-- /.modal-content -->

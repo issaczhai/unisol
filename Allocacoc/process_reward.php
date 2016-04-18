@@ -35,7 +35,7 @@ header("Location: admin.php");
     if($exist === false || $used === true){
         $arr = array();
         $arr['code'] = $code;
-        $arr['status'] = $exist;
+        $arr['status'] = false;
         echo json_encode($arr);
         exit;
     }

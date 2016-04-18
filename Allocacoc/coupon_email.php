@@ -14,10 +14,6 @@ $to = filter_input(INPUT_POST,'send_email_address');
 
 $invitation_link = filter_input(INPUT_POST,'invitation_link');
 
-//$to = "hx.zhai.2012@sis.smu.edu.sg";
-//$to = "monalisa4518@gmail.com";
-//$to = "leonyu0930@gmail.com";
-//$to = "253291619@qq.com";
 $sender_name = "Issac Zhai";
 
 $subject = $sender_name." has just given you $10 Credits";
@@ -62,8 +58,7 @@ $headers = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 // More headers
-$headers .= 'From: leonyu0930@gmail.com' . "\r\n";
-//$headers .= 'Cc: leonyu0930@gmail.com' . "\r\n";
+$headers .= 'From: allocacoc@trustedbrandsonline.com' . "\r\n";
 
 
 mail($to,$subject,$message,$headers);

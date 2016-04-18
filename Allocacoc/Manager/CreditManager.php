@@ -25,10 +25,11 @@ class CreditManager {
     }
     
     function updateCreditStatusToTrue($sender_id,$receiver_id){
+        $status = "true";
         $ConnectionManager = new ConnectionManager();
         $conn = $ConnectionManager->getConnection();
         $stmt = $conn->prepare("UPDATE credit_history SET status = ? WHERE sender_id = ? AND receiver_id = ?");
-        $stmt->bind_param("sss","true",$sender_id,$receiver_id);
+        $stmt->bind_param("sss",$status,$sender_id,$receiver_id);
         $stmt->execute();
         $ConnectionManager->closeConnection($stmt, $conn);
     }
