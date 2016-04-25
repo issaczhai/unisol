@@ -88,15 +88,26 @@
                 <h4 class="mrg5">Specialized Services</h4>
             </div>
             <div class="grid_12">
-                <p class="p4"><span class="p5">Ping Tan Construction Pte Ltd has a history of completing projects within an agreed time frame. Our experienced management and administration staff have the ability to plan and complete projects within the cost/time constraints on any project.</span>
-                <br>Whether a project comprises construction, from scratch, renovation, repairing, restoration or minor demolition, the company will to adhere to deadlines – which in turn affect time cost scheduling. With that, clearly defined structural measures have been mapped out to ensure smooth processes that ultimately achieve our final target.</p>
-                <p class="p4">Ping Tan involved in providing basic and complex construction work such as:</p>
+                <p class="p4 default-font-family"><span class="p5 custom-p5">Ping Tan Construction Pte Ltd has a history of completing projects within an agreed time frame. Our experienced management and administration staff have the ability to plan and complete projects within the cost/time constraints on any project.</span>
+                <br><br>Whether a project comprises construction, from scratch, renovation, repairing, restoration or minor demolition, the company will to adhere to deadlines – which in turn affect time cost scheduling. With that, clearly defined structural measures have been mapped out to ensure smooth processes that ultimately achieve our final target.</p>
+                <p class="p4 default-font-family">Ping Tan involved in providing basic and complex construction work such as:</p>
                 <ul class="list list-service">
-                 <li> Reinforced Work </li>
-                 <li> Wet Architectural work</li>
-                 <li> Dry Architectural work</li>
-                 <li> External work </li>
-                 <li> Design & Build </li>
+                    <li> Sub-Contracting Works </li>
+                    <li>
+                        <ul class="list-service-detail">
+                            <li>Reinforced Concrete Works</li>
+                            <li>Wet Architectural Works i.e. Brickwork, Wall Panel, Plastering, Tiling Works etc</li>
+                            <li>Drywall Partition and Ceiling Works</li>
+                        </ul>
+                    </li>
+                    <li> Main Contract works</li>
+                    <li>
+                        <ul class="list-service-detail">
+                            <li>Conventional Building Works for Industrial Factory / Warehouse, Commercial Building, Residential</li>
+                            <li>A & A Works to Existing Building</li>
+                            <li>Design & Build Construction Projects</li>
+                        </ul>
+                    </li>
                 </ul>
                 <!--<a class="a3" href="#"><span></span>read more</a>-->
             </div>

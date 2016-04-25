@@ -54,13 +54,13 @@
             </div>
             <div class="grid_4">
                 <figure class="img1 mrg6">
-                    <img class="img6" src="images/director.jpg" alt="">
+                    <img class="img6" src="images/director.png" alt="">
                 </figure>
             </div>
             <div class="grid_8">
-                <p class="p4"><span class="p5">As the key person in the business organisation, Mr. Lin Cai has more than fifteen years of experience and is expert in wide engineering, construction projects and business development.</span><br>Having first begun his apprenticeship in 2000, the only director of the company now leads a capable team in the building and construction field.He is well-respected in the building industry, demonstrated through the strong relationships he has established with architects and with his satisfied clients. </p>
-                <p class="p4">He is a proven leader, having worked and learnt under strong mentors himself, and his success lies in his commitment to taking a ‘hands-on’ management approach. This allows him to not only guarantee that the highest standard of workmanship and materials is delivered for each project, but also to ensure the best experience for each client through honest and efficient communication and project adaptability. He takes the time to understand the goals and expectations of each client, and works closely with them in generating solutions that will not only look good, but will be functional and durable.</p>
-                <p class="p4">His commitment to quality and his well-known industry reputation for honesty and integrity ensure every project is carried out with the upmost professionalism.</p>
+                <p class="p4 default-font-family"><span class="p5 default-font-family">As the key person in the business organisation, Mr. Lin Cai has more than fifteen years of experience and is expert in wide engineering, construction projects and business development.</span><br><br>Having first begun his apprenticeship in 2000, the only director of the company now leads a capable team in the building and construction field.He is well-respected in the building industry, demonstrated through the strong relationships he has established with architects and with his satisfied clients. </p>
+                <br><p class="p4 default-font-family">He is a proven leader, having worked and learnt under strong mentors himself, and his success lies in his commitment to taking a ‘hands-on’ management approach. This allows him to not only guarantee that the highest standard of workmanship and materials is delivered for each project, but also to ensure the best experience for each client through honest and efficient communication and project adaptability. He takes the time to understand the goals and expectations of each client, and works closely with them in generating solutions that will not only look good, but will be functional and durable.</p>
+                <br><p class="p4 default-font-family">His commitment to quality and his well-known industry reputation for honesty and integrity ensure every project is carried out with the upmost professionalism.</p>
             </div>
         </div>
     </section>
@@ -69,12 +69,12 @@
         <div class="container_12">
             <div class="grid_12">
                 <h4 class="mrg8">Our Team</h4>
-                <div class="grid_4 alpha">
+                <div class="grid_12 alpha">
                     <figure class="mrg10">
-                        <img class="img2 img4" src="images/managementteam.jpg" alt="">
+                        <img class="img2 img4-default max-height1" src="images/team.jpg" alt="">
                     </figure>
-                    <p class="p4 mrg2"><span class="p5">Management Team</span></p>
-                </div>
+                    <!-- <p class="p4 mrg2"><span class="p5">Management Team</span></p> -->
+                </div><!-- 
                 <div class="grid_4 omega">
                     <figure class="mrg10">
                         <img class="img2 img4" src="images/contractteam.jpg" alt="">
@@ -97,6 +97,7 @@
                     </figure>
                     <p class="p4 mrg2"><span class="p5">Site Operation/Safety Team</span></p>
                 </div>
+            </div> -->
         </div>
     </section>
 

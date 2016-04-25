@@ -123,15 +123,34 @@ h3{
     font-size: 14px;
 }
 
+.custom-p5{
+    text-transform: none;
+    font: 16px/20px 'sans-serif'
+}
 .p4 {
     font-style: none;
     font-size: 15px;
     color: #747474;
 }
-
+.default-font-family{
+    font: 14px/20px 'sans-serif';
+    color: #444;
+    text-transform: none;
+}
+.middle-font-family{
+    font: 18px/20px 'sans-serif';
+    color: #444;
+    text-transform: none;
+}
 .img4 {
     width: 300px;
     height: 200px;
+}
+.img4-default{
+    width: 100%;
+}
+.max-height1{
+    max-height: 35em;
 }
 .list{
     font-style: none;
@@ -156,7 +175,12 @@ h3{
     font: 12px/24px 'times new roman';
     font-style: italic;
 }
-
+/*******INDEX********/
+.main-service{
+    display: block;
+    float: none;
+    margin: 0 auto;
+}
 /*******FOOTER*******/
 .navbar-inverse h4{
     color: rgb(255, 255, 255);
@@ -244,9 +268,23 @@ ul.list-service{
     font-size: 15px;
     color: #747474;
     color: #a6a8ac;
-    font: 14px/20px 'times new roman';
+    font: 16px/20px 'times new roman';
     font-style: italic;
+    color: #444;
+}
+ul.list-service>li.nth-child(even){
+    background: none;
 }
 ul.list-service{
+    line-height: 3.5em;
+}
+ul.list-service-detail{
+    list-style-type: none;
+    font: 14px/20px 'sans-serif';
+    color: #444;
     line-height: 3em;
+}
+ul.list-service > li{
+    background: none;
+    padding-left: 0;
 }

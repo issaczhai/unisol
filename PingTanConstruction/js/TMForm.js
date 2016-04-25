@@ -250,5 +250,5 @@ regula.custom({
 
 
 $(document).ready(function(){ 
-	$('#form').TMForm({ownerEmail:'jackyfeng1218@gmail.com'});
+	$('#form').TMForm({ownerEmail:'info@pingtan.sg'});
 });

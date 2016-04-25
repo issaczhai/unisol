@@ -140,7 +140,7 @@
                 <h4 class="mrg9">Spontaneous Application</h4>
             </div>
             <div class="grid_12omega">
-                    <p class="p4">You do not see an open position that matches your specific skill-set? 
+                    <p class="p4 middle-font-family">You do not see an open position that matches your specific skill-set? 
                     Ping Tan is always looking for the most passionate and talented professionals to strengthen our ambitious team. 
                     If you are interested to work at Ping Tan, get in touch with us! Submit a general application via hr@pingtan.sg.</p>
             </div>

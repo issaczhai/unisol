@@ -4,8 +4,6 @@
     <title>Home</title>
     <meta charset="utf-8">
     <meta name = "format-detection" content = "telephone=no" />
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/camera.css">
     <link rel="stylesheet" href="css/custom_style.css">
@@ -82,42 +80,30 @@
         <div class="container_12">
             <div class="grid_12">
                 <div class="line"><h2>quality deliverable</h2><br><h2 class="mrg1">is our utmost priority</h2></div>
-                <div class="grid_4 alpha">
-                    <div class="maxheight block2">
-                        <div class="box_inner">
-                            <figure class="img1">
-                                <img class="img5" src="images/page1_img1.jpg" alt="">
-                            </figure>
-                            <!-- <a class="a1" href="#"></a> -->
-                            <h3>Wet Architectural<br>Work</h3>
-                            <p></p>
+                    <div class="grid_8 main-service">
+                        <div class="grid_4 alpha">
+                            <div class="maxheight block2">
+                                <div class="box_inner">
+                                    <figure class="img1">
+                                        <img class="img5" src="images/page1_img1.jpg" alt="">
+                                    </figure>
+                                    <a class="a1" href="./service.php"></a>
+                                    <h3>Sub-Contracting<br>Works</h3>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="grid_4">
-                    <div class="maxheight block2">
-                        <div class="box_inner">
-                            <figure class="img1">
-                                <img class="img5" src="images/page1_img2.jpg" alt="">
-                            </figure>
-                            <!-- <a class="a1" href="#"></a> -->
-                            <h3>Wet Architectural<br>Work</h3>
-                            <p></p>
+                        <div class="grid_4 alpha">
+                            <div class="maxheight block2">
+                                <div class="box_inner">
+                                    <figure class="img1">
+                                        <img class="img5" src="images/page1_img2.jpg" alt="">
+                                    </figure>
+                                    <a class="a1" href="./service.php"></a>
+                                    <h3>Main Contract<br>Works</h3>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="grid_4 omega">
-                    <div class="maxheight block2">
-                        <div class="box_inner">
-                            <figure class="img1">
-                                <img class="img5" src="images/page1_img3.jpg" alt="">
-                            </figure>
-                            <!-- <a class="a1" href="#"></a> -->
-                            <h3>Design &amp;<br> Build </h3>
-                            <p></p>
-                        </div>
-                    </div>
-                </div>
+                    </div>    
             </div>
         </div>
     </section>
