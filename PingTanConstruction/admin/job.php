@@ -12,7 +12,7 @@ include("template/protect.php");
     <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
     <link rel="shortcut icon" href="img/favicon.png">
 
-    <title> Admin | Projects </title>
+    <title> Admin | Job </title>
 
     <!-- Bootstrap CSS -->    
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -39,11 +39,9 @@ include("template/protect.php");
   <!-- container section start -->
   <section id="container" class="">
 <?php
-include("template/protect.php");
-
-include("template/header.php");
-
-include("template/sidebar.php");
+include_once("template/header.php");
+     
+include_once("template/sidebar.php");
 ?>
       
       <!--main content start-->
@@ -53,59 +51,55 @@ include("template/sidebar.php");
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="breadcrumb">
-                        <li><i class="fa fa-home"></i><a href="index.php">Home</a></li>
-                        <li><i class="fa fa-laptop"></i>Project</li>						  	
+                            <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+                            <li><i class="fa fa-bag"></i>Job</li>						  	
                     </ol>
                 </div>
             </div>
               
-            <!--page start-->
-            <div class="row">
+             <div class="row">
                  <div class="col-lg-12">
                     <section class="panel">
                           <header class="panel-heading tab-bg-info">
                               <ul class="nav nav-tabs">
                                   <li class="active">
-                                      <a data-toggle="tab" href="#project-list">
-                                          Project List
+                                      <a data-toggle="tab" href="#job-list">
+                                          Job List
                                       </a>
                                   </li>
                                   <li class="">
-                                      <a data-toggle="tab" href="#add-project">
-                                          Add Project
+                                      <a data-toggle="tab" href="#post-job">
+                                          Post Job
                                       </a>
                                   </li>
                               </ul>
                           </header>
                           <div class="panel-body" style="padding: 0">
                               <div class="tab-content">
-                                  <div id="project-list" class="tab-pane active">
+                                  <div id="job-list" class="tab-pane active">
                                       <table class="table table-striped table-advance table-hover">
-                                          <tbody class="project-list">
+                                          <tbody class="job-list">
                                               <tr>
-                                                  <th style="width:5%"> # </th>
-                                                  <th style="width:20%"> Project Name </th>
-                                                  <th style="width:10%"> End Date </th>
-                                                  <th style="width:10%"> Value </th>
-                                                  <th style="width:10%"> Scope of Work</th>
-                                                  <th style="width:15%"> Client </th>
-                                                  <th style="width:10%"> Status </th>
+                                                  <th style="width:10%"> Job ID </th>
+                                                  <th style="width:30%"> Position Name </th>
+                                                  <th style="width:10%"> Type </th>
+                                                  <th style="width:10%"> Category </th>
+                                                  <th style="width:10%"> Post Date </th>
+                                                  <th style="width:10%"> Last Edit </th>
                                                   <th style="width:20%"> Action </th>
                                               </tr>
 
-                                              <tr class="project-row" style="display:none">
-                                                  <td class="row-count"> 1 </td>
-                                                  <td class="row-projectName"> Project I Love You</td>
-                                                  <td class="row-endDate">2011-02-08</td>
-                                                  <td class="row-value">$12,560,000</td>
-                                                  <td class="row-scopeOfWork"> Ar</td>
-                                                  <td class="row-client">Issac CHak Pte Ltd</td>
-                                                  <td class="row-status">Completed</td>
+                                              <tr class="job-row" style="display:none">
+                                                  <td class="row-jobid"> 34521 </td>
+                                                  <td class="row-jobname"> Architect Assurance</td>
+                                                  <td class="row-type"> Full-Time </td>
+                                                  <td class="row-category"> Assurance</td>
+                                                  <td class="row-postdate"> 20-04-01</td>
+                                                  <td class="row-lastedit"> 2016-04-25</td>
                                                   <td>
                                                       <div class="btn-group">
-                                                          <button class="btn btn-primary edit-project-info-btn" data-toggle="modal" data-target="#editInfoModal"><i class="icon_pencil_alt"></i></button>
-                                                          <button class="btn btn-info edit-project-photo-btn" data-toggle="modal" data-target="#editPhotoModal"><i class="icon_image"></i></button>
-                                                          <button class="btn btn-danger delete-project-btn" data-toggle="modal" data-target="#deleteProjectModal"><i class="icon_close_alt2"></i></button>
+                                                          <button class="btn btn-primary edit-job-btn" data-toggle="modal" data-target="#editJobModal"><i class="icon_pencil_alt"></i></button>
+                                                          <button class="btn btn-danger delete-job-btn" data-toggle="modal" data-target="#deleteJobModal"><i class="icon_close_alt2"></i></button>
                                                       </div>
                                                   </td>
                                               </tr>                              
@@ -114,62 +108,69 @@ include("template/sidebar.php");
                                   </div>
                                   
                                   <!-- edit-profile -->
-                                  <div id="add-project" class="tab-pane">
+                                  <div id="post-job" class="tab-pane">
                                     <section class="panel">                                          
                                           <div class="panel-body bio-graph-info">
-                                              <form class="form-horizontal" role="form" action="../process_project.php" method="post" enctype="multipart/form-data">                                                  
-                                                  <input type="hidden" name="operation" value="addProject">
+                                              <form class="form-horizontal" role="form" action="../process_job.php" method="post" enctype="multipart/form-data">                                                  
+                                                  <input type="hidden" name="operation" value="postjob">
                                                   <br>
                                                   <div class="form-group">
-                                                      <label class="col-lg-2 control-label">Project Name</label>
+                                                      <label class="col-lg-2 control-label">Job Name</label>
                                                       <div class="col-lg-6">
-                                                          <input type="text" class="form-control" maxlength="100" id="projectName" name="projectName" required>
+                                                          <input type="text" class="form-control" maxlength="100" id="jobname" name="jobname" required>
                                                       </div>
                                                   </div>
                                                   <div class="form-group">
-                                                      <label class="col-lg-2 control-label">Completion Date(Estimated)</label>
+                                                      <label class="col-lg-2 control-label"> Location </label>
                                                       <div class="col-lg-6">
-                                                          <input type="text" class="form-control" id="endDate" name="endDate" placeholder="eg. yyyy-mm" maxlength="20" required>
+                                                          <input type="text" class="form-control" id="location" name="location" maxlength="50" required>
                                                       </div>
                                                   </div>
                                                   <div class="form-group">
-                                                      <label class="col-lg-2 control-label">Value (Not displayed)</label>
+                                                      <label class="col-lg-2 control-label">Type</label>
                                                       <div class="col-lg-6">
-                                                          <input type="text" class="form-control" maxlength="16" id="value" name="value" required>
-                                                      </div>
-                                                  </div>
-                                                  <div class="form-group">
-                                                      <label class="col-lg-2 control-label">Scope of Work</label>
-                                                      <div class="col-lg-6">
-                                                          <input type="text" class="form-control" maxlength="100" id="scopeOfWork" name="scopeOfWork" required>
-                                                      </div>
-                                                  </div>
-                                                  <div class="form-group">
-                                                      <label class="col-lg-2 control-label">Contract</label>
-                                                      <div class="col-lg-6">
-                                                          <input type="text" class="form-control" id="contract" name="contract" required>
-                                                      </div>
-                                                  </div>
-                                                  <div class="form-group">
-                                                      <label class="col-lg-2 control-label">Client</label>
-                                                      <div class="col-lg-6">
-                                                          <input type="text" class="form-control" maxlength="100" id="client" name="client" required>
-                                                      </div>
-                                                  </div>
-                                                  <div class="form-group">
-                                                      <label class="col-lg-2 control-label">Photo</label>
-                                                      <div class="col-lg-6">
-                                                          <input type="file" class="form-control" id="photo" name="photo[]" multiple required>
-                                                      </div>
-                                                  </div>
-                                                  <div class="form-group">
-                                                      <label class="col-lg-2 control-label">Status</label>
-                                                      <div class="col-lg-6">
-                                                            <select class="form-control m-bot15" id="status" name="status" required>
-                                                                <option value="Upcoming">Upcoming</option>
-                                                                <option value="Ongoing">Ongoing</option>
-                                                                <option value="Completed">Completed</option>
+                                                            <select class="form-control m-bot15" id="type" name="type" required>
+                                                                <option value="Full-Time">Full-Time</option>
+                                                                <option value="Part-Time">Part-Time</option>
                                                             </select>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group">
+                                                      <label class="col-lg-2 control-label"> Category </label>
+                                                      <div class="col-lg-6">
+                                                          <input type="text" class="form-control" id="category" name="category" maxlength="50" required>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group">
+                                                      <label class="col-lg-2 control-label"> Job Description </label>
+                                                      <div class="col-lg-6">
+                                                          <textarea id="job_description" name="job_description" rows="4" cols="50" class="form-control" required></textarea>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group">
+                                                      <label class="col-lg-2 control-label">Qualification</label>
+                                                      <div class="col-lg-6 qualification-div">
+                                                          <input type="text" class="form-control" id="qualification" name="qualification[]" multiple required>
+                                                      </div>
+                                                      <div class="col-lg-2 add-qualification-btn-div">
+                                                          <button class="btn btn-primary add-qualification-btn" type="button"><i class="icon_plus"></i></button>
+                                                          <button class="btn btn-danger delete-qualification-btn" type="button"><i class="icon_minus-06"></i></button>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group">
+                                                      <label class="col-lg-2 control-label">Offer</label>
+                                                      <div class="col-lg-6 offer-div">
+                                                          <input type="text" class="form-control" id="offer" name="offer[]" multiple required>
+                                                      </div>
+                                                      <div class="col-lg-2 add-offer-btn-div">
+                                                          <button class="btn btn-primary add-offer-btn" type="button"><i class="icon_plus"></i></button>
+                                                          <button class="btn btn-danger delete-offer-btn" type="button"><i class="icon_minus-06"></i></button>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group">
+                                                      <label class="col-lg-2 control-label"> Contact Information </label>
+                                                      <div class="col-lg-6">
+                                                          <textarea id="contact" name="contact" rows="4" cols="50" class="form-control"></textarea>
                                                       </div>
                                                   </div>
                                                   <div class="form-group">
@@ -191,7 +192,6 @@ include("template/sidebar.php");
                       </section>
                  </div>
               </div>
-	
               
             
 
@@ -225,6 +225,7 @@ include("template/sidebar.php");
         <script src="../js/pingtan.js"></script>
         <script src="../js/request.js"></script>
         <script src="../js/service.js"></script>
-        <script src="../js/projectsAdmin.js"></script>
+        <script src="../js/jobAdmin.js"></script>
+
   </body>
 </html>

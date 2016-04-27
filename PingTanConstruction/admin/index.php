@@ -1,3 +1,7 @@
+<?php
+session_start();
+include("template/protect.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -34,13 +38,11 @@
   <body>
   <!-- container section start -->
   <section id="container" class="">
-     <?php
-     include("template/protect.php");
+<?php
+include_once("template/header.php");
      
-     include("template/header.php");
-     
-     include("template/sidebar.php");
-     ?>
+include_once("template/sidebar.php");
+?>
       
       <!--main content start-->
       <section id="main-content">

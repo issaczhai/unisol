@@ -16,6 +16,13 @@
                       </a>
                   </li>
                   <li>                     
+                      <a class="" href="job.php">
+                          <i class="icon_bag"></i>
+                          <span>Recruitment</span>
+                          
+                      </a>             
+                  </li>
+                  <li>                     
                       <a class="" href="contact.php">
                           <i class="icon_piechart"></i>
                           <span>Contact</span>

@@ -18,6 +18,24 @@ var listProjects = function(result){
     }
 };
 
+var listJobs = function(result){
+    for (var i = 0; i < result.length; i++) { 
+        var row = cloneComponent('job-row', true, true);
+        row.find('.row-jobid').text(result[i].jobid);
+        row.find('.row-jobname').text(result[i].jobname);
+        row.find('.row-type').text(result[i].type);
+        row.find('.row-category').text(result[i].category);
+        row.find('.row-postdate').text(result[i].postdate);
+        row.find('.row-lastedit').text(result[i].lastedit);
+        row.find('.row-status').text(result[i].status);
+        row.find('.edit-job-btn').attr('data-jobid', result[i].jobid);
+        row.find('.delete-job-btn').attr('data-jobid', result[i].jobid);
+        row.find('.delete-job-btn').attr('data-jobname', result[i].jobname);
+        row.css('display','');
+        $('.job-list').append(row);
+    }
+}
+
 var populateContact = function(result){
     document.getElementById("address").value = result.address;
     document.getElementById("freephone").value = result.freephone;
@@ -25,6 +43,7 @@ var populateContact = function(result){
     document.getElementById("fax").value = result.fax;
     document.getElementById("email").value = result.email;
 };
+
 var renderProjects = function (result) {
 	 // render each project as thumbnail
 	 	// set id for each li as project id 
@@ -81,27 +100,34 @@ var renderProjects = function (result) {
 	var service = getFileName(pathname);
 	// Page Rendering Services
 	switch(service){
-		case "projects": 
-			baseUrl = '../process_project.php';
-            postData.operation = 'getProjectList';
-			data = buildXHRData(postData);
-			callback = listProjects;
-			break;
-        case "contact": 
-			baseUrl = '../process_contact.php';
-            postData.operation = 'getContact';
-			data = buildXHRData(postData);
-			callback = populateContact;
-			break;
-		case "project": 
-			baseUrl = './Service/service_projects.php';
-			postData.type = 'all';
-			data = buildXHRData(postData);
-			callback = renderProjects;
-			
-			break;
+            case "projects": 
+                    baseUrl = '../process_project.php';
+                    postData.operation = 'getProjectList';
+                    data = buildXHRData(postData);
+                    callback = listProjects;
+                    break;
+            case "contact": 
+                    baseUrl = '../process_contact.php';
+                    postData.operation = 'getContact';
+                    data = buildXHRData(postData);
+                    callback = populateContact;
+                    break;
+            case "project": 
+                    baseUrl = './Service/service_projects.php';
+                    postData.type = 'all';
+                    data = buildXHRData(postData);
+                    callback = renderProjects;
 
-		default : callback = null;
+                    break;
+            case "job": 
+                    baseUrl = '../process_job.php';
+                    postData.operation = 'getJobList';
+                    data = buildXHRData(postData);
+                    callback = listJobs;
+
+                    break;
+
+            default : callback = null;
 	}
 
 	xhr = new Request(false, baseUrl, data, 'POST', callback);
