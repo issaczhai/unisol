@@ -15,7 +15,9 @@
     <script src="js/superfish.js"></script>
     <script src="js/jquery.ui.totop.js"></script>
     <script src="js/jquery.mobilemenu.js"></script>
-
+    <script src="js/pingtan.js"></script>
+    <script src="js/request.js"></script>   
+    <script src="js/service.js"></script>
     <script>
         $(document).ready(function(){
 
@@ -49,17 +51,17 @@
     <section class="bg2 pad4">
         <div class="container_12">
             <div class="grid_12">
-                <h3>Junior JavaScript Developer</h3>
+                <h3 id="job-title">Junior JavaScript Developer</h3>
             </div>
             <div class="grid_12">
-                <p>Singapore</p>
-                <p>Full-time</p>
+                <p id="job-location">Singapore</p>
+                <p id="job-type">Full-time</p>
             </div>
             <div class="grid_12">
                 <h5 class="career-category">Company Description</h5>
                 <p class="career-category">PING TAN started their building construction activities in Singapore in 2012. The company has grown in strength to over 300 skilled professionals, who are committed to delivering quality products and services to meet the growing demands of major contractors and developers in the fast-changing world. With these strengths, we have been certified for general construction, professional contractor for building renovation works and professional contractor for RC Structural and Wet & Masonry works.</p>
                 <h5 class="career-category">Job Description</h5>
-                <p class="career-category">As a business developer, you will work directly with the OpenTelly management team on the development and implementation of the business and expansion strategies for THEOplayer, and will play a strategic role in the further growth of the company.</p>
+                <p class="career-category" id="job-description">As a business developer, you will work directly with the OpenTelly management team on the development and implementation of the business and expansion strategies for THEOplayer, and will play a strategic role in the further growth of the company.</p>
                 <h5>Qualification</h5>
                 <ul class="list-qualification">
                     <li>A Master degree in economics, management, finance, law, engineering or computer science with a very strong interest in business developmen</li>

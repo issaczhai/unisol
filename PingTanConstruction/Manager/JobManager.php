@@ -60,6 +60,48 @@ class JobManager {
         return $jobList;
     }
     
+    function getCareerCategory(){
+        $categoryList = [];
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT Distinct category FROM job");
+        $stmt->execute();
+        $stmt->bind_result($category);
+        while ($stmt->fetch())
+        {   
+            array_push($categoryList, $category);
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $categoryList;
+    }
+
+    function getJobByCategory($category){
+        $jobList = [];
+        $ConnectionManager = new ConnectionManager();
+        $conn = $ConnectionManager->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM job WHERE category = ?");
+        $stmt->bind_param("s", $category);
+        $stmt->execute();
+        $stmt->bind_result($jobid, $jobname, $location, $job_description, $type, $category, $qualification, $offer, $contact,$postdate,$lastedit);
+        while ($stmt->fetch())
+        {   $job = [];
+            $job['jobid'] = $jobid;
+            $job['jobname'] = $jobname;
+            $job['location'] = $location;
+            $job['description'] = $job_description;
+            $job['type'] = $type;
+            $job['category'] = $category;
+            $job['qualification'] = $qualification;
+            $job['offer'] = $offer;
+            $job['contact'] = $contact;
+            $job['postdate'] = $postdate;
+            $job['lastedit'] = $lastedit;
+            array_push($jobList, $job);
+        }
+        $ConnectionManager->closeConnection($stmt, $conn);
+        return $jobList;
+    }
+
     function getJobById($jobid){
         $job = [];
         $ConnectionManager = new ConnectionManager();

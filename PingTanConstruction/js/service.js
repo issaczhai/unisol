@@ -4,6 +4,7 @@ var listProjects = function(result){
         var row = cloneComponent('project-row', true, true);
         row.find('.row-count').text(i+1);
         row.find('.row-projectName').text(result[i].projectName);
+        row.find('.row-startDate').text(result[i].startDate);
         row.find('.row-endDate').text(result[i].endDate);
         row.find('.row-value').text(result[i].value);
         row.find('.row-scopeOfWork').text(result[i].scopeOfWork);
@@ -12,7 +13,6 @@ var listProjects = function(result){
         row.find('.edit-project-info-btn').attr('data-projectid', result[i].projectId);
         row.find('.edit-project-photo-btn').attr('data-projectid', result[i].projectId);
         row.find('.delete-project-btn').attr('data-projectid', result[i].projectId);
-        row.find('.delete-project-btn').attr('data-projectname', result[i].projectName);
         row.css('display','');
         $('.project-list').append(row);
     }
@@ -34,7 +34,7 @@ var listJobs = function(result){
         row.css('display','');
         $('.job-list').append(row);
     }
-}
+};
 
 var populateContact = function(result){
     document.getElementById("address").value = result.address;
@@ -43,7 +43,6 @@ var populateContact = function(result){
     document.getElementById("fax").value = result.fax;
     document.getElementById("email").value = result.email;
 };
-
 var renderProjects = function (result) {
 	 // render each project as thumbnail
 	 	// set id for each li as project id 
@@ -89,6 +88,72 @@ var renderProjects = function (result) {
 
 };
 
+var renderCareer = function(result) {
+	if(result.error){
+	// display the information message when there's no job openings
+		$('.info-career').css('display','block');
+		return;
+	}
+
+	result.forEach( function(element, index) {
+		// statements
+		var careerCategory = $('.career-category-template').clone(true, true),
+			jobList = result[index],
+			category;
+
+		careerCategory.removeClass('career-category-template');
+		$('.career-content').append(careerCategory);
+		console.log(careerCategory);
+		// render all jobs under category
+		for(var i = 0; i < jobList.length; i++){
+			var job = jobList[i],
+				articleJob = $('.job-template').clone(true, true);
+
+			category = job.category;
+			articleJob.removeClass('job-template');
+			articleJob.find('.p5').text(job.jobname);
+			articleJob.find('.p4').text(job.description);
+			articleJob.find('a.a3').attr('href','./job_detail.php?jobId=' + job.jobid);
+			console.log(category);
+			careerCategory.append(articleJob);
+		}
+
+		careerCategory.find('h5.mrg5').text(category);
+		
+	});
+
+};
+
+var renderJob = function(result) {
+	if(result.error){
+		return;
+	}
+	var jobId = result[0].jobid,
+		description = result[0].description,
+		title = result[0].jobname,
+		location = result[0].location,
+		type = result[0].type,
+		qualificationArray = convertJsonToValueArray($.parseJSON(result[0].qualification)),
+		offerArray = convertJsonToValueArray($.parseJSON(result[0].offer));
+
+	$('#job-title').text(title);
+	$('#job-location').text(location);
+	$('#job-type').text(type);
+	$('#job-description').text(description);
+
+	qualificationArray.forEach( function(element, index) {
+		var li = document.createElement('li');
+		$(li).text(qualificationArray[index]);
+		$('.list-qualification').append($(li));
+	});
+
+	offerArray.forEach( function(element, index) {
+		var li = document.createElement('li');
+		$(li).text(offerArray[index]);
+		$('.list-offer').append($(li));
+	});
+};
+
 (function(){
 	var xhr,
 		baseUrl,
@@ -100,34 +165,44 @@ var renderProjects = function (result) {
 	var service = getFileName(pathname);
 	// Page Rendering Services
 	switch(service){
-            case "projects": 
-                    baseUrl = '../process_project.php';
-                    postData.operation = 'getProjectList';
-                    data = buildXHRData(postData);
-                    callback = listProjects;
-                    break;
-            case "contact": 
-                    baseUrl = '../process_contact.php';
-                    postData.operation = 'getContact';
-                    data = buildXHRData(postData);
-                    callback = populateContact;
-                    break;
-            case "project": 
-                    baseUrl = './Service/service_projects.php';
-                    postData.type = 'all';
-                    data = buildXHRData(postData);
-                    callback = renderProjects;
-
-                    break;
-            case "job": 
-                    baseUrl = '../process_job.php';
-                    postData.operation = 'getJobList';
-                    data = buildXHRData(postData);
-                    callback = listJobs;
-
-                    break;
-
-            default : callback = null;
+		case "projects": 
+			baseUrl = '../process_project.php';
+            postData.operation = 'getProjectList';
+			data = buildXHRData(postData);
+			callback = listProjects;
+			break;
+        case "contact": 
+			baseUrl = '../process_contact.php';
+            postData.operation = 'getContact';
+			data = buildXHRData(postData);
+			callback = populateContact;
+			break;
+		case "job": 
+                baseUrl = '../process_job.php';
+                postData.operation = 'getJobList';
+                data = buildXHRData(postData);
+                callback = listJobs;
+		break;
+		case "project": 
+			baseUrl = './Service/service_projects.php';
+			postData.type = 'all';
+			data = buildXHRData(postData);
+			callback = renderProjects;
+           	break;
+		case "career":
+			baseUrl = './Service/service_career.php';
+			postData.type = 'all';
+			data = buildXHRData(postData);
+			callback = renderCareer;
+			break;
+		case "job_detail":
+			baseUrl = './Service/service_job_detail.php';
+			jobId = $_GET('jobId');
+			postData.jobId = jobId;
+			data = buildXHRData(postData);
+			callback = renderJob;
+			break;
+		default : callback = null;
 	}
 
 	xhr = new Request(false, baseUrl, data, 'POST', callback);

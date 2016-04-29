@@ -240,9 +240,12 @@ h3{
     text-align: center;
 }
 .info-career{
+    display: none;
     line-height: 1.5em;
 }
-
+.career-category-template, .job-template{
+    display: none;
+}
 .career-category{
     margin-bottom: 1em;
 }
