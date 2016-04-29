@@ -154,6 +154,14 @@ var renderJob = function(result) {
 	});
 };
 
+var renderContact = function(result){
+	if (result.error) return;
+
+	$('#telephone').text(result[0].telephone);
+	$('#fax').text(result[0].fax);
+	$('#email').text(result[0].email);
+};
+
 (function(){
 	var xhr,
 		baseUrl,
@@ -194,6 +202,12 @@ var renderJob = function(result) {
 			postData.type = 'all';
 			data = buildXHRData(postData);
 			callback = renderCareer;
+			break;
+		case "contacts":
+			baseUrl = './Service/service_contact.php';
+			postData.type = 'all';
+			data = buildXHRData(postData);
+			callback = renderContact;
 			break;
 		case "job_detail":
 			baseUrl = './Service/service_job_detail.php';

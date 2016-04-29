@@ -29,7 +29,7 @@
                             <li <?php if($current == 'career') {echo 'class="current"';} ?>>
                                 <a href="career.php">career</a></li>
                             <li <?php if($current == 'contacts') {echo 'class="current"';} ?>>
-                                <a href="contact.php">contacts</a></li>
+                                <a href="contacts.php">contacts</a></li>
                         </ul>
                     </nav>
                 </section>

@@ -17,7 +17,9 @@
     <script src="js/jquery.ui.totop.js"></script>
     <script src="js/jquery.mobilemenu.js"></script>
     <script src="js/TMForm.js"></script>
-
+    <script src="js/pingtan.js"></script>
+    <script src="js/request.js"></script>   
+    <script src="js/service.js"></script>
     <script>
         $(document).ready(function(){
 
@@ -59,8 +61,9 @@
                     <address>
                         <dl> 
                             <dt>8 New Industrial Road, Singapore 536200 LHK 3 Building #06-04</dt>
-                            <dd><span>Telephone:</span>+65 6747 6711</dd>
-                            <dd><span>FAX:</span>+65 6747 6711</dd>
+                            <dd><span>Telephone:</span><span id="telephone">+65 6747 6711</span></dd>
+                            <dd><span>Fax:</span><span id="fax">+65 6747 6711</span></dd>
+                            <dd><span>Email:</span><span id="email">info@pingtan.com</span></dd>
                         </dl>
                    </address>
                 </div>
