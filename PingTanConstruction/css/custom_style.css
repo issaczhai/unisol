@@ -26,7 +26,7 @@ section.top{
 }
 
 .footer-logo a{
-    font-size: 2em;
+    font-size: 1.2em;
     font-weight: 600;
     color: rgb(68, 68, 68);
 }
@@ -148,6 +148,9 @@ h3{
 }
 .img4-default{
     width: 100%;
+}
+.img1-radius-none{
+    border-radius:  0;
 }
 .max-height1{
     max-height: 35em;

@@ -60,17 +60,17 @@
 
 <div id="content">
     <div id="camera_wrap">
-        <div data-src="images/slide1.jpg">
+        <div data-src="images/quality2.jpg">
             <div class="caption fadeIn">
                 <p class="p9"><span>committed</span><br>to quality</p>
             </div>
         </div>
-        <div data-src="images/slide2.jpg">
+        <div data-src="images/risk2.jpg">
             <div class="caption fadeIn">
                 <p class="p9"><span>risk</span><br>prevention</p>
             </div>
         </div>
-        <div data-src="images/slide3.jpg">
+        <div data-src="images/commitment3.jpg">
             <div class="caption fadeIn">
                 <p class="p9"><span>commitment</span></p>
             </div>
@@ -85,7 +85,7 @@
                             <div class="maxheight block2">
                                 <div class="box_inner">
                                     <figure class="img1">
-                                        <img class="img5" src="images/page1_img1.jpg" alt="">
+                                        <img class="img5" src="images/home_mainCon.jpg" alt="">
                                     </figure>
                                     <a class="a1" href="./service.php"></a>
                                     <h3>Sub-Contracting<br>Works</h3>
@@ -96,7 +96,7 @@
                             <div class="maxheight block2">
                                 <div class="box_inner">
                                     <figure class="img1">
-                                        <img class="img5" src="images/page1_img2.jpg" alt="">
+                                        <img class="img5" src="images/home_subCon.jpg" alt="">
                                     </figure>
                                     <a class="a1" href="./service.php"></a>
                                     <h3>Main Contract<br>Works</h3>
@@ -118,7 +118,7 @@
                         <img class="img2" src="images/ntuc.png" alt="">
                         <div class="image_hover">
                             <!-- <a class="a2" href="#"><img src="images/icon7.png" alt=""></a> -->
-                            <span class="p1">Project name:</span><br>NTUC Fairprice
+                            <span class="p1">Project name:</span><br>NTUC Foodfair
                         </div>
                     </figure>     
                 </div>
@@ -129,7 +129,7 @@
                         <img class="img2" src="images/westbuild.jpg" alt="">
                         <div class="image_hover">
                             <!-- <a class="a2" href="#"><img src="images/icon7.png" alt=""></a> -->
-                            <span class="p1">Project name:</span><br>Westbuild
+                            <span class="p1">Project name:</span><br>HH @ Kallang
                         </div>
                     </figure>     
                 </div>
@@ -140,7 +140,8 @@
                         <img class="img2" src="images/seagate.jpg" alt="">
                         <div class="image_hover">
                             <!-- <a class="a2" href="#"><img src="images/icon7.png" alt=""></a> -->
-                            <span class="p1">Project name:</span><br>Seagate
+                            <span class="p1">Project name:</span><br>Seagate Singapore International Headquarter
+
                         </div>
                     </figure>     
                 </div>
