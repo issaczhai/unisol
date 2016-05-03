@@ -74,13 +74,18 @@ if ($operation === "addProject"){
     }
     //remove deleted photos
     foreach($toBeDelId as $id){
-        unlink($photoList[$id]);
+        if (file_exists($photoList[$id])) {
+	    unlink($photoList[$id]);
+	}
         unset($photoList[$id]);
     }
     
     //add newly uploaded photo
     $inputName = "photo";
     $location = "images/project/".$projectId."/";
+    if (!file_exists($location)){
+        mkdir($location,0777, true);
+    }
     $checkPhoto = true;
     $checkSize = true;
     $indexArray = [];
@@ -89,7 +94,7 @@ if ($operation === "addProject"){
     //merge two photo array
     $merge = $photoList;
     if(!empty($returnList)){
-        $merge = array_merge($photoList, $returnList);
+        $merge = $returnList+$photoList;
     }
     $photo = json_encode($merge);
     $projectMgr->updateProjectPhoto($projectId, $photo);
