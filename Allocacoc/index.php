@@ -1,275 +1,259 @@
 <?php
-if (session_status()!=PHP_SESSION_ACTIVE) {
-session_start();
+// Version
+define('VERSION', '2.0.3.1');
+
+// Configuration
+if (is_file('config.php')) {
+	require_once('config.php');
 }
-?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-        <link rel="stylesheet" href="./public_html/css/carouselHome.css">
-        <link rel="stylesheet" href="./public_html/css/main.css">
-        <link rel="stylesheet" href="./public_html/css/webShop.css">
-        <!-- Scripts -->        
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script src="./public_html/js/main.js"></script>
-        <script src="./public_html/js/allocacoc.js"></script>
-        <!-- full screen carousel style -->
-        <style>
-             html,body{height:100%;}
-            .carousel,.item,.active{height:100%;}
-            .carousel-inner{height:100%;}
-            //transparent header and bring it z-index up to make full screen carousel, style only for home page
-           #myNavbar{ background-color: transparent;
-                    background: rgba(248, 248, 248,0.8);
-                    border: none;
-                    z-index: 100;
-                    margin-bottom: 0;
-                    border-radius: 0;
-           }
-           .badge{
-               background-color:#AEAEAE;
-           }
-        </style>
-        <script>
-        function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
+// Install
+if (!defined('DIR_APPLICATION')) {
+	header('Location: install/index.php');
+	exit;
+}
 
-            var result = { width: 0, height: 0, fScaleToTargetWidth: true };
+// Startup
+require_once(DIR_SYSTEM . 'startup.php');
 
-            if ((srcwidth <= 0) || (srcheight <= 0) || (targetwidth <= 0) || (targetheight <= 0)) {
-                return result;
-            }
+// Registry
+$registry = new Registry();
 
-            // scale to the target width
-            var scaleX1 = targetwidth;
-            var scaleY1 = (srcheight * targetwidth) / srcwidth;
+// Loader
+$loader = new Loader($registry);
+$registry->set('load', $loader);
 
-            // scale to the target height
-            var scaleX2 = (srcwidth * targetheight) / srcheight;
-            var scaleY2 = targetheight;
+// Config
+$config = new Config();
+$registry->set('config', $config);
 
-            // now figure out which one we should use
-            var fScaleOnWidth = (scaleX2 > targetwidth);
-            if (fScaleOnWidth) {
-                fScaleOnWidth = fLetterBox;
-            }
-            else {
-               fScaleOnWidth = !fLetterBox;
-            }
+// Database
+$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+$registry->set('db', $db);
 
-            if (fScaleOnWidth===true) {
-                result.width = Math.floor(scaleX1);
-                result.height = Math.floor(scaleY1);
-                result.fScaleToTargetWidth = true;
-            }
-            else {
-                result.width = Math.floor(scaleX2);
-                result.height = Math.floor(scaleY2);
-                result.fScaleToTargetWidth = false;
-            }
-            result.targetleft = Math.floor((targetwidth - result.width) / 2);
-            result.targettop = Math.floor((targetheight - result.height) / 2);
+// Store
+if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) {
+	$store_query = $db->query("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`ssl`, 'www.', '') = '" . $db->escape('https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
+} else {
+	$store_query = $db->query("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`url`, 'www.', '') = '" . $db->escape('http://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
+}
 
-            return result;
-        }
-        </script>
-        <script>
-        function OnProductBigImageLoad(evt) {
-            var img = evt.currentTarget;
+if ($store_query->num_rows) {
+	$config->set('config_store_id', $store_query->row['store_id']);
+} else {
+	$config->set('config_store_id', 0);
+}
 
-            // what's the size of this image and it's parent
-            /* var w = $(this).width();
-            var h = $(this).height(); */
-            var w = img.naturalWidth;
-            var h = img.naturalHeight;
-            var tw = $(".productImgBig").width();
-            var th = $(".productImgBig").height();
+// Settings
+$query = $db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0' OR store_id = '" . (int)$config->get('config_store_id') . "' ORDER BY store_id ASC");
 
-            // compute the new size and offsets
-            var result = ScaleImage(w, h, tw, th, true);
+foreach ($query->rows as $result) {
+	if (!$result['serialized']) {
+		$config->set($result['key'], $result['value']);
+	} else {
+		$config->set($result['key'], unserialize($result['value']));
+	}
+}
 
-            // adjust the image coordinates and size
-            $(img).width(result.width);
-            $(img).height(result.height);
-            $(img).css("left", result.targetleft);
-            $(img).css("top", result.targettop);
-        }
-        </script>
-        <script>
-        function OnProductSmallImageLoad(evt) {
-            var img = evt.currentTarget;
+if (!$store_query->num_rows) {
+	$config->set('config_url', HTTP_SERVER);
+	$config->set('config_ssl', HTTPS_SERVER);
+}
 
-            // what's the size of this image and it's parent
-            var w = img.naturalWidth;
-            var h = img.naturalHeight;
-            var tw = $(".productImgSmall").width();
-            var th = $(".productImgSmall").height();
+// Url
+$url = new Url($config->get('config_url'), $config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url'));
+$registry->set('url', $url);
 
-            // compute the new size and offsets
-            var result = ScaleImage(w, h, tw, th, true);
+// Log
+$log = new Log($config->get('config_error_filename'));
+$registry->set('log', $log);
 
-            // adjust the image coordinates and siz
-            $(img).width(result.width);
-            $(img).height(result.height);
-            $(img).css("left", result.targetleft);
-            $(img).css("top", result.targettop);
-        }
-        </script>
-        <script>
-        function OnCartImageLoad(evt) {
-            var img = evt.currentTarget;
+function error_handler($errno, $errstr, $errfile, $errline) {
+	global $log, $config;
 
-            // what's the size of this image and it's parent
-            var w = img.naturalWidth;
-            var h = img.naturalHeight;
-            var tw = $(".cartImg").width();
-            var th = $(".cartImg").height();
+	// error suppressed with @
+	if (error_reporting() === 0) {
+		return false;
+	}
 
-            // compute the new size and offsets
-            var result = ScaleImage(w, h, tw, th, true);
+	switch ($errno) {
+		case E_NOTICE:
+		case E_USER_NOTICE:
+			$error = 'Notice';
+			break;
+		case E_WARNING:
+		case E_USER_WARNING:
+			$error = 'Warning';
+			break;
+		case E_ERROR:
+		case E_USER_ERROR:
+			$error = 'Fatal Error';
+			break;
+		default:
+			$error = 'Unknown';
+			break;
+	}
 
-            // adjust the image coordinates and size
-            $(img).width(result.width);
-            $(img).height(result.height);
-            $(img).css("left", result.targetleft);
-            $(img).css("top", result.targettop);
-        }
-        </script>
-        <!-- Latest compiled and minified JavaScript -->
-        
-        <meta charset="UTF-8">
-        <title>Allocacoc</title>
-    </head>
-<body>
-    <script>
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId      : '387511714775185',
-            xfbml      : true,
-            version    : 'v2.3'
-          });
-        };
+	if ($config->get('config_error_display')) {
+		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
+	}
 
-        (function(d, s, id){
-           var js, fjs = d.getElementsByTagName(s)[0];
-           if (d.getElementById(id)) {return;}
-           js = d.createElement(s); js.id = id;
-           js.src = "//connect.facebook.net/en_US/sdk.js";
-           fjs.parentNode.insertBefore(js, fjs);
-         }(document, 'script', 'facebook-jssdk'));
-    </script>    
-<?php
-    include_once("./templates/header.php");
-    include_once("./templates/modal.php");
-    ?>
-    
-	<!--<div id="loaderID" style="display:none;position:absolute; top:50%; left:53%; z-index:10; opacity:1"><img src="./public_html/img/ajax-loader.gif" /></div>
-        <div class="modal" id="product_detail_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content" id="product_detail_modal_content" style="width:800px">
-                
-            </div>
-            </div>
-        </div>-->
-    	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                <!-- Overlay 
-                <div class="overlay"></div>-->
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-                </ol>
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <img src="./public_html/img/sfeer_Extended_USB.jpg" alt="First slide">
-                        <div class="hero">
-                            <hgroup>
-                                <h1>Extended</h1>        
-                                <h3>Get start your next awesome project</h3>
-                            </hgroup>
-                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
-                        </div>
-            <!-- Static Header -->
+	if ($config->get('config_error_log')) {
+		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
+	}
 
-                    </div>
-                    <div class="item">
-                        <img src="./public_html/img/sfeer_Extended.jpg" alt="Second slide">
-                        <div class="hero">
-                            <hgroup>
-                                <h1>Extended USB</h1>        
-                                <h3>Get start your next awesome project</h3>
-                            </hgroup>
-                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
-                        </div>
+	return true;
+}
 
-                    </div>
-                    <div class="item">
-                        <img src="./public_html/img/sfeer_ReWirable.jpg" alt="Third slide">
-                        <div class="hero">
-                            <hgroup>
-                                <h1>ReWirable</h1>        
-                                <h3>Get start your next awesome project</h3>
-                            </hgroup>
-                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
-                        </div>
+// Error Handler
+set_error_handler('error_handler');
 
-                    </div>
-                    <div class="item">
-                        <img src="./public_html/img/sfeer_ReWirable_USB.jpg" alt="Forth slide">
-                        <div class="hero">
-                            <hgroup>
-                                <h1>ReWirable USB</h1>        
-                                <h3>Get start your next awesome project</h3>
-                            </hgroup>
-                            <!--<button class="btn btn-hero btn-lg" role="button">See all features</button>-->
-                        </div>
+// Request
+$request = new Request();
+$registry->set('request', $request);
 
-                    </div>
-                </div>
-                <!-- Controls
-                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-                </a> -->
-        </div><!-- /carousel -->
+// Response
+$response = new Response();
+$response->addHeader('Content-Type: text/html; charset=utf-8');
+$response->setCompression($config->get('config_compression'));
+$registry->set('response', $response);
 
+// Cache
+$cache = new Cache('file');
+$registry->set('cache', $cache);
 
-<!-- display product detail modal
-<script>
-    function getProductDetail(product_id){
-        $('#product_detail_modal_content').hide();
-        $('#product_detail_modal').modal('show');
-        $('#loaderID').show();
-        var customer_id = '';
-        if(customer_id===null){
-            customer_id = '';
-        }
-        var selected_product_id = 'selected_product_id=' + product_id + '&customer_id=' + customer_id;
+// Session
+$session = new Session();
+$registry->set('session', $session);
 
-        //event.preventDefault();
-        $.ajax({ //Process the form using $.ajax()
-            type      : 'POST', //Method type
-            url       : './process_product_detail.php', //Your form processing file URL
-            data      : selected_product_id,
-            cache     : false,
-            success   : function(html) {
-                            $('#loaderID').hide();
-                            $('#product_detail_modal_content').html(html);
-                            $('#product_detail_modal_content').show();
-                        }
-        });
-    }
-</script>
--->
-    
+// Language Detection
+$languages = array();
+
+$query = $db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE status = '1'");
+
+foreach ($query->rows as $result) {
+	$languages[$result['code']] = $result;
+}
+
+if (isset($session->data['language']) && array_key_exists($session->data['language'], $languages)) {
+	$code = $session->data['language'];
+} elseif (isset($request->cookie['language']) && array_key_exists($request->cookie['language'], $languages)) {
+	$code = $request->cookie['language'];
+} else {
+	$detect = '';
+
+	if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) {
+		$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
+
+		foreach ($browser_languages as $browser_language) {
+			foreach ($languages as $key => $value) {
+				if ($value['status']) {
+					$locale = explode(',', $value['locale']);
+
+					if (in_array($browser_language, $locale)) {
+						$detect = $key;
+						break 2;
+					}
+				}
+			}
+		}
+	}
+
+	$code = $detect ? $detect : $config->get('config_language');
+}
+
+if (!isset($session->data['language']) || $session->data['language'] != $code) {
+	$session->data['language'] = $code;
+}
+
+if (!isset($request->cookie['language']) || $request->cookie['language'] != $code) {
+	setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $request->server['HTTP_HOST']);
+}
+
+$config->set('config_language_id', $languages[$code]['language_id']);
+$config->set('config_language', $languages[$code]['code']);
+
+// Language
+$language = new Language($languages[$code]['directory']);
+$language->load($languages[$code]['directory']);
+$registry->set('language', $language);
+
+// Document
+$registry->set('document', new Document());
+
+// Customer
+$customer = new Customer($registry);
+$registry->set('customer', $customer);
+
+// Customer Group
+if ($customer->isLogged()) {
+	$config->set('config_customer_group_id', $customer->getGroupId());
+} elseif (isset($session->data['customer']) && isset($session->data['customer']['customer_group_id'])) {
+	// For API calls
+	$config->set('config_customer_group_id', $session->data['customer']['customer_group_id']);
+} elseif (isset($session->data['guest']) && isset($session->data['guest']['customer_group_id'])) {
+	$config->set('config_customer_group_id', $session->data['guest']['customer_group_id']);
+}
+
+// Tracking Code
+if (isset($request->get['tracking'])) {
+	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
+
+	$db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicks = (clicks + 1) WHERE code = '" . $db->escape($request->get['tracking']) . "'");
+}
+
+// Affiliate
+$registry->set('affiliate', new Affiliate($registry));
+
+// Currency
+$registry->set('currency', new Currency($registry));
+
+// Tax
+$registry->set('tax', new Tax($registry));
+
+// Weight
+$registry->set('weight', new Weight($registry));
+
+// Length
+$registry->set('length', new Length($registry));
+
+// Cart
+$registry->set('cart', new Cart($registry));
+
+// Encryption
+$registry->set('encryption', new Encryption($config->get('config_encryption')));
+
+//OpenBay Pro
+$registry->set('openbay', new Openbay($registry));
+
+// Event
+$event = new Event($registry);
+$registry->set('event', $event);
+
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
+
+foreach ($query->rows as $result) {
+	$event->register($result['trigger'], $result['action']);
+}
+
+// Front Controller
+$controller = new Front($registry);
+
+// Maintenance Mode
+$controller->addPreAction(new Action('common/maintenance'));
+
+// SEO URL's
+$controller->addPreAction(new Action('common/seo_url'));
+
+// Router
+if (isset($request->get['route'])) {
+	$action = new Action($request->get['route']);
+} else {
+	$action = new Action('common/home');
+}
+
+// Dispatch
+$controller->dispatch($action, new Action('error/not_found'));
+
+// Output
+$response->output();
