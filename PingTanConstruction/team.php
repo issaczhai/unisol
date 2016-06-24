@@ -53,7 +53,7 @@
                 <h4 class="mrg5">DIRECTOR PROFILE：Mr.Lin Cai</h4>
             </div>
             <div class="grid_4">
-                <figure class="img1 mrg6">
+                <figure class="img1 mrg6 img1-radius-none">
                     <img class="img6" src="images/director.png" alt="">
                 </figure>
             </div>
